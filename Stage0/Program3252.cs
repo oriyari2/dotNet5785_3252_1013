@@ -1,4 +1,6 @@
-﻿partial class Program
+﻿namespace Stage0
+{ 
+partial class Program
 {
     private static void Main(string[] args)
     {
@@ -15,4 +17,5 @@
     }
     static partial void Welcome1013();
     
+}
 }
