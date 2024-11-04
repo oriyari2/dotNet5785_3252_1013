@@ -9,9 +9,8 @@ namespace Stage0
      internal partial class Program
     {
          static partial void Welcome1013() 
-          {
-            Console.WriteLine("rivka is also here!");
-
+         {
+            Console.WriteLine("Rivka is also here!");
          }
     }
 }
