@@ -6,8 +6,13 @@ public class VolunteerImplementation : IVolunteer
 {
     public void Create(Volunteer item)
     {
-        Volunteer NewItem = item with { Id = Config.NextAssignmentId };//create new item with right id, and any other details like item 
-        DataSource.Volunteers.Add(NewItem);   //add new item to list
+        
+        if (Read(item.Id) == null) //didnt found item withe item.id in list
+            DataSource.Volunteers.Add(item);   //add new item to list
+  
+        else //id of item already exist in another item in list
+            throw new Exception($"Volunteer with ID={item.Id} already exists"); 
+        
     }
 
     public void Delete(int id)

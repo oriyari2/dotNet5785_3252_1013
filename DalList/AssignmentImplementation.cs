@@ -8,8 +8,7 @@ public class AssignmentImplementation : IAssignment
     public void Create(Assignment item)
     {
         Assignment NewItem = item with { Id = Config.NextAssignmentId };//create new item with right id, and any other details like item 
-        DataSource.Assignments.Add(NewItem);   //add new item to list 
-
+        DataSource.Assignments.Add(NewItem);   //add new item to list
     }
 
     public void Delete(int id)

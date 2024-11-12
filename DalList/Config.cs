@@ -12,12 +12,15 @@ internal static class Config
 
     internal static DateTime Clock { get; set; } = DateTime.Now;
 
+    internal static TimeSpan RiskRange { get; set; } = TimeSpan.Zero; //maybe no continue##
+
     internal static void Reset()
     {
         s_nextAssignmentId = StartAssignmentId;
         s_nextCallId = StartCallId;
         Clock = DateTime.Now;
-        
+        RiskRange = TimeSpan.Zero; 
+
     }
 }
 

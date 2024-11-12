@@ -40,5 +40,10 @@ public record Volunteer
     {
     public Volunteer() : this(0, "","","",null,null,null,null,
     RoleType.volunteer,false,0, DistanceType.air) { } // empty ctor
-    }
+
+    /*
+     (VolId,VolName, VolNum,VolEmail,null,VolAdress,VolLat,VolLong,
+    role,true,VolMaxDis, DistanceType.air)
+     */
+}
 

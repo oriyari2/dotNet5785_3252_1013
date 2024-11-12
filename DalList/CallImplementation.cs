@@ -6,7 +6,7 @@ public class CallImplementation : ICall
 {
     public void Create(Call item)
     {
-        Call NewItem = item with { Id = Config.NextAssignmentId };//create new item with right id, and any other details like item 
+        Call NewItem = item with { Id = Config.NextCallId };//create new item with right id, and any other details like item 
         DataSource.Calls.Add(NewItem);   //add new item to list
     }
 
