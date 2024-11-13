@@ -24,9 +24,8 @@ public record Call
     double Longitude,
     DateTime OpeningTime,
     DateTime? MaxTimeToEnd
-
     )
 {
-    public Call() : this(0, CallType.type1,null,"",0,0,
+    public Call() : this(0, CallType.food,null,"",0,0,
     DateTime.Now, DateTime.Now){ } // empty ctor 
 }
