@@ -53,13 +53,10 @@ public static class Initialization
             else // Some calls cancelled by volunteer
             {
                 status = EndType.self;
-                treatmentEndTime = selectedCall.End.AddHours(s_rand.Next(1, 48)); // Expired end time
+                treatmentEndTime = selectedCall.MaxTimeToEnd; // Expired end time
             }
 
-
-            // Create new Assignment
-            int assignmentId = s_dalConfig!.GetNextAssignmentId(); // Unique ID from config
-            s_dalAssignment!.Create(new Assignment(assignmentId, selectedCall.Id, selectedVolunteer.Id,
+            s_dalAssignment!.Create(new Assignment(0, selectedCall.Id, selectedVolunteer.Id,
                                                    treatmentStartTime, treatmentEndTime, status));
         }
     }
@@ -221,4 +218,29 @@ public static class Initialization
         }
     }
 
+
+    public static void Do(ICall? dalCall, IAssignment? dalAssignment, IVolunteer? dalVolunteer, IConfig? dalConfig) //stage 1
+    {
+        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dalCall = dalCall as DalApi.ICall ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dalAssignment = dalAssignment as DalApi.IAssignment ?? throw new NullReferenceException("DAL object can not be null!");
+
+        Console.WriteLine("Reset Configuration values and List values...");
+        s_dalConfig.Reset(); //stage 1
+        dalVolunteer.DeleteAll(); //stage 1
+        Console.WriteLine("Initializing volunteer list ...");
+        createVolunteer();
+
+        s_dalCall.DeleteAll(); //stage 1
+        Console.WriteLine("Initializing Call list ...");
+        createCall();
+
+        s_dalAssignment.DeleteAll(); //stage 1
+        Console.WriteLine("Initializing Assignment list ...");
+        createAssignment();
+    }
+
 }
+
+

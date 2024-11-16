@@ -27,5 +27,5 @@ public record Call
     )
 {
     public Call() : this(0, CallType.food,null,"",0,0,
-    DateTime.Now, DateTime.Now){ } // empty ctor 
+    DateTime.Now, null){ } // empty ctor 
 }

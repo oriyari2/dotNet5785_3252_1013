@@ -34,16 +34,13 @@ public record Volunteer
     double? Longitude,
     RoleType Role,
     bool Active,
-    double MaxDistance,
+    double? MaxDistance,
     DistanceType TheDistanceType //place to bonus$$
     )
     {
     public Volunteer() : this(0, "","","",null,null,null,null,
-    RoleType.volunteer,false,0, DistanceType.air) { } // empty ctor
+    RoleType.volunteer,false,null, DistanceType.air) { } // empty ctor
 
-    /*
-     (VolId,VolName, VolNum,VolEmail,null,VolAdress,VolLat,VolLong,
-    role,true,VolMaxDis, DistanceType.air)
-     */
+   
 }
 
