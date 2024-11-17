@@ -63,7 +63,7 @@ public static class Initialization
 
     private static void createCall()
     {
-        string[] Calldescription = 
+        string[] Calldescription =
             { "A volunteer is needed to drive the reserve soldier to his destination",
             "Need two volunteers to take care of the children",
             "Need a volunteer to come shop at the supermarket for the family",
@@ -110,73 +110,73 @@ public static class Initialization
 
         double[] CallLatitudes = {
     31.778, 31.773, 31.762, 31.770, 31.767, 31.759, 31.764, 31.771,
-    31.780, 31.776, 31.763, 31.758, 31.770, 31.777, 31.771, 31.779,
-    31.762, 31.758, 31.773, 31.750, 31.765, 31.768, 31.766, 31.764,
-    31.757, 31.755, 31.770, 31.775, 31.761, 31.778, 31.768, 31.753,
-    31.767, 31.770, 31.759, 31.752, 31.771, 31.761, 31.776, 31.769,
-    31.770, 31.760, 31.764, 31.762, 31.775, 31.759, 31.772, 31.766,
-    31.767, 31.761, 31.773, 31.775, 31.754, 31.751, 31.759, 31.762,
-    31.766, 31.768, 31.770, 31.761, 31.764, 31.763, 31.767, 31.758,
-    31.773, 31.756, 31.772, 31.764
-};
+31.780, 31.776, 31.763, 31.758, 31.770, 31.777, 31.771, 31.779,
+31.762, 31.758, 31.773, 31.750, 31.765, 31.768, 31.766, 31.764,
+31.757, 31.755, 31.770, 31.775, 31.761, 31.778, 31.768, 31.753,
+31.767, 31.770, 31.759, 31.752, 31.771, 31.761, 31.776, 31.769,
+31.770, 31.760, 31.764, 31.762, 31.775, 31.759, 31.772, 31.766,
+31.767, 31.761, 31.773, 31.775, 31.754, 31.751, 31.759, 31.762,
+31.766, 31.768, 31.770, 31.761, 31.764, 31.763, 31.767, 31.758,
+31.773, 31.756, 31.772, 31.764, 31.757, 31.765
+};// Array containing the latitudes of the addrsses
 
         double[] CallLongitudes = {
     35.216, 35.213, 35.217, 35.214, 35.212, 35.211, 35.210, 35.217,
-    35.218, 35.213, 35.212, 35.209, 35.215, 35.213, 35.208, 35.214,
-    35.216, 35.214, 35.207, 35.206, 35.215, 35.209, 35.208, 35.207,
-    35.213, 35.211, 35.208, 35.212, 35.217, 35.218, 35.210, 35.216,
-    35.211, 35.219, 35.215, 35.214, 35.217, 35.218, 35.216, 35.212,
-    35.215, 35.217, 35.213, 35.211, 35.214, 35.209, 35.210, 35.207,
-    35.208, 35.209, 35.212, 35.215, 35.216, 35.210, 35.214, 35.217,
-    35.208, 35.209, 35.215, 35.217, 35.213, 35.211, 35.208, 35.215,
-    35.218, 35.212, 35.210, 35.215
-};
+35.218, 35.213, 35.212, 35.209, 35.215, 35.213, 35.208, 35.214,
+35.216, 35.214, 35.207, 35.206, 35.215, 35.209, 35.208, 35.207,
+35.213, 35.211, 35.208, 35.212, 35.217, 35.218, 35.210, 35.216,
+35.211, 35.219, 35.215, 35.214, 35.217, 35.218, 35.216, 35.212,
+35.215, 35.217, 35.213, 35.211, 35.214, 35.209, 35.210, 35.207,
+35.208, 35.209, 35.212, 35.215, 35.216, 35.210, 35.214, 35.217,
+35.208, 35.209, 35.215, 35.217, 35.213, 35.211, 35.208, 35.215,
+35.218, 35.212, 35.210, 35.215, 35.219, 35.214
+};// Array containing the longitudes of the addresses
 
-        for (int i = 0; i < 70; i++)
+        for (int i = 0; i < 70; i++) // Loop through 70 iterations
         {
-            string address = CallAdresses[i];
-            double longitude = CallLongitudes[i];
-            double latitude = CallLatitudes[i];
-            string? description = "";
-            CallType callType = CallType.food;
-            DateTime start = new DateTime(s_dalConfig.Clock.Year - 1, i % 12 + 1, i % 28 + 1); //stage 1
-            DateTime end = new DateTime(s_dalConfig.Clock.Year + 1, i % 12 + 1, i % 28 + 1); //Call end 2 years after the call opened
-            if(i%10 == 0)
+            string address = CallAdresses[i]; // Get address from the list
+            double longitude = CallLongitudes[i]; // Get longitude from the list
+            double latitude = CallLatitudes[i]; // Get latitude from the list
+            string? description = ""; // Initialize description as an empty string
+            CallType callType = CallType.food; // Default call type is food
+            DateTime start = new DateTime(s_dalConfig.Clock.Year - 1, i % 12 + 1, i % 28 + 1); // Set call start date to one year before the current year
+            DateTime end = new DateTime(s_dalConfig.Clock.Year + 1, i % 12 + 1, i % 28 + 1); // Set call end date to one year after the current year
+            if (i % 10 == 0) // If the current index is divisible by 10
             {
-                end = start;//Expired
+                end = start; // Set the end date to the same as the start date (expired)
             }
-            if(i < 10)
+            if (i < 10) // If index is less than 10
             {
-                callType = CallType.food;
-                description = Calldescription[3];
+                callType = CallType.food; // Call type is food
+                description = Calldescription[3]; // Set description from the array
             }
-            else if (i >= 10 && i < 30)
+            else if (i >= 10 && i < 30) // If index is between 10 and 29
             {
-                callType = CallType.Cleaning;
-                description = Calldescription[4];
+                callType = CallType.Cleaning; // Call type is Cleaning
+                description = Calldescription[4]; // Set description from the array
             }
-            else if (i >= 30 && i < 45)
+            else if (i >= 30 && i < 45) // If index is between 30 and 44
             {
-                callType = CallType.Transportation;
-                description = Calldescription[0];
+                callType = CallType.Transportation; // Call type is Transportation
+                description = Calldescription[0]; // Set description from the array
             }
-            else if (i >= 45 && i < 55)
+            else if (i >= 45 && i < 55) // If index is between 45 and 54
             {
-                callType = CallType.Babysitting;
-                description = Calldescription[1];
+                callType = CallType.Babysitting; // Call type is Babysitting
+                description = Calldescription[1]; // Set description from the array
             }
-            else if (i >= 55 && i < 70)
+            else if (i >= 55 && i < 70) // If index is between 55 and 69
             {
-                callType = CallType.Shopping;
-                description = Calldescription[2];
+                callType = CallType.Shopping; // Call type is Shopping
+                description = Calldescription[2]; // Set description from the array
             }
 
-            s_dalCall.Create(new(0,callType, description, address, latitude, longitude, start, end));
+            s_dalCall.Create(new(0, callType, description, address, latitude, longitude, start, end)); // Create a new call entry in the database
         }
     }
 
     private static void createVolunteer()
-    {  
+    {
         string[] VolNames ={ "Dani Levy", "Eli Amar", "Yair Cohen", "Ariela Levin",
          "Dina Klein", "Shira Israelof","yael cohen", "david azrad", "miri levi", "amir shalom",
         "ronit shahar", "itay ben-david", "maya peretz", "yoni abergil", "lior haddad","rivka azrad" }; //potential names
@@ -213,7 +213,7 @@ public static class Initialization
             double VolMaxDis = s_rand.Next(); //random distance
 
             s_dalVolunteer!.Create(new(VolId, VolNames[i], VolPhone, VolEmail, null, VolAdresses[i],
-            VolLatitudes[i], VolLongitudes[i], VulRole, true, VolMaxDis, DistanceType.air)); 
+            VolLatitudes[i], VolLongitudes[i], VulRole, true, VolMaxDis, DistanceType.air));
             //add new Volunteer with right details to list
         }
     }
@@ -221,24 +221,24 @@ public static class Initialization
 
     public static void Do(ICall? dalCall, IAssignment? dalAssignment, IVolunteer? dalVolunteer, IConfig? dalConfig) //stage 1
     {
-        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dalCall = dalCall as DalApi.ICall ?? throw new NullReferenceException("DAL object can not be null!");
-        s_dalAssignment = dalAssignment as DalApi.IAssignment ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the configuration data access layer (DAL)
+        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the volunteer DAL
+        s_dalCall = dalCall as DalApi.ICall ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the call DAL, cast to ICall if possible
+        s_dalAssignment = dalAssignment as DalApi.IAssignment ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the assignment DAL, cast to IAssignment if possible
 
-        Console.WriteLine("Reset Configuration values and List values...");
-        s_dalConfig.Reset(); //stage 1
-        dalVolunteer.DeleteAll(); //stage 1
-        Console.WriteLine("Initializing volunteer list ...");
-        createVolunteer();
+        Console.WriteLine("Reset Configuration values and List values..."); // Log message indicating reset start
+        s_dalConfig.Reset(); //stage 1 // Reset configuration values in the DAL
+        dalVolunteer.DeleteAll(); //stage 1 // Delete all volunteer records from the database
+        Console.WriteLine("Initializing volunteer list ..."); // Log message for volunteer list initialization
+        createVolunteer(); // Create and populate the volunteer list
 
-        s_dalCall.DeleteAll(); //stage 1
-        Console.WriteLine("Initializing Call list ...");
-        createCall();
+        s_dalCall.DeleteAll(); //stage 1 // Delete all call records from the database
+        Console.WriteLine("Initializing Call list ..."); // Log message for call list initialization
+        createCall(); // Create and populate the call list
 
-        s_dalAssignment.DeleteAll(); //stage 1
-        Console.WriteLine("Initializing Assignment list ...");
-        createAssignment();
+        s_dalAssignment.DeleteAll(); //stage 1 // Delete all assignment records from the database
+        Console.WriteLine("Initializing Assignment list ..."); // Log message for assignment list initialization
+        createAssignment(); // Create and populate the assignment list
     }
 
 }

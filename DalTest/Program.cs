@@ -13,15 +13,30 @@ namespace DalTest
         private static ICall? s_dalCall = new CallImplementation(); //stage 1
         private static IAssignment? s_dalAssignment = new AssignmentImplementation(); //stage 1
         private static IConfig? s_dalConfig = new ConfigImplementation(); //stage 
-        private enum chooseMain { exit, volunteer, call, assignment, initialization, print, config, reset };
-        private enum subMenu { exit, create, read, readAll, update, delete, deleteAll }
+        private enum ChooseMain { exit, volunteer, call, assignment, initialization, print, config, reset };
+        private enum SubMenu { exit, create, read, readAll, update, delete, deleteAll }
+        private enum ConfigMenu
+        {
+            exit, plusMinute, plusHour, plusDay, plusYear, plusMonth, getClock,
+            getRiskRange, setRiskRange, reset
+        }
 
+        private static ConfigMenu configInputChoose()
+        {
+            ConfigMenu choose;
+            Console.WriteLine("Please enter one of the following options:exit, plusMinute, plusHour," +
+                "plusDay,plusMonth, plusYear,\n getClock, getRiskRange, setRiskRange, reset ");
+            string? input = Console.ReadLine();
+            while (!Enum.TryParse(input, out choose))//$$
+                input = Console.ReadLine();
+            return choose;
+        }
         /*
          The function will return what action the user wants to perform on the entity.
         */
-        private static subMenu inputChoose()
+        private static SubMenu inputChoose()
         {
-            subMenu choose;
+            SubMenu choose;
             Console.WriteLine("Please enter one of the following options:exit, create, read," +
                 " readAll, update, delete, deleteAll");
             string? input = Console.ReadLine();
@@ -30,6 +45,18 @@ namespace DalTest
             return choose;
         }
 
+        private static void setRiskRange()
+        {
+            TimeSpan riskRange;
+            Console.WriteLine("please enter risk range (in format of dd.hh:mm:ss)");
+            string input = Console.ReadLine();
+            while (!TimeSpan.TryParse(input, out  riskRange))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid risk range (in format of dd.hh:mm:ss):");
+                input = Console.ReadLine();
+            }
+            s_dalConfig.RiskRange = riskRange;
+        }
         /*
          creates new volunteer
         */
@@ -146,7 +173,7 @@ namespace DalTest
 
         private static Call callCreate()
         {
-            Console.WriteLine("Enter CallType (Transportation, Babysitting, Shopping, food , Cleaning):");
+            Console.WriteLine("Enter Call type (Transportation, Babysitting, Shopping, food , Cleaning):");
             CallType callType;
             string? input = Console.ReadLine();
             while (!CallType.TryParse(input, out callType))
@@ -200,13 +227,13 @@ namespace DalTest
             if (call != null)
                 Console.WriteLine(call);
             else
-                Console.WriteLine("Volunteer not found.");
+                Console.WriteLine("Call not found.");
         }
 
         private static void callReadAll()
         {
             var listCall = s_dalCall.ReadAll();
-            
+
             foreach (Call call in listCall)
                 Console.WriteLine(call);
         }
@@ -224,7 +251,6 @@ namespace DalTest
             s_dalCall?.Delete(id);
         }
 
-     
         private static Assignment assignmentCreate()
         {
             Console.WriteLine("Enter Call ID (integer):");
@@ -236,7 +262,7 @@ namespace DalTest
                 input = Console.ReadLine();
             }
 
-            Console.WriteLine("Enter Call ID (integer):");
+            Console.WriteLine("Enter Volunteer ID (integer):");
             int VolunteerId;
             input = Console.ReadLine();
             while (!int.TryParse(input, out VolunteerId))
@@ -245,7 +271,7 @@ namespace DalTest
                 input = Console.ReadLine();
             }
 
-            
+
             Assignment assignment = new Assignment(0, CallId, VolunteerId, DateTime.Now, null, null);
             return assignment;
 
@@ -280,7 +306,7 @@ namespace DalTest
 
         private static void assignmentDelete()
         {
-            Console.WriteLine("Enter  assignment ID:");
+            Console.WriteLine("Enter assignment ID:");
             int id;
             string? input = Console.ReadLine();
             while (!int.TryParse(input, out id))
@@ -292,7 +318,7 @@ namespace DalTest
         }
         static void Main(string[] args)
         {
-            chooseMain choose;
+            ChooseMain choose;
             do
             {
                 Console.WriteLine("Please enter one of the following options:exit, volunteer, call," +
@@ -305,172 +331,244 @@ namespace DalTest
                 {
                     switch (choose)
                     {
-                        case chooseMain.exit:
+                        case ChooseMain.exit:
                             break;
-                        case chooseMain.volunteer:
+                        case ChooseMain.volunteer:
                             {
-                                subMenu chooseNew = inputChoose();
-                                while(chooseNew!= subMenu.exit)
-                                { 
-                                switch (chooseNew)
+                                SubMenu chooseNew = inputChoose();
+                                while (chooseNew != SubMenu.exit)
                                 {
-                                    case subMenu.exit:
-                                        break;
-                                    case subMenu.create:
-                                        {
-                                            Volunteer vol = volunteerCreate();
-                                            s_dalVolunteer?.Create(vol);
+                                    switch (chooseNew)
+                                    {
+                                        case SubMenu.exit:
                                             break;
-                                        }
-                                    case subMenu.read:
-                                        {
-                                            volunteerRead();
+                                        case SubMenu.create:
+                                            {
+                                                Volunteer vol = volunteerCreate();
+                                                s_dalVolunteer?.Create(vol);
+                                                break;
+                                            }
+                                        case SubMenu.read:
+                                            {
+                                                volunteerRead();
+                                                break;
+                                            }
+                                        case SubMenu.readAll:
+                                            {
+                                                volunteerReadAll();
+                                                break;
+                                            }
+                                        case SubMenu.update:
+                                            {
+                                                Volunteer vol = volunteerCreate();
+                                                Console.WriteLine(s_dalVolunteer?.Read(vol.Id));
+                                                s_dalVolunteer?.Update(vol);
+                                                break;
+                                            }
+                                        case SubMenu.delete:
+                                            {
+                                                volunteerDelete();
+                                                break;
+                                            }
+                                        case SubMenu.deleteAll:
+                                            {
+                                                s_dalVolunteer?.DeleteAll();
+                                                break;
+                                            }
+                                        default:
                                             break;
-                                        }
-                                    case subMenu.readAll:
-                                        {
-                                            volunteerReadAll();
-                                            break;
-                                        }
-                                    case subMenu.update:
-                                        {
-                                            Volunteer vol = volunteerCreate();
-                                            //print vol
-                                            s_dalVolunteer?.Update(vol);
-                                            break;
-                                        }
-                                    case subMenu.delete:
-                                        {
-                                            volunteerDelete();
-                                            break;
-                                        }
-                                    case subMenu.deleteAll:
-                                        {
-                                            s_dalVolunteer.DeleteAll();
-                                            break;
-                                        }
-                                    default:
-                                        break;
-                                }
-                                chooseNew = inputChoose();
-
-                                }
-                                break;
-                            }
-                        case chooseMain.call:
-                            {
-                                subMenu chooseNew = inputChoose();
-                                while (chooseNew != subMenu.exit)
-                                {
-                                switch (chooseNew)
-                                {
-                                    case subMenu.exit:
-                                        break;
-                                    case subMenu.create:
-                                        {
-                                            Call newCall = callCreate();
-                                            s_dalCall?.Create(newCall);
-                                            break;
-                                        }
-                                    case subMenu.read:
-                                        {
-                                            callRead();
-                                            break;
-                                        }
-                                    case subMenu.readAll:
-                                        {
-                                            callReadAll();
-                                            break;
-                                        }
-                                    case subMenu.update:
-                                        {
-                                            Call call = callCreate();
-                                            s_dalCall?.Update(call);
-                                            break;
-                                        }
-                                    case subMenu.delete:
-                                        {
-                                            callDelete();
-                                            break;
-                                        }
-                                    case subMenu.deleteAll:
-                                        {
-                                            s_dalCall.DeleteAll();
-                                            break;
-                                        }
-                                    default:
-                                        break;
-
-                                }
+                                    }
                                     chooseNew = inputChoose();
 
                                 }
                                 break;
                             }
-                        case chooseMain.assignment:
+                        case ChooseMain.call:
                             {
-                                subMenu chooseNew = inputChoose();
-                                while (chooseNew != subMenu.exit)
+                                SubMenu chooseNew = inputChoose();
+                                while (chooseNew != SubMenu.exit)
                                 {
-                                switch (chooseNew)
-                                {
-                                    case subMenu.exit:
-                                        break;
-                                    case subMenu.create:
-                                        {
-                                            Assignment assignment = assignmentCreate();
-                                            s_dalAssignment?.Create(assignment);
+                                    switch (chooseNew)
+                                    {
+                                        case SubMenu.exit:
                                             break;
-                                        }
-                                    case subMenu.read:
-                                        {
-                                            assignmentRead();
+                                        case SubMenu.create:
+                                            {
+                                                Call newCall = callCreate();
+                                                s_dalCall?.Create(newCall);
+                                                break;
+                                            }
+                                        case SubMenu.read:
+                                            {
+                                                callRead();
+                                                break;
+                                            }
+                                        case SubMenu.readAll:
+                                            {
+                                                callReadAll();
+                                                break;
+                                            }
+                                        case SubMenu.update:
+                                            {
+                                                Call call = callCreate();
+                                                Console.WriteLine(s_dalCall?.Read(call.Id));
+                                                s_dalCall?.Update(call);
+                                                break;
+                                            }
+                                        case SubMenu.delete:
+                                            {
+                                                callDelete();
+                                                break;
+                                            }
+                                        case SubMenu.deleteAll:
+                                            {
+                                                s_dalCall?.DeleteAll();
+                                                break;
+                                            }
+                                        default:
                                             break;
-                                        }
-                                    case subMenu.readAll:
-                                        {
-                                            assignmentReadAll();
-                                            break;
-                                        }
-                                    case subMenu.update:
-                                        {
-                                            Assignment assignment = assignmentCreate();
-                                            s_dalAssignment?.Update(assignment);
-                                            break;
-                                        }
-                                    case subMenu.delete:
-                                        {
-                                            assignmentDelete();
-                                            break;
-                                        }
-                                    case subMenu.deleteAll:
-                                        {
-                                            s_dalAssignment.DeleteAll();
-                                            break;
-                                        }
-                                    default:
-                                        break;
+
+                                    }
+                                    chooseNew = inputChoose();
+
                                 }
+                                break;
+                            }
+                        case ChooseMain.assignment:
+                            {
+                                SubMenu chooseNew = inputChoose();
+                                while (chooseNew != SubMenu.exit)
+                                {
+                                    switch (chooseNew)
+                                    {
+                                        case SubMenu.exit:
+                                            break;
+                                        case SubMenu.create:
+                                            {
+                                                Assignment assignment = assignmentCreate();
+                                                s_dalAssignment?.Create(assignment);
+                                                break;
+                                            }
+                                        case SubMenu.read:
+                                            {
+                                                assignmentRead();
+                                                break;
+                                            }
+                                        case SubMenu.readAll:
+                                            {
+                                                assignmentReadAll();
+                                                break;
+                                            }
+                                        case SubMenu.update:
+                                            {
+                                                Assignment assignment = assignmentCreate();
+                                                Console.WriteLine(s_dalAssignment?.Read(assignment.Id));
+                                                s_dalAssignment?.Update(assignment);
+                                                break;
+                                            }
+                                        case SubMenu.delete:
+                                            {
+                                                assignmentDelete();
+                                                break;
+                                            }
+                                        case SubMenu.deleteAll:
+                                            {
+                                                s_dalAssignment?.DeleteAll();
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
                                     chooseNew = inputChoose();
 
                                 }
                                 break;
                             }
 
-                        case chooseMain.initialization:
-                            { 
-                            Initialization.Do(s_dalCall, s_dalAssignment, s_dalVolunteer, s_dalConfig);
-                            break;
+                        case ChooseMain.initialization:
+                            {
+                                Initialization.Do(s_dalCall, s_dalAssignment, s_dalVolunteer, s_dalConfig);
+                                break;
                             }
-                        case chooseMain.print:
-                            volunteerReadAll();
-                            callReadAll();
-                            assignmentReadAll();
+                        case ChooseMain.print:
+                            {
+                                volunteerReadAll();
+                                callReadAll();
+                                assignmentReadAll();
+                            }
                             break;
-                        case chooseMain.config:
+                        case ChooseMain.config:
+                            {
+                                ConfigMenu chooseNew = configInputChoose();
+                                while (chooseNew != ConfigMenu.exit)
+                                {
+                                    switch (chooseNew)
+                                    {
+                                        case ConfigMenu.exit:
+                                            break;
+                                        case ConfigMenu.plusMinute:
+                                            {
+                                                s_dalConfig.Clock = s_dalConfig.Clock.AddMinutes(1);
+                                                break;
+                                            }
+                                        case ConfigMenu.plusHour:
+                                            {
+                                                s_dalConfig.Clock = s_dalConfig.Clock.AddHours(1);
+                                                break;
+                                            }
+                                        case ConfigMenu.plusDay:
+                                            {
+                                                s_dalConfig.Clock = s_dalConfig.Clock.AddDays(1);
+                                                break;
+                                            }
+                                        case ConfigMenu.plusMonth:
+                                            {
+                                                s_dalConfig.Clock = s_dalConfig.Clock.AddMonths(1);
+                                                break;
+                                            }
+                                        case ConfigMenu.plusYear:
+                                            {
+                                                s_dalConfig.Clock = s_dalConfig.Clock.AddYears(1);
+                                                break;
+                                            }
+                                        case ConfigMenu.getClock:
+                                            {
+                                                Console.WriteLine(s_dalConfig?.Clock);
+                                                break;
+                                            }
+                                        case ConfigMenu.getRiskRange:
+                                            {
+                                                Console.WriteLine(s_dalConfig.RiskRange);
+                                                break;
+                                            }
+                                        case ConfigMenu.setRiskRange:
+                                            {
+                                                setRiskRange();
+                                                break;
+                                            }
+                                        case ConfigMenu.reset:
+                                            {
+                                                s_dalConfig?.Reset();
+                                                break;
+                                            }
+                                        default:
+                                            break;
+                                    }
+                                    {
+
+                                    }
+                                    chooseNew = configInputChoose();
+                                }
+                            }
                             break;
-                        case chooseMain.reset:
-                            s_dalConfig?.Reset();
+                        case ChooseMain.reset:
+                            {
+                                s_dalVolunteer?.DeleteAll();
+                                s_dalCall?.DeleteAll();
+                                s_dalAssignment?.DeleteAll();
+                                s_dalConfig?.Reset();
+                            }
+
                             break;
                         default:
                             break;
@@ -482,7 +580,7 @@ namespace DalTest
                 }
 
 
-            } while (choose != chooseMain.exit);
+            } while (choose != ChooseMain.exit);
 
         }
     }

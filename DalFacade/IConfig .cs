@@ -1,9 +1,7 @@
 ﻿namespace DalApi;
-public interface IConfig
+public interface IConfig // Interface for configuration settings
 {
-    DateTime Clock { get; set; }
-    TimeSpan RiskRange { get; set; } //maybe not need##
-    void Reset();
-
+    DateTime Clock { get; set; } // Property for the current time or clock
+    TimeSpan RiskRange { get; set; } // Property for the risk range duration
+    void Reset(); // Method to reset the configuration
 }
-
