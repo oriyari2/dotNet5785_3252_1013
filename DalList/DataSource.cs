@@ -1,6 +1,6 @@
 ﻿namespace Dal;
 
-internal static class DataSource // Static class serving as a data source
+internal static class DataSource // Static class serving as a data source.
 {
     internal static List<DO.Assignment> Assignments { get; } = new(); // Static list to store Assignment objects
 
