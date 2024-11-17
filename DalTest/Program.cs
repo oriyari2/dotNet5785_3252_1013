@@ -566,7 +566,7 @@ namespace DalTest
                 {
                     Console.WriteLine(ex); // Display error details.
                 }
-            } while (choose != ChooseMain.exit); // Repeat until 'exit' is chosen.
+            } while (choose != ChooseMain.exit); // Repeat until 'exit' is chosen
         }
     }
 }
