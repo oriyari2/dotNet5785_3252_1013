@@ -6,6 +6,9 @@ using DO;
 using System;
 using System.Data;
 
+/// <summary>
+/// Class responsible for initializing the data in the system, including calls, volunteers, and assignments.
+/// </summary>
 public static class Initialization
 {
     private static IAssignment? s_dalAssignment; //stage 1
@@ -14,53 +17,97 @@ public static class Initialization
     private static IConfig? s_dalConfig; //stage 1
     private static readonly Random s_rand = new();
 
+    /// <summary>
+    ///  Retrieve all existing calls and volunteers- I got help from gpt in this specific method, I sent 
+    ///  him the func I wrote that had a problem with expired calls and he held[ed me fix it
+    /// </summary>
     private static void createAssignment()
     {
-        // Generate diverse assignments as per the requirements
-        var allCalls = s_dalCall!.ReadAll(); // Retrieve all calls
-        var allVolunteers = s_dalVolunteer!.ReadAll(); // Retrieve all volunteers
+        var allCalls = s_dalCall.ReadAll();
+        var allVolunteers = s_dalVolunteer.ReadAll();
+
+        // Remove the last two volunteers from the list
+        var availableVolunteers = allVolunteers.Take(allVolunteers.Count - 2).ToList();
+
+        // Assignments to be created
         int numAssignments = 50;
 
+        // Track assigned calls to ensure each call appears in only one assignment
+        var assignedCalls = new HashSet<int>();
+
+        // Get the current system time
+        DateTime currentTime = DateTime.Now;
+
+        // Generate a diversity of assignments
         for (int i = 0; i < numAssignments; i++)
         {
-            int callIndex = s_rand.Next(0, allCalls.Count); // Randomly select an existing call
-            var selectedCall = allCalls[callIndex];
+            // Select a random call that has not been assigned yet
+            var availableCalls = allCalls.Where(c => !assignedCalls.Contains(c.Id)).ToList();
+            if (availableCalls.Count == 0) break; // Stop if no unassigned calls are left
 
-            int volunteerIndex = s_rand.Next(0, allVolunteers.Count); // Random volunteer
-            var selectedVolunteer = allVolunteers[volunteerIndex];
+            int callIndex = s_rand.Next(0, availableCalls.Count);
+            var selectedCall = availableCalls[callIndex];
 
-            DateTime treatmentStartTime = selectedCall.OpeningTime.AddHours(s_rand.Next(1, 72)); // Entry time after call start
+            // Select a random volunteer from the reduced list
+            int volunteerIndex = s_rand.Next(0, availableVolunteers.Count);
+            var selectedVolunteer = availableVolunteers[volunteerIndex];
+
+            // Ensure treatment start time is within valid range
+            DateTime treatmentStartTime = selectedCall.OpeningTime.AddHours(s_rand.Next(1, 72));
+            if (selectedCall.MaxTimeToEnd.HasValue)
+            {
+                treatmentStartTime = treatmentStartTime < selectedCall.MaxTimeToEnd.Value
+                    ? treatmentStartTime
+                    : selectedCall.MaxTimeToEnd.Value.AddMinutes(-10); // Adjust if necessary
+            }
             DateTime? treatmentEndTime = null;
             EndType status;
 
-            // Randomly decide on assignment status
-            if (i % 10 == 0) // Case for expired, unassigned calls
+            // Decide assignment status based on diverse scenarios
+            if (i % 10 == 0) // Expired call, no treatment
             {
                 status = EndType.expired;
                 treatmentEndTime = selectedCall.MaxTimeToEnd.HasValue
-                    ? selectedCall.MaxTimeToEnd.Value.AddHours(s_rand.Next(1, 48))
-                    : (DateTime?)null;
+                    ? selectedCall.MaxTimeToEnd.Value.AddHours(-s_rand.Next(1, 48)) // Ensure end time is before MaxTimeToEnd
+                    : currentTime.AddHours(-s_rand.Next(1, 48)); // Ensure end time is in the past
+                if (treatmentEndTime >= currentTime)
+                {
+                    treatmentEndTime = currentTime.AddHours(-s_rand.Next(1, 48)); // Force it into the past
+                }
             }
-            else if (i % 3 == 0) // Some calls are still in treatment
+            else if (i % 3 == 0) // Call in treatment
             {
                 status = EndType.treated;
             }
-            else if (i % 2 == 0) // Some calls were treated and completed
+            else if (i % 2 == 0) // Completed by manager
             {
                 status = EndType.manager;
-                treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24)); // End time before expiration
+                treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24));
+                if (selectedCall.MaxTimeToEnd.HasValue)
+                {
+                    treatmentEndTime = treatmentEndTime <= selectedCall.MaxTimeToEnd.Value
+                        ? treatmentEndTime
+                        : selectedCall.MaxTimeToEnd.Value.AddHours(-1); // Ensure within valid range
+                }
             }
-            else // Some calls cancelled by volunteer
+            else // Self-cancellation
             {
                 status = EndType.self;
-                treatmentEndTime = selectedCall.MaxTimeToEnd; // Expired end time
+                treatmentEndTime = selectedCall.MaxTimeToEnd;
             }
 
-            s_dalAssignment!.Create(new Assignment(0, selectedCall.Id, selectedVolunteer.Id,
+            // Add the call to the assigned set
+            assignedCalls.Add(selectedCall.Id);
+
+            // Create the assignment
+            s_dalAssignment.Create(new Assignment(0, selectedCall.Id, selectedVolunteer.Id,
                                                    treatmentStartTime, treatmentEndTime, status));
         }
     }
 
+    /// <summary>
+    /// Creates calls in the system with realistic data such as descriptions, locations, and time ranges.
+    /// </summary>
     private static void createCall()
     {
         string[] Calldescription =
@@ -175,6 +222,9 @@ public static class Initialization
         }
     }
 
+    /// <summary>
+    /// Creates volunteers in the system with realistic attributes such as names, addresses, and roles.
+    /// </summary>
     private static void createVolunteer()
     {
         string[] VolNames ={ "Dani Levy", "Eli Amar", "Yair Cohen", "Ariela Levin",
@@ -218,7 +268,15 @@ public static class Initialization
         }
     }
 
-
+    /// <summary>
+    /// Initializes the system by resetting configuration values, deleting existing data,
+    /// and populating the database with sample volunteers, calls, and assignments.
+    /// </summary>
+    /// <param name="dalCall">The data access layer for call operations.</param>
+    /// <param name="dalAssignment">The data access layer for assignment operations.</param>
+    /// <param name="dalVolunteer">The data access layer for volunteer operations.</param>
+    /// <param name="dalConfig">The data access layer for configuration settings.</param>
+    /// <exception cref="NullReferenceException">Thrown if any of the provided DAL objects is null.</exception>
     public static void Do(ICall? dalCall, IAssignment? dalAssignment, IVolunteer? dalVolunteer, IConfig? dalConfig) //stage 1
     {
         s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the configuration data access layer (DAL)
