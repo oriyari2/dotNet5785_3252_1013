@@ -7,157 +7,163 @@ using System.Data.Common;
 
 namespace DalTest
 {
+    /// <summary>
+    /// Main program class for managing volunteers, calls, assignments, and configurations.
+    /// Provides a menu-based interface to interact with the data access layers (DALs).
+    /// </summary>
     internal class Program
     {
-        private static IVolunteer? s_dalVolunteer = new VolunteerImplementation(); // Initialize the IVolunteer data access layer (DAL) with a VolunteerImplementation instance.
-        private static ICall? s_dalCall = new CallImplementation(); // Initialize the ICall data access layer (DAL) with a CallImplementation instance.
-        private static IAssignment? s_dalAssignment = new AssignmentImplementation(); // Initialize the IAssignment data access layer (DAL) with an AssignmentImplementation instance.
-        private static IConfig? s_dalConfig = new ConfigImplementation(); // Initialize the IConfig data access layer (DAL) with a ConfigImplementation instance.
-        private enum ChooseMain { exit, volunteer, call, assignment, initialization, print, config, reset }; // Enum to define the main menu options.
-        private enum SubMenu { exit, create, read, readAll, update, delete, deleteAll } // Enum to define the sub-menu options for CRUD operations.
-        private enum ConfigMenu // Enum to define configuration menu options.
+        // Fields for data access layers (DALs) for managing different entities.
+        private static IVolunteer? s_dalVolunteer = new VolunteerImplementation();
+        private static ICall? s_dalCall = new CallImplementation();
+        private static IAssignment? s_dalAssignment = new AssignmentImplementation();
+        private static IConfig? s_dalConfig = new ConfigImplementation();
+
+        // Enums for main menu and sub-menu options.
+        private enum ChooseMain { exit, volunteer, call, assignment, initialization, print, config, reset };
+        private enum SubMenu { exit, create, read, readAll, update, delete, deleteAll }
+        private enum ConfigMenu
         {
             exit, plusMinute, plusHour, plusDay, plusYear, plusMonth, getClock,
             getRiskRange, setRiskRange, reset
         }
 
-        private static ConfigMenu configInputChoose() // Method to handle user input for configuration menu options.
+        /// <summary>
+        /// Prompts the user to select a configuration menu option and validates the input.
+        /// </summary>
+        /// <returns>Selected <see cref="ConfigMenu"/> option.</returns>
+        private static ConfigMenu configInputChoose()
         {
             ConfigMenu choose;
-            Console.WriteLine("Please enter one of the following options:exit, plusMinute, plusHour," + // Prompt user for input in configuration menu.
+            Console.WriteLine("Please enter one of the following options:exit, plusMinute, plusHour," +
                 "plusDay, plusMonth, plusYear,\ngetClock, getRiskRange, setRiskRange, reset ");
-            while (!Enum.TryParse(Console.ReadLine(), out choose)) ; // Validate input and parse it to the corresponding ConfigMenu enum.
-            return choose; // Return the valid menu choice.
+            while (!Enum.TryParse(Console.ReadLine(), out choose)) ;
+            return choose;
         }
 
-        /*
-         The function will return what action the user wants to perform on the entity.
-        */
-        private static SubMenu inputChoose() // Method to handle user input for the sub-menu options.
+        /// <summary>
+        /// Prompts the user to select a sub-menu option for CRUD operations and validates the input.
+        /// </summary>
+        /// <returns>Selected <see cref="SubMenu"/> option.</returns>
+        private static SubMenu inputChoose()
         {
             SubMenu choose;
-            Console.WriteLine("Please enter one of the following options:exit, create, read," + // Prompt user for input in sub-menu for CRUD actions.
+            Console.WriteLine("Please enter one of the following options:exit, create, read," +
                 " readAll, update, delete, deleteAll");
-            while (!Enum.TryParse(Console.ReadLine(), out choose)) ; // Validate input and parse it to the corresponding SubMenu enum.
-            return choose; // Return the valid sub-menu choice.
+            while (!Enum.TryParse(Console.ReadLine(), out choose)) ;
+            return choose;
         }
 
-        private static void setRiskRange() // Method to set the risk range configuration.
+        /// <summary>
+        /// Prompts the user to input a risk range in the format of a <see cref="TimeSpan"/> and sets it.
+        /// </summary>
+        private static void setRiskRange()
         {
-            TimeSpan riskRange; // Variable to store the parsed risk range.
-            Console.WriteLine("please enter risk range (in format of dd.hh:mm:ss)"); // Prompt user for input in TimeSpan format.
-            while (!TimeSpan.TryParse(Console.ReadLine(), out riskRange)) // Validate input and parse it as a TimeSpan.
-                Console.WriteLine("Invalid input. Please enter a valid risk range (in format of dd.hh:mm:ss):"); // Prompt user again if input is invalid.
-            s_dalConfig.RiskRange = riskRange; // Set the valid risk range to the configuration object.
+            TimeSpan riskRange;
+            Console.WriteLine("Please enter risk range (in format of dd.hh:mm:ss)");
+            while (!TimeSpan.TryParse(Console.ReadLine(), out riskRange))
+                Console.WriteLine("Invalid input. Please enter a valid risk range (in format of dd.hh:mm:ss):");
+            s_dalConfig.RiskRange = riskRange;
         }
 
-        //volunteer function
-        /*
-         creates new volunteer
-        */  
+        /// <summary>
+        /// Creates a new <see cref="Volunteer"/> object by prompting the user for required and optional details.
+        /// </summary>
+        /// <returns>Newly created <see cref="Volunteer"/> object.</returns>
         private static Volunteer volunteerCreate()
         {
-            // Prompt for ID input
             Console.WriteLine("Enter ID (integer):");
             int id;
-            // Read user input and try to convert it to an integer. If invalid, ask again.
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid integer ID:");
 
-            // Prompt for Name input
             Console.WriteLine("Enter Name:");
             string name = Console.ReadLine() ?? "";
 
-            // Prompt for Phone Number input
             Console.WriteLine("Enter Phone Number:");
             string phoneNumber = Console.ReadLine() ?? "";
 
-            // Prompt for Email input
             Console.WriteLine("Enter Email:");
             string email = Console.ReadLine() ?? "";
 
-            // Prompt for optional Password input
             Console.WriteLine("Enter Password (optional):");
             string? password = Console.ReadLine();
 
-            // Prompt for optional Address input
             Console.WriteLine("Enter Address (optional):");
             string? address = Console.ReadLine();
 
-            // Prompt for optional Latitude input, and try parsing it as a double
             Console.WriteLine("Enter Latitude (optional, decimal):");
             double? latitude = double.TryParse(Console.ReadLine(), out double lat) ? lat : null;
 
-            // Prompt for optional Longitude input, and try parsing it as a double
             Console.WriteLine("Enter Longitude (optional, decimal):");
             double? longitude = double.TryParse(Console.ReadLine(), out double lon) ? lon : null;
 
-            // Prompt for Role Type input and validate it by trying to parse it as an Enum
             Console.WriteLine("Enter Role Type (manager, volunteer):");
             RoleType role;
             while (!Enum.TryParse(Console.ReadLine(), out role))
                 Console.WriteLine("Invalid role type. Please enter a valid role type:");
 
-            // Prompt for Active status (true/false) input and validate it
             Console.WriteLine("Is the Volunteer Active? (true/false):");
             bool active;
             while (!bool.TryParse(Console.ReadLine(), out active))
                 Console.WriteLine("Invalid input. Please enter true or false:");
 
-            // Prompt for optional Max Distance input, and try parsing it as a double
             Console.WriteLine("Enter Max Distance (optional, decimal):");
             double? maxDistance = double.TryParse(Console.ReadLine(), out double tempMaxDistance) ? tempMaxDistance : null;
 
-            // Prompt for Distance Type input and validate it by trying to parse it as an Enum
             Console.WriteLine("Enter Distance Type (air, walking, driving):");
             DistanceType theDistanceType;
             while (!Enum.TryParse(Console.ReadLine(), out theDistanceType))
                 Console.WriteLine("Invalid distance type. Please enter a valid distance type:");
 
-            // Create and return a new Volunteer object with all the gathered data
-            Volunteer vol = new Volunteer(id, name, phoneNumber, email, password, address, latitude, longitude, role, active, maxDistance, theDistanceType);
-            return vol;
-
+            return new Volunteer(id, name, phoneNumber, email, password, address, latitude, longitude, role, active, maxDistance, theDistanceType);
         }
 
-        /*
-        A method that Chat GPT wrote. We sent him to implement the read method with the implementation
-        of read in the IVolunteer class.
-        */
+        /// <summary>
+        /// Reads a volunteer's details by their ID and displays the information.
+        /// </summary>
+        /// <returns>The ID of the volunteer, if found.</returns>
         private static int volunteerRead()
         {
-            Console.WriteLine("Enter volunteer ID:");  // Prompt the user to enter the volunteer ID
-            int id;  // Declare a variable to hold the volunteer ID
-            while (!int.TryParse(Console.ReadLine(), out id))  // Check if the input is a valid integer
-                Console.WriteLine("Invalid input. Please enter a valid ID:");  // Prompt again if the input is invalid
+            Console.WriteLine("Enter volunteer ID:");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+                Console.WriteLine("Invalid input. Please enter a valid ID:");
 
-            Volunteer? volunteer = s_dalVolunteer?.Read(id);  // Try to read the volunteer with the provided ID
+            Volunteer? volunteer = s_dalVolunteer?.Read(id);
 
-            if (volunteer != null)  // If a volunteer is found, display their information
+            if (volunteer != null)
                 Console.WriteLine(volunteer);
-            else  // If no volunteer is found, inform the user
+            else
                 Console.WriteLine("Volunteer not found.");
             return id;
         }
 
+        /// <summary>
+        /// Reads and displays details of all volunteers.
+        /// </summary>
         private static void volunteerReadAll()
         {
-            var listVolunteer = s_dalVolunteer.ReadAll();  // Get all volunteers from the data source
-            foreach (Volunteer vol in listVolunteer)  // Iterate through each volunteer in the list
-                Console.WriteLine(vol);  // Print each volunteer's information
+            var listVolunteer = s_dalVolunteer.ReadAll();
+            foreach (Volunteer vol in listVolunteer)
+                Console.WriteLine(vol);
         }
 
-
+        /// <summary>
+        /// Deletes a volunteer record based on their ID.
+        /// </summary>
         private static void volunteerDelete()
         {
-            Console.WriteLine("Enter volunteer ID:");  // Prompt the user to enter the volunteer ID
-            int id;  // Declare an integer variable to store the volunteer ID
-            while (!int.TryParse(Console.ReadLine(), out id))  // Check if the input can be parsed into an integer
-                Console.WriteLine("Invalid input. Please enter a valid ID:");  // Prompt the user to enter a valid ID if parsing fails
-            s_dalVolunteer?.Delete(id);  // Call the Delete method on the volunteer data access layer to remove the volunteer with the specified ID
-
+            Console.WriteLine("Enter volunteer ID:");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+                Console.WriteLine("Invalid input. Please enter a valid ID:");
+            s_dalVolunteer?.Delete(id);
         }
 
+        /// <summary>
+        /// Updates an existing volunteer's details after fetching their current record by ID.
+        /// </summary>
         private static void volunteerUpdate()
         {
             int id = volunteerRead();
@@ -165,52 +171,49 @@ namespace DalTest
                 s_dalVolunteer?.Update(volunteerCreate());
         }
 
-        //call function
-        private static Call callCreate(int id=0)
+        /// <summary>
+        /// Creates a new <see cref="Call"/> object by prompting the user for details.
+        /// </summary>
+        /// <param name="id">Optional call ID for updating an existing record.</param>
+        /// <returns>Newly created <see cref="Call"/> object.</returns>
+        private static Call callCreate(int id = 0)
         {
-            // Prompting the user to enter the call type
             Console.WriteLine("Enter Call type (Transportation, Babysitting, Shopping, food, Cleaning):");
-            CallType callType; // Declaring a variable to hold the call type
-            while (!CallType.TryParse(Console.ReadLine(), out callType)) // Validating the input to ensure it's a valid CallType enumeration
-                Console.WriteLine("Invalid input. Please enter a valid call type:"); // Informing the user about the invalid input
-            
+            CallType callType;
+            while (!CallType.TryParse(Console.ReadLine(), out callType))
+                Console.WriteLine("Invalid input. Please enter a valid call type:");
 
-            // Prompting for the description of the call
             Console.WriteLine("Enter description of the call:");
-            string VerbalDescription = Console.ReadLine() ?? ""; // Storing the call description, using an empty string if null
+            string VerbalDescription = Console.ReadLine() ?? "";
 
-            // Prompting for the address
             Console.WriteLine("Enter Address:");
-            string Address = Console.ReadLine() ?? ""; // Storing the address, using an empty string if null
+            string Address = Console.ReadLine() ?? "";
 
-            // Prompting for the latitude (optional)
             Console.WriteLine("Enter Latitude (decimal):");
-            double latitude; // Declaring a variable for the latitude
-            while (!double.TryParse(Console.ReadLine(), out latitude))// Validating if the latitude is a valid decimal number
-                Console.WriteLine("Invalid input. Please enter a valid latitude:"); // Asking for valid latitude input
-            
+            double latitude;
+            while (!double.TryParse(Console.ReadLine(), out latitude))
+                Console.WriteLine("Invalid input. Please enter a valid latitude:");
 
-            // Prompting for the longitude (optional)
             Console.WriteLine("Enter Longitude (decimal):");
-            double longitude; // Declaring a variable for the longitude
-            while (!double.TryParse(Console.ReadLine(), out longitude))// Validating if the longitude is a valid decimal number
-                Console.WriteLine("Invalid input. Please enter a valid longitude:"); // Asking for valid longitude input
+            double longitude;
+            while (!double.TryParse(Console.ReadLine(), out longitude))
+                Console.WriteLine("Invalid input. Please enter a valid longitude:");
 
-            // Creating the call object with the provided details
-            Call call = new Call(id, callType, VerbalDescription, Address, latitude, longitude, DateTime.Now, null);
-
-            // Returning the created call object
-            return call;
-
+            return new Call(id, callType, VerbalDescription, Address, latitude, longitude, DateTime.Now, null);
         }
 
+
+        /// <summary>
+        /// Reads a call ID from the user and retrieves the corresponding call.
+        /// </summary>
+        /// <returns>The ID of the call entered by the user.</returns>
         private static int callRead()
         {
             Console.WriteLine("Enter call ID:");
             int id;
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid ID:");
-            
+
             Call? call = s_dalCall?.Read(id);
 
             if (call != null)
@@ -220,6 +223,9 @@ namespace DalTest
             return id;
         }
 
+        /// <summary>
+        /// Reads and displays all calls from the database.
+        /// </summary>
         private static void callReadAll()
         {
             var listCall = s_dalCall.ReadAll(); // Call the function that retrieves all records
@@ -228,95 +234,118 @@ namespace DalTest
                 Console.WriteLine(call); // Print the details of each call to the screen
         }
 
+        /// <summary>
+        /// Deletes a call from the database based on user input.
+        /// </summary>
         private static void callDelete()
         {
             Console.WriteLine("Enter call ID:"); // Prompt the user to enter a call ID
             int id; // Declare an integer variable to store the call ID
             while (!int.TryParse(Console.ReadLine(), out id)) // Check if the input can be parsed into an integer
                 Console.WriteLine("Invalid input. Please enter a valid ID:"); // Inform the user of invalid input
-            
+
             s_dalCall?.Delete(id); // Call the Delete method on the data access layer (DAL) with the parsed ID
         }
 
+        /// <summary>
+        /// Updates an existing call's details.
+        /// </summary>
         private static void callUpdate()
         {
-            // Prompting the user to enter the call id need to update
             Console.WriteLine("Enter Call id (integer):");
-            int callId; // Declaring a variable to hold the call id
-                                                
-            while (!int.TryParse(Console.ReadLine(), out callId)) // Validating the input to ensure it's a valid CallType enumeration
-                Console.WriteLine("Invalid input. Please enter a valid call id:"); // Informing the user about the invalid input
+            int callId;
+
+            while (!int.TryParse(Console.ReadLine(), out callId))
+                Console.WriteLine("Invalid input. Please enter a valid call id:");
+
             Call call = callCreate(callId); // Create or modify a call object.
             Console.WriteLine(s_dalCall?.Read(call.Id)); // Display current details.
             s_dalCall?.Update(call); // Update details in the database.
-
         }
+
+        /// <summary>
+        /// Updates an existing assignment's details.
+        /// </summary>
         private static void assignmentUpdate()
         {
-            // Prompting the user to enter the Assignment id need to update
             Console.WriteLine("Enter Assignment id (integer):");
-            int assignmentId; // Declaring a variable to hold the call id
-            while (!int.TryParse(Console.ReadLine(), out assignmentId))// Validating the input to ensure it's a valid assignmentId 
-                Console.WriteLine("Invalid input. Please enter a valid call id:"); // Informing the user about the invalid input
-            
+            int assignmentId;
+
+            while (!int.TryParse(Console.ReadLine(), out assignmentId))
+                Console.WriteLine("Invalid input. Please enter a valid call id:");
+
             Assignment assignment = assignmentCreate(assignmentId); // Create or modify a call object.
             Console.WriteLine(s_dalAssignment?.Read(assignment.Id)); // Display current details.
             s_dalAssignment?.Update(assignment); // Update details in the database.
-
         }
 
-        //assignment function
-
-        private static Assignment assignmentCreate(int id=0)
+        /// <summary>
+        /// Creates a new assignment with user-provided data.
+        /// </summary>
+        /// <param name="id">Optional assignment ID (default is 0).</param>
+        /// <returns>A new Assignment object.</returns>
+        private static Assignment assignmentCreate(int id = 0)
         {
-            Console.WriteLine("Enter Call ID (integer):");  // Prompt the user to enter a Call ID as an integer
-            int CallId;  // Declare a variable to store the Call ID
-            while (!int.TryParse(Console.ReadLine(), out CallId))  // Try to convert the input to an integer
-                Console.WriteLine("Invalid input. Please enter a valid integer ID:");  // If conversion fails, ask for a valid input
+            Console.WriteLine("Enter Call ID (integer):");
+            int CallId;
+            while (!int.TryParse(Console.ReadLine(), out CallId))
+                Console.WriteLine("Invalid input. Please enter a valid integer ID:");
 
-            Console.WriteLine("Enter Volunteer ID (integer):");  // Prompt the user to enter a Volunteer ID as an integer
-            int VolunteerId;  // Declare a variable to store the Volunteer ID
-            while (!int.TryParse(Console.ReadLine(), out VolunteerId))  // Try to convert the input to an integer
-                Console.WriteLine("Invalid input. Please enter a valid integer ID:");  // If conversion fails, ask for a valid input
-           
-            Assignment assignment = new Assignment(id, CallId, VolunteerId, DateTime.Now, null, null);  // Create a new Assignment object with the provided data
-            return assignment;  // Return the created assignment object
+            Console.WriteLine("Enter Volunteer ID (integer):");
+            int VolunteerId;
+            while (!int.TryParse(Console.ReadLine(), out VolunteerId))
+                Console.WriteLine("Invalid input. Please enter a valid integer ID:");
 
+            Assignment assignment = new Assignment(id, CallId, VolunteerId, DateTime.Now, null, null);
+            return assignment;
         }
 
+        /// <summary>
+        /// Reads and displays a specific assignment based on user input.
+        /// </summary>
         private static void assignmentRead()
         {
-            Console.WriteLine("Enter assignment ID:"); // Prompt the user to input an assignment ID.
-            int id; // Declare a variable to store the assignment ID.
-            while (!int.TryParse(Console.ReadLine(), out id)) // Validate the input and repeat until a valid integer is entered.
-                Console.WriteLine("Invalid input. Please enter a valid ID:"); // Notify the user of invalid input.
+            Console.WriteLine("Enter assignment ID:");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+                Console.WriteLine("Invalid input. Please enter a valid ID:");
 
-            Assignment? assignment = s_dalAssignment?.Read(id); // Attempt to fetch the assignment using the given ID.
+            Assignment? assignment = s_dalAssignment?.Read(id);
 
-            if (assignment != null) // Check if the assignment exists.
-                Console.WriteLine(assignment); // Print the assignment details if found.
+            if (assignment != null)
+                Console.WriteLine(assignment);
             else
-                Console.WriteLine("Assignment not found."); // Inform the user if the assignment does not exist.
-
+                Console.WriteLine("Assignment not found.");
         }
 
+        /// <summary>
+        /// Reads and displays all assignments from the database.
+        /// </summary>
         private static void assignmentReadAll()
         {
-            var listAssignment = s_dalAssignment.ReadAll(); // Retrieve a list of all assignments from the data access layer.
+            var listAssignment = s_dalAssignment.ReadAll();
 
-            foreach (Assignment assignment in listAssignment) // Loop through each assignment in the list.
-                Console.WriteLine(assignment); // Print the details of each assignment.
+            foreach (Assignment assignment in listAssignment)
+                Console.WriteLine(assignment);
         }
 
+        /// <summary>
+        /// Deletes a specific assignment based on user input.
+        /// </summary>
         private static void assignmentDelete()
         {
-            Console.WriteLine("Enter assignment ID:"); // Prompt the user to input an assignment ID for deletion.
-            int id; // Declare a variable to store the assignment ID.
-            while (!int.TryParse(Console.ReadLine(), out id)) // Validate the input and repeat until a valid integer is entered.
-                Console.WriteLine("Invalid input. Please enter a valid ID:"); // Notify the user of invalid input.
-            s_dalAssignment?.Delete(id); // Attempt to delete the assignment with the specified ID from the data access layer.
+            Console.WriteLine("Enter assignment ID:");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+                Console.WriteLine("Invalid input. Please enter a valid ID:");
 
+            s_dalAssignment?.Delete(id);
         }
+
+        /// <summary>
+        /// Main entry point of the application, provides a menu for various operations.
+        /// </summary>
+        /// <param name="args">Command-line arguments.</param>
 
         static void Main(string[] args)
         {

@@ -1,4 +1,4 @@
-﻿namespace DO; // Namespace for data objects
+﻿namespace DO; // Namespace for data objects.
 public enum RoleType { manager, volunteer }; // Defines user roles in the system
 
 public enum DistanceType { air, walking, driving }; // Defines types of distances 

@@ -1,6 +1,9 @@
 ﻿namespace DalApi;
 using DO;
 
+/// <summary>
+/// Interface defining the operations for managing assignment data in the data access layer (DAL).
+/// </summary>
 public interface IAssignment
 {
     void Create(Assignment item); //Creates new entity object in DAL
