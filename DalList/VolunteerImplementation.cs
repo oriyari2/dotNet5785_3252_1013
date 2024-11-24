@@ -5,7 +5,7 @@ namespace Dal;
 /// <summary>
 /// Implementation of the IVolunteer interface, handling CRUD operations for Volunteer entities.
 /// </summary>
-public class VolunteerImplementation : IVolunteer
+internal class VolunteerImplementation : IVolunteer
 {
     /// <summary>
     /// Adds a new Volunteer entity to the data source.
@@ -17,7 +17,7 @@ public class VolunteerImplementation : IVolunteer
         if (Read(item.Id) == null) // Check if a Volunteer with the same ID already exists
             DataSource.Volunteers.Add(item);   // Add the new Volunteer to the data source
         else // Throw an exception if a Volunteer with the same ID is found
-            throw new Exception($"Volunteer with ID={item.Id} already exists");
+            throw new DalAlreadyExistsException($"Volunteer with ID={item.Id} already exists");
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class VolunteerImplementation : IVolunteer
         }
         else
         {
-            throw new Exception($"Object with Id {id} not found."); // Throw an exception if the Volunteer is not found
+            throw new DalDoesNotExistException($"Object with Id {id} not found."); // Throw an exception if the Volunteer is not found
         }
     }
 

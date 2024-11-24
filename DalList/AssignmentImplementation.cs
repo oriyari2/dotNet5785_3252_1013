@@ -5,7 +5,7 @@ using DO;
 /// <summary>
 /// Implementation of the IAssignment interface for managing Assignment entities in the data source.
 /// </summary>
-public class AssignmentImplementation : IAssignment
+internal class AssignmentImplementation : IAssignment
 {
     /// <summary>
     /// Creates a new Assignment entity and adds it to the data source.
@@ -33,7 +33,7 @@ public class AssignmentImplementation : IAssignment
         }
         else
         {
-            throw new Exception($"Object with Id {id} not found."); // Entity not found, throw exception
+            throw new DalDoesNotExistException($"Object with Id {id} not found."); // Entity not found, throw exception
         }
     }
 

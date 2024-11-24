@@ -11,20 +11,17 @@ using System.Data;
 /// </summary>
 public static class Initialization
 {
-    private static IAssignment? s_dalAssignment; //stage 1
-    private static ICall? s_dalCall; //stage 1
-    private static IVolunteer? s_dalVolunteer; //stage 1
-    private static IConfig? s_dalConfig; //stage 1
+    private static IDal? s_dal; //stage 2
     private static readonly Random s_rand = new();
 
     /// <summary>
     ///  Retrieve all existing calls and volunteers- I got help from gpt in this specific method, I sent 
-    ///  him the func I wrote that had a problem with expired calls and he held[ed me fix it
+    ///  him the func I wrote that had a problem with expired calls and he helped me fix it
     /// </summary>
     private static void createAssignment()
     {
-        var allCalls = s_dalCall.ReadAll();
-        var allVolunteers = s_dalVolunteer.ReadAll();
+        var allCalls = s_dal!.Call.ReadAll();
+        var allVolunteers = s_dal!.Volunteer.ReadAll();
 
         // Remove the last two volunteers from the list
         var availableVolunteers = allVolunteers.Take(allVolunteers.Count - 2).ToList();
@@ -100,7 +97,7 @@ public static class Initialization
             assignedCalls.Add(selectedCall.Id);
 
             // Create the assignment
-            s_dalAssignment.Create(new Assignment(0, selectedCall.Id, selectedVolunteer.Id,
+            s_dal!.Assignment.Create(new Assignment(0, selectedCall.Id, selectedVolunteer.Id,
                                                    treatmentStartTime, treatmentEndTime, status));
         }
     }
@@ -186,8 +183,8 @@ public static class Initialization
             double latitude = CallLatitudes[i]; // Get latitude from the list
             string? description = ""; // Initialize description as an empty string
             CallType callType = CallType.food; // Default call type is food
-            DateTime start = new DateTime(s_dalConfig.Clock.Year - 1, i % 12 + 1, i % 28 + 1); // Set call start date to one year before the current year
-            DateTime end = new DateTime(s_dalConfig.Clock.Year + 1, i % 12 + 1, i % 28 + 1); // Set call end date to one year after the current year
+            DateTime start = new DateTime(s_dal!.Config.Clock.Year - 1, i % 12 + 1, i % 28 + 1); // Set call start date to one year before the current year
+            DateTime end = new DateTime(s_dal!.Config.Clock.Year + 1, i % 12 + 1, i % 28 + 1); // Set call end date to one year after the current year
             if (i % 10 == 0) // If the current index is divisible by 10
             {
                 end = start; // Set the end date to the same as the start date (expired)
@@ -218,7 +215,7 @@ public static class Initialization
                 description = Calldescription[2]; // Set description from the array
             }
 
-            s_dalCall.Create(new(0, callType, description, address, latitude, longitude, start, end)); // Create a new call entry in the database
+            s_dal!.Call.Create(new(0, callType, description, address, latitude, longitude, start, end)); // Create a new call entry in the database
         }
     }
 
@@ -252,7 +249,7 @@ public static class Initialization
             int VolId;
             do
                 VolId = s_rand.Next(200000000, 400000000);
-            while (s_dalVolunteer!.Read(VolId) != null); //until find available id
+            while (s_dal!.Volunteer!.Read(VolId) != null); //until find available id
 
             RoleType VulRole = (i == 0) ? RoleType.manager : RoleType.volunteer; //1 manager 15 volunteers
 
@@ -262,7 +259,7 @@ public static class Initialization
 
             double VolMaxDis = s_rand.Next(); //random distance
 
-            s_dalVolunteer!.Create(new(VolId, VolNames[i], VolPhone, VolEmail, null, VolAdresses[i],
+            s_dal!.Volunteer.Create(new(VolId, VolNames[i], VolPhone, VolEmail, null, VolAdresses[i],
             VolLatitudes[i], VolLongitudes[i], VulRole, true, VolMaxDis, DistanceType.air));
             //add new Volunteer with right details to list
         }
@@ -277,24 +274,20 @@ public static class Initialization
     /// <param name="dalVolunteer">The data access layer for volunteer operations.</param>
     /// <param name="dalConfig">The data access layer for configuration settings.</param>
     /// <exception cref="NullReferenceException">Thrown if any of the provided DAL objects is null.</exception>
-    public static void Do(ICall? dalCall, IAssignment? dalAssignment, IVolunteer? dalVolunteer, IConfig? dalConfig) //stage 1
+    public static void Do(IDal dal) //stage 2
     {
-        s_dalConfig = dalConfig ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the configuration data access layer (DAL)
-        s_dalVolunteer = dalVolunteer ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the volunteer DAL
-        s_dalCall = dalCall as DalApi.ICall ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the call DAL, cast to ICall if possible
-        s_dalAssignment = dalAssignment as DalApi.IAssignment ?? throw new NullReferenceException("DAL object can not be null!"); // Initialize the assignment DAL, cast to IAssignment if possible
 
-        Console.WriteLine("Reset Configuration values and List values..."); // Log message indicating reset start
-        s_dalConfig.Reset(); //stage 1 // Reset configuration values in the DAL
-        dalVolunteer.DeleteAll(); //stage 1 // Delete all volunteer records from the database
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); // stage 2
+
+        Console.WriteLine("Reset Configuration values and List values...");
+
+        s_dal.ResetDB();//stage 2
         Console.WriteLine("Initializing volunteer list ..."); // Log message for volunteer list initialization
         createVolunteer(); // Create and populate the volunteer list
 
-        s_dalCall.DeleteAll(); //stage 1 // Delete all call records from the database
         Console.WriteLine("Initializing Call list ..."); // Log message for call list initialization
         createCall(); // Create and populate the call list
 
-        s_dalAssignment.DeleteAll(); //stage 1 // Delete all assignment records from the database
         Console.WriteLine("Initializing Assignment list ..."); // Log message for assignment list initialization
         createAssignment(); // Create and populate the assignment list
     }

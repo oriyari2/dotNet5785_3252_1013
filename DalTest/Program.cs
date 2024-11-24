@@ -13,11 +13,7 @@ namespace DalTest
     /// </summary>
     internal class Program
     {
-        // Fields for data access layers (DALs) for managing different entities.
-        private static IVolunteer? s_dalVolunteer = new VolunteerImplementation();
-        private static ICall? s_dalCall = new CallImplementation();
-        private static IAssignment? s_dalAssignment = new AssignmentImplementation();
-        private static IConfig? s_dalConfig = new ConfigImplementation();
+        static readonly IDal s_dal = new Dal.DalList(); //stage 2
 
         // Enums for main menu and sub-menu options.
         private enum ChooseMain { exit, volunteer, call, assignment, initialization, print, config, reset };
@@ -63,7 +59,7 @@ namespace DalTest
             Console.WriteLine("Please enter risk range (in format of dd.hh:mm:ss)");
             while (!TimeSpan.TryParse(Console.ReadLine(), out riskRange))
                 Console.WriteLine("Invalid input. Please enter a valid risk range (in format of dd.hh:mm:ss):");
-            s_dalConfig.RiskRange = riskRange;
+            s_dal!.Config.RiskRange = riskRange;
         }
 
         /// <summary>
@@ -130,7 +126,7 @@ namespace DalTest
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid ID:");
 
-            Volunteer? volunteer = s_dalVolunteer?.Read(id);
+            Volunteer? volunteer = s_dal!.Volunteer.Read(id);
 
             if (volunteer != null)
                 Console.WriteLine(volunteer);
@@ -144,7 +140,7 @@ namespace DalTest
         /// </summary>
         private static void volunteerReadAll()
         {
-            var listVolunteer = s_dalVolunteer.ReadAll();
+            var listVolunteer = s_dal!.Volunteer.ReadAll();
             foreach (Volunteer vol in listVolunteer)
                 Console.WriteLine(vol);
         }
@@ -158,7 +154,7 @@ namespace DalTest
             int id;
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid ID:");
-            s_dalVolunteer?.Delete(id);
+            s_dal!.Volunteer?.Delete(id);
         }
 
         /// <summary>
@@ -168,7 +164,7 @@ namespace DalTest
         {
             int id = volunteerRead();
             if (id != 0)
-                s_dalVolunteer?.Update(volunteerCreate());
+                s_dal!.Volunteer?.Update(volunteerCreate());
         }
 
         /// <summary>
@@ -214,7 +210,7 @@ namespace DalTest
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid ID:");
 
-            Call? call = s_dalCall?.Read(id);
+            Call? call = s_dal!.Call.Read(id);
 
             if (call != null)
                 Console.WriteLine(call);
@@ -228,7 +224,7 @@ namespace DalTest
         /// </summary>
         private static void callReadAll()
         {
-            var listCall = s_dalCall.ReadAll(); // Call the function that retrieves all records
+            var listCall = s_dal!.Call.ReadAll(); // Call the function that retrieves all records
 
             foreach (Call call in listCall) // Loop through each call in the list
                 Console.WriteLine(call); // Print the details of each call to the screen
@@ -244,7 +240,7 @@ namespace DalTest
             while (!int.TryParse(Console.ReadLine(), out id)) // Check if the input can be parsed into an integer
                 Console.WriteLine("Invalid input. Please enter a valid ID:"); // Inform the user of invalid input
 
-            s_dalCall?.Delete(id); // Call the Delete method on the data access layer (DAL) with the parsed ID
+            s_dal!.Call?.Delete(id); // Call the Delete method on the data access layer (DAL) with the parsed ID
         }
 
         /// <summary>
@@ -259,8 +255,8 @@ namespace DalTest
                 Console.WriteLine("Invalid input. Please enter a valid call id:");
 
             Call call = callCreate(callId); // Create or modify a call object.
-            Console.WriteLine(s_dalCall?.Read(call.Id)); // Display current details.
-            s_dalCall?.Update(call); // Update details in the database.
+            Console.WriteLine(s_dal!.Call?.Read(call.Id)); // Display current details.
+            s_dal!.Call?.Update(call); // Update details in the database.
         }
 
         /// <summary>
@@ -275,8 +271,8 @@ namespace DalTest
                 Console.WriteLine("Invalid input. Please enter a valid call id:");
 
             Assignment assignment = assignmentCreate(assignmentId); // Create or modify a call object.
-            Console.WriteLine(s_dalAssignment?.Read(assignment.Id)); // Display current details.
-            s_dalAssignment?.Update(assignment); // Update details in the database.
+            Console.WriteLine(s_dal!.Assignment?.Read(assignment.Id)); // Display current details.
+            s_dal!.Assignment?.Update(assignment); // Update details in the database.
         }
 
         /// <summary>
@@ -310,7 +306,7 @@ namespace DalTest
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid ID:");
 
-            Assignment? assignment = s_dalAssignment?.Read(id);
+            Assignment? assignment = s_dal!.Assignment?.Read(id);
 
             if (assignment != null)
                 Console.WriteLine(assignment);
@@ -323,7 +319,7 @@ namespace DalTest
         /// </summary>
         private static void assignmentReadAll()
         {
-            var listAssignment = s_dalAssignment.ReadAll();
+            var listAssignment = s_dal!.Assignment.ReadAll();
 
             foreach (Assignment assignment in listAssignment)
                 Console.WriteLine(assignment);
@@ -339,7 +335,7 @@ namespace DalTest
             while (!int.TryParse(Console.ReadLine(), out id))
                 Console.WriteLine("Invalid input. Please enter a valid ID:");
 
-            s_dalAssignment?.Delete(id);
+            s_dal!.Assignment?.Delete(id);
         }
 
         /// <summary>
@@ -375,7 +371,7 @@ namespace DalTest
                                         case SubMenu.create: // Create a new volunteer.
                                             {
                                                 Volunteer vol = volunteerCreate(); // Call method to create a volunteer.
-                                                s_dalVolunteer?.Create(vol); // Save volunteer to the database.
+                                                s_dal!.Volunteer?.Create(vol); // Save volunteer to the database.
                                                 break;
                                             }
                                         case SubMenu.read: // Read a volunteer's details.
@@ -391,8 +387,8 @@ namespace DalTest
                                         case SubMenu.update: // Update a volunteer's details.
                                             {
                                                 Volunteer vol = volunteerCreate(); // Create or modify a volunteer object.
-                                                Console.WriteLine(s_dalVolunteer?.Read(vol.Id)); // Display current details.
-                                                s_dalVolunteer?.Update(vol); // Update details in the database.
+                                                Console.WriteLine(s_dal!.Volunteer?.Read(vol.Id)); // Display current details.
+                                                s_dal!.Volunteer?.Update(vol); // Update details in the database.
                                                 break;
                                             }
                                         case SubMenu.delete: // Delete a volunteer.
@@ -402,7 +398,7 @@ namespace DalTest
                                             }
                                         case SubMenu.deleteAll: // Delete all volunteers.
                                             {
-                                                s_dalVolunteer?.DeleteAll(); // Clear all data from the database.
+                                                s_dal!.Volunteer?.DeleteAll(); // Clear all data from the database.
                                                 break;
                                             }
                                         default: // Default case if no valid option is chosen.
@@ -424,7 +420,7 @@ namespace DalTest
                                         case SubMenu.create: // Create a new call.
                                             {
                                                 Call newCall = callCreate(0); // Call method to create a call.
-                                                s_dalCall?.Create(newCall); // Save call to the database.
+                                                s_dal!.Call?.Create(newCall); // Save call to the database.
                                                 break;
                                             }
                                         case SubMenu.read: // Read a call's details.
@@ -449,7 +445,7 @@ namespace DalTest
                                             }
                                         case SubMenu.deleteAll: // Delete all calls.
                                             {
-                                                s_dalCall?.DeleteAll(); // Clear all data from the database.
+                                                s_dal!.Call?.DeleteAll(); // Clear all data from the database.
                                                 break;
                                             }
                                         default: // Default case if no valid option is chosen.
@@ -471,7 +467,7 @@ namespace DalTest
                                         case SubMenu.create: // Create a new assignment.
                                             {
                                                 Assignment assignment = assignmentCreate(0); // Create an assignment object.
-                                                s_dalAssignment?.Create(assignment); // Save assignment to the database.
+                                                s_dal!.Assignment?.Create(assignment); // Save assignment to the database.
                                                 break;
                                             }
                                         case SubMenu.read: // Read an assignment's details.
@@ -496,7 +492,7 @@ namespace DalTest
                                             }
                                         case SubMenu.deleteAll: // Delete all assignments.
                                             {
-                                                s_dalAssignment?.DeleteAll(); // Clear all data from the database.
+                                                s_dal!.Assignment?.DeleteAll(); // Clear all data from the database.
                                                 break;
                                             }
                                         default: // Default case if no valid option is chosen.
@@ -508,7 +504,7 @@ namespace DalTest
                             }
                         case ChooseMain.initialization: // Initialize the system.
                             {
-                                Initialization.Do(s_dalCall, s_dalAssignment, s_dalVolunteer, s_dalConfig); // Perform initialization tasks.
+                                Initialization.Do(s_dal);
                                 break;
                             }
                         case ChooseMain.print: // Print all data.
@@ -529,37 +525,37 @@ namespace DalTest
                                             break;
                                         case ConfigMenu.plusMinute: // Increment the clock by one minute.
                                             {
-                                                s_dalConfig.Clock = s_dalConfig.Clock.AddMinutes(1);
+                                                s_dal!.Config.Clock = s_dal!.Config.Clock.AddMinutes(1);
                                                 break;
                                             }
                                         case ConfigMenu.plusHour: // Increment the clock by one hour.
                                             {
-                                                s_dalConfig.Clock = s_dalConfig.Clock.AddHours(1);
+                                                s_dal!.Config.Clock = s_dal!.Config.Clock.AddHours(1);
                                                 break;
                                             }
                                         case ConfigMenu.plusDay: // Increment the clock by one day.
                                             {
-                                                s_dalConfig.Clock = s_dalConfig.Clock.AddDays(1);
+                                                s_dal!.Config.Clock = s_dal!.Config.Clock.AddDays(1);
                                                 break;
                                             }
                                         case ConfigMenu.plusMonth: // Increment the clock by one month.
                                             {
-                                                s_dalConfig.Clock = s_dalConfig.Clock.AddMonths(1);
+                                                s_dal!.Config.Clock = s_dal!.Config.Clock.AddMonths(1);
                                                 break;
                                             }
                                         case ConfigMenu.plusYear: // Increment the clock by one year.
                                             {
-                                                s_dalConfig.Clock = s_dalConfig.Clock.AddYears(1);
+                                                s_dal!.Config.Clock = s_dal!.Config.Clock.AddYears(1);
                                                 break;
                                             }
                                         case ConfigMenu.getClock: // Display the current clock time.
                                             {
-                                                Console.WriteLine(s_dalConfig?.Clock);
+                                                Console.WriteLine(s_dal!.Config?.Clock);
                                                 break;
                                             }
                                         case ConfigMenu.getRiskRange: // Display the current risk range.
                                             {
-                                                Console.WriteLine(s_dalConfig?.RiskRange);
+                                                Console.WriteLine(s_dal!.Config?.RiskRange);
                                                 break;
                                             }
                                         case ConfigMenu.setRiskRange: // Modify the risk range.
@@ -569,7 +565,7 @@ namespace DalTest
                                             }
                                         case ConfigMenu.reset: // Reset configuration to default values.
                                             {
-                                                s_dalConfig?.Reset();
+                                                s_dal!.Config?.Reset();
                                                 break;
                                             }
                                         default: // Default case if no valid option is chosen.
@@ -581,10 +577,7 @@ namespace DalTest
                             }
                         case ChooseMain.reset: // Reset all data.
                             {
-                                s_dalVolunteer?.DeleteAll(); // Clear volunteer data.
-                                s_dalCall?.DeleteAll(); // Clear call data.
-                                s_dalAssignment?.DeleteAll(); // Clear assignment data.
-                                s_dalConfig?.Reset(); // Reset configuration.
+                                s_dal.ResetDB();
                                 break;
                             }
                         default: // Default case if no valid option is chosen.
