@@ -18,5 +18,13 @@ public class DalAlreadyExistsException : Exception
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
 
-
+/// <summary>
+/// This exception is thrown when the system encounters an error while attempting
+/// to load or create an XML file in the Data Access Layer (DAL). 
+/// </summary>
+[Serializable]
+public class DalXMLFileLoadCreateException : Exception
+{
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
+}
 
