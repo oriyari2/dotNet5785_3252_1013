@@ -20,7 +20,7 @@ internal class AssignmentImplementation : IAssignment
 
     /// <summary>
     /// Deletes an Assignment entity from the data source by its ID.
-    /// Throws an exception if the entity is not found.
+    /// Throws an exception if the entity is not found
     /// </summary>
     /// <param name="id">The ID of the Assignment entity to be deleted.</param>
     public void Delete(int id)
