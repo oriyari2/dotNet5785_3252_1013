@@ -78,8 +78,6 @@ static class XMLTools
 
     #endregion
 
-
-
     #region SaveLoadWithXElement
 
     /// <summary>
@@ -211,8 +209,6 @@ static class XMLTools
     }
 
     #endregion
-
-
 
     #region ExtensionFuctions
 

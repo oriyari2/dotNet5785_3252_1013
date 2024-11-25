@@ -7,3 +7,5 @@ Windows project. Creating a volunteer management system
 $ We add Trypharse bonus -  1 point$
 	We couldn't define the variables inside the loop because we used them later,
 	but we did capture the variable if it was entered incorrectly again inside the loop.
+
+/stage2 final commit/
