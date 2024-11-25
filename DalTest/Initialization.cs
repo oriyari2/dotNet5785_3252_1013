@@ -23,8 +23,9 @@ public static class Initialization
         var allCalls = s_dal!.Call.ReadAll();
         var allVolunteers = s_dal!.Volunteer.ReadAll();
 
-        // Remove the last two volunteers from the list
-        var availableVolunteers = allVolunteers.Take(allVolunteers.Count - 2).ToList();
+        // Remove the first two volunteers from the list
+        
+        var availableVolunteers = (allVolunteers.Skip(2)).ToList();
 
         // Assignments to be created
         int numAssignments = 50;
@@ -46,7 +47,7 @@ public static class Initialization
             var selectedCall = availableCalls[callIndex];
 
             // Select a random volunteer from the reduced list
-            int volunteerIndex = s_rand.Next(0, availableVolunteers.Count);
+            int volunteerIndex = s_rand.Next(0, availableVolunteers.Count());
             var selectedVolunteer = availableVolunteers[volunteerIndex];
 
             // Ensure treatment start time is within valid range

@@ -51,7 +51,7 @@ internal class CallImplementation : ICall
     /// <returns>The Call object if found; otherwise, null.</returns>
     public Call? Read(int id)
     {
-        return DataSource.Calls.Find(obj => obj.Id == id);
+        return DataSource.Calls.FirstOrDefault(obj => obj.Id == id);
         // Use a lambda expression to find the Call with the specified ID in the data source
         // Return the Call object if found, or null if not found
     }
@@ -60,11 +60,14 @@ internal class CallImplementation : ICall
     /// Reads all Call entities from the data source.
     /// </summary>
     /// <returns>A list containing all Call objects in the data source.</returns>
-    public List<Call> ReadAll()
-    {
-        return new List<Call>(DataSource.Calls);
-        // Return a new list containing all Call objects from the data source
-    }
+    public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null) // Defines a function that returns a collection of calls, with an optional custom filter
+    => filter != null // Checks if a filter condition was provided
+           ? from item in DataSource.Calls // If there is a filter, starts a query on the calls collection
+             where filter(item) // Filters the calls based on the function passed as a parameter
+             select item // Returns the calls that meet the filter condition
+           : from item in DataSource.Calls // If no filter is provided, starts a query on the entire calls collection
+             select item; // Returns all calls from the source (DataSource)
+
 
     /// <summary>
     /// Updates an existing Call entity in the data source.
@@ -76,4 +79,15 @@ internal class CallImplementation : ICall
         Delete(item.Id); // Delete the existing Call object by its ID; throws an exception if not found
         Create(item); // Add the updated Call object to the data source
     }
+
+    /// <summary>
+    /// Retrieves a Call entity from the data source that matches the given filter.
+    /// </summary>
+    /// <param name="filter">A predicate function to filter the Call objects.</param>
+    /// <returns>The first matching Call object, or null if no match is found.</returns>
+    public Call? Read(Func<Call, bool> filter)
+    {
+        return DataSource.Calls.FirstOrDefault(filter); // Searches for the first Call that matches the filter
+    }
+
 }

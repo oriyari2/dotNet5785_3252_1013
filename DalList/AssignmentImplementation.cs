@@ -53,7 +53,7 @@ internal class AssignmentImplementation : IAssignment
     /// <returns>The Assignment entity with the specified ID, or null if not found.</returns>
     public Assignment? Read(int id)
     {
-        return DataSource.Assignments.Find(obj => obj.Id == id);
+        return DataSource.Assignments.FirstOrDefault(obj => obj.Id == id);
         // Use a lambda function to search for the entity by ID and return it, or null if not found
     }
 
@@ -62,11 +62,15 @@ internal class AssignmentImplementation : IAssignment
     /// Returns a copy of the data source's Assignments list.
     /// </summary>
     /// <returns>A list of all Assignment entities.</returns>
-    public List<Assignment> ReadAll()
-    {
-        return new List<Assignment>(DataSource.Assignments);
-        // Return a copy of the Assignments list to ensure encapsulation
-    }
+    public IEnumerable<Assignment> ReadAll(Func<Assignment, bool>? filter = null) // Defines a function that returns a collection of assignments, with an optional custom filter
+ => filter != null // Checks if a filter condition was provided
+        ? from item in DataSource.Assignments // If there is a filter, starts a query on the assignments collection
+          where filter(item) // Filters the assignments based on the function passed as a parameter
+          select item // Returns the assignments that meet the filter condition
+        : from item in DataSource.Assignments // If no filter is provided, starts a query on the entire assignments collection
+          select item; // Returns all assignments from the source (DataSource)
+
+
 
     /// <summary>
     /// Updates an existing Assignment entity in the data source.
@@ -74,9 +78,21 @@ internal class AssignmentImplementation : IAssignment
     /// Throws an exception if the entity with the given ID does not exist.
     /// </summary>
     /// <param name="item">The updated Assignment entity.</param>
+    /// <exception cref="Exception">Thrown if the Assignment to update is not found.</exception>
     public void Update(Assignment item)
     {
         Delete(item.Id); // Delete the existing entity if it exists, or throw an exception
         Create(item); // Add the updated entity to the data source
     }
+
+    /// <summary>
+    /// Retrieves an Assignment entity from the data source that matches the given filter.
+    /// </summary>
+    /// <param name="filter">A predicate function to filter the Assignment objects.</param>
+    /// <returns>The first matching Assignment object, or null if no match is found.</returns>
+    public Assignment? Read(Func<Assignment, bool> filter)
+    {
+        return DataSource.Assignments.FirstOrDefault(filter); // Searches for the first Assignment that matches the filter
+    }
+
 }

@@ -54,7 +54,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <returns>The Volunteer object if found; otherwise, null.</returns>
     public Volunteer? Read(int id)
     {
-        return DataSource.Volunteers.Find(obj => obj.Id == id);
+        return DataSource.Volunteers.FirstOrDefault(obj => obj.Id == id);
         // Use a lambda expression to find and return the Volunteer with the specified ID
         // Return null if no such Volunteer is found
     }
@@ -63,14 +63,19 @@ internal class VolunteerImplementation : IVolunteer
     /// Retrieves all Volunteer entities from the data source.
     /// </summary>
     /// <returns>A list of all Volunteer objects in the data source.</returns>
-    public List<Volunteer> ReadAll()
-    {
-        return new List<Volunteer>(DataSource.Volunteers);
-        // Return a new list containing all Volunteer objects in the data source
-    }
+    public IEnumerable<Volunteer> ReadAll(Func<Volunteer, bool>? filter = null) // Defines a function that returns a collection of volunteers, with an optional custom filter
+   => filter != null  // Checks if a filter condition was provided
+          ? from item in DataSource.Volunteers // If there is a filter, starts a query on the volunteers collection
+            where filter(item) // Filters the volunteers based on the function passed as a parameter
+            select item // Returns the volunteers that meet the filter condition
+          : from item in DataSource.Volunteers // If no filter is provided, starts a query on the entire volunteers collection
+            select item; // Returns all volunteers from the source (DataSource)
+
 
     /// <summary>
     /// Updates an existing Volunteer entity in the data source.
+    /// The existing entity is deleted, and the updated entity is added.
+    /// Throws an exception if the entity with the given ID does not exist.
     /// </summary>
     /// <param name="item">The updated Volunteer object.</param>
     /// <exception cref="Exception">Thrown if the Volunteer to update is not found.</exception>
@@ -79,4 +84,15 @@ internal class VolunteerImplementation : IVolunteer
         Delete(item.Id); // Delete the existing Volunteer object by its ID; throw an exception if not found
         Create(item); // Add the updated Volunteer object to the data source
     }
+
+    /// <summary>
+    /// Retrieves a Volunteer entity from the data source that matches the given filter.
+    /// </summary>
+    /// <param name="filter">A predicate function to filter the Volunteer objects.</param>
+    /// <returns>The first matching Volunteer object, or null if no match is found.</returns>
+    public Volunteer? Read(Func<Volunteer, bool> filter)
+    {
+        return DataSource.Volunteers.FirstOrDefault(filter); // Searches for the first Volunteer that matches the filter
+    }
+
 }
