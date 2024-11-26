@@ -44,7 +44,7 @@ namespace DalTest
         private static SubMenu inputChoose()
         {
             SubMenu choose;
-            Console.WriteLine("Please enter one of the following options:exit, create, read," +
+            Console.WriteLine("Please enter one of the following options: exit, create, read," +
                 " readAll, update, delete, deleteAll");
             while (!Enum.TryParse(Console.ReadLine(), out choose)) ;
             return choose;
