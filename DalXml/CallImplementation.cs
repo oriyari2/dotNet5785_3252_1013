@@ -57,8 +57,8 @@ internal class CallImplementation : ICall
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
 
-        if (callsRootElem.Elements().Any(st => (int?)st.Element("Id") == item.Id))
-            throw new DO.DalAlreadyExistsException($"Call with ID={item.Id} already exists");
+        //if (callsRootElem.Elements().Any(st => (int?)st.Element("Id") == item.Id))
+        //    throw new DO.DalAlreadyExistsException($"Call with ID={item.Id} already exists");
 
         callsRootElem.Add(createCallElement(item));
         XMLTools.SaveListToXMLElement(callsRootElem, Config.s_calls_xml);

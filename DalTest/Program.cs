@@ -13,7 +13,7 @@ namespace DalTest
     /// </summary>
     internal class Program
     {
-        static readonly IDal s_dal = new Dal.DalList(); //stage 2
+        static readonly IDal s_dal = new Dal.DalXml(); //stage 2
 
         // Enums for main menu and sub-menu options.
         private enum ChooseMain { exit, volunteer, call, assignment, initialization, print, config, reset };

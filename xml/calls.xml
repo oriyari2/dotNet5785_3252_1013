@@ -1,3 +1,633 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfCall>
-</ArrayOfCall>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Calls>
+  <Call>
+    <Id>0</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.778</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2023-01-01T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-01-01T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>1</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2023-02-02T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>2</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.762</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-03-03T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-03-03T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>3</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-04-04T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-04-04T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>4</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.767</Latitude>
+    <Longitude>35.212</Longitude>
+    <OpeningTime>2023-05-05T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-05-05T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>5</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.759</Latitude>
+    <Longitude>35.211</Longitude>
+    <OpeningTime>2023-06-06T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-06-06T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>6</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.764</Latitude>
+    <Longitude>35.21</Longitude>
+    <OpeningTime>2023-07-07T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-07-07T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>7</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.771</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-08-08T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-08-08T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>8</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.78</Latitude>
+    <Longitude>35.218</Longitude>
+    <OpeningTime>2023-09-09T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-09-09T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>9</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Latitude>31.776</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2023-10-10T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-10T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>10</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.763</Latitude>
+    <Longitude>35.212</Longitude>
+    <OpeningTime>2023-11-11T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-11-11T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>11</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.758</Latitude>
+    <Longitude>35.209</Longitude>
+    <OpeningTime>2023-12-12T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-12-12T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>12</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-01-13T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-01-13T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>13</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.777</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2023-02-14T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>14</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.771</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2023-03-15T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-03-15T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>15</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.779</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-04-16T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-04-16T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>16</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.762</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2023-05-17T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-05-17T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>17</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.758</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-06-18T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-06-18T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>18</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.207</Longitude>
+    <OpeningTime>2023-07-19T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-07-19T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>19</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.75</Latitude>
+    <Longitude>35.206</Longitude>
+    <OpeningTime>2023-08-20T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-08-20T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>20</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.765</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-09-21T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-09-21T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>21</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.768</Latitude>
+    <Longitude>35.209</Longitude>
+    <OpeningTime>2023-10-22T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-22T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>22</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.766</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2023-11-23T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-11-23T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>23</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.764</Latitude>
+    <Longitude>35.207</Longitude>
+    <OpeningTime>2023-12-24T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-12-24T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>24</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.757</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2023-01-25T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-01-25T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>25</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.755</Latitude>
+    <Longitude>35.211</Longitude>
+    <OpeningTime>2023-02-26T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-02-26T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>26</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2023-03-27T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-03-27T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>27</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.775</Latitude>
+    <Longitude>35.212</Longitude>
+    <OpeningTime>2023-04-28T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-04-28T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>28</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.761</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-05-01T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-05-01T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>29</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Latitude>31.778</Latitude>
+    <Longitude>35.218</Longitude>
+    <OpeningTime>2023-06-02T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-06-02T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>30</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.768</Latitude>
+    <Longitude>35.21</Longitude>
+    <OpeningTime>2023-07-03T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-07-03T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>31</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.753</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2023-08-04T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-08-04T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>32</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.767</Latitude>
+    <Longitude>35.211</Longitude>
+    <OpeningTime>2023-09-05T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-09-05T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>33</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.219</Longitude>
+    <OpeningTime>2023-10-06T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-06T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>34</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.759</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-11-07T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-11-07T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>35</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.752</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-12-08T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-12-08T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>36</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.771</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-01-09T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-01-09T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>37</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.761</Latitude>
+    <Longitude>35.218</Longitude>
+    <OpeningTime>2023-02-10T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-02-10T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>38</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.776</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2023-03-11T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-03-11T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>39</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.769</Latitude>
+    <Longitude>35.212</Longitude>
+    <OpeningTime>2023-04-12T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-04-12T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>40</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-05-13T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-05-13T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>41</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.76</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-06-14T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-06-14T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>42</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.764</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2023-07-15T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-07-15T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>43</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.762</Latitude>
+    <Longitude>35.211</Longitude>
+    <OpeningTime>2023-08-16T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-08-16T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>44</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Latitude>31.775</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-09-17T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-09-17T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>45</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.759</Latitude>
+    <Longitude>35.209</Longitude>
+    <OpeningTime>2023-10-18T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-18T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>46</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.772</Latitude>
+    <Longitude>35.21</Longitude>
+    <OpeningTime>2023-11-19T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-11-19T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>47</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.766</Latitude>
+    <Longitude>35.207</Longitude>
+    <OpeningTime>2023-12-20T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-12-20T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>48</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.767</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2023-01-21T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-01-21T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>49</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.761</Latitude>
+    <Longitude>35.209</Longitude>
+    <OpeningTime>2023-02-22T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-02-22T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>50</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.212</Longitude>
+    <OpeningTime>2023-03-23T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-03-23T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>51</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.775</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-04-24T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-04-24T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>52</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.754</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2023-05-25T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-05-25T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>53</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.751</Latitude>
+    <Longitude>35.21</Longitude>
+    <OpeningTime>2023-06-26T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-06-26T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>54</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <Latitude>31.759</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-07-27T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-07-27T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>55</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.762</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-08-28T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-08-28T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>56</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.766</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2023-09-01T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-09-01T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>57</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.768</Latitude>
+    <Longitude>35.209</Longitude>
+    <OpeningTime>2023-10-02T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-02T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>58</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-11-03T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-11-03T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>59</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.761</Latitude>
+    <Longitude>35.217</Longitude>
+    <OpeningTime>2023-12-04T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-12-04T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>60</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.764</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2023-01-05T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2023-01-05T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>61</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.763</Latitude>
+    <Longitude>35.211</Longitude>
+    <OpeningTime>2023-02-06T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-02-06T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>62</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.767</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2023-03-07T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-03-07T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>63</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.758</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-04-08T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-04-08T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>64</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.218</Longitude>
+    <OpeningTime>2023-05-09T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-05-09T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>65</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.756</Latitude>
+    <Longitude>35.212</Longitude>
+    <OpeningTime>2023-06-10T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-06-10T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>66</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.772</Latitude>
+    <Longitude>35.21</Longitude>
+    <OpeningTime>2023-07-11T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-07-11T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>67</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.764</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2023-08-12T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-08-12T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>68</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.757</Latitude>
+    <Longitude>35.219</Longitude>
+    <OpeningTime>2023-09-13T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-09-13T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>69</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.765</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-10-14T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-14T00:00:00</MaxTimeToEnd>
+  </Call>
+</Calls>
