@@ -38,7 +38,7 @@ namespace DalTest
         }
 
         /// <summary>
-        /// Prompts the user to select a sub-menu option  for CRUD operations and validates the input.
+        /// Prompts the user to select a sub-menu option for CRUD operations and validates the input.
         /// </summary>
         /// <returns>Selected <see cref="SubMenu"/> option.</returns>
         private static SubMenu inputChoose()
