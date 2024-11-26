@@ -6,7 +6,7 @@ using DalApi;
 /// Provides access to the Volunteer, Call, Assignment, and Config entities
 /// as well as the ability to reset the database.
 /// </summary>
-sealed public class DalList: IDal
+sealed public class DalList : IDal
 {
     public IVolunteer Volunteer { get; } = new VolunteerImplementation();
 
@@ -26,6 +26,6 @@ sealed public class DalList: IDal
         Call.DeleteAll(); // Clear call data.
         Assignment.DeleteAll(); // Clear assignment data.
         Config.Reset(); // Reset configuration.
-        
+
     }
 }

@@ -9,3 +9,6 @@ $ We add Trypharse bonus -  1 point$
 	but we did capture the variable if it was entered incorrectly again inside the loop.
 
 /stage2 final commit/
+
+/stage3 final commit/
+

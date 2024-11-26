@@ -26,6 +26,7 @@ public record Call
     DateTime? MaxTimeToEnd
     )
 {
-    public Call() : this(0, CallType.food,null,"",0,0,
-    DateTime.Now, null){ } // empty ctor 
+    public Call() : this(0, CallType.food, null, "", 0, 0,
+    DateTime.Now, null)
+    { } // empty ctor 
 }

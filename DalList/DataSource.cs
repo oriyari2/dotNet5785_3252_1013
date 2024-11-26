@@ -3,7 +3,7 @@
 /// <summary>
 ///Static class serving as a data source.
 /// </summary>
-internal static class DataSource 
+internal static class DataSource
 {
     internal static List<DO.Assignment> Assignments { get; } = new(); // Static list to store Assignment objects
 

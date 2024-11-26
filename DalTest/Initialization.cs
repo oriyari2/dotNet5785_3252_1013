@@ -24,7 +24,7 @@ public static class Initialization
         var allVolunteers = s_dal!.Volunteer.ReadAll();
 
         // Remove the first two volunteers from the list
-        
+
         var availableVolunteers = (allVolunteers.Skip(2)).ToList();
 
         // Assignments to be created

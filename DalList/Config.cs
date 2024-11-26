@@ -3,7 +3,7 @@
 /// <summary>
 ///Static class for configuration settings
 /// </summary>
-internal static class Config 
+internal static class Config
 {
     internal const int StartCallId = 1; // Starting value for call IDs
     private static int s_nextCallId = StartCallId; // Tracks the next available call ID
@@ -19,7 +19,7 @@ internal static class Config
     /// <summary>
     ///Method to reset configuration settings
     /// </summary>
-    internal static void Reset() 
+    internal static void Reset()
     {
         s_nextAssignmentId = StartAssignmentId; // Reset the assignment ID counter
         s_nextCallId = StartCallId; // Reset the call ID counter

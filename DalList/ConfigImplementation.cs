@@ -4,7 +4,7 @@ namespace Dal;
 /// <summary>
 ///Class implementing the IConfig interface
 /// </summary>
-internal class ConfigImplementation : IConfig 
+internal class ConfigImplementation : IConfig
 {
     /// <summary>
     ///Property to get or set the Clock value

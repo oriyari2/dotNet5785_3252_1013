@@ -25,7 +25,7 @@ namespace DO;
 public record Volunteer
 (
     int Id,
-    string Name, 
+    string Name,
     string PhoneNumber,
     string Email,
     string? Password, //place to bonus$$
@@ -37,10 +37,11 @@ public record Volunteer
     double? MaxDistance,
     DistanceType TheDistanceType //place to bonus$$
     )
-    {
-    public Volunteer() : this(0, "","","",null,null,null,null,
-    RoleType.volunteer,false,null, DistanceType.air) { } // empty ctor
+{
+    public Volunteer() : this(0, "", "", "", null, null, null, null,
+    RoleType.volunteer, false, null, DistanceType.air)
+    { } // empty ctor
 
-   
+
 }
 

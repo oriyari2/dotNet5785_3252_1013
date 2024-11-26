@@ -4,6 +4,9 @@ using DO;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Implementation of the IVolunteer interface for managing volunteer data using XML.
+/// </summary>
 internal class VolunteerImplementation : IVolunteer
 {
     /// <summary>
