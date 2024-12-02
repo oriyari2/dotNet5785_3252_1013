@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Diagnostics;
 namespace Dal;
 
 /// <summary>
@@ -6,8 +7,18 @@ namespace Dal;
 /// This class provides access to various entities (e.g., Volunteers, Calls, Assignments, Config)
 /// and includes methods for resetting the database.
 /// </summary>
-public class DalXml : IDal
+
+//in this class we used the full lazy singelton method with thread safe, exactly like we used it in dallist
+//and the explanation is there
+sealed internal class DalXml : IDal
 {
+    //Private constructor to prevent creation of new instances from outside.
+    private DalXml() { }
+    public static DalXml Instance => Nested.instance;
+    private static class Nested
+    {
+        internal static readonly DalXml instance = new DalXml();
+    }
     public IVolunteer Volunteer { get; } = new VolunteerImplementation();
 
     public ICall Call { get; } = new CallImplementation();

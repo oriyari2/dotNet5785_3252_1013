@@ -13,8 +13,7 @@ namespace DalTest
     /// </summary>
     internal class Program
     {
-        static readonly IDal s_dal = new Dal.DalXml();
-
+        static readonly IDal s_dal = Factory.Get; //stage 4
         // Enums for main menu and sub-menu options.
         private enum ChooseMain { exit, volunteer, call, assignment, initialization, print, config, reset };
         private enum SubMenu { exit, create, read, readAll, update, delete, deleteAll }
@@ -504,7 +503,7 @@ namespace DalTest
                             }
                         case ChooseMain.initialization: // Initialize the system.
                             {
-                                Initialization.Do(s_dal);
+                                Initialization.Do(); //stage 4
                                 break;
                             }
                         case ChooseMain.print: // Print all data.

@@ -12,3 +12,6 @@ $ We add Trypharse bonus -  1 point$
 
 /stage3 final commit/
 
+$ We add Thread Safe full Lazy Initialization bonus- 2 points$
+
+

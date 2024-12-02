@@ -1,0 +1,22 @@
+﻿namespace BO;
+
+/// <summary>
+/// The CallAssignInList entity represents an assignment in a call, including details about the assigned volunteer and timing information.
+/// </summary>
+/// <param name="VolunteerId">The unique ID of the volunteer assigned to the call.</param>
+/// <param name="Name">The name of the assigned volunteer.</param>
+/// <param name="EntryTime">The time when the volunteer was assigned to the call.</param>
+/// <param name="ActualEndTime">The actual time when the assignment ended.</param>
+/// <param name="TheEndType">The type of end for the assignment (e.g., completed, canceled).</param>
+public class CallAssignInList
+{
+    public int? VolunteerId { get; set; } // ID of the assigned volunteer
+
+    public string? Name { get; set; } // Name of the assigned volunteer
+
+    public DateTime EntryTime { get; set; } // Time the volunteer was assigned to the call
+
+    public DateTime? ActualEndTime { get; set; } // Actual time the assignment ended
+
+    public EndType? TheEndType { get; set; } // Type of end for the assignment
+}
