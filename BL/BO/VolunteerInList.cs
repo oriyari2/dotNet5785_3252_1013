@@ -14,19 +14,19 @@
 /// <param name="TheCallType">The type of the call the volunteer is handling (if any).</param>
 public class VolunteerInList
 {
-    public int Id { get; set; } // Unique identifier for the volunteer
+    public int Id { get; init; } // Unique identifier for the volunteer
 
-    public string Name { get; set; } // Name of the volunteer
+    public string Name { get; init; } // Name of the volunteer
 
-    public bool Active { get; set; } // Indicates if the volunteer is active
+    public bool Active { get; init; } // Indicates if the volunteer is active
 
-    public int TotalHandled { get; set; } // Total number of calls handled by the volunteer
+    public int TotalHandled { get; init; } // Total number of calls handled by the volunteer
 
-    public int TotalCanceled { get; set; } // Total number of calls canceled by the volunteer
+    public int TotalCanceled { get; init; } // Total number of calls canceled by the volunteer
 
-    public int TotalExpired { get; set; } // Total number of calls that expired without completion
+    public int TotalExpired { get; init; } // Total number of calls that expired without completion
 
-    public int? CurrentCall { get; set; } // Current call the volunteer is handling (if any)
+    public int? CurrentCall { get; init; } // Current call the volunteer is handling (if any)
 
-    public CallType TheCallType { get; set; } // Type of the call the volunteer is handling
+    public CallType TheCallType { get; init; } // Type of the call the volunteer is handling
 }

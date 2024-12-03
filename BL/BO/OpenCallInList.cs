@@ -13,17 +13,17 @@
 /// <param name="Distance">The distance to the call's location from the handler or volunteer.</param>
 public class OpenCallInList
 {
-    public int Id { get; set; } // Unique identifier for the open call
+    public int Id { get; init; } // Unique identifier for the open call
 
-    public CallType TheCallType { get; set; } // Type of the call
+    public CallType TheCallType { get; init ; } // Type of the call
 
-    public string? VerbalDescription { get; set; } // Description of the call
+    public string? VerbalDescription { get; init; } // Description of the call
 
-    public string Address { get; set; } // Address associated with the call
+    public string Address { get; init; } // Address associated with the call
 
-    public DateTime OpeningTime { get; set; } // Time when the call was opened
+    public DateTime OpeningTime { get; init; } // Time when the call was opened
 
-    public DateTime? MaxTimeToEnd { get; set; } // Maximum time allowed for the call to be resolved
+    public DateTime? MaxTimeToEnd { get; init; } // Maximum time allowed for the call to be resolved
 
-    public double Distance { get; set; } // Distance to the call's location
+    public double Distance { get; init; } // Distance to the call's location
 }

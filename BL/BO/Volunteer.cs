@@ -23,9 +23,9 @@ namespace BO;
 /// <param name="IsProgress">An optional reference to the call that the volunteer is currently handling.</param>
 public class Volunteer
 {
-    public int Id { get; set; } // Unique identifier for the volunteer
+    public int Id { get; init; } // Unique identifier for the volunteer
 
-    public string Name { get; set; } // Name of the volunteer
+    public string Name { get; init; } // Name of the volunteer
 
     public string PhoneNumber { get; set; } // Phone number of the volunteer
 
@@ -47,11 +47,11 @@ public class Volunteer
 
     public DistanceType TheDistanceType { get; set; } // Distance type (place to bonus$$)
 
-    public int TotalHandled { get; set; } // Total calls handled by the volunteer
+    public int TotalHandled { get; init; } // Total calls handled by the volunteer
 
-    public int TotalCanceled { get; set; } // Total calls canceled by the volunteer
+    public int TotalCanceled { get; init; } // Total calls canceled by the volunteer
 
-    public int TotalExpired { get; set; } // Total calls that expired before being completed
+    public int TotalExpired { get; init; } // Total calls that expired before being completed
 
     public BO.CallInProgress? IsProgress { get; set; } // Current call in progress (if any)
 }

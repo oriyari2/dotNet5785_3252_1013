@@ -13,17 +13,17 @@
 /// <param name="TheEndType">The type of closure for the call (e.g., resolved, canceled).</param>
 public class ClosedCallInList
 {
-    public int Id { get; set; } // Unique identifier for the closed call
+    public int Id { get; init; } // Unique identifier for the closed call
 
-    public CallType TheCallType { get; set; } // Type of the call
+    public CallType TheCallType { get; init; } // Type of the call
 
-    public string Address { get; set; } // Address associated with the call
+    public string Address { get; init; } // Address associated with the call
 
-    public DateTime OpeningTime { get; set; } // Time when the call was opened
+    public DateTime OpeningTime { get; init; } // Time when the call was opened
 
-    public DateTime EntryTime { get; set; } // Time when the handling of the call began
+    public DateTime EntryTime { get; init; } // Time when the handling of the call began
 
-    public DateTime? ActualEndTime { get; set; } // Time when the call was resolved and closed
+    public DateTime? ActualEndTime { get; init; } // Time when the call was resolved and closed
 
-    public EndType? TheEndType { get; set; } // Type of closure for the call
+    public EndType? TheEndType { get; init; } // Type of closure for the call
 }

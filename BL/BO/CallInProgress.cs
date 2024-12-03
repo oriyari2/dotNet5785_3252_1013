@@ -16,23 +16,23 @@
 /// <param name="status">The current status of the call (e.g., in-progress, escalated).</param>
 public class CallInProgress
 {
-    public int Id { get; set; } // Unique identifier for the record
+    public int Id { get; init; } // Unique identifier for the record
 
-    public int CallId { get; set; } // Unique identifier of the call
+    public int CallId { get; init; } // Unique identifier of the call
 
-    public CallType TheCallType { get; set; } // Type of the call
+    public CallType TheCallType { get; init; } // Type of the call
 
-    public string? VerbalDescription { get; set; } // Description of the call
+    public string? VerbalDescription { get; init; } // Description of the call
 
-    public string Address { get; set; } // Address associated with the call
+    public string Address { get; init; } // Address associated with the call
 
-    public DateTime OpeningTime { get; set; } // Time when the call was opened
+    public DateTime OpeningTime { get; init; } // Time when the call was opened
 
-    public DateTime? MaxTimeToEnd { get; set; } // Maximum allowed time to resolve the call
+    public DateTime? MaxTimeToEnd { get; init; } // Maximum allowed time to resolve the call
 
-    public DateTime EntryTime { get; set; } // Time when the handling of the call began
+    public DateTime EntryTime { get; init; } // Time when the handling of the call began
 
-    public double Distance { get; set; } // Distance to the call's location
+    public double Distance { get; init; } // Distance to the call's location
 
-    public Status status { get; set; } // Current status of the call
+    public Status status { get; init; } // Current status of the call
 }

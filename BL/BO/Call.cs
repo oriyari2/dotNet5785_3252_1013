@@ -17,11 +17,11 @@
 /// <param name="listAssignForCall">A list of assignments related to this call.</param>
 public class Call
 {
-    public int Id { get; set; } // Unique identifier for the call
+    public int Id { get; init; } // Unique identifier for the call
 
-    public CallType TheCallType { get; set; } // Type of the call
+    public CallType TheCallType { get; init; } // Type of the call
 
-    public string? VerbalDescription { get; set; } // Description of the call
+    public string? VerbalDescription { get; init; } // Description of the call
 
     public string? Address { get; set; } // Address related to the call
 
