@@ -30,8 +30,19 @@ namespace DalTest
         private static ConfigMenu configInputChoose()
         {
             ConfigMenu choose;
-            Console.WriteLine("Please enter one of the following options:exit, plusMinute, plusHour," +
-                "plusDay, plusMonth, plusYear,\ngetClock, getRiskRange, setRiskRange, reset ");
+            Console.WriteLine("Please enter one of the following options:\n");
+            Console.WriteLine("0 - exit\n");
+            Console.WriteLine("1 - plusMinute\n");
+            Console.WriteLine("2 - plusHour\n");
+            Console.WriteLine("3 - plusDay\n");
+            Console.WriteLine("4 - plusMonth\n");
+            Console.WriteLine("5 - plusYear\n");
+            Console.WriteLine("6 - getClock\n");
+            Console.WriteLine("7 - getRiskRange\n");
+            Console.WriteLine("8 - setRiskRange\n");
+            Console.WriteLine("9 - reset\n");
+           
+
             while (!Enum.TryParse(Console.ReadLine(), out choose)) ;
             return choose;
         }
@@ -43,8 +54,15 @@ namespace DalTest
         private static SubMenu inputChoose()
         {
             SubMenu choose;
-            Console.WriteLine("Please enter one of the following options: exit, create, read," +
-                " readAll, update, delete, deleteAll");
+            Console.WriteLine("Please enter one of the following options:\n ");
+            Console.WriteLine("0 - exit\n");
+            Console.WriteLine("1 - create\n");
+            Console.WriteLine("2 - read\n");
+            Console.WriteLine("3 - readAll\n");
+            Console.WriteLine("4 - update\n");
+            Console.WriteLine("5 - delete\n");
+            Console.WriteLine("6 - deleteAll\n");
+
             while (!Enum.TryParse(Console.ReadLine(), out choose)) ;
             return choose;
         }
@@ -347,9 +365,16 @@ namespace DalTest
             ChooseMain choose; // Variable to store the main menu choice.
             do
             {
-                Console.WriteLine("Please enter one of the following options:exit, volunteer, call," +
-                    "assignment, initialization, print, config, reset"); // Prompt the user for an input.
-
+                Console.WriteLine("Please enter one of the following options:\n ");// Prompt the user for an input.
+                Console.WriteLine("0 - exit\n");
+                Console.WriteLine("1 - volunteer\n");
+                Console.WriteLine("2 - call\n");
+                Console.WriteLine("3 - assignment\n");
+                Console.WriteLine("4 - initialization\n");
+                Console.WriteLine("5 - print\n");
+                Console.WriteLine("6 - config\n");
+                Console.WriteLine("7 - reset\n");
+               
                 while (!Enum.TryParse(Console.ReadLine(), out choose)) ; // Validate if the input matches the enum values.
 
                 try

@@ -14,11 +14,11 @@
 /// <param name="TotalAssignments">The total number of assignments associated with the call.</param>
 public class CallInList
 {
-    public int Id { get; init; } // Unique identifier for the record in the list
+    public int? Id { get; init; } // Unique identifier for the record in the list
 
     public int CallId { get; init; } // Unique identifier of the call
 
-    public CallType TheCallType { get; init   } // Type of the call
+    public CallType TheCallType { get; init; } // Type of the call
 
     public DateTime OpeningTime { get; init; } // Time when the call was opened
 

@@ -1,4 +1,5 @@
 
+
 using BlImplementation;
 using BO;
 namespace Helpers;
@@ -109,5 +110,3 @@ internal static class ClockManager //stage 4
     }
     #endregion Stage 7 base
 }
-ClockManager.cs
-המערכת מציגה את ClockManager.cs.

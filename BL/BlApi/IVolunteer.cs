@@ -14,7 +14,4 @@ public interface IVolunteer
 
     public void Create(BO.Volunteer volunteer);
 
-
-
-
 }
