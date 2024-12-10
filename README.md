@@ -14,4 +14,7 @@ $ We add Trypharse bonus -  1 point$
 
 $ We add Thread Safe full Lazy Initialization bonus- 2 points$
 
+in volunteerImplemenation of BO we decided to let the system delete a volunteer just if he do not have a call in program, 
+becouse otherwise even if he never treated a call but now he has a call in progress when we delete the volunteer it will create
+problemswith the current call
 

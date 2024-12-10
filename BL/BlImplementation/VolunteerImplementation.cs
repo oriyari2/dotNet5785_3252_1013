@@ -3,6 +3,7 @@ using BlApi;
 
 using Helpers;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 internal class VolunteerImplementation : IVolunteer
 {
@@ -10,12 +11,6 @@ internal class VolunteerImplementation : IVolunteer
 
     public void Create(BO.Volunteer boVolunteer)
     {
-        //DO.RoleType role = (DO.RoleType)boVolunteer.Role;
-        //bool temp = (DO.RoleType.TryParse(boVolunteer.Role.ToString(), out role));
-
-        //DO.DistanceType distanceType;
-        //temp = (DO.DistanceType.TryParse(boVolunteer.TheDistanceType.ToString(), out distanceType));
-
 
         DO.Volunteer doVolunteer = new(boVolunteer.Id, boVolunteer.Name,
         boVolunteer.PhoneNumber, boVolunteer.Email, boVolunteer.Password, boVolunteer.Address, boVolunteer.Latitude,
@@ -33,47 +28,63 @@ internal class VolunteerImplementation : IVolunteer
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+
+        var volunteer = Read(id);
+        if (volunteer.IsProgress != null)
+            throw new BO.cantDeleteItem($"Volunteer with ID={id} can't be deleted");
+        try
+        {
+            _dal.Volunteer.Delete(id);
+        }
+        catch(DO.DalDoesNotExistException ex)
+        {
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} can't be deleted", ex);
+        }
     }
 
     public BO.RoleType LogIn(string name, string password)
     {
-        throw new NotImplementedException();
+        return (BO.RoleType)_dal.Volunteer.ReadAll(s => (s.Name == name) && (s.Password == password)).First().Role;
     }
-    
+
     public BO.Volunteer Read(int id)
     {
-
-        var doVolunteer = _dal.Volunteer.Read(id) ??
-            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
-        //BO.RoleType role;
-        //bool temp = (BO.RoleType.TryParse(doVolunteer.Role.ToString(), out role));
-
-        //BO.DistanceType distanceType;
-        //temp = (BO.DistanceType.TryParse(doVolunteer.TheDistanceType.ToString(), out distanceType));
-
-        return new()
+        try
         {
-            Id = id,
-            Name = doVolunteer.Name,
-            PhoneNumber = doVolunteer.PhoneNumber,
-            Email = doVolunteer.Email,
-            Password = doVolunteer.Password,
-            Address = doVolunteer.Address,
-            Latitude = doVolunteer.Latitude,
-            Longitude = doVolunteer.Longitude,
-            Role = (BO.RoleType)doVolunteer.Role,
-            Active = doVolunteer.Active,
-            MaxDistance = doVolunteer.MaxDistance,
-            TheDistanceType = (BO.DistanceType)doVolunteer.TheDistanceType,
-            TotalHandled= 
-        };
+            var doVolunteer = _dal.Volunteer.Read(id);
+
+            return new()
+            {
+                Id = id,
+                Name = doVolunteer.Name,
+                PhoneNumber = doVolunteer.PhoneNumber,
+                Email = doVolunteer.Email,
+                Password = doVolunteer.Password,
+                Address = doVolunteer.Address,
+                Latitude = doVolunteer.Latitude,
+                Longitude = doVolunteer.Longitude,
+                Role = (BO.RoleType)doVolunteer.Role,
+                Active = doVolunteer.Active,
+                MaxDistance = doVolunteer.MaxDistance,
+                TheDistanceType = (BO.DistanceType)doVolunteer.TheDistanceType,
+                TotalHandled = VolunteerManager.TotalCall(id, DO.EndType.treated),
+                TotalCanceled = VolunteerManager.TotalCall(id, DO.EndType.self),
+                TotalExpired = VolunteerManager.TotalCall(id, DO.EndType.expired),
+                IsProgress = VolunteerManager.callProgress(id)
+            };
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist",ex);
+        }
     }
-    
+
 
     public IEnumerable<BO.VolunteerInList> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id)
-        =>
-    
+    {
+        var volList = _dal.Volunteer.ReadAll(s=> s.Active == active).OrderBy(field => field);
+        retrun volList.OrderBy(field => field);
+    }
 
     public void Update(int id, BO.Volunteer volunteer)
     {

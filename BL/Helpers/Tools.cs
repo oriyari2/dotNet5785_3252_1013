@@ -1,6 +1,6 @@
 ﻿namespace Helpers;
 
-internal static  class Tools
+internal static class Tools
 {
 
 }
