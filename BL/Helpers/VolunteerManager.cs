@@ -46,30 +46,29 @@ internal static class VolunteerManager
         return callInProgress;
     }
 
-    
+
     internal static double GetDistance(string address1, string address2)
     {
-        string apiKey = "AIzaSyC0zQlfOYgjYpr12DVxTc6Sw8u6lqzUX2U"; // הכניסי כאן את מפתח ה-API שלך
-        string url = $"https://maps.googleapis.com/maps/api/distancematrix/json?origins={Uri.EscapeDataString(address1)}&destinations={Uri.EscapeDataString(address2)}&key={apiKey}";
+        // קבלת קווי אורך ורוחב לשתי הכתובות
+        GetCoordinatesFromAddress(address1, out double lat1, out double lon1);
+        GetCoordinatesFromAddress(address2, out double lat2, out double lon2);
 
-        using (HttpClient client = new HttpClient())
-        {
-            HttpResponseMessage response = client.GetAsync(url).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string jsonResponse = response.Content.ReadAsStringAsync().Result;
-
-                var json = JObject.Parse(jsonResponse);
-
-                var distanceInMeters = json["rows"]?[0]?["elements"]?[0]?["distance"]?["value"]?.ToObject<double>();
-                if (distanceInMeters.HasValue)
-                    return distanceInMeters.Value / 1000; 
-            }
-
-            throw new OurSystemException("Failed to retrieve distance. Please check your API key and addresses.");
-        }
+        // חישוב מרחק בעזרת נוסחת Haversine
+        double R = 6371; // רדיוס כדור הארץ בקילומטרים
+        double dLat = DegreesToRadians(lat2 - lat1);
+        double dLon = DegreesToRadians(lon2 - lon1);
+        double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                   Math.Cos(DegreesToRadians(lat1)) * Math.Cos(DegreesToRadians(lat2)) *
+                   Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        return R * c; // המרחק בקילומטרים
     }
+
+    private static double DegreesToRadians(double degrees)
+    {
+        return degrees * Math.PI / 180;
+    }
+
 
 
     internal static void GetCoordinatesFromAddress(string address, out double latitude, out double longitude)
@@ -79,16 +78,17 @@ internal static class VolunteerManager
             throw new ArgumentException("The address provided is invalid or empty.");
         }
 
-        const string apiKey = "AIzaSyC0zQlfOYgjYpr12DVxTc6Sw8u6lqzUX2U"; // יש להחליף במפתח API תקף
-        string baseUrl = "https://us1.locationiq.com/v1/search.php";
-        string url = $"{baseUrl}?key={apiKey}&q={Uri.EscapeDataString(address)}&format=json";
+        string baseUrl = "https://nominatim.openstreetmap.org/search";
+        string url = $"{baseUrl}?q={Uri.EscapeDataString(address)}&format=json&limit=1";
 
         using (HttpClient client = new HttpClient())
         {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; DistanceCalculator/1.0)");
+
             HttpResponseMessage response = client.GetAsync(url).Result; // קריאה סינכרונית
             if (!response.IsSuccessStatusCode)
             {
-                throw new OurSystemException($"Failed to fetch coordinates. HTTP Status: {response.StatusCode}");
+                throw new Exception($"Failed to fetch coordinates. HTTP Status: {response.StatusCode}");
             }
 
             string responseData = response.Content.ReadAsStringAsync().Result;
@@ -96,7 +96,7 @@ internal static class VolunteerManager
 
             if (locationData == null || locationData.Length == 0)
             {
-                throw new OurSystemException("The address provided is invalid or could not be found.");
+                throw new Exception("The address provided is invalid or could not be found.");
             }
 
             // קו רוחב וקו אורך
@@ -104,6 +104,7 @@ internal static class VolunteerManager
             longitude = double.Parse(locationData[0]["lon"].ToString());
         }
     }
+
 
     internal static  IEnumerable<BO.Volunteer> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id)
     { 
