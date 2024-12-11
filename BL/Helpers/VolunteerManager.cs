@@ -28,12 +28,13 @@ internal static class VolunteerManager
     internal static BO.CallInProgress callProgress(int id)
     {
         var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == null));
-        var volunteer = s_dal.Volunteer.Read(id);
+        var volunteer = s_dal.Volunteer.Read(id)??
+           throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
         AdminImplementation admin = new();
         BO.CallInProgress callInProgress =
          (from item in assignments
           let call = s_dal.Call.Read(item.CallId)
-          select new BO.CallInProgress
+        select new BO.CallInProgress
           {
               Id = item.Id,
               CallId = item.CallId,
@@ -117,14 +118,17 @@ internal static class VolunteerManager
         return degree * Math.PI / 180.0;
     }
 
-
-    internal static IEnumerable<BO.Volunteer> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id)
+    internal static int? GetCurrentCall(int id)
     {
-        var listVol = s_dal.Volunteer.ReadAll(s => s.Active == active);
-        var listSort = from item in listVol
-                       orderby field//We need to change to switch
-                       select item;
-        return (IEnumerable<BO.Volunteer>)listVol;
+        var assignment = s_dal.Assignment.ReadAll(t => t.ActualEndTime == null && id == t.VolunteerId).FirstOrDefault();
+        return assignment?.CallId;
+
+    }
+
+    internal static BO.CallType GetCallType(int id)
+    {
+        var call = s_dal.Call.Read(id);
+        return (BO.CallType)call.TheCallType;
     }
 
 };

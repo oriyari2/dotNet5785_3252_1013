@@ -29,7 +29,8 @@ internal class VolunteerImplementation : IVolunteer
     public void Delete(int id)
     {
 
-        var volunteer = Read(id);
+       
+            var volunteer = Read(id);
         if (volunteer.IsProgress != null)
             throw new BO.cantDeleteItem($"Volunteer with ID={id} can't be deleted");
         try
@@ -38,22 +39,33 @@ internal class VolunteerImplementation : IVolunteer
         }
         catch(DO.DalDoesNotExistException ex)
         {
-            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} can't be deleted", ex);
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist", ex);
         }
+
     }
 
     public BO.RoleType LogIn(string name, string password)
     {
-        return (BO.RoleType)_dal.Volunteer.ReadAll(s => (s.Name == name) && (s.Password == password)).First().Role;
+        var volunteer = _dal.Volunteer.ReadAll(s => (s.Name == name) && (s.Password == password)).FirstOrDefault();
+
+        if (volunteer==null)
+        {
+            throw new BO.BlDoesNotExistException($"Volunteer with Name={name} does Not exist");
+        }
+        if(volunteer.Password!= password)
+        {
+            throw new BO.IncorrectValueException("incorrect password");
+        }
+        return (BO.RoleType)volunteer.Role;
     }
 
     public BO.Volunteer Read(int id)
     {
-        try
-        {
-            var doVolunteer = _dal.Volunteer.Read(id);
+        
+            var doVolunteer = _dal.Volunteer.Read(id)??
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
 
-            return new()
+        return new BO.Volunteer()
             {
                 Id = id,
                 Name = doVolunteer.Name,
@@ -71,23 +83,48 @@ internal class VolunteerImplementation : IVolunteer
                 TotalCanceled = VolunteerManager.TotalCall(id, DO.EndType.self),
                 TotalExpired = VolunteerManager.TotalCall(id, DO.EndType.expired),
                 IsProgress = VolunteerManager.callProgress(id)
-            };
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist",ex);
-        }
+            };  
     }
 
 
     public IEnumerable<BO.VolunteerInList> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id)
     {
-        var volList = _dal.Volunteer.ReadAll(s=> s.Active == active).OrderBy(field => field);
-        retrun volList.OrderBy(field => field);
+        // קבלת הרשימה מה-DAL
+        var listVol = active != null
+            ? _dal.Volunteer.ReadAll(s => s.Active == active)
+            : _dal.Volunteer.ReadAll();
+
+        // הגדרת המיון
+        var sortedList = field switch
+        {
+            BO.FieldsVolunteerInList.Id => listVol.OrderBy(item => item.Id),
+            BO.FieldsVolunteerInList.Name => listVol.OrderBy(item => item.Name),
+            BO.FieldsVolunteerInList.TotalHandled => listVol.OrderBy(item => VolunteerManager.TotalCall(item.Id, DO.EndType.treated)),
+            BO.FieldsVolunteerInList.TotalCanceled => listVol.OrderBy(item => VolunteerManager.TotalCall(item.Id, DO.EndType.self)),
+            BO.FieldsVolunteerInList.TotalExpired => listVol.OrderBy(item => VolunteerManager.TotalCall(item.Id, DO.EndType.expired)),
+            _ => listVol.OrderBy(item => item.Id) // ברירת מחדל במקרה שלא הוגדר שדה
+        };
+
+        // יצירת אובייקטים מסוג VolunteerInList
+        var listSort = from item in sortedList
+                       let call = VolunteerManager.GetCurrentCall(item.Id)
+                       select new BO.VolunteerInList
+                       {
+                           Id = item.Id,
+                           Name = item.Name,
+                           Active = item.Active,
+                           TotalHandled = VolunteerManager.TotalCall(item.Id, DO.EndType.treated),
+                           TotalCanceled = VolunteerManager.TotalCall(item.Id, DO.EndType.self),
+                           TotalExpired = VolunteerManager.TotalCall(item.Id, DO.EndType.expired),
+                           CurrentCall = call,
+                           TheCallType = call == null ? BO.CallType.None : VolunteerManager.GetCallType((int)call)
+                       };
+
+        return listSort;
     }
 
     public void Update(int id, BO.Volunteer volunteer)
     {
-        throw new NotImplementedException();
+         
     }
 }
