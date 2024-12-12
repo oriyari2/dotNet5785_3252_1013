@@ -24,7 +24,7 @@ in volunteerManager of BO we wrote a functions for each field that need check,th
 and that why we didnt write a func that check if number field is a real number, and about id we assume that as an int he will
 throw exeption earlier if he got non int value, and if we got a field of int he must be valid for int
 
-in the func create of volunteerImplemenation we assume that the person who created the volunteer is manager becouse
+in the func create of volunteerImplemenation we assume that the person who created the volunteer is manager because
 we doesent have any information about the person who add the volunteer and only manager can add
 
 $we added bonus of check that the password is strong-1 point $

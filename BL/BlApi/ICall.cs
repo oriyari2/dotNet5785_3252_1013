@@ -7,7 +7,7 @@ public interface ICall
 {
     public IEnumerable<int> CallsAmount();
 
-    public IEnumerable<BO.CallInList> ReadAll(BO.FieldsCallInList filter,object? toFilter, BO.FieldsCallInList toSort);
+    public IEnumerable<BO.CallInList> ReadAll(BO.FieldsCallInList? filter,object? toFilter, BO.FieldsCallInList? toSort);
     public BO.Call Read(int id);
     public void Update(int id, BO.Call call); //we are not sure if need id
     public void Delete(int id);
