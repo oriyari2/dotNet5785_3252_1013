@@ -18,7 +18,9 @@ public enum CallType { Transportation, Babysitting, Shopping, food, Cleaning, No
 /// <summary>
 /// Specifies the statuses of a call in the system.
 /// </summary>
-public enum Status { treatment, riskTreatment }; // Defines call statuses: under treatment or at risk
+public enum Status { open,treatment,close,expired, riskTreatment,riskOpen  }; // Defines call statuses: under treatment or at risk
+
+
 
 /// <summary>
 /// Specifies the resolution types for a call.
