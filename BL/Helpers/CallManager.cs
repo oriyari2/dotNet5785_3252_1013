@@ -28,18 +28,18 @@ internal static class CallManager
             return BO.Status.close;
 
     }
-    internal static List <BO.CallAssignInList> GetCallAssignInList(IEnumerable<DO.Assignment> assignment)
+    internal static List<BO.CallAssignInList> GetCallAssignInList(IEnumerable<DO.Assignment> assignment)
     {
-        var toReturn=from item in assignment
-            let volunteerr = (s_dal.Volunteer.Read(item.VolunteerId))
-            select  new BO.CallAssignInList()
-        {
-            VolunteerId = item.VolunteerId,
-            Name = volunteerr==null?null: volunteerr.Name,
-            EntryTime = item.EntryTime,
-            ActualEndTime = item.ActualEndTime,
-            TheEndType = (BO.EndType)item.TheEndType
-        };
+        var toReturn = from item in assignment
+                       let volunteerr = (s_dal.Volunteer.Read(item.VolunteerId))
+                       select new BO.CallAssignInList()
+                       {
+                           VolunteerId = item.VolunteerId,
+                           Name = volunteerr == null ? null : volunteerr.Name,
+                           EntryTime = item.EntryTime,
+                           ActualEndTime = item.ActualEndTime,
+                           TheEndType = (BO.EndType)item.TheEndType
+                       };
         return toReturn.ToList();
     }
     internal static DO.Call HelpCreateUodate(BO.Call call)
@@ -62,9 +62,41 @@ internal static class CallManager
         };
     }
 
+    /// <summary>
+    /// מחשבת את המרחק בין כתובת מתנדב לכתובת קריאה.
+    /// </summary>
+    /// <param name="volunteerAddress">כתובת המתנדב</param>
+    /// <param name="callAddress">כתובת הקריאה</param>
+    /// <returns>מרחק בקילומטרים</returns>
+    internal static double GetDistance(string volunteerAddress, string callAddress)
+    {
+        if (string.IsNullOrEmpty(volunteerAddress) || string.IsNullOrEmpty(callAddress))
+        {
+            return 0; // אם הכתובת לא תקינה, מחזירים 0
+        }
+
+        try
+        {
+            // קבלת קואורדינטות עבור כתובת המתנדב
+            VolunteerManager.GetCoordinates(volunteerAddress, out double volunteerLat, out double volunteerLong);
+
+            // קבלת קואורדינטות עבור כתובת הקריאה
+            VolunteerManager.GetCoordinates(callAddress, out double callLat, out double callLong);
+
+            // חישוב המרחק בעזרת CalculateDistance
+            return VolunteerManager.CalculateDistance(
+                (Latitude: volunteerLat, Longitude: volunteerLong),
+                (Latitude: callLat, Longitude: callLong));
+        }
+        catch (Exception ex)
+        {
+            throw new BO.InvalidValueExeption($"Error calculating distance: {ex.Message}");
+        }
 
 
-    //distance = VolunteerManager.CalculateDistance((volLatitude, volLongitude),(callLatitude, callLongitude));
-    //double distance = 0;
-    //VolunteerManager.GetCoordinates(volunteer.Address, out callLatitude, out callLongitude);
+
+        //distance = VolunteerManager.CalculateDistance((volLatitude, volLongitude),(callLatitude, callLongitude));
+        //double distance = 0;
+        //VolunteerManager.GetCoordinates(volunteer.Address, out callLatitude, out callLongitude);
+    }
 }

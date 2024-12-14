@@ -232,7 +232,7 @@ internal static class VolunteerManager
         char[] encrypted = new char[password.Length];
         for (int i = 0; i < password.Length; i++)
         {
-            encrypted[i] = (char)(password[i] + Shift);
+            encrypted[i] = (char)(password[i] + 3);
         }
         return new string(encrypted);
     }
@@ -248,7 +248,7 @@ internal static class VolunteerManager
         char[] decrypted = new char[encryptedPassword.Length];
         for (int i = 0; i < encryptedPassword.Length; i++)
         {
-            decrypted[i] = (char)(encryptedPassword[i] - Shift);
+            decrypted[i] = (char)(encryptedPassword[i] - 3);
         }
         return new string(decrypted);
     }
