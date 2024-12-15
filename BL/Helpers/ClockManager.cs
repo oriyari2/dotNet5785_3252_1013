@@ -25,6 +25,7 @@ internal static class ClockManager //stage 4
     {
         // new Thread(() => { // stage 7 - not sure - still under investigation - see stage 7 instructions after it will be released        
         updateClock(newClock);//stage 4-6
+
         // }).Start(); // stage 7 as above
     }
 
@@ -40,10 +41,11 @@ internal static class ClockManager //stage 4
         //Go through all students to update properties that are affected by the clock update
         //(students becomes not active after 5 years etc.)
 
-        StudentManager.PeriodicStudentsUpdates(oldClock, newClock); //stage 4
+        //StudentManager.PeriodicStudentsUpdates(oldClock, newClock); //stage 4
         //etc ...
 
         //Calling all the observers of clock update
+
         ClockUpdatedObservers?.Invoke(); //prepared for stage 5
     }
     #endregion Stage 4
