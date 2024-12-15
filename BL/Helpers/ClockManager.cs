@@ -1,7 +1,6 @@
 
 
 using BlImplementation;
-using BO;
 namespace Helpers;
 
 /// <summary>
@@ -33,18 +32,8 @@ internal static class ClockManager //stage 4
     {
         var oldClock = _dal.Config.Clock; //stage 4
         _dal.Config.Clock = newClock; //stage 4
-
-        //TO_DO:
-        //Add calls here to any logic method that should be called periodically,
-        //after each clock update
-        //for example, Periodic students' updates:
-        //Go through all students to update properties that are affected by the clock update
-        //(students becomes not active after 5 years etc.)
-
-        //StudentManager.PeriodicStudentsUpdates(oldClock, newClock); //stage 4
-        //etc ...
-
-        //Calling all the observers of clock update
+        CallManager.UpdateExpired();//every time we update the clock, this function change
+                                    //everything in the system that the update of the clock affect
 
         ClockUpdatedObservers?.Invoke(); //prepared for stage 5
     }
@@ -98,7 +87,7 @@ internal static class ClockManager //stage 4
             //TO_DO:
             //Add calls here to any logic simulation that was required in stage 7
             //for example: course registration simulation
-            StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
+            //StudentManager.SimulateCourseRegistrationAndGrade(); //stage 7
 
             //etc...
             #endregion Stage 7

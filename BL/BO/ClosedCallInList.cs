@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The ClosedCallInList entity represents a call that has been closed, 
@@ -13,6 +15,8 @@
 /// <param name="TheEndType">The type of closure for the call (e.g., resolved, canceled).</param>
 public class ClosedCallInList
 {
+    public override string ToString() => this.ToStringProperty();
+
     public int Id { get; init; } // Unique identifier for the closed call
 
     public CallType TheCallType { get; init; } // Type of the call

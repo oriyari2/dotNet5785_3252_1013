@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The Call entity contains details for a "call", including a unique running ID number.
@@ -17,6 +19,7 @@
 /// <param name="listAssignForCall">A list of assignments related to this call.</param>
 public class Call
 {
+    public override string ToString() => this.ToStringProperty();
     public int Id { get; init; } // Unique identifier for the call
 
     public CallType TheCallType { get; init; } // Type of the call

@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The CallInList entity represents a summarized view of a call, including its status, type, timing, and assignment details.
@@ -14,6 +16,7 @@
 /// <param name="TotalAssignments">The total number of assignments associated with the call.</param>
 public class CallInList
 {
+    public override string ToString() => this.ToStringProperty();
     public int? Id { get; init; } // Unique identifier for the record in the list
 
     public int CallId { get; init; } // Unique identifier of the call

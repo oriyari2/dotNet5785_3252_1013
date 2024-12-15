@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The VolunteerInList entity represents a volunteer listed in the system, 
@@ -14,6 +16,8 @@
 /// <param name="TheCallType">The type of the call the volunteer is handling (if any).</param>
 public class VolunteerInList
 {
+    public override string ToString() => this.ToStringProperty();
+
     public int Id { get; init; } // Unique identifier for the volunteer
 
     public string Name { get; init; } // Name of the volunteer

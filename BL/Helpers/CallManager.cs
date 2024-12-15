@@ -48,7 +48,7 @@ internal static class CallManager
         VolunteerManager.GetCoordinates(call.Address, out latitude, out longitude); //if wrrong adreess throw exeption
 
         if (call.MaxTimeToEnd < call.OpeningTime)
-            throw BO.UserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
+            throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
         return new()
         {
             Id = call.Id,
@@ -90,7 +90,7 @@ internal static class CallManager
         }
         catch (Exception ex)
         {
-            throw new BO.InvalidValueExeption($"Error calculating distance: {ex.Message}");
+            throw new BO.BlInvalidValueExeption($"Error calculating distance: {ex.Message}");
         }
 
 
@@ -99,4 +99,47 @@ internal static class CallManager
         //double distance = 0;
         //VolunteerManager.GetCoordinates(volunteer.Address, out callLatitude, out callLongitude);
     }
+    internal static void UpdateExpired()
+    {
+        // שלב 1: שליפת קריאות שזמן הסיום המקסימלי שלהן עבר
+        var expiredCalls = s_dal.Call.ReadAll(c => c.MaxTimeToEnd < ClockManager.Now);
+
+        // שלב 2: קריאות ללא הקצאה - יצירת הקצאה חדשה עבורן
+        foreach (var call in expiredCalls)
+        {
+            var hasAssignment = s_dal.Assignment
+                .ReadAll(a => a.CallId == call.Id)
+                .Any();
+
+            if (!hasAssignment) // אם אין עדיין הקצאה לקריאה הזו
+            {
+                var newAssignment = new DO.Assignment(
+                    Id: 0,  // יצירת ID חדש להקצאה
+                    CallId: call.Id,
+                    VolunteerId: 0, // ת.ז מתנדב = 0
+                    EntryTime: ClockManager.Now,
+                    ActualEndTime: ClockManager.Now,
+                    TheEndType: DO.EndType.expired // סוג סיום "ביטול פג תוקף"
+                );
+                s_dal.Assignment.Create(newAssignment); 
+            }
+        }
+
+        // שלב 3: קריאות עם הקצאה קיימת אך זמן סיום הטיפול שלהן הוא null - עדכון ההקצאה
+        foreach (var assignment in s_dal.Assignment.ReadAll(a => a.ActualEndTime == null))
+        {
+            var call = expiredCalls.FirstOrDefault(c => c.Id == assignment.CallId);
+            if (call != null) // אם הקריאה עדיין מוגדרת כפג תוקף
+            {
+                var updatedAssignment = assignment with
+                {
+                    ActualEndTime = ClockManager.Now,
+                    TheEndType = DO.EndType.expired
+                };
+
+                s_dal.Assignment.Update(updatedAssignment);
+            }
+        }
+    }
+
 }

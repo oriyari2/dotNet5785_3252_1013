@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The CallAssignInList entity represents an assignment in a call, including details about the assigned volunteer and timing information.
@@ -10,6 +12,7 @@
 /// <param name="TheEndType">The type of end for the assignment (e.g., completed, canceled).</param>
 public class CallAssignInList
 {
+    public override string ToString() => this.ToStringProperty();
     public int? VolunteerId { get; init; } // ID of the assigned volunteer
 
     public string? Name { get; init; } // Name of the assigned volunteer

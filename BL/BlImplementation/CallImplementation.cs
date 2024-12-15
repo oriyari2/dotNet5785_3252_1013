@@ -1,6 +1,5 @@
 ﻿namespace BlImplementation;
 using BlApi;
-using BO;
 using Helpers;
 using System;
 using System.Collections.Generic;
@@ -34,12 +33,14 @@ internal class CallImplementation : ICall
     {
         var assignment = _dal.Assignment.Read(AssignmentId);
         var asker = _dal.Volunteer.Read(RequesterId);
+        if(asker == null)
+            throw new BO.BlDoesNotExistException($"Volunteer with id={RequesterId} does Not exist\"");
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
         if (assignment.VolunteerId != RequesterId && asker.Role != DO.RoleType.manager)
-            throw new BO.UserCantUpdateItemExeption($"volunteer with id={RequesterId}can't change this assignment to cancel");
+            throw new BO.BlUserCantUpdateItemExeption($"volunteer with id={RequesterId}can't change this assignment to cancel");
         if (assignment.TheEndType != null || assignment.ActualEndTime != null)
-            throw new BO.UserCantUpdateItemExeption("This assignment already ended");
+            throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
 
         DO.Assignment newAssign;
         if (asker.Role == DO.RoleType.manager)
@@ -83,9 +84,9 @@ internal class CallImplementation : ICall
         {
             _dal.Call.Create(doCall);
         }
-        catch (DO.DalDoesNotExistException ex)
+        catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlDoesNotExistException($"Call with ID={call.Id} does not exists", ex);
+            throw new BO.BlAlreadyExistsException($"Call with ID={call.Id} already exists", ex);
         }
     }
 
@@ -94,9 +95,11 @@ internal class CallImplementation : ICall
     {
         BO.Call call = Read(id);
 
-        if (call.listAssignForCall.Count != 0)
+        if(call == null)
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
 
-            throw new BO.cantDeleteItem($"call with ID={id} can't be deleted");
+        if (call.listAssignForCall == null || call.listAssignForCall.Count != 0)
+            throw new BO.BlcantDeleteItem($"call with ID={id} can't be deleted");
 
         try
         {
@@ -114,9 +117,9 @@ internal class CallImplementation : ICall
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
         if (assignment.VolunteerId != volunteerId)
-            throw new BO.UserCantUpdateItemExeption($"volunteer with id={volunteerId}can't change this assignment to end");
+            throw new BO.BlUserCantUpdateItemExeption($"volunteer with id={volunteerId}can't change this assignment to end");
         if (assignment.TheEndType != null || assignment.ActualEndTime != null)
-            throw new BO.UserCantUpdateItemExeption("This assignment already ended");
+            throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
         DO.Assignment newAssign = assignment with { ActualEndTime = ClockManager.Now, TheEndType = DO.EndType.treated };
 
         try
@@ -185,7 +188,6 @@ internal class CallImplementation : ICall
 
     public IEnumerable<BO.OpenCallInList> GetOpenCallInList(int volunteerId, BO.CallType? callTypeFilter, BO.FieldsOpenCallInList? sortField)
     {
-        double volunteerLong, volunteerLat, callLong, callLat;
         // קבלת כל הקריאות מה-DAL
         var allCalls = ReadAll(null, null, null);
 
@@ -205,7 +207,7 @@ internal class CallImplementation : ICall
                                 Address = theAddress,
                                 OpeningTime = call.OpeningTime,
                                 Distance = volunteer?.Address != null ?
-          CallManager.GetDistance(volunteer?.Address, theAddress)
+          CallManager.GetDistance(volunteer.Address, theAddress)
           : 0  // חישוב המרחק בין המתנדב לקריאה
 
                             };
@@ -245,14 +247,14 @@ internal class CallImplementation : ICall
         return new BO.Call()
         {
             Id = call.Id,
-            TheCallType = call.TheCallType,
+            TheCallType = (BO.CallType)call.TheCallType,
             VerbalDescription = call.VerbalDescription,
             Address = call.Address,
             Latitude = call.Latitude,
             Longitude = call.Longitude,
             OpeningTime = call.OpeningTime,
             MaxTimeToEnd = call.MaxTimeToEnd,
-            status = CallManager.CheckStatus(assignment, call),
+            status = CallManager.CheckStatus(assignment.OrderByDescending(s=>s.EntryTime).FirstOrDefault(), call),
             listAssignForCall = assignment == null ? null : CallManager.GetCallAssignInList(assignment)
         };
 
@@ -295,7 +297,7 @@ internal class CallImplementation : ICall
                     BO.FieldsCallInList.TheCallType => call.TheCallType.Equals(toFilter),
                     BO.FieldsCallInList.OpeningTime => call.OpeningTime.Equals(toFilter),
                     BO.FieldsCallInList.TimeToEnd => call.TimeToEnd.Equals(toFilter),
-                    BO.FieldsCallInList.LastVolunteer => call.LastVolunteer.Equals(toFilter),
+                    BO.FieldsCallInList.LastVolunteer => call.LastVolunteer!= null && call.LastVolunteer.Equals(toFilter),
                     BO.FieldsCallInList.CompletionTreatment => call.CompletionTreatment.Equals(toFilter),
                     BO.FieldsCallInList.status => call.status.Equals(toFilter),
                     BO.FieldsCallInList.TotalAssignments => call.TotalAssignments.Equals(toFilter),

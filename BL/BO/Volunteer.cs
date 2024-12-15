@@ -1,4 +1,5 @@
 ﻿using DO;
+using Helpers;
 
 namespace BO;
 
@@ -23,6 +24,8 @@ namespace BO;
 /// <param name="IsProgress">An optional reference to the call that the volunteer is currently handling.</param>
 public class Volunteer
 {
+    public override string ToString() => this.ToStringProperty();
+
     public int Id { get; init; } // Unique identifier for the volunteer
 
     public string Name { get; init; } // Name of the volunteer

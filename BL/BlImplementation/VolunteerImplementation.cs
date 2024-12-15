@@ -1,6 +1,5 @@
 ﻿namespace BlImplementation;
 using BlApi;
-
 using Helpers;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -41,7 +40,7 @@ internal class VolunteerImplementation : IVolunteer
 
         var volunteer = Read(id);
         if (volunteer.IsProgress != null)
-            throw new BO.cantDeleteItem($"Volunteer with ID={id} can't be deleted");
+            throw new BO.BlcantDeleteItem($"Volunteer with ID={id} can't be deleted");
         try
         {
             _dal.Volunteer.Delete(id);
@@ -63,7 +62,7 @@ internal class VolunteerImplementation : IVolunteer
         }
         if (VolunteerManager.DecryptPassword(volunteer.Password) != password)
         {
-            throw new BO.IncorrectValueException("incorrect password");
+            throw new BO.BlIncorrectValueException("incorrect password");
         }
         return (BO.RoleType)volunteer.Role;
     }
@@ -136,7 +135,7 @@ internal class VolunteerImplementation : IVolunteer
     {
         BO.Volunteer asker = Read(id);
         if (asker.Id != id && asker.Role != BO.RoleType.manager)
-            throw new BO.UserCantUpdateItemExeption("The asker can't update this Volunteer");
+            throw new BO.BlUserCantUpdateItemExeption("The asker can't update this Volunteer");
 
         BO.Volunteer oldVolunteer = Read(volunteer.Id);
         //funcs that check the value, end if the value is wrong the func will throw exeption
@@ -153,12 +152,12 @@ internal class VolunteerImplementation : IVolunteer
         password = VolunteerManager.EncryptPassword(password);
 
         if (asker.Role != BO.RoleType.manager && volunteer.Role != BO.RoleType.volunteer)
-            throw new BO.UserCantUpdateItemExeption("Volunteer Can't change the role of the volunteer");
+            throw new BO.BlUserCantUpdateItemExeption("Volunteer Can't change the role of the volunteer");
 
         if (volunteer.TotalCanceled != oldVolunteer.TotalCanceled ||
             volunteer.TotalExpired != oldVolunteer.TotalExpired ||
             volunteer.TotalHandled != oldVolunteer.TotalHandled)
-            throw new BO.UserCantUpdateItemExeption("asker can't change field of totall");
+            throw new BO.BlUserCantUpdateItemExeption("asker can't change field of totall");
         try
         {
             DO.Volunteer newVol = new()

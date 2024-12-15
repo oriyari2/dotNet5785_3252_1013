@@ -18,7 +18,7 @@ namespace Helpers;
 
 internal static class VolunteerManager
 {
-    private static IDal s_dal = Factory.Get;
+    private static IDal s_dal = DalApi.Factory.Get;
     private static readonly HttpClient client = new HttpClient
     {
         DefaultRequestHeaders =
@@ -36,7 +36,7 @@ internal static class VolunteerManager
         BO.CallInProgress callInProgress =
          (from item in assignments
           let call = s_dal.Call.Read(item.CallId)
-        select new BO.CallInProgress
+          select new BO.CallInProgress
           {
               Id = item.Id,
               CallId = item.CallId,
@@ -47,12 +47,11 @@ internal static class VolunteerManager
               MaxTimeToEnd = call.MaxTimeToEnd,
               EntryTime = item.EntryTime,
 
-              Distance = volunteer?.Address != null ? CalculateDistance(GetCoordinates(volunteer.Address,out double longi,out double lat), 
-              GetCoordinates(call.Address ,out double longi1, out double lat1)) : 0,
-
+              Distance = volunteer?.Address != null ? CallManager.GetDistance(volunteer.Address, call.Address) : 0,
+  
               status = (ClockManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
-                      ? BO.Status.treatment
-                      : BO.Status.riskTreatment
+                        ? BO.Status.treatment
+                        : BO.Status.riskTreatment
           }).First();
 
         return callInProgress;
@@ -65,7 +64,7 @@ internal static class VolunteerManager
     internal static void GetCoordinates(string address, out double latitude, out double longitude)
     {
         if (string.IsNullOrEmpty(address))
-            throw new BO.InvalidValueExeption("Address must be a non-empty string");
+            throw new BO.BlInvalidValueExeption("Address must be a non-empty string");
 
         string baseUrl = "https://nominatim.openstreetmap.org/search";
         string requestUrl = $"{baseUrl}?q={Uri.EscapeDataString(address)}&format=json&addressdetails=1";
@@ -76,14 +75,14 @@ internal static class VolunteerManager
             var data = JArray.Parse(response);
 
             if (data.Count == 0)
-                throw new BO.OurSystemExeption("No coordinates found for the provided address");
+                throw new BO.BlOurSystemExeption("No coordinates found for the provided address");
 
             latitude = double.Parse(data[0]["lat"].ToString());
             longitude = double.Parse(data[0]["lon"].ToString());
         }
         catch (Exception ex)
         {
-            throw new BO.OurSystemExeption($"Failed to fetch coordinates: {ex.Message}");
+            throw new BO.BlOurSystemExeption($"Failed to fetch coordinates: {ex.Message}");
         }
     }
 
@@ -133,31 +132,22 @@ internal static class VolunteerManager
     internal static void IsValidEmail(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
-            throw new BO.InvalidValueExeption("Invalid Email");
+            throw new BO.BlInvalidValueExeption("Invalid Email");
         // Regular expression to match a valid email address
         string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         if( Regex.IsMatch(email, emailPattern)==false)
-            throw new BO.InvalidValueExeption("Invalid Email");
+            throw new BO.BlInvalidValueExeption("Invalid Email");
     }
 
-    //internal static void IsNumericField(string input)
-    //{
-    //    // אם הקלט ריק או מכיל רק רווחים
-    //    if (string.IsNullOrWhiteSpace(input))
-    //        throw new BO.InvalidValueExeption("");
-    //    // מנסה להמיר את הקלט למספר שלם (או מספר נקודה צפה) לפי הצורך
-    //    if (int.TryParse(input, out _) || double.TryParse(input, out _) == false)
-    //        throw new BO.InvalidValueExeption("Invalid Phone Number"); ;
-    //}
 
     internal static void IsValidPhoneNumber(string phoneNumber)
     {
         // אם הקלט ריק או מכיל רווחים
         if (string.IsNullOrWhiteSpace(phoneNumber))
-            throw new BO.InvalidValueExeption("Invalid Phone Number ");
+            throw new BO.BlInvalidValueExeption("Invalid Phone Number ");
         // בדיקה שהטלפון מתחיל ב-05, מכיל בדיוק 10 ספרות וכולל רק ספרות
         if( phoneNumber.Length == 10 && phoneNumber.StartsWith("05") && phoneNumber.All(char.IsDigit)==false)
-            throw new BO.InvalidValueExeption("Invalid Phone Number "); ;
+            throw new BO.BlInvalidValueExeption("Invalid Phone Number "); ;
     }
 
     internal static void IsValidID(int id)
@@ -167,7 +157,7 @@ internal static class VolunteerManager
 
         // תעודת זהות חייבת להיות באורך 9 תווים (ללא ספרת ביקורת)
         if (idStr.Length != 9)
-            throw new BO.InvalidValueExeption("Invalid Id");
+            throw new BO.BlInvalidValueExeption("Invalid Id");
         // חישוב ספרת הביקורת (כפי שנעשה בתעודת זהות ישראלית)
         int sum = 0;
         for (int i = 0; i < 8; i++)
@@ -187,7 +177,7 @@ internal static class VolunteerManager
         int checkDigit = (10 - (sum % 10)) % 10;
         // השוואה עם ספרת הביקורת בתעודת הזהות
         if( checkDigit == (id % 10)==false)
-            throw new BO.InvalidValueExeption("Invalid Id");
+            throw new BO.BlInvalidValueExeption("Invalid Id");
     }
 
 
@@ -226,7 +216,7 @@ internal static class VolunteerManager
     {
         if (string.IsNullOrWhiteSpace(password))
         {
-            throw new BO.InvalidVlueExeption("Password cannot be null or empty.");
+            throw new BO.BlInvalidValueExeption("Password cannot be null or empty.");
         }
 
         char[] encrypted = new char[password.Length];
@@ -242,7 +232,7 @@ internal static class VolunteerManager
     {
         if (string.IsNullOrWhiteSpace(encryptedPassword))
         {
-            throw new BO.InvalidVlueExeption("Encrypted password cannot be null or empty.");
+            throw new BO.BlInvalidValueExeption("Encrypted password cannot be null or empty.");
         }
 
         char[] decrypted = new char[encryptedPassword.Length];
@@ -258,17 +248,17 @@ internal static class VolunteerManager
         // בדיקת אורך
         if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
         {
-            throw new BO.InvalidValueExeption("The password must be at least 8 characters long.");
+            throw new BO.BlInvalidValueExeption("The password must be at least 8 characters long.");
         }
         // בדיקת נוכחות של מספר
         if (!Regex.IsMatch(password, @"\d"))
         {
-            throw new BO.InvalidValueExeption("The password must contain at least one numeric digit.");
+            throw new BO.BlInvalidValueExeption("The password must contain at least one numeric digit.");
         }
         // בדיקת רצפים של יותר מ-2 תווים מאותו סוג
         if (Regex.IsMatch(password, @"(.)\1\1"))
         {
-            throw new BO.InvalidValueExeption("The password must not contain sequences of more than 2 identical characters.");
+            throw new BO.BlInvalidValueExeption("The password must not contain sequences of more than 2 identical characters.");
         }
     }
 

@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The OpenCallInList entity represents a call that is currently open, 
@@ -13,6 +15,8 @@
 /// <param name="Distance">The distance to the call's location from the handler or volunteer.</param>
 public class OpenCallInList
 {
+    public override string ToString() => this.ToStringProperty();
+
     public int Id { get; init; } // Unique identifier for the open call
 
     public CallType TheCallType { get; init ; } // Type of the call

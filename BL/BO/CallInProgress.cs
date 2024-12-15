@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using Helpers;
+
+namespace BO;
 
 /// <summary>
 /// The CallInProgress entity represents a call currently being handled, 
@@ -16,6 +18,8 @@
 /// <param name="status">The current status of the call (e.g., in-progress, escalated).</param>
 public class CallInProgress
 {
+    public override string ToString() => this.ToStringProperty();
+
     public int Id { get; init; } // Unique identifier for the record
 
     public int CallId { get; init; } // Unique identifier of the call
