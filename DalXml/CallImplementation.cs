@@ -119,6 +119,7 @@ internal class CallImplementation : ICall
     /// <returns>An enumerable collection of Calls matching the filter, or all Calls if no filter is provided.</returns>
     public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null)
     {
+
         IEnumerable<Call> allCalls = XMLTools.LoadListFromXMLElement(Config.s_calls_xml)
                    .Elements().Select(s => getCall(s));
         return filter is null ? allCalls : allCalls.Where(filter);

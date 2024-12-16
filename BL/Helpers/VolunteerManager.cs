@@ -47,7 +47,7 @@ internal static class VolunteerManager
               MaxTimeToEnd = call.MaxTimeToEnd,
               EntryTime = item.EntryTime,
 
-              Distance = volunteer?.Address != null ? CallManager.GetDistance(volunteer.Address, call.Address) : 0,
+              Distance = volunteer?.Address != null ? VolunteerManager.GetDistance(volunteer.Address, call.Address) : 0,
   
               status = (ClockManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
                         ? BO.Status.treatment
@@ -55,65 +55,6 @@ internal static class VolunteerManager
           }).First();
 
         return callInProgress;
-    }
-
-
-    /// <summary>
-    /// מקבלת כתובת ומחזירה קואורדינטות של קו רוחב וקו אורך.
-    /// </summary>
-    internal static void GetCoordinates(string address, out double latitude, out double longitude)
-    {
-        if (string.IsNullOrEmpty(address))
-            throw new BO.BlInvalidValueExeption("Address must be a non-empty string");
-
-        string baseUrl = "https://nominatim.openstreetmap.org/search";
-        string requestUrl = $"{baseUrl}?q={Uri.EscapeDataString(address)}&format=json&addressdetails=1";
-
-        try
-        {
-            var response = client.GetStringAsync(requestUrl).Result; // סינכרוני
-            var data = JArray.Parse(response);
-
-            if (data.Count == 0)
-                throw new BO.BlOurSystemExeption("No coordinates found for the provided address");
-
-            latitude = double.Parse(data[0]["lat"].ToString());
-            longitude = double.Parse(data[0]["lon"].ToString());
-        }
-        catch (Exception ex)
-        {
-            throw new BO.BlOurSystemExeption($"Failed to fetch coordinates: {ex.Message}");
-        }
-    }
-
-    /// <summary>
-    /// מחשבת את המרחק האווירי בין שתי נקודות קואורדינטות.
-    /// </summary>
-    internal static double CalculateDistance((double Latitude, double Longitude) point1, (double Latitude, double Longitude) point2)
-    {
-        const double EarthRadiusKm = 6371;
-
-        double lat1Rad = DegreeToRadian(point1.Latitude);
-        double lon1Rad = DegreeToRadian(point1.Longitude);
-        double lat2Rad = DegreeToRadian(point2.Latitude);
-        double lon2Rad = DegreeToRadian(point2.Longitude);
-
-        double dlat = lat2Rad - lat1Rad;
-        double dlon = lon2Rad - lon1Rad;
-
-        double a = Math.Pow(Math.Sin(dlat / 2), 2) +
-                   Math.Cos(lat1Rad) * Math.Cos(lat2Rad) * Math.Pow(Math.Sin(dlon / 2), 2);
-
-        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-        return EarthRadiusKm * c;
-    }
-
-    /// <summary>
-    /// ממירה מעלות לרדיאנים.
-    /// </summary>
-    internal static double DegreeToRadian(double degree)
-    {
-        return degree * Math.PI / 180.0;
     }
 
     internal static int? GetCurrentCall(int id)
@@ -129,6 +70,7 @@ internal static class VolunteerManager
         return (BO.CallType)call.TheCallType;
     }
 
+    #region isValidInput
     internal static void IsValidEmail(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
@@ -179,8 +121,9 @@ internal static class VolunteerManager
         if( checkDigit == (id % 10)==false)
             throw new BO.BlInvalidValueExeption("Invalid Id");
     }
+    #endregion
 
-
+    #region Passwors
     public static string GenerateStrongPassword()
     {
         // מאגר התווים האפשריים
@@ -262,7 +205,116 @@ internal static class VolunteerManager
         }
     }
 
-};
+    #endregion
+
+    #region distance
+    /// <summary>
+    /// מקבלת כתובת ומחזירה קואורדינטות של קו רוחב וקו אורך.
+    /// </summary>
+    internal static void GetCoordinates(string address, out double latitude, out double longitude)
+    {
+        if (string.IsNullOrEmpty(address))
+            throw new BO.BlInvalidValueExeption("Address must be a non-empty string");
+
+        string baseUrl = "https://nominatim.openstreetmap.org/search";
+        string requestUrl = $"{baseUrl}?q={Uri.EscapeDataString(address)}&format=json&addressdetails=1";
+
+        try
+        {
+            // יצירת אובייקט HttpClient ואחזור התשובה בצורה סינכרונית
+            using (var client = new HttpClient())
+            {
+                var response = client.GetStringAsync(requestUrl).Result; // סינכרוני, מחכה לתשובה
+                var data = JArray.Parse(response);
+
+                if (data.Count == 0)
+                    throw new BO.BlOurSystemExeption("No coordinates found for the provided address");
+
+                latitude = double.Parse(data[0]["lat"].ToString());
+                longitude = double.Parse(data[0]["lon"].ToString());
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlOurSystemExeption($"Failed to fetch coordinates: {ex.Message}");
+        }
+    }
+
+
+    /// <summary>
+    /// מחשבת את המרחק האווירי בין שתי נקודות קואורדינטות.
+    /// </summary>
+    internal static double CalculateDistance((double Latitude, double Longitude) point1, (double Latitude, double Longitude) point2)
+    {
+        const double EarthRadiusKm = 6371;
+
+        double lat1Rad = DegreeToRadian(point1.Latitude);
+        double lon1Rad = DegreeToRadian(point1.Longitude);
+        double lat2Rad = DegreeToRadian(point2.Latitude);
+        double lon2Rad = DegreeToRadian(point2.Longitude);
+
+        double dlat = lat2Rad - lat1Rad;
+        double dlon = lon2Rad - lon1Rad;
+
+        double a = Math.Pow(Math.Sin(dlat / 2), 2) +
+                   Math.Cos(lat1Rad) * Math.Cos(lat2Rad) * Math.Pow(Math.Sin(dlon / 2), 2);
+
+        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+        return EarthRadiusKm * c;
+    }
+
+    /// <summary>
+    /// ממירה מעלות לרדיאנים.
+    /// </summary>
+    internal static double DegreeToRadian(double degree)
+    {
+        return degree * Math.PI / 180.0;
+    }
+
+    /// <summary>
+    /// מחשבת את המרחק בין כתובת מתנדב לכתובת קריאה.
+    /// </summary>
+    /// <param name="volunteerAddress">כתובת המתנדב</param>
+    /// <param name="callAddress">כתובת הקריאה</param>
+    /// <returns>מרחק בקילומטרים</returns>
+    internal static double GetDistance(string volunteerAddress, string callAddress)
+    {
+        if (string.IsNullOrEmpty(volunteerAddress) || string.IsNullOrEmpty(callAddress))
+        {
+            return 0; // אם הכתובת לא תקינה, מחזירים 0
+        }
+
+        try
+        {
+            // קבלת קואורדינטות עבור כתובת המתנדב
+            GetCoordinates(volunteerAddress, out double volunteerLat, out double volunteerLong);
+
+            // קבלת קואורדינטות עבור כתובת הקריאה
+            GetCoordinates(callAddress, out double callLat, out double callLong);
+
+            // חישוב המרחק בעזרת CalculateDistance
+            return CalculateDistance(
+                (Latitude: volunteerLat, Longitude: volunteerLong),
+                (Latitude: callLat, Longitude: callLong));
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlInvalidValueExeption($"Error calculating distance: {ex.Message}");
+        }
+    }
+
+
+
+
+    //distance = VolunteerManager.CalculateDistance((volLatitude, volLongitude),(callLatitude, callLongitude));
+    //double distance = 0;
+    //VolunteerManager.GetCoordinates(volunteer.Address, out callLatitude, out callLongitude);
+    #endregion
+
+}
+
+
+
 
 
 

@@ -1,4 +1,6 @@
-﻿namespace BlTest;
+﻿using BO;
+
+namespace BlTest;
 
 internal class Program
 {
@@ -89,11 +91,15 @@ internal class Program
                             break;
 
                         case AdminMenuOptions.AdvanceClock:
-                            Console.Write("Enter time unit to advance: ");
-                            if (Enum.TryParse(Console.ReadLine(), out BO.TimeUnit timeUnit))
-                                s_bl.Admin.AdvanceClock(timeUnit);
-                            else
+                            Console.Write("Enter time unit to advance:\n" +
+                                "0. Minute\n1. Hour\n2. Day\n3. Month\n4. Year\n");
+                            BO.TimeUnit timeUnit;
+                            while (!Enum.TryParse(Console.ReadLine(), out timeUnit))
+                            {
                                 Console.WriteLine("Invalid Time Unit");
+                            }  
+                            s_bl.Admin.AdvanceClock(timeUnit);
+                                Console.WriteLine(s_bl.Admin.GetClock());
                             break;
 
                         case AdminMenuOptions.GetRiskRange:
@@ -102,10 +108,10 @@ internal class Program
 
                         case AdminMenuOptions.SetRiskRange:
                             Console.Write("Enter risk range (hh:mm:ss): ");
-                            if (TimeSpan.TryParse(Console.ReadLine(), out TimeSpan range))
-                                s_bl.Admin.SetRiskRange(range);
-                            else
+                            TimeSpan range;
+                            while (!TimeSpan.TryParse(Console.ReadLine(), out  range))
                                 Console.Write("Invalid risk range ");
+                            s_bl.Admin.SetRiskRange(range);
                             break;
 
                         case AdminMenuOptions.Reset:
@@ -133,6 +139,7 @@ internal class Program
         }
     }
 
+
     private static void CallMenu()
     {
         bool exit = false;
@@ -159,18 +166,66 @@ internal class Program
                             break;
 
                         case CallMenuOptions.CallsAmount:
-                            foreach (var amount in s_bl.Call.CallsAmount())
-                                Console.WriteLine(amount);
+                            var amounts = s_bl.Call.CallsAmount().ToArray(); // שמירת התוצאה במערך
+                            for (int i = 0; i < amounts.Length; i++)
+                                Console.WriteLine($"{(BO.Status)i}: {amounts[i]}");
+                            break;
+
+                        case CallMenuOptions.ReadAll:
+                            var allCalls = s_bl.Call.ReadAll(null, null, null);
+                            foreach (var call in allCalls)
+                                Console.WriteLine(call);
                             break;
 
                         case CallMenuOptions.Read:
                             Console.Write("Enter call ID: ");
-                            if (int.TryParse(Console.ReadLine(), out int id))
-                                Console.WriteLine(s_bl.Call.Read(id));
+                            int id;
+                            while (!int.TryParse(Console.ReadLine(), out  id))
+                                Console.Write("Invalid Id "); 
+                            try
+                            { 
+                            Console.WriteLine(s_bl.Call.Read(id));
+                            }
+                            catch(BO.BlDoesNotExistException ex) 
+                            {
+                                PrintException(ex);
+                            }
+
                             break;
 
+                        case CallMenuOptions.Update:
+                            Console.Write("Enter call ID to update: ");
+                            //if (int.TryParse(Console.ReadLine(), out int updateId))
+                            //{
+                            //    var callToUpdate = s_bl.Call.Read(updateId);
+                            //    Console.WriteLine("Enter new details for the call:");
+                            //    // ניתן להניח פה קבלת נתונים חדשים מהמשתמש, לדוגמה:
+                            //    Console.Write("New Description: ");
+                            //    string newDescription = Console.ReadLine();
+                            //    callToUpdate.Description = newDescription;
+                            //    s_bl.Call.Update(callToUpdate);
+                            //    Console.WriteLine("Call updated successfully.");
+                            //}
+                            //else
+                                Console.WriteLine("Invalid Id");
+                            break;
+
+                        case CallMenuOptions.Delete:
+                            Console.Write("Enter call ID to delete: ");
+                            if (int.TryParse(Console.ReadLine(), out int deleteId))
+                            {
+                                s_bl.Call.Delete(deleteId);
+                                Console.WriteLine("Call deleted successfully.");
+                            }
+                            else
+                                Console.WriteLine("Invalid Id");
+                            break;
+
+                        case CallMenuOptions.Create:
+                            CallMenuCreate();
+                            break;
                         default:
-                            Console.WriteLine("Option not implemented.");
+                            Console.WriteLine("Invalid option.");
                             break;
                     }
                 }
@@ -179,8 +234,12 @@ internal class Program
                     PrintException(ex);
                 }
             }
+            else
+                Console.WriteLine("Invalid input.");
+
         }
     }
+
 
     private static void VolunteerMenu()
     {
@@ -229,6 +288,48 @@ internal class Program
         Console.WriteLine($"Message: {ex.Message}");
         if (ex.InnerException != null)
             Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+    }
+
+    private static void CallMenuCreate()
+    {
+        Console.WriteLine("Enter new call details:\n");
+        Console.Write("Call Type\n0: Transportation\n1: Babysitting\n2: Shopping\n3: food\n4: Cleaning:\n");
+        BO.CallType callType;
+        while (!Enum.TryParse(Console.ReadLine(), out callType))
+        {
+            Console.WriteLine("Invalid Call Type.");
+        }
+        Console.Write("Verbal Description:\n");
+        string? description = Console.ReadLine();
+
+        Console.Write("Address:()\n");
+        string? address = Console.ReadLine();
+
+        Console.Write("Max Time To End (yyyy-MM-dd HH:mm) [optional]:\n");
+        DateTime? maxTimeToEnd = DateTime.TryParse(Console.ReadLine(), out DateTime maxEndTime) ? maxEndTime : null;
+        BO.Call call = new BO.Call()
+        {
+            Id = 0,
+
+            TheCallType = callType,
+
+            VerbalDescription = description,
+
+            Address = address,
+
+            Latitude = 0,
+
+            Longitude = 0,
+
+            OpeningTime = DateTime.Now,
+
+            MaxTimeToEnd = maxTimeToEnd,
+
+            status = BO.Status.treatment,
+
+            listAssignForCall = null
+        };
+            s_bl.Call.Create(call);
     }
 }
 

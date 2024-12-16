@@ -207,7 +207,7 @@ internal class CallImplementation : ICall
                                 Address = theAddress,
                                 OpeningTime = call.OpeningTime,
                                 Distance = volunteer?.Address != null ?
-          CallManager.GetDistance(volunteer.Address, theAddress)
+          VolunteerManager.GetDistance(volunteer.Address, theAddress)
           : 0  // חישוב המרחק בין המתנדב לקריאה
 
                             };
@@ -264,8 +264,6 @@ internal class CallImplementation : ICall
 
     public IEnumerable<BO.CallInList> ReadAll(BO.FieldsCallInList? filter, object? toFilter, BO.FieldsCallInList? toSort)
     {
-
-
         var listCall = _dal.Call.ReadAll();
         var listAssignment = _dal.Assignment.ReadAll();
         var callInList = from item in listCall
@@ -279,8 +277,8 @@ internal class CallImplementation : ICall
                              TheCallType = (BO.CallType)item.TheCallType,
                              OpeningTime = item.OpeningTime,
                              TimeToEnd = TempTimeToEnd > TimeSpan.Zero ? TempTimeToEnd : null,
-                             LastVolunteer = volunteer.Name,
-                             CompletionTreatment = assignment.TheEndType != null ? assignment.ActualEndTime - item.OpeningTime : null,
+                             LastVolunteer = volunteer!= null ? volunteer.Name : null,
+                             CompletionTreatment = assignment != null ? (assignment.TheEndType != null ? assignment.ActualEndTime - item.OpeningTime : null): null,
                              status = CallManager.CheckStatus(assignment, item),
                              TotalAssignments = listAssignment.Where(s => s.CallId == item.Id).Count()
                          };

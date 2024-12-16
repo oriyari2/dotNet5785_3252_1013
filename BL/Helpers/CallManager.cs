@@ -61,44 +61,6 @@ internal static class CallManager
             MaxTimeToEnd = call.MaxTimeToEnd
         };
     }
-
-    /// <summary>
-    /// מחשבת את המרחק בין כתובת מתנדב לכתובת קריאה.
-    /// </summary>
-    /// <param name="volunteerAddress">כתובת המתנדב</param>
-    /// <param name="callAddress">כתובת הקריאה</param>
-    /// <returns>מרחק בקילומטרים</returns>
-    internal static double GetDistance(string volunteerAddress, string callAddress)
-    {
-        if (string.IsNullOrEmpty(volunteerAddress) || string.IsNullOrEmpty(callAddress))
-        {
-            return 0; // אם הכתובת לא תקינה, מחזירים 0
-        }
-
-        try
-        {
-            // קבלת קואורדינטות עבור כתובת המתנדב
-            VolunteerManager.GetCoordinates(volunteerAddress, out double volunteerLat, out double volunteerLong);
-
-            // קבלת קואורדינטות עבור כתובת הקריאה
-            VolunteerManager.GetCoordinates(callAddress, out double callLat, out double callLong);
-
-            // חישוב המרחק בעזרת CalculateDistance
-            return VolunteerManager.CalculateDistance(
-                (Latitude: volunteerLat, Longitude: volunteerLong),
-                (Latitude: callLat, Longitude: callLong));
-        }
-        catch (Exception ex)
-        {
-            throw new BO.BlInvalidValueExeption($"Error calculating distance: {ex.Message}");
-        }
-
-
-
-        //distance = VolunteerManager.CalculateDistance((volLatitude, volLongitude),(callLatitude, callLongitude));
-        //double distance = 0;
-        //VolunteerManager.GetCoordinates(volunteer.Address, out callLatitude, out callLongitude);
-    }
     internal static void UpdateExpired()
     {
         // שלב 1: שליפת קריאות שזמן הסיום המקסימלי שלהן עבר

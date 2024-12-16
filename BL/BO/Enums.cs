@@ -50,5 +50,5 @@ public enum FieldsOpenCallInList { Id, TheCallType , VerbalDescription , Address
 /// <summary>
 /// ENUM value of a time units
 /// </summary>
-public enum TimeUnit { Day, Month,Hour, Minute,Year };
+public enum TimeUnit {Minute, Hour, Day, Month, Year };
 
