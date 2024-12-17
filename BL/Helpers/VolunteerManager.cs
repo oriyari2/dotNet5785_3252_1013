@@ -26,7 +26,12 @@ internal static class VolunteerManager
         UserAgent = { new ProductInfoHeaderValue("GeocodingDistanceProject", "1.0") }
     }
     };
-    internal static int TotalCall(int id, DO.EndType endType) => s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == endType)).Count();
+    internal static int TotalCall(int id, DO.EndType endType)
+    {
+      var tempAssignments=  s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == endType)); 
+      var toReturn= tempAssignments==null?0: tempAssignments.Count();
+        return toReturn;
+    }
     internal static BO.CallInProgress callProgress(int id)
     {
         var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == null));
@@ -52,9 +57,9 @@ internal static class VolunteerManager
               status = (ClockManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
                         ? BO.Status.treatment
                         : BO.Status.riskTreatment
-          }).First();
+          }).FirstOrDefault();
 
-        return callInProgress;
+           return callInProgress;
     }
 
     internal static int? GetCurrentCall(int id)
