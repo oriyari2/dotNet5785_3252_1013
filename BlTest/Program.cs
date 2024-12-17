@@ -267,14 +267,8 @@ internal class Program
                             break;
 
                         case VolunteerMenuOptions.LogIn:
-                            Console.Write("Enter Volunteer ID to Log In: ");
-                            if (int.TryParse(Console.ReadLine(), out int loginId))
-                            {
-                                var volunteer = s_bl.Volunteer.Read(loginId);
-                                Console.WriteLine($"Successfully logged in: {volunteer}");
-                            }
-                            else
-                                Console.WriteLine("Invalid ID format.");
+                            BO.RoleType role = LogInHelp();
+                            Console.Write("Volunteer Role is: ", role);
                             break;
 
                         case VolunteerMenuOptions.ReadAll:
@@ -412,6 +406,15 @@ internal class Program
             listAssignForCall = null
         };
             s_bl.Call.Create(call);
+    }
+
+    private static BO.RoleType LogInHelp()
+    {
+        Console.Write("Enter Volunteer Name to Log In: ");
+        string? name = Console.ReadLine();
+        Console.Write("Enter Volunteer Password to Log In: ");
+        string? password = Console.ReadLine();
+        return s_bl.Volunteer.LogIn(name, password);
     }
 }
 

@@ -1,5 +1,4 @@
 ﻿namespace DalTest;
-
 using Dal;
 using DalApi;
 using DO;
@@ -259,11 +258,27 @@ public static class Initialization
             string VolEmail = VolPhone + "@gmail.com"; //valid email with the volunteer phone number
 
             double VolMaxDis = s_rand.Next(); //random distance
+            string Password = "ps" + VolPhone;
+            Password = EncryptPassword(Password);
 
-            s_dal!.Volunteer.Create(new(VolId, VolNames[i], VolPhone, VolEmail, null, VolAdresses[i],
+            s_dal!.Volunteer.Create(new(VolId, VolNames[i], VolPhone, VolEmail, Password, VolAdresses[i],
             VolLatitudes[i], VolLongitudes[i], VulRole, true, VolMaxDis, DistanceType.air));
             //add new Volunteer with right details to list
         }
+    }
+
+    internal static int GetShift => 3; // הסטת תווים עבור ההצפנה
+
+    // פונקציה להצפנת סיסמה
+    internal static string EncryptPassword(string password)
+    {
+ 
+        char[] encrypted = new char[password.Length];
+        for (int i = 0; i < password.Length; i++)
+        {
+            encrypted[i] = (char)(password[i] + GetShift);
+        }
+        return new string(encrypted);
     }
 
     /// <summary>

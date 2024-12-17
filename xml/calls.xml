@@ -613,6 +613,15 @@
     <MaxTimeToEnd>2025-08-12T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>68</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Latitude>31.757</Latitude>
+    <Longitude>35.219</Longitude>
+    <OpeningTime>2023-09-13T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-09-13T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>69</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
