@@ -96,18 +96,18 @@ internal class CallImplementation : ICall
         BO.Call call = Read(id);
 
         if(call == null)
-            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
+            throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
 
         if (call.listAssignForCall == null || call.listAssignForCall.Count != 0)
             throw new BO.BlcantDeleteItem($"call with ID={id} can't be deleted");
 
         try
         {
-            _dal.Volunteer.Delete(id);
+            _dal.Call.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist", ex);
+            throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist", ex);
         }
     }
 

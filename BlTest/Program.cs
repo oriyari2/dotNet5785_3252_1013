@@ -252,6 +252,9 @@ internal class Program
             Console.WriteLine("1. Log In");
             Console.WriteLine("2. Read All");
             Console.WriteLine("3. Read");
+            Console.WriteLine("4. Update");
+            Console.WriteLine("5. Delete");
+            Console.WriteLine("6. Create");
 
             if (Enum.TryParse(Console.ReadLine(), out VolunteerMenuOptions choice))
             {
@@ -263,10 +266,84 @@ internal class Program
                             exit = true;
                             break;
 
+                        case VolunteerMenuOptions.LogIn:
+                            Console.Write("Enter Volunteer ID to Log In: ");
+                            if (int.TryParse(Console.ReadLine(), out int loginId))
+                            {
+                                var volunteer = s_bl.Volunteer.Read(loginId);
+                                Console.WriteLine($"Successfully logged in: {volunteer}");
+                            }
+                            else
+                                Console.WriteLine("Invalid ID format.");
+                            break;
+
+                        case VolunteerMenuOptions.ReadAll:
+                            Console.WriteLine("Reading all volunteers...");
+                            var volList = s_bl.Volunteer.ReadAll(null);
+                            foreach (var volunteer in volList)
+                                Console.WriteLine(volunteer);
+                            break;
+
                         case VolunteerMenuOptions.Read:
-                            Console.Write("Enter Volunteer ID: ");
-                            if (int.TryParse(Console.ReadLine(), out int id))
-                                Console.WriteLine(s_bl.Volunteer.Read(id));
+                            Console.Write("Enter Volunteer ID to Read: ");
+                            if (int.TryParse(Console.ReadLine(), out int readId))
+                            {
+                                var volunteer = s_bl.Volunteer.Read(readId);
+                                Console.WriteLine(volunteer);
+                            }
+                            else
+                                Console.WriteLine("Invalid ID format.");
+                            break;
+
+                        case VolunteerMenuOptions.Update:
+                            Console.Write("Enter Volunteer ID to Update: ");
+                            //if (int.TryParse(Console.ReadLine(), out int updateId))
+                            //{
+                            //    var existingVolunteer = s_bl.Volunteer.Read(updateId);
+                            //    Console.WriteLine($"Existing Volunteer: {existingVolunteer}");
+
+                            //    Console.Write("Enter New Name: ");
+                            //    string newName = Console.ReadLine();
+
+                            //    existingVolunteer.Name = newName;
+                            //    s_bl.Volunteer.Update(existingVolunteer);
+
+                            //    Console.WriteLine("Volunteer updated successfully.");
+                            //}
+                            //else
+                            //    Console.WriteLine("Invalid ID format.");
+                            break;
+
+                        case VolunteerMenuOptions.Delete:
+                            Console.Write("Enter Volunteer ID to Delete: ");
+                            if (int.TryParse(Console.ReadLine(), out int deleteId))
+                            {
+                                s_bl.Volunteer.Delete(deleteId);
+                                Console.WriteLine($"Volunteer with ID {deleteId} deleted successfully.");
+                            }
+                            else
+                                Console.WriteLine("Invalid ID format.");
+                            break;
+
+                        case VolunteerMenuOptions.Create:
+                            //Console.Write("Enter Volunteer Name: ");
+                            //string name = Console.ReadLine();
+
+                            //Console.Write("Enter Address: ");
+                            //string address = Console.ReadLine();
+
+                            //Console.Write("Enter Phone Number: ");
+                            //string phoneNumber = Console.ReadLine();
+
+                            //var newVolunteer = new BO.Volunteer
+                            //{
+                            //    Name = name,
+                            //    Address = address,
+                            //    PhoneNumber = phoneNumber
+                            //};
+
+                            //s_bl.Volunteer.Create(newVolunteer);
+                            Console.WriteLine("New volunteer created successfully.");
                             break;
 
                         default:
@@ -279,7 +356,12 @@ internal class Program
                     PrintException(ex);
                 }
             }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a number between 0 and 6.");
+            }
         }
+
     }
 
     private static void PrintException(Exception ex)
