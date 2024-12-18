@@ -98,9 +98,9 @@ internal class Program
                             while (!Enum.TryParse(Console.ReadLine(), out timeUnit))
                             {
                                 Console.WriteLine("Invalid Time Unit");
-                            }  
+                            }
                             s_bl.Admin.AdvanceClock(timeUnit);
-                                Console.WriteLine(s_bl.Admin.GetClock());
+                            Console.WriteLine(s_bl.Admin.GetClock());
                             break;
 
                         case AdminMenuOptions.GetRiskRange:
@@ -110,7 +110,7 @@ internal class Program
                         case AdminMenuOptions.SetRiskRange:
                             Console.Write("Enter risk range (hh:mm:ss): ");
                             TimeSpan range;
-                            while (!TimeSpan.TryParse(Console.ReadLine(), out  range))
+                            while (!TimeSpan.TryParse(Console.ReadLine(), out range))
                                 Console.Write("Invalid risk range ");
                             s_bl.Admin.SetRiskRange(range);
                             break;
@@ -227,7 +227,7 @@ internal class Program
                             BO.FieldsClosedCallInList? sortField = sortFilterClose();
                             var closeCallList = s_bl.Call.GetClosedCallInList(volunteerId, callTypeFilter, sortField);
                             Console.WriteLine("Call Closed list for volunteer: ");
-                            foreach ( var call in closeCallList)
+                            foreach (var call in closeCallList)
                                 Console.WriteLine(call);
                             break;
 
@@ -237,43 +237,69 @@ internal class Program
                                 out BO.CallType? filter);
                             BO.FieldsOpenCallInList? sort = sortFilterOpen();
                             var openCallList = s_bl.Call.GetOpenCallInList(volId, filter, sort);
-                            Console.WriteLine("Call Closed list for volunteer: ");
+                            Console.WriteLine("Call Open list for volunteer: ");
                             foreach (var call in openCallList)
                                 Console.WriteLine(call);
                             break;
 
                         case CallMenuOptions.EndTreatment:
-                            Console.Write("Enter call ID to end treatment: ");
-                            if (int.TryParse(Console.ReadLine(), out int endId))
+                            Console.Write("Enter volunteer ID to end treatment of current call in treatment: ");
+                            if (int.TryParse(Console.ReadLine(), out int volunteerId2))
                             {
-                                //s_bl.Call.EndTreatment(endId);
-                                Console.WriteLine("Treatment ended successfully.");
+                                var assignmentProgress = s_bl.Volunteer.Read(volunteerId2).IsProgress;
+                                if (assignmentProgress == null)
+                                    Console.WriteLine("No Call In Treatmet Of Volunteer");
+                                else
+                                {
+                                    s_bl.Call.EndTreatment(volunteerId2, assignmentProgress.Id);
+                                    Console.WriteLine("Treatment ended successfully.");
+                                }
                             }
                             else
                                 Console.WriteLine("Invalid Id.");
                             break;
 
                         case CallMenuOptions.CancelTreatment:
-                            Console.Write("Enter call ID to cancel treatment: ");
-                            if (int.TryParse(Console.ReadLine(), out int cancelId))
+                            Console.Write("Enter your ID : ");
+                            if (int.TryParse(Console.ReadLine(), out int requesterId))
                             {
-                                //s_bl.Call.CancelTreatment(cancelId);
-                                Console.WriteLine("Treatment canceled successfully.");
+
+                                if (s_bl.Volunteer.Read(requesterId).Role == BO.RoleType.manager)
+                                {
+                                    Console.Write("Enter volunteer ID to cancel treatment of current call in treatment: ");
+                                    if (!int.TryParse(Console.ReadLine(), out requesterId))
+                                    {
+                                        Console.WriteLine("Invalid Id.");
+                                        break;
+                                    }
+                                }
+                                
+                                var assignmentProgress = s_bl.Volunteer.Read(requesterId).IsProgress;
+                                if (assignmentProgress == null)
+                                    Console.WriteLine("No Call In Treatmet Of Volunteer");
+                                else
+                                {
+                                    s_bl.Call.CancelTreatment(requesterId, assignmentProgress.Id);
+                                    Console.WriteLine("Treatment canceled successfully.");
+                                }
                             }
                             else
                                 Console.WriteLine("Invalid Id.");
-                            break;
+                        break;
 
                         case CallMenuOptions.ChooseCallToTreat:
+                           
+                            HelpGetCallList(out int chooserId, out BO.CallType? callType);
+                            BO.FieldsOpenCallInList? toSort = sortFilterOpen();
                             Console.WriteLine("Choose a call to treat:");
-                            //var openCallList = s_bl.Call.GetOpenCallList();
-                            //foreach (var call in openCallList)
-                            //    Console.WriteLine(call);
+                            var openCall = s_bl.Call.GetOpenCallInList(chooserId, callType, toSort);
+                            foreach (var call in openCall)
+                                Console.WriteLine(call);
 
                             Console.Write("Enter call ID to treat: ");
                             if (int.TryParse(Console.ReadLine(), out int treatId))
                             {
-                                //s_bl.Call.ChooseCallToTreat(treatId);
+                                s_bl.Call.ChooseCallToTreat(chooserId,treatId);
                                 Console.WriteLine("Call is now being treated.");
                             }
                             else
@@ -425,7 +451,7 @@ internal class Program
         if (ex.InnerException != null)
             Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
     }
-
+    
     private static void CallMenuCreate()
     {
         Console.WriteLine("Enter new call details:\n");
@@ -465,7 +491,7 @@ internal class Program
 
             listAssignForCall = null
         };
-            s_bl.Call.Create(call);
+        s_bl.Call.Create(call);
     }
 
     private static BO.RoleType LogInHelp()

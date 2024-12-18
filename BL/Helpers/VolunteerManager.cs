@@ -29,11 +29,12 @@ internal static class VolunteerManager
     }
     internal static BO.CallInProgress callProgress(int id)
     {
-        var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == null));
+    var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId== id) && (s.ActualEndTime==null));
+
         var volunteer = s_dal.Volunteer.Read(id)??
            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
         AdminImplementation admin = new();
-        BO.CallInProgress callInProgress =
+        BO.CallInProgress? callInProgress =
          (from item in assignments
           let call = s_dal.Call.Read(item.CallId)
           select new BO.CallInProgress

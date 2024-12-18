@@ -23,6 +23,6 @@ public record Assignment
 )
 {
     public Assignment() : this(0, 0, 0, DateTime.Now,
-    DateTime.Now, EndType.expired)
+    null, null)
     { } // empty ctor
 }

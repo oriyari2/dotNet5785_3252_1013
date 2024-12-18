@@ -193,7 +193,7 @@ internal class CallImplementation : ICall
 
         // קבלת כל השיבוצים מה-DAL
         var allAssignments = _dal.Assignment.ReadAll();
-        var volunteer = Read(volunteerId);
+        DO.Volunteer volunteer = _dal.Volunteer.Read(volunteerId);
         // סינון לפי סטטוס "פתוחה" או "פתוחה בסיכון" בלבד
         var filteredCalls = from call in allCalls
                             join assignment in allAssignments on call.Id equals assignment.CallId into callAssignments
