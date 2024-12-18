@@ -16,14 +16,14 @@ internal class VolunteerImplementation : IVolunteer
         VolunteerManager.IsValidEmail(boVolunteer.Email);
         VolunteerManager.IsValidID(boVolunteer.Id);
         VolunteerManager.IsValidPhoneNumber(boVolunteer.PhoneNumber);
-        VolunteerManager.GetCoordinates(boVolunteer.Address, out double latitude, out double longitude);//this function ia additon
+        double[] dis = VolunteerManager.GetCoordinates(boVolunteer.Address);//this function ia additon
                                                                                                         //put latitude and longitud of adress
         string password = VolunteerManager.GenerateStrongPassword();
         password = VolunteerManager.EncryptPassword(password);
 
         DO.Volunteer doVolunteer = new(boVolunteer.Id, boVolunteer.Name,
-        boVolunteer.PhoneNumber, boVolunteer.Email, password, boVolunteer.Address, boVolunteer.Latitude,
-        boVolunteer.Longitude, (DO.RoleType)boVolunteer.Role, boVolunteer.Active, boVolunteer.MaxDistance, (DO.DistanceType)boVolunteer.TheDistanceType);
+        boVolunteer.PhoneNumber, boVolunteer.Email, password, boVolunteer.Address, dis[0],
+        dis[1], (DO.RoleType)boVolunteer.Role, boVolunteer.Active, boVolunteer.MaxDistance, (DO.DistanceType)boVolunteer.TheDistanceType);
         try
         {
             _dal.Volunteer.Create(doVolunteer);
@@ -145,7 +145,7 @@ internal class VolunteerImplementation : IVolunteer
 
         double volLatitude, volLongitude;
 
-        VolunteerManager.GetCoordinates(volunteer.Address, out volLatitude, out volLongitude); //put latitude and longitud of adress
+        double[] cordinate = VolunteerManager.GetCoordinates(volunteer.Address); //put latitude and longitud of adress
 
         string password = volunteer.Password;
         VolunteerManager.ValidateStrongPassword(password);
@@ -168,8 +168,8 @@ internal class VolunteerImplementation : IVolunteer
                 Email = volunteer.Email,
                 Password = password,
                 Address = volunteer.Address,
-                Latitude = volLatitude,
-                Longitude = volLongitude,
+                Latitude = cordinate[0],
+                Longitude = cordinate[1],
                 Role = (DO.RoleType)volunteer.Role,
                 Active = volunteer.Active,
                 MaxDistance = volunteer.MaxDistance,

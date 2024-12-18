@@ -630,4 +630,13 @@
     <OpeningTime>2023-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2025-10-14T00:00:00</MaxTimeToEnd>
   </Call>
+  <Call>
+    <Id>122</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>?</VerbalDescription>
+    <Latitude>32.8191218</Latitude>
+    <Longitude>34.9983856</Longitude>
+    <OpeningTime>2024-12-18T10:50:26.6032288+02:00</OpeningTime>
+    <MaxTimeToEnd />
+  </Call>
 </Calls>

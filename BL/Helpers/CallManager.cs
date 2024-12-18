@@ -44,8 +44,7 @@ internal static class CallManager
     }
     internal static DO.Call HelpCreateUodate(BO.Call call)
     {
-        double latitude, longitude;
-        VolunteerManager.GetCoordinates(call.Address, out latitude, out longitude); //if wrrong adreess throw exeption
+        double[] cordinate = VolunteerManager.GetCoordinates(call.Address); //if wrrong adreess throw exeption
 
         if (call.MaxTimeToEnd < call.OpeningTime)
             throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
@@ -55,8 +54,8 @@ internal static class CallManager
             TheCallType = (DO.CallType)call.TheCallType,
             VerbalDescription = call.VerbalDescription,
             Address = call.Address,
-            Latitude = latitude,
-            Longitude = longitude,
+            Latitude = cordinate[0],
+            Longitude = cordinate[1],
             OpeningTime = call.OpeningTime,
             MaxTimeToEnd = call.MaxTimeToEnd
         };

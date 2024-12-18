@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 
 namespace BlTest;
 
@@ -139,7 +140,6 @@ internal class Program
         }
     }
 
-
     private static void CallMenu()
     {
         bool exit = false;
@@ -154,6 +154,11 @@ internal class Program
             Console.WriteLine("4. Update");
             Console.WriteLine("5. Delete");
             Console.WriteLine("6. Create");
+            Console.WriteLine("7. Get Closed Call List");
+            Console.WriteLine("8. Get Open Call List");
+            Console.WriteLine("9. End Treatment");
+            Console.WriteLine("10. Cancel Treatment");
+            Console.WriteLine("11. Choose Call To Treat");
 
             if (Enum.TryParse(Console.ReadLine(), out CallMenuOptions choice))
             {
@@ -166,7 +171,7 @@ internal class Program
                             break;
 
                         case CallMenuOptions.CallsAmount:
-                            var amounts = s_bl.Call.CallsAmount().ToArray(); // שמירת התוצאה במערך
+                            var amounts = s_bl.Call.CallsAmount().ToArray();
                             for (int i = 0; i < amounts.Length; i++)
                                 Console.WriteLine($"{(BO.Status)i}: {amounts[i]}");
                             break;
@@ -179,35 +184,25 @@ internal class Program
 
                         case CallMenuOptions.Read:
                             Console.Write("Enter call ID: ");
-                            int id;
-                            while (!int.TryParse(Console.ReadLine(), out  id))
-                                Console.Write("Invalid Id "); 
-                            try
-                            { 
-                            Console.WriteLine(s_bl.Call.Read(id));
-                            }
-                            catch(BO.BlDoesNotExistException ex) 
-                            {
-                                PrintException(ex);
-                            }
-
+                            if (int.TryParse(Console.ReadLine(), out int id))
+                                Console.WriteLine(s_bl.Call.Read(id));
+                            else
+                                Console.WriteLine("Invalid Id.");
                             break;
 
                         case CallMenuOptions.Update:
                             Console.Write("Enter call ID to update: ");
-                            //if (int.TryParse(Console.ReadLine(), out int updateId))
-                            //{
-                            //    var callToUpdate = s_bl.Call.Read(updateId);
-                            //    Console.WriteLine("Enter new details for the call:");
-                            //    // ניתן להניח פה קבלת נתונים חדשים מהמשתמש, לדוגמה:
-                            //    Console.Write("New Description: ");
-                            //    string newDescription = Console.ReadLine();
-                            //    callToUpdate.Description = newDescription;
-                            //    s_bl.Call.Update(callToUpdate);
-                            //    Console.WriteLine("Call updated successfully.");
-                            //}
-                            //else
-                                Console.WriteLine("Invalid Id");
+                            if (int.TryParse(Console.ReadLine(), out int updateId))
+                            {
+                                var callToUpdate = s_bl.Call.Read(updateId);
+                                //Console.Write("New Description: ");
+                                //string newDescription = Console.ReadLine();
+                                //callToUpdate.Description = newDescription;
+                                //s_bl.Call.Update(callToUpdate);
+                                //Console.WriteLine("Call updated successfully.");
+                            }
+                            else
+                                Console.WriteLine("Invalid Id.");
                             break;
 
                         case CallMenuOptions.Delete:
@@ -218,12 +213,73 @@ internal class Program
                                 Console.WriteLine("Call deleted successfully.");
                             }
                             else
-                                Console.WriteLine("Invalid Id");
+                                Console.WriteLine("Invalid Id.");
                             break;
 
                         case CallMenuOptions.Create:
                             CallMenuCreate();
                             break;
+
+                        case CallMenuOptions.GetClosedCallList:
+                            HelpGetCallList(
+                                out int volunteerId,
+                                out BO.CallType? callTypeFilter);
+                            BO.FieldsClosedCallInList? sortField = sortFilterClose();
+                            var closeCallList = s_bl.Call.GetClosedCallInList(volunteerId, callTypeFilter, sortField);
+                            Console.WriteLine("Call Closed list for volunteer: ");
+                            foreach ( var call in closeCallList)
+                                Console.WriteLine(call);
+                            break;
+
+                        case CallMenuOptions.GetOpenCallList:
+                            HelpGetCallList(
+                                out int volId,
+                                out BO.CallType? filter);
+                            BO.FieldsOpenCallInList? sort = sortFilterOpen();
+                            var openCallList = s_bl.Call.GetOpenCallInList(volId, filter, sort);
+                            Console.WriteLine("Call Closed list for volunteer: ");
+                            foreach (var call in openCallList)
+                                Console.WriteLine(call);
+                            break;
+
+                        case CallMenuOptions.EndTreatment:
+                            Console.Write("Enter call ID to end treatment: ");
+                            if (int.TryParse(Console.ReadLine(), out int endId))
+                            {
+                                //s_bl.Call.EndTreatment(endId);
+                                Console.WriteLine("Treatment ended successfully.");
+                            }
+                            else
+                                Console.WriteLine("Invalid Id.");
+                            break;
+
+                        case CallMenuOptions.CancelTreatment:
+                            Console.Write("Enter call ID to cancel treatment: ");
+                            if (int.TryParse(Console.ReadLine(), out int cancelId))
+                            {
+                                //s_bl.Call.CancelTreatment(cancelId);
+                                Console.WriteLine("Treatment canceled successfully.");
+                            }
+                            else
+                                Console.WriteLine("Invalid Id.");
+                            break;
+
+                        case CallMenuOptions.ChooseCallToTreat:
+                            Console.WriteLine("Choose a call to treat:");
+                            //var openCallList = s_bl.Call.GetOpenCallList();
+                            //foreach (var call in openCallList)
+                            //    Console.WriteLine(call);
+
+                            Console.Write("Enter call ID to treat: ");
+                            if (int.TryParse(Console.ReadLine(), out int treatId))
+                            {
+                                //s_bl.Call.ChooseCallToTreat(treatId);
+                                Console.WriteLine("Call is now being treated.");
+                            }
+                            else
+                                Console.WriteLine("Invalid Id.");
+                            break;
+
                         default:
                             Console.WriteLine("Invalid option.");
                             break;
@@ -235,10 +291,14 @@ internal class Program
                 }
             }
             else
+            {
                 Console.WriteLine("Invalid input.");
-
+            }
         }
     }
+
+
+
 
 
     private static void VolunteerMenu()
@@ -320,23 +380,23 @@ internal class Program
                             break;
 
                         case VolunteerMenuOptions.Create:
-                            //Console.Write("Enter Volunteer Name: ");
-                            //string name = Console.ReadLine();
+                            Console.Write("Enter Volunteer Name: ");
+                            string name = Console.ReadLine();
 
-                            //Console.Write("Enter Address: ");
-                            //string address = Console.ReadLine();
+                            Console.Write("Enter Address: ");
+                            string address = Console.ReadLine();
 
-                            //Console.Write("Enter Phone Number: ");
-                            //string phoneNumber = Console.ReadLine();
+                            Console.Write("Enter Phone Number: ");
+                            string phoneNumber = Console.ReadLine();
 
-                            //var newVolunteer = new BO.Volunteer
-                            //{
-                            //    Name = name,
-                            //    Address = address,
-                            //    PhoneNumber = phoneNumber
-                            //};
+                            var newVolunteer = new BO.Volunteer
+                            {
+                                Name = name,
+                                Address = address,
+                                PhoneNumber = phoneNumber
+                            };
 
-                            //s_bl.Volunteer.Create(newVolunteer);
+                            s_bl.Volunteer.Create(newVolunteer);
                             Console.WriteLine("New volunteer created successfully.");
                             break;
 
@@ -378,7 +438,7 @@ internal class Program
         Console.Write("Verbal Description:\n");
         string? description = Console.ReadLine();
 
-        Console.Write("Address:()\n");
+        Console.Write("Address: \n");
         string? address = Console.ReadLine();
 
         Console.Write("Max Time To End (yyyy-MM-dd HH:mm) [optional]:\n");
@@ -416,5 +476,160 @@ internal class Program
         string? password = Console.ReadLine();
         return s_bl.Volunteer.LogIn(name, password);
     }
+
+
+    private static void HelpGetCallList(out int volunteerId, out BO.CallType? callTypeFilter)
+    {
+        volunteerId = -1;
+        callTypeFilter = null;
+        Console.WriteLine("\nEnter Volunteer Id: ");
+        while (!int.TryParse(Console.ReadLine(), out volunteerId))
+        {
+            Console.WriteLine("Invalid Volunteer Id. Please enter a valid number:");
+        }
+
+        Console.WriteLine("Do you want to filter the list? (1 for Yes, 0 for No): ");
+        if (int.TryParse(Console.ReadLine(), out int filterInput) && filterInput == 1)
+        {
+            // תפריט סינון לפי CallType
+            Console.WriteLine("\nChoose a Call Type to filter by:");
+            Console.WriteLine("1. Transportation");
+            Console.WriteLine("2. Babysitting");
+            Console.WriteLine("3. Shopping");
+            Console.WriteLine("4. Food");
+            Console.WriteLine("5. Cleaning");
+            Console.WriteLine("6. None");
+            Console.WriteLine("7. All");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    callTypeFilter = BO.CallType.Transportation;
+                    break;
+                case "2":
+                    callTypeFilter = BO.CallType.Babysitting;
+                    break;
+                case "3":
+                    callTypeFilter = BO.CallType.Shopping;
+                    break;
+                case "4":
+                    callTypeFilter = BO.CallType.food;
+                    break;
+                case "5":
+                    callTypeFilter = BO.CallType.Cleaning;
+                    break;
+                case "6":
+                    callTypeFilter = BO.CallType.None;
+                    break;
+                case "7":
+                    callTypeFilter = null; // ללא סינון
+                    break;
+                default:
+                    Console.WriteLine("Invalid input. No filter applied.");
+                    break;
+            }
+        }
+    }
+
+
+    static BO.FieldsClosedCallInList? sortFilterClose()
+    {
+        BO.FieldsClosedCallInList? sortField = null;
+        Console.WriteLine("Do you want to sort the list? (1 for Yes, 0 for No): ");
+        if (int.TryParse(Console.ReadLine(), out int sortInput) && sortInput == 1)
+        {
+            // תפריט מיון לפי FieldsClosedCallInList
+            Console.WriteLine("\nChoose a field to sort by:");
+            Console.WriteLine("1. Id");
+            Console.WriteLine("2. Call Type");
+            Console.WriteLine("3. Address");
+            Console.WriteLine("4. Opening Time");
+            Console.WriteLine("5. Entry Time");
+            Console.WriteLine("6. Actual End Time");
+            Console.WriteLine("7. End Type");
+
+            // קליטת הבחירה של המשתמש
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    sortField = BO.FieldsClosedCallInList.Id;
+                    break;
+                case "2":
+                    sortField = BO.FieldsClosedCallInList.TheCallType;
+                    break;
+                case "3":
+                    sortField = BO.FieldsClosedCallInList.Address;
+                    break;
+                case "4":
+                    sortField = BO.FieldsClosedCallInList.OpeningTime;
+                    break;
+                case "5":
+                    sortField = BO.FieldsClosedCallInList.EntryTime;
+                    break;
+                case "6":
+                    sortField = BO.FieldsClosedCallInList.ActualEndTime;
+                    break;
+                case "7":
+                    sortField = BO.FieldsClosedCallInList.TheEndType;
+                    break;
+                default:
+                    Console.WriteLine("Invalid input. No sorting applied.");
+                    break;
+            }
+        }
+        // החזרת הערך שנבחר או null
+        return sortField;
+    }
+
+    static BO.FieldsOpenCallInList? sortFilterOpen()
+    {
+        BO.FieldsOpenCallInList? sortField = null;
+        Console.WriteLine("Do you want to sort the list? (1 for Yes, 0 for No): ");
+        if (int.TryParse(Console.ReadLine(), out int sortInput) && sortInput == 1)
+        {
+            // תפריט מיון לפי FieldsOpenCallInList
+            Console.WriteLine("\nChoose a field to sort by:");
+            Console.WriteLine("1. Id");
+            Console.WriteLine("2. Call Type");
+            Console.WriteLine("3. Verbal Description");
+            Console.WriteLine("4. Address");
+            Console.WriteLine("5. Opening Time");
+            Console.WriteLine("6. Max Time To End");
+            Console.WriteLine("7. Distance");
+
+            // קליטת הבחירה של המשתמש
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    sortField = BO.FieldsOpenCallInList.Id;
+                    break;
+                case "2":
+                    sortField = BO.FieldsOpenCallInList.TheCallType;
+                    break;
+                case "3":
+                    sortField = BO.FieldsOpenCallInList.VerbalDescription;
+                    break;
+                case "4":
+                    sortField = BO.FieldsOpenCallInList.Address;
+                    break;
+                case "5":
+                    sortField = BO.FieldsOpenCallInList.OpeningTime;
+                    break;
+                case "6":
+                    sortField = BO.FieldsOpenCallInList.MaxTimeToEnd;
+                    break;
+                case "7":
+                    sortField = BO.FieldsOpenCallInList.Distance;
+                    break;
+                default:
+                    Console.WriteLine("Invalid input. No sorting applied.");
+                    break;
+            }
+
+            // החזרת הערך שנבחר או null
+        }
+        return sortField;
+    }
+
 }
 
