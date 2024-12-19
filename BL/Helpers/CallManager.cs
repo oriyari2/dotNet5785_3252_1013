@@ -38,7 +38,7 @@ internal static class CallManager
                            Name = volunteerr == null ? null : volunteerr.Name,
                            EntryTime = item.EntryTime,
                            ActualEndTime = item.ActualEndTime,
-                           TheEndType = (BO.EndType)item.TheEndType
+                           TheEndType = item.TheEndType == null ? null :(BO.EndType)item.TheEndType
                        };
         return toReturn.ToList();
     }

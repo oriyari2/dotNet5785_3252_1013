@@ -23,7 +23,7 @@ internal class VolunteerImplementation : IVolunteer
 
         DO.Volunteer doVolunteer = new(boVolunteer.Id, boVolunteer.Name,
         boVolunteer.PhoneNumber, boVolunteer.Email, password, boVolunteer.Address, dis[0],
-        dis[1], (DO.RoleType)boVolunteer.Role, boVolunteer.Active, boVolunteer.MaxDistance, (DO.DistanceType)boVolunteer.TheDistanceType);
+        dis[1], DO.RoleType.volunteer, true, boVolunteer.MaxDistance, (DO.DistanceType)boVolunteer.TheDistanceType);
         try
         {
             _dal.Volunteer.Create(doVolunteer);
@@ -79,7 +79,7 @@ internal class VolunteerImplementation : IVolunteer
             Name = doVolunteer.Name,
             PhoneNumber = doVolunteer.PhoneNumber,
             Email = doVolunteer.Email,
-            Password = doVolunteer.Password,
+            Password = VolunteerManager.DecryptPassword(doVolunteer.Password),
             Address = doVolunteer.Address,
             Latitude = doVolunteer.Latitude,
             Longitude = doVolunteer.Longitude,
@@ -127,7 +127,6 @@ internal class VolunteerImplementation : IVolunteer
                            CurrentCall = call,
                            TheCallType = call == null ? BO.CallType.None : VolunteerManager.GetCallType((int)call)
                        };
-
         return listSort;
     }
 

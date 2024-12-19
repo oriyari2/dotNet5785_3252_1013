@@ -33,6 +33,8 @@ internal static class VolunteerManager
 
         var volunteer = s_dal.Volunteer.Read(id)??
            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
+        double volLon = (double)volunteer.Longitude;
+        double volLat = (double)volunteer.Latitude;
         AdminImplementation admin = new();
         BO.CallInProgress? callInProgress =
          (from item in assignments
@@ -47,8 +49,7 @@ internal static class VolunteerManager
               OpeningTime = call.OpeningTime,
               MaxTimeToEnd = call.MaxTimeToEnd,
               EntryTime = item.EntryTime,
-
-              Distance = volunteer?.Address != null ? VolunteerManager.GetDistance(volunteer.Address, call.Address) : 0,
+              Distance = volunteer?.Address != null ? VolunteerManager.CalculateDistance(volLon, volLat, call.Longitude, call.Latitude) : 0,
   
               status = (ClockManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
                         ? BO.Status.treatment
@@ -76,9 +77,8 @@ internal static class VolunteerManager
     {
         if (string.IsNullOrWhiteSpace(email))
             throw new BO.BlInvalidValueExeption("Invalid Email");
-        // Regular expression to match a valid email address
-        string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-        if( Regex.IsMatch(email, emailPattern)==false)
+        string emailPattern = @"^[a-zA-Z0-9._%+-]+@(gmail\.com|hotmail\.com|yahoo\.com|walla\.co\.il|outlook\.com|g\.jct\.ac\.il)$";
+        if (!Regex.IsMatch(email, emailPattern))
             throw new BO.BlInvalidValueExeption("Invalid Email");
     }
 
@@ -89,7 +89,7 @@ internal static class VolunteerManager
         if (string.IsNullOrWhiteSpace(phoneNumber))
             throw new BO.BlInvalidValueExeption("Invalid Phone Number ");
         // בדיקה שהטלפון מתחיל ב-05, מכיל בדיוק 10 ספרות וכולל רק ספרות
-        if( phoneNumber.Length == 10 && phoneNumber.StartsWith("05") && phoneNumber.All(char.IsDigit)==false)
+        if( phoneNumber.Length != 10 || !phoneNumber.StartsWith("05") || phoneNumber.All(char.IsDigit)==false)
             throw new BO.BlInvalidValueExeption("Invalid Phone Number "); ;
     }
 
@@ -209,69 +209,113 @@ internal static class VolunteerManager
     #endregion
 
     #region distance
-   
-        private const string ApiKey = "67627d3f6df90712511821ksqbfefac"; // מפתח ה-API שלך
 
-        /// <summary>
-        /// מחשבת את המרחק בין שתי קואורדינטות באמצעות נוסחת Haversine.
-        /// </summary>
-        internal static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+
+    /// <summary>
+    /// מחזירה את המרחק בין שתי כתובות.
+    /// </summary>
+    public static double GetDistance(string address1, string address2)
+    {
+        var coord1 = GetCoordinates(address1);
+        var coord2 = GetCoordinates(address2);
+        return CalculateDistance(coord1[0], coord1[1], coord2[0], coord2[1]);
+    }
+
+    internal static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+    {
+        const double EarthRadius = 6371000; // Earth's radius in meters
+
+        // Convert latitude and longitude from degrees to radians
+        double lat1Rad = lat1 * Math.PI / 180;
+        double lon1Rad = lon1 * Math.PI / 180;
+        double lat2Rad = lat2 * Math.PI / 180;
+        double lon2Rad = lon2 * Math.PI / 180;
+
+        // Differences in latitude and longitude
+        double deltaLat = lat2Rad - lat1Rad;
+        double deltaLon = lon2Rad - lon1Rad;
+
+        // Haversine formula
+        double a = Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2) +
+                   Math.Cos(lat1Rad) * Math.Cos(lat2Rad) *
+                   Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
+
+        double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+        // Final distance in meters
+        return EarthRadius * c;
+
+    }
+
+    public static double[] GetCoordinates(string address)//לטפל בחריגות!!!!!
+    {
+        // Checking if the address is null or empty
+        if (string.IsNullOrWhiteSpace(address))
         {
-            const double EarthRadius = 6371000; // רדיוס כדור הארץ במטרים
-
-            double dLat = (lat2 - lat1) * Math.PI / 180;
-            double dLon = (lon2 - lon1) * Math.PI / 180;
-
-            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                       Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
-                       Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-
-            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            return EarthRadius * c;
+            throw new ArgumentException("Address cannot be empty or null.", nameof(address));
         }
 
-        /// <summary>
-        /// מביאה את הקואורדינטות של כתובת נתונה (רוחב ואורך).
-        /// </summary>
-        public static double[] GetCoordinates(string address)
-        {
-        //string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key={ApiKey}";
-        string apiKey = $"https://geocode.maps.co/search?q=address&api_key=67627d3f6df90712511821ksqbfefac";
+        string apiKey = "https://geocode.maps.co/search?q=address&api_key=67627d3f6df90712511821ksqbfefac";  // החלף במפתח האמיתי שלך
         string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key={apiKey}";
         HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-        using (HttpClient client = new HttpClient())
-            {
-                var response = client.GetStringAsync(url).Result;
 
-                var results = JsonSerializer.Deserialize<LocationResult[]>(response);
-                if (results != null && results.Length > 0)
+        // Creating a synchronous HTTP request
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        request.Method = "GET";
+
+        try
+        {
+            // Sending the request and getting the response synchronously
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                // Checking if the response status is OK
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    return new double[]
+                    throw new Exception($"Error in request: {response.StatusCode}");
+                }
+
+                // Reading the response body as a string
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    string jsonResponse = reader.ReadToEnd();
+
+                    // Deserializing the JSON response to extract location data
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var results = JsonSerializer.Deserialize<LocationResult[]>(jsonResponse, options);
+
+                    // If no results are found, throwing an exception
+                    if (results == null || results.Length == 0)
                     {
-                    double.Parse(results[0].Lat, CultureInfo.InvariantCulture),
-                    double.Parse(results[0].Lon, CultureInfo.InvariantCulture)
-                    };
+                        throw new Exception("No coordinates found for the given address.");
+                    }
+
+                    // Returning the latitude and longitude as an array
+                    return new double[] { double.Parse(results[0].Lat), double.Parse(results[0].Lon) };
                 }
             }
-            throw new Exception("No coordinates found.");
         }
-
-        /// <summary>
-        /// מחזירה את המרחק בין שתי כתובות.
-        /// </summary>
-        public static double GetDistance(string address1, string address2)
+        catch (WebException ex)
         {
-            var coord1 = GetCoordinates(address1);
-            var coord2 = GetCoordinates(address2);
-            return CalculateDistance(coord1[0], coord1[1], coord2[0], coord2[1]);
+            // Handling web exceptions (e.g., network issues)
+            throw new Exception("Error sending web request: " + ex.Message);
         }
-
-        private class LocationResult
+        catch (Exception ex)
         {
-            public string Lat { get; set; }
-            public string Lon { get; set; }
+            // Handling general exceptions
+            throw new Exception("General error: " + ex.Message);
         }
+    }
 
+    /// <summary>
+    /// Class to represent the structure of the geocoding response(latitude and longitude)
+    /// </summary>
+    private class LocationResult
+    {
+        // Latitude as string in the JSON response
+        public string Lat { get; set; }
+        // Longitude as string in the JSON response
+        public string Lon { get; set; }
+    }
     #endregion
 }
 

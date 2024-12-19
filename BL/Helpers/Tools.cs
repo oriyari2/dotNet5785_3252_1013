@@ -1,12 +1,15 @@
-﻿namespace Helpers;
+﻿using System.Reflection;
+
+namespace Helpers;
 
 internal static class Tools
 {
     internal static string ToStringProperty<T>(this T t)
     {
-        var properties = typeof(T).GetProperties();
-        var result = string.Join(", ", properties.Select(p => $"{p.Name}: {p.GetValue(t)}"));
-        return $"{{ {result} }}";
+        string str = "";
+        foreach (PropertyInfo item in t.GetType().GetProperties())
+            str += "\n" + item.Name + ": " + item.GetValue(t, null);
+        return str;
     }
     internal static void IsNumericField(string input)
     {

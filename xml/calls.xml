@@ -4,7 +4,7 @@
     <Id>0</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Haneviim St 1, Israel</Address>
+    <Address>Haneviim 1, Jerusalem, Israel</Address>
     <Latitude>31.778</Latitude>
     <Longitude>35.216</Longitude>
     <OpeningTime>2023-01-01T00:00:00</OpeningTime>
@@ -14,7 +14,7 @@
     <Id>1</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Yad Harutsim St 3, Israel</Address>
+    <Address>Yad Harutsim 3, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.213</Longitude>
     <OpeningTime>2023-02-02T00:00:00</OpeningTime>
@@ -24,7 +24,7 @@
     <Id>2</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Emek Refaim St 8, Israel</Address>
+    <Address>Emek Refaim 8, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-03-03T00:00:00</OpeningTime>
@@ -34,7 +34,7 @@
     <Id>3</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Shlomtzion HaMalka St 9, Israel</Address>
+    <Address>Shlomtzion HaMalka 9, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.214</Longitude>
     <OpeningTime>2023-04-04T00:00:00</OpeningTime>
@@ -44,7 +44,7 @@
     <Id>4</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Harav Kook St 6, Israel</Address>
+    <Address>Harav Kook 6, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.212</Longitude>
     <OpeningTime>2023-05-05T00:00:00</OpeningTime>
@@ -54,7 +54,7 @@
     <Id>5</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, HaPalmach St 12, Israel</Address>
+    <Address>HaPalmach 12, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.211</Longitude>
     <OpeningTime>2023-06-06T00:00:00</OpeningTime>
@@ -64,7 +64,7 @@
     <Id>6</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Balfour St 4, Israel</Address>
+    <Address>Balfour 4, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.21</Longitude>
     <OpeningTime>2023-07-07T00:00:00</OpeningTime>
@@ -74,7 +74,7 @@
     <Id>7</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Agron St 11, Israel</Address>
+    <Address>Agron 11, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-08-08T00:00:00</OpeningTime>
@@ -84,7 +84,7 @@
     <Id>8</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, Shazar Blvd 7, Israel</Address>
+    <Address>Shazar 7, Jerusalem, Israel</Address>
     <Latitude>31.78</Latitude>
     <Longitude>35.218</Longitude>
     <OpeningTime>2023-09-09T00:00:00</OpeningTime>
@@ -94,7 +94,7 @@
     <Id>9</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Jerusalem, King George St 32, Israel</Address>
+    <Address>King George 32, Jerusalem, Israel</Address>
     <Latitude>31.776</Latitude>
     <Longitude>35.213</Longitude>
     <OpeningTime>2023-10-10T00:00:00</OpeningTime>
@@ -104,7 +104,7 @@
     <Id>10</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Keren HaYesod St 27, Israel</Address>
+    <Address>Keren HaYesod 27, Jerusalem, Israel</Address>
     <Latitude>31.763</Latitude>
     <Longitude>35.212</Longitude>
     <OpeningTime>2023-11-11T00:00:00</OpeningTime>
@@ -114,7 +114,7 @@
     <Id>11</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Ramban St 9, Israel</Address>
+    <Address>Ramban 9, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.209</Longitude>
     <OpeningTime>2023-12-12T00:00:00</OpeningTime>
@@ -124,7 +124,7 @@
     <Id>12</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Diskin St 10, Israel</Address>
+    <Address>Diskin 10, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-01-13T00:00:00</OpeningTime>
@@ -134,7 +134,7 @@
     <Id>13</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, HaRav Herzog Blvd 22, Israel</Address>
+    <Address>HaRav Herzog 22, Jerusalem, Israel</Address>
     <Latitude>31.777</Latitude>
     <Longitude>35.213</Longitude>
     <OpeningTime>2023-02-14T00:00:00</OpeningTime>
@@ -144,7 +144,7 @@
     <Id>14</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Zalman Shazar Blvd 15, Israel</Address>
+    <Address>Zalman Shazar 15, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.208</Longitude>
     <OpeningTime>2023-03-15T00:00:00</OpeningTime>
@@ -154,7 +154,7 @@
     <Id>15</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Tchernichovsky St 33, Israel</Address>
+    <Address>Tchernichovsky 33, Jerusalem, Israel</Address>
     <Latitude>31.779</Latitude>
     <Longitude>35.214</Longitude>
     <OpeningTime>2023-04-16T00:00:00</OpeningTime>
@@ -164,7 +164,7 @@
     <Id>16</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Aza St 19, Israel</Address>
+    <Address>Aza 19, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.216</Longitude>
     <OpeningTime>2023-05-17T00:00:00</OpeningTime>
@@ -174,7 +174,7 @@
     <Id>17</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Ben Yehuda St 55, Israel</Address>
+    <Address>Ben Yehuda 55, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.214</Longitude>
     <OpeningTime>2023-06-18T00:00:00</OpeningTime>
@@ -184,7 +184,7 @@
     <Id>18</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Rambam St 21, Israel</Address>
+    <Address>Rambam 21, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.207</Longitude>
     <OpeningTime>2023-07-19T00:00:00</OpeningTime>
@@ -194,7 +194,7 @@
     <Id>19</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Malha Rd 12, Israel</Address>
+    <Address>Malha Rd 12, Jerusalem, Israel</Address>
     <Latitude>31.75</Latitude>
     <Longitude>35.206</Longitude>
     <OpeningTime>2023-08-20T00:00:00</OpeningTime>
@@ -204,7 +204,7 @@
     <Id>20</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, HaPisga St 2, Israel</Address>
+    <Address>HaPisga 2, Jerusalem, Israel</Address>
     <Latitude>31.765</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-09-21T00:00:00</OpeningTime>
@@ -214,7 +214,7 @@
     <Id>21</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Kiryat Moshe St 5, Israel</Address>
+    <Address>Kiryat Moshe 5, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.209</Longitude>
     <OpeningTime>2023-10-22T00:00:00</OpeningTime>
@@ -224,7 +224,7 @@
     <Id>22</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, HaNasi St 14, Israel</Address>
+    <Address>HaNasi 14, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.208</Longitude>
     <OpeningTime>2023-11-23T00:00:00</OpeningTime>
@@ -234,7 +234,7 @@
     <Id>23</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Aliash St 23, Israel</Address>
+    <Address>Aliash 23, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.207</Longitude>
     <OpeningTime>2023-12-24T00:00:00</OpeningTime>
@@ -244,7 +244,7 @@
     <Id>24</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Gaza St 26, Israel</Address>
+    <Address>Gaza 26, Jerusalem, Israel</Address>
     <Latitude>31.757</Latitude>
     <Longitude>35.213</Longitude>
     <OpeningTime>2023-01-25T00:00:00</OpeningTime>
@@ -254,7 +254,7 @@
     <Id>25</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Ein Kerem St 31, Israel</Address>
+    <Address>Ein Kerem 31, Jerusalem, Israel</Address>
     <Latitude>31.755</Latitude>
     <Longitude>35.211</Longitude>
     <OpeningTime>2023-02-26T00:00:00</OpeningTime>
@@ -264,7 +264,7 @@
     <Id>26</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Motza St 8, Israel</Address>
+    <Address>Motza 8, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.208</Longitude>
     <OpeningTime>2023-03-27T00:00:00</OpeningTime>
@@ -274,7 +274,7 @@
     <Id>27</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Rashi St 6, Israel</Address>
+    <Address>Rashi 6, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.212</Longitude>
     <OpeningTime>2023-04-28T00:00:00</OpeningTime>
@@ -284,7 +284,7 @@
     <Id>28</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, King David St 20, Israel</Address>
+    <Address>King David 20, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-05-01T00:00:00</OpeningTime>
@@ -294,7 +294,7 @@
     <Id>29</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Jerusalem, Hillel St 25, Israel</Address>
+    <Address>Hillel 25, Jerusalem, Israel</Address>
     <Latitude>31.778</Latitude>
     <Longitude>35.218</Longitude>
     <OpeningTime>2023-06-02T00:00:00</OpeningTime>
@@ -304,7 +304,7 @@
     <Id>30</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Yoel Solomon St 4, Israel</Address>
+    <Address>Yoel Solomon 4, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.21</Longitude>
     <OpeningTime>2023-07-03T00:00:00</OpeningTime>
@@ -314,7 +314,7 @@
     <Id>31</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Ramat Sharet St 17, Israel</Address>
+    <Address>Ramat Sharet 17, Jerusalem, Israel</Address>
     <Latitude>31.753</Latitude>
     <Longitude>35.216</Longitude>
     <OpeningTime>2023-08-04T00:00:00</OpeningTime>
@@ -324,7 +324,7 @@
     <Id>32</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Ramat Beit HaKerem St 2, Israel</Address>
+    <Address>Ramat Beit HaKerem 2, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.211</Longitude>
     <OpeningTime>2023-09-05T00:00:00</OpeningTime>
@@ -334,7 +334,7 @@
     <Id>33</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Yermiyahu St 3, Israel</Address>
+    <Address>Yermiyahu 3, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.219</Longitude>
     <OpeningTime>2023-10-06T00:00:00</OpeningTime>
@@ -344,7 +344,7 @@
     <Id>34</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Rabin Blvd 9, Israel</Address>
+    <Address>Rabin 9, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-11-07T00:00:00</OpeningTime>
@@ -354,7 +354,7 @@
     <Id>35</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Malha Mall, Israel</Address>
+    <Address>Malha Mall, Jerusalem, Israel</Address>
     <Latitude>31.752</Latitude>
     <Longitude>35.214</Longitude>
     <OpeningTime>2023-12-08T00:00:00</OpeningTime>
@@ -364,7 +364,7 @@
     <Id>36</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Jaffa Rd 120, Israel</Address>
+    <Address>Jaffa Rd 120, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-01-09T00:00:00</OpeningTime>
@@ -374,7 +374,7 @@
     <Id>37</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Agripas St 67, Israel</Address>
+    <Address>Agripas 67, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.218</Longitude>
     <OpeningTime>2023-02-10T00:00:00</OpeningTime>
@@ -384,7 +384,7 @@
     <Id>38</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Ein Gedi St 10, Israel</Address>
+    <Address>Ein Gedi 10, Jerusalem, Israel</Address>
     <Latitude>31.776</Latitude>
     <Longitude>35.216</Longitude>
     <OpeningTime>2023-03-11T00:00:00</OpeningTime>
@@ -394,7 +394,7 @@
     <Id>39</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, HaTayasim St 3, Israel</Address>
+    <Address>HaTayasim 3, Jerusalem, Israel</Address>
     <Latitude>31.769</Latitude>
     <Longitude>35.212</Longitude>
     <OpeningTime>2023-04-12T00:00:00</OpeningTime>
@@ -404,7 +404,7 @@
     <Id>40</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Mesilat Yesharim St 5, Israel</Address>
+    <Address>Mesilat Yesharim 5, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-05-13T00:00:00</OpeningTime>
@@ -414,7 +414,7 @@
     <Id>41</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Avraham Shalom Yehuda St 8, Israel</Address>
+    <Address>Avraham Shalom Yehuda 8, Jerusalem, Israel</Address>
     <Latitude>31.76</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-06-14T00:00:00</OpeningTime>
@@ -424,7 +424,7 @@
     <Id>42</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Begin Blvd 14, Israel</Address>
+    <Address>Begin 14, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.213</Longitude>
     <OpeningTime>2023-07-15T00:00:00</OpeningTime>
@@ -434,7 +434,7 @@
     <Id>43</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Shmu’el HaNavi St 22, Israel</Address>
+    <Address>Shmu’el HaNavi 22, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.211</Longitude>
     <OpeningTime>2023-08-16T00:00:00</OpeningTime>
@@ -444,7 +444,7 @@
     <Id>44</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Jerusalem, Golda Meir Blvd 33, Israel</Address>
+    <Address>Golda Meir 33, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.214</Longitude>
     <OpeningTime>2023-09-17T00:00:00</OpeningTime>
@@ -454,7 +454,7 @@
     <Id>45</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Menachem Begin St 40, Israel</Address>
+    <Address>Menachem Begin 40, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.209</Longitude>
     <OpeningTime>2023-10-18T00:00:00</OpeningTime>
@@ -464,7 +464,7 @@
     <Id>46</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Davidka Square 13, Israel</Address>
+    <Address>Davidka Square 13, Jerusalem, Israel</Address>
     <Latitude>31.772</Latitude>
     <Longitude>35.21</Longitude>
     <OpeningTime>2023-11-19T00:00:00</OpeningTime>
@@ -474,7 +474,7 @@
     <Id>47</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Zion Square 1, Israel</Address>
+    <Address>Zion Square 1, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.207</Longitude>
     <OpeningTime>2023-12-20T00:00:00</OpeningTime>
@@ -484,7 +484,7 @@
     <Id>48</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Eliashar St 5, Israel</Address>
+    <Address>Eliashar 5, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.208</Longitude>
     <OpeningTime>2023-01-21T00:00:00</OpeningTime>
@@ -494,7 +494,7 @@
     <Id>49</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Bezalel St 3, Israel</Address>
+    <Address>Bezalel 3, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.209</Longitude>
     <OpeningTime>2023-02-22T00:00:00</OpeningTime>
@@ -504,7 +504,7 @@
     <Id>50</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, HaMasger St 6, Israel</Address>
+    <Address>HaMasger 6, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.212</Longitude>
     <OpeningTime>2023-03-23T00:00:00</OpeningTime>
@@ -514,7 +514,7 @@
     <Id>51</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Einstein St 9, Israel</Address>
+    <Address>Einstein 9, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-04-24T00:00:00</OpeningTime>
@@ -524,7 +524,7 @@
     <Id>52</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Ben Gurion St 12, Israel</Address>
+    <Address>Ben Gurion 12, Jerusalem, Israel</Address>
     <Latitude>31.754</Latitude>
     <Longitude>35.216</Longitude>
     <OpeningTime>2023-05-25T00:00:00</OpeningTime>
@@ -534,7 +534,7 @@
     <Id>53</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Alpert St 10, Israel</Address>
+    <Address>Alpert 10, Jerusalem, Israel</Address>
     <Latitude>31.751</Latitude>
     <Longitude>35.21</Longitude>
     <OpeningTime>2023-06-26T00:00:00</OpeningTime>
@@ -544,7 +544,7 @@
     <Id>54</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
-    <Address>Jerusalem, Abraham Lincoln St 6, Israel</Address>
+    <Address>Abraham Lincoln 6, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.214</Longitude>
     <OpeningTime>2023-07-27T00:00:00</OpeningTime>
@@ -554,7 +554,7 @@
     <Id>55</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Ein Kerem Valley, Israel</Address>
+    <Address>Ein Kerem Valley, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-08-28T00:00:00</OpeningTime>
@@ -564,7 +564,7 @@
     <Id>56</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, HaKibbutz HaMeuhad St 13, Israel</Address>
+    <Address>HaKibbutz HaMeuhad 13, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.208</Longitude>
     <OpeningTime>2023-09-01T00:00:00</OpeningTime>
@@ -574,7 +574,7 @@
     <Id>57</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Mesilat Baruch St 20, Israel</Address>
+    <Address>Mesilat Baruch 20, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.209</Longitude>
     <OpeningTime>2023-10-02T00:00:00</OpeningTime>
@@ -584,7 +584,7 @@
     <Id>58</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, HaMelitz St 14, Israel</Address>
+    <Address>HaMelitz 14, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-11-03T00:00:00</OpeningTime>
@@ -594,7 +594,7 @@
     <Id>59</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, HaPalmach St 45, Israel</Address>
+    <Address>HaPalmach 45, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.217</Longitude>
     <OpeningTime>2023-12-04T00:00:00</OpeningTime>
@@ -604,7 +604,7 @@
     <Id>60</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, HaKablan St 33, Israel</Address>
+    <Address>HaKablan 33, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.213</Longitude>
     <OpeningTime>2023-01-05T00:00:00</OpeningTime>
@@ -614,7 +614,7 @@
     <Id>61</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Rachel Imenu St 5, Israel</Address>
+    <Address>Rachel Imenu 5, Jerusalem, Israel</Address>
     <Latitude>31.763</Latitude>
     <Longitude>35.211</Longitude>
     <OpeningTime>2023-02-06T00:00:00</OpeningTime>
@@ -624,7 +624,7 @@
     <Id>62</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Ben Zakkai St 16, Israel</Address>
+    <Address>Ben Zakkai 16, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.208</Longitude>
     <OpeningTime>2023-03-07T00:00:00</OpeningTime>
@@ -634,7 +634,7 @@
     <Id>63</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Nachalat Shiva St 8, Israel</Address>
+    <Address>Nachalat Shiva 8, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-04-08T00:00:00</OpeningTime>
@@ -644,7 +644,7 @@
     <Id>64</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Beit Yaakov St 7, Israel</Address>
+    <Address>Beit Yaakov 7, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.218</Longitude>
     <OpeningTime>2023-05-09T00:00:00</OpeningTime>
@@ -654,7 +654,7 @@
     <Id>65</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, HaHistadrut St 11, Israel</Address>
+    <Address>HaHistadrut 11, Jerusalem, Israel</Address>
     <Latitude>31.756</Latitude>
     <Longitude>35.212</Longitude>
     <OpeningTime>2023-06-10T00:00:00</OpeningTime>
@@ -664,7 +664,7 @@
     <Id>66</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, HaMagid St 6, Israel</Address>
+    <Address>HaMagid 6, Jerusalem, Israel</Address>
     <Latitude>31.772</Latitude>
     <Longitude>35.21</Longitude>
     <OpeningTime>2023-07-11T00:00:00</OpeningTime>
@@ -674,7 +674,7 @@
     <Id>67</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Harav Kook St 9, Israel</Address>
+    <Address>Harav Kook 9, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.215</Longitude>
     <OpeningTime>2023-08-12T00:00:00</OpeningTime>
@@ -684,20 +684,20 @@
     <Id>68</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Yeshayahu St 19, Israel</Address>
+    <Address>Yeshayahu 19, Jerusalem, Israel</Address>
     <Latitude>31.757</Latitude>
     <Longitude>35.219</Longitude>
     <OpeningTime>2023-09-13T00:00:00</OpeningTime>
     <MaxTimeToEnd>2025-09-13T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
-    <Id>69</Id>
-    <CallType>Shopping</CallType>
-    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Jerusalem, Har Nof Blvd 4, Israel</Address>
-    <Latitude>31.765</Latitude>
-    <Longitude>35.214</Longitude>
-    <OpeningTime>2023-10-14T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2025-10-14T00:00:00</MaxTimeToEnd>
+    <Id>125</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>er</VerbalDescription>
+    <Address>Hapisga 30, Jerusalem, Israel</Address>
+    <Latitude>31.7674594</Latitude>
+    <Longitude>35.1832238</Longitude>
+    <OpeningTime>2024-12-19T14:52:31.1659127+02:00</OpeningTime>
+    <MaxTimeToEnd>2025-01-02T12:00:00</MaxTimeToEnd>
   </Call>
 </Calls>

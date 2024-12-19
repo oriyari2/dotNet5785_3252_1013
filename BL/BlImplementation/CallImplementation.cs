@@ -63,7 +63,6 @@ internal class CallImplementation : ICall
         var call = GetOpenCallInList(volunteerId, null, null).FirstOrDefault(s => s.Id == CallId);
         if (call == null)
             throw new BO.BlDoesNotExistException($"Call with needed conditions does not exists");
-
         DO.Assignment assignment = new()
         {
 
@@ -118,7 +117,7 @@ internal class CallImplementation : ICall
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
         if (assignment.VolunteerId != volunteerId)
             throw new BO.BlUserCantUpdateItemExeption($"volunteer with id={volunteerId}can't change this assignment to end");
-        if (assignment.TheEndType != null || assignment.ActualEndTime != null)
+        if (assignment.ActualEndTime != null)
             throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
         DO.Assignment newAssign = assignment with { ActualEndTime = ClockManager.Now, TheEndType = DO.EndType.treated };
 
@@ -188,26 +187,32 @@ internal class CallImplementation : ICall
 
     public IEnumerable<BO.OpenCallInList> GetOpenCallInList(int volunteerId, BO.CallType? callTypeFilter, BO.FieldsOpenCallInList? sortField)
     {
+        DO.Volunteer volunteer = _dal.Volunteer.Read(volunteerId);
+        if(volunteer == null)
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteerId} does not exists");
+
         // קבלת כל הקריאות מה-DAL
         var allCalls = ReadAll(null, null, null);
 
         // קבלת כל השיבוצים מה-DAL
         var allAssignments = _dal.Assignment.ReadAll();
-        DO.Volunteer volunteer = _dal.Volunteer.Read(volunteerId);
+        double lonVol = (double)volunteer.Longitude;
+        double latVol = (double)volunteer.Latitude;
+
         // סינון לפי סטטוס "פתוחה" או "פתוחה בסיכון" בלבד
         var filteredCalls = from call in allCalls
                             join assignment in allAssignments on call.Id equals assignment.CallId into callAssignments
                             from assignment in callAssignments.DefaultIfEmpty()
                             where (call.status == BO.Status.open || call.status == BO.Status.riskOpen)
-                            let theAddress = Read(call.CallId).Address
+                            let boCall = Read(call.CallId)
                             select new BO.OpenCallInList
                             {
                                 Id = call.CallId,
                                 TheCallType = call.TheCallType,
-                                Address = theAddress,
+                                Address = boCall.Address,
                                 OpeningTime = call.OpeningTime,
                                 Distance = volunteer?.Address != null ?
-          VolunteerManager.GetDistance(volunteer.Address, theAddress)
+                                VolunteerManager.CalculateDistance(latVol, lonVol, boCall.Latitude, boCall.Longitude)
           : 0  // חישוב המרחק בין המתנדב לקריאה
 
                             };

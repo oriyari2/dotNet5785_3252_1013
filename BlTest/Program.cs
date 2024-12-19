@@ -1,5 +1,7 @@
 ﻿using BO;
 using DO;
+using System;
+using System.Data;
 
 namespace BlTest;
 
@@ -177,9 +179,7 @@ internal class Program
                             break;
 
                         case CallMenuOptions.ReadAll:
-                            var allCalls = s_bl.Call.ReadAll(null, null, null);
-                            foreach (var call in allCalls)
-                                Console.WriteLine(call);
+                            ReadAllCallHelp();
                             break;
 
                         case CallMenuOptions.Read:
@@ -191,18 +191,8 @@ internal class Program
                             break;
 
                         case CallMenuOptions.Update:
-                            Console.Write("Enter call ID to update: ");
-                            if (int.TryParse(Console.ReadLine(), out int updateId))
-                            {
-                                var callToUpdate = s_bl.Call.Read(updateId);
-                                //Console.Write("New Description: ");
-                                //string newDescription = Console.ReadLine();
-                                //callToUpdate.Description = newDescription;
-                                //s_bl.Call.Update(callToUpdate);
-                                //Console.WriteLine("Call updated successfully.");
-                            }
-                            else
-                                Console.WriteLine("Invalid Id.");
+                            BO.Call callUpdate = CallCreateUpdate(true);
+                            s_bl.Call.Update(callUpdate);
                             break;
 
                         case CallMenuOptions.Delete:
@@ -217,7 +207,8 @@ internal class Program
                             break;
 
                         case CallMenuOptions.Create:
-                            CallMenuCreate();
+                            BO.Call callCreate = CallCreateUpdate(false);
+                            s_bl.Call.Create(callCreate);
                             break;
 
                         case CallMenuOptions.GetClosedCallList:
@@ -273,7 +264,7 @@ internal class Program
                                         break;
                                     }
                                 }
-                                
+
                                 var assignmentProgress = s_bl.Volunteer.Read(requesterId).IsProgress;
                                 if (assignmentProgress == null)
                                     Console.WriteLine("No Call In Treatmet Of Volunteer");
@@ -285,10 +276,10 @@ internal class Program
                             }
                             else
                                 Console.WriteLine("Invalid Id.");
-                        break;
+                            break;
 
                         case CallMenuOptions.ChooseCallToTreat:
-                           
+
                             HelpGetCallList(out int chooserId, out BO.CallType? callType);
                             BO.FieldsOpenCallInList? toSort = sortFilterOpen();
                             Console.WriteLine("Choose a call to treat:");
@@ -299,7 +290,7 @@ internal class Program
                             Console.Write("Enter call ID to treat: ");
                             if (int.TryParse(Console.ReadLine(), out int treatId))
                             {
-                                s_bl.Call.ChooseCallToTreat(chooserId,treatId);
+                                s_bl.Call.ChooseCallToTreat(chooserId, treatId);
                                 Console.WriteLine("Call is now being treated.");
                             }
                             else
@@ -323,9 +314,13 @@ internal class Program
         }
     }
 
-
-
-
+    private static void PrintException(Exception ex)
+    {
+        Console.WriteLine($"Exception: {ex.GetType().Name}");
+        Console.WriteLine($"Message: {ex.Message}");
+        if (ex.InnerException != null)
+            Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+    }
 
     private static void VolunteerMenu()
     {
@@ -354,14 +349,11 @@ internal class Program
 
                         case VolunteerMenuOptions.LogIn:
                             BO.RoleType role = LogInHelp();
-                            Console.Write("Volunteer Role is: ", role);
+                            Console.Write("Volunteer Role is: " + role);
                             break;
 
                         case VolunteerMenuOptions.ReadAll:
-                            Console.WriteLine("Reading all volunteers...");
-                            var volList = s_bl.Volunteer.ReadAll(null);
-                            foreach (var volunteer in volList)
-                                Console.WriteLine(volunteer);
+                            ReadAllVolunteerHelp();
                             break;
 
                         case VolunteerMenuOptions.Read:
@@ -376,22 +368,8 @@ internal class Program
                             break;
 
                         case VolunteerMenuOptions.Update:
-                            Console.Write("Enter Volunteer ID to Update: ");
-                            //if (int.TryParse(Console.ReadLine(), out int updateId))
-                            //{
-                            //    var existingVolunteer = s_bl.Volunteer.Read(updateId);
-                            //    Console.WriteLine($"Existing Volunteer: {existingVolunteer}");
-
-                            //    Console.Write("Enter New Name: ");
-                            //    string newName = Console.ReadLine();
-
-                            //    existingVolunteer.Name = newName;
-                            //    s_bl.Volunteer.Update(existingVolunteer);
-
-                            //    Console.WriteLine("Volunteer updated successfully.");
-                            //}
-                            //else
-                            //    Console.WriteLine("Invalid ID format.");
+                            HelpUpdateVolunteer();
+                            Console.WriteLine("New volunteer updated successfully.");
                             break;
 
                         case VolunteerMenuOptions.Delete:
@@ -406,27 +384,8 @@ internal class Program
                             break;
 
                         case VolunteerMenuOptions.Create:
-                            Console.Write("Enter Volunteer Name: ");
-                            string name = Console.ReadLine();
-
-                            Console.Write("Enter Address: ");
-                            string address = Console.ReadLine();
-
-                            Console.Write("Enter Phone Number: ");
-                            string phoneNumber = Console.ReadLine();
-
-                            Console.Write("Enter Email: ");
-                            string email = Console.ReadLine();
-
-                            var newVolunteer = new BO.Volunteer
-                            {
-                                Name = name,
-                                Address = address,
-                                PhoneNumber = phoneNumber,
-                                Email=email
-                            };
-
-                            s_bl.Volunteer.Create(newVolunteer);
+                            BO.Volunteer newVol = HelpCreateVolunteer();
+                            s_bl.Volunteer.Create(newVol);
                             Console.WriteLine("New volunteer created successfully.");
                             break;
 
@@ -448,17 +407,16 @@ internal class Program
 
     }
 
-    private static void PrintException(Exception ex)
+    private static BO.Call CallCreateUpdate(bool type)
     {
-        Console.WriteLine($"Exception: {ex.GetType().Name}");
-        Console.WriteLine($"Message: {ex.Message}");
-        if (ex.InnerException != null)
-            Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
-    }
-    
-    private static void CallMenuCreate()
-    {
-        Console.WriteLine("Enter new call details:\n");
+        Console.WriteLine("Enter call details:");
+        int id = 0;
+        if (type == true)
+        {
+            Console.WriteLine("Enter call Id:");
+            if (!int.TryParse(Console.ReadLine(), out id))
+                Console.WriteLine("Invalid Id.");
+        }
         Console.Write("Call Type\n0: Transportation\n1: Babysitting\n2: Shopping\n3: food\n4: Cleaning:\n");
         BO.CallType callType;
         while (!Enum.TryParse(Console.ReadLine(), out callType))
@@ -468,35 +426,27 @@ internal class Program
         Console.Write("Verbal Description:\n");
         string? description = Console.ReadLine();
 
-        Console.Write("Address: \n");
+        Console.Write("Address: ([Street Name] [Building/House Number], [City], [Country])\n");
         string? address = Console.ReadLine();
 
         Console.Write("Max Time To End (yyyy-MM-dd HH:mm) [optional]:\n");
         DateTime? maxTimeToEnd = DateTime.TryParse(Console.ReadLine(), out DateTime maxEndTime) ? maxEndTime : null;
         BO.Call call = new BO.Call()
         {
-            Id = 0,
-
+            Id = id,
             TheCallType = callType,
-
             VerbalDescription = description,
-
             Address = address,
-
             Latitude = 0,
-
             Longitude = 0,
-
             OpeningTime = DateTime.Now,
-
             MaxTimeToEnd = maxTimeToEnd,
-
             status = BO.Status.treatment,
-
             listAssignForCall = null
         };
-        s_bl.Call.Create(call);
+        return call;
     }
+
 
     private static BO.RoleType LogInHelp()
     {
@@ -661,5 +611,195 @@ internal class Program
         return sortField;
     }
 
+    static BO.Volunteer HelpCreateVolunteer()
+    {
+        Console.Write("Enter Volunteer Id: ");
+        if (!int.TryParse(Console.ReadLine(), out int VolIdCreate))
+            Console.WriteLine("Invalid ID format.");
+        Console.Write("Enter Volunteer Name: ");
+        string name = Console.ReadLine();
+        Console.Write("Enter Address: ");
+        string address = Console.ReadLine();
+        Console.Write("Enter Phone Number: ");
+        string phoneNumber = Console.ReadLine();
+        Console.Write("Enter Email: ");
+        string email = Console.ReadLine();
+        double? maxDistance = null;
+        Console.Write("Enter max Distance to choose call:(optional) ");
+        if (double.TryParse(Console.ReadLine(), out double tmp))
+            maxDistance = tmp;
+        var newVolunteer = new BO.Volunteer
+        {
+            Id = VolIdCreate,
+            Name = name,
+            Address = address,
+            PhoneNumber = phoneNumber,
+            Email = email,
+            MaxDistance = maxDistance,
+            Role = BO.RoleType.volunteer,
+            Active = true
+        };
+        return newVolunteer;
+    }
+
+    static void HelpUpdateVolunteer()
+    {
+        Console.WriteLine("Enter volunteer ID");
+        if (!int.TryParse(Console.ReadLine(), out int idToUpdate))
+        {
+            Console.WriteLine("Invalid ID");
+            return;
+        }
+        Console.WriteLine("Please enter your ID");
+        if (!int.TryParse(Console.ReadLine(), out int idPersson))
+        {
+            Console.WriteLine("Invalid ID");
+            return;
+        }
+        Console.WriteLine("Updating details for volunteer: ");
+        Console.WriteLine("Enter Name :");
+        string fullName = Console.ReadLine();
+        Console.WriteLine("Phone Number :");
+        string phoneNumber = Console.ReadLine();
+        Console.WriteLine("Email:");
+        string email = Console.ReadLine();
+        Console.WriteLine("Role (manager- 0, volunteer- 1, ):");
+        if (!Enum.TryParse(Console.ReadLine(), out BO.RoleType roleUpdate))
+        {
+            roleUpdate = BO.RoleType.volunteer;
+        }
+        Console.WriteLine("Active (true/false):");
+        if (!bool.TryParse(Console.ReadLine(), out bool activeUP))
+            activeUP = true;
+        Console.WriteLine("Password :");
+        string passwordNew = Console.ReadLine();
+        Console.WriteLine("Address:");
+        string fullAddress = Console.ReadLine();
+        double? maxDistance = null;
+        Console.Write("Enter max Distance to choose call:(optional) ");
+        if (double.TryParse(Console.ReadLine(), out double tmp))
+            maxDistance = tmp;
+        BO.Volunteer volunteerToUpdate = new BO.Volunteer
+        {
+            Id = idToUpdate,
+            Name = fullName,
+            PhoneNumber = phoneNumber,
+            Email = email,
+            TheDistanceType = BO.DistanceType.air,
+            Role = roleUpdate,
+            Active = activeUP,
+            Password = passwordNew,
+            Address = fullAddress,
+            Latitude = 0,
+            Longitude = 0,
+            MaxDistance = maxDistance,
+            TotalHandled = 0,
+            TotalCanceled = 0,
+            TotalExpired = 0,
+            IsProgress = null,
+        };
+
+        s_bl.Volunteer.Update(idPersson, volunteerToUpdate);
+    }
+
+    static void ReadAllVolunteerHelp()
+    {
+        Console.WriteLine("Filter by active status? (Enter 'true' for Active, 'false' for Inactive, or press Enter to skip):");
+        bool? activeFilter = null;
+        if (bool.TryParse(Console.ReadLine(), out bool activeOption))
+            activeFilter = activeOption;
+        // קלט מיון
+        Console.WriteLine("Sort by field? (Enter: 1 for Id, 2 for Name, 3 for TotalHandled, 4 for TotalCanceled, 5 for TotalExpired):");
+        BO.FieldsVolunteerInList sortField = BO.FieldsVolunteerInList.Id; // ברירת מחדל
+        if (int.TryParse(Console.ReadLine(), out int sortFieldOption))
+        {
+            sortField = sortFieldOption switch
+            {
+                1 => BO.FieldsVolunteerInList.Id,
+                2 => BO.FieldsVolunteerInList.Name,
+                3 => BO.FieldsVolunteerInList.TotalHandled,
+                4 => BO.FieldsVolunteerInList.TotalCanceled,
+                5 => BO.FieldsVolunteerInList.TotalExpired,
+                _ => BO.FieldsVolunteerInList.Id // ברירת מחדל אם הערך לא מוכר
+            };
+        }
+        // קריאה לפונקציה עם הקלט של המשתמש
+        var volList = s_bl.Volunteer.ReadAll(activeFilter, sortField);
+
+        // הדפסת התוצאה
+        foreach (var volunteer in volList)
+            Console.WriteLine(volunteer);
+    }
+
+    static void ReadAllCallHelp()
+    {
+        Console.WriteLine("Filter by field? (Enter: 1 for Id, 2 for CallId, 3 for TheCallType, 4 for OpeningTime, 5 for TimeToEnd, 6 for LastVolunteer, 7 for CompletionTreatment, 8 for Status, 9 for TotalAssignments, or press Enter to skip):");
+        BO.FieldsCallInList? filterField = null;
+        object? filterValue = null;
+
+        if (int.TryParse(Console.ReadLine(), out int filterFieldOption))
+        {
+            filterField = filterFieldOption switch
+            {
+                1 => BO.FieldsCallInList.Id,
+                2 => BO.FieldsCallInList.CallId,
+                3 => BO.FieldsCallInList.TheCallType,
+                4 => BO.FieldsCallInList.OpeningTime,
+                5 => BO.FieldsCallInList.TimeToEnd,
+                6 => BO.FieldsCallInList.LastVolunteer,
+                7 => BO.FieldsCallInList.CompletionTreatment,
+                8 => BO.FieldsCallInList.status,
+                9 => BO.FieldsCallInList.TotalAssignments,
+                _ => null
+            };
+
+            if (filterField.HasValue)
+            {
+                Console.WriteLine("Enter filter value:");
+                var inputValue = Console.ReadLine();
+                filterValue = filterField switch
+                {
+                    BO.FieldsCallInList.Id => int.TryParse(inputValue, out int id) ? id : null,
+                    BO.FieldsCallInList.CallId => int.TryParse(inputValue, out int callId) ? callId : null,
+                    BO.FieldsCallInList.TheCallType => Enum.TryParse(typeof(BO.CallType), inputValue, out var callType) ? callType : null,
+                    BO.FieldsCallInList.OpeningTime => DateTime.TryParse(inputValue, out DateTime openingTime) ? openingTime : null,
+                    BO.FieldsCallInList.TimeToEnd => TimeSpan.TryParse(inputValue, out TimeSpan timeToEnd) ? timeToEnd : null,
+                    BO.FieldsCallInList.LastVolunteer => inputValue, // LastVolunteer is a string
+                    BO.FieldsCallInList.CompletionTreatment => TimeSpan.TryParse(inputValue, out TimeSpan completionTreatment) ? completionTreatment : null,
+                    BO.FieldsCallInList.status => Enum.TryParse(typeof(BO.Status), inputValue, out var status) ? status : null,
+                    BO.FieldsCallInList.TotalAssignments => int.TryParse(inputValue, out int totalAssignments) ? totalAssignments : null,
+                    _ => null
+                };
+            }
+        }
+
+        // קלט למיון
+        Console.WriteLine("Sort by field? (Enter: 1 for Id, 2 for CallId, 3 for TheCallType, 4 for OpeningTime, 5 for TimeToEnd, 6 for LastVolunteer, 7 for CompletionTreatment, 8 for Status, 9 for TotalAssignments, or press Enter to skip):");
+        BO.FieldsCallInList? sortField = null;
+
+        if (int.TryParse(Console.ReadLine(), out int sortFieldOption))
+        {
+            sortField = sortFieldOption switch
+            {
+                1 => BO.FieldsCallInList.Id,
+                2 => BO.FieldsCallInList.CallId,
+                3 => BO.FieldsCallInList.TheCallType,
+                4 => BO.FieldsCallInList.OpeningTime,
+                5 => BO.FieldsCallInList.TimeToEnd,
+                6 => BO.FieldsCallInList.LastVolunteer,
+                7 => BO.FieldsCallInList.CompletionTreatment,
+                8 => BO.FieldsCallInList.status,
+                9 => BO.FieldsCallInList.TotalAssignments,
+                _ => null
+            };
+        }
+
+        // קריאה לפונקציה עם הסינון והמיון
+        var allCalls = s_bl.Call.ReadAll(filterField, filterValue, sortField);
+
+        // הדפסת התוצאה
+        foreach (var call in allCalls)
+            Console.WriteLine(call);
+    }
 }
 
