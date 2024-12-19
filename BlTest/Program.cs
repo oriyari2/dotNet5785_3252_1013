@@ -415,11 +415,15 @@ internal class Program
                             Console.Write("Enter Phone Number: ");
                             string phoneNumber = Console.ReadLine();
 
+                            Console.Write("Enter Email: ");
+                            string email = Console.ReadLine();
+
                             var newVolunteer = new BO.Volunteer
                             {
                                 Name = name,
                                 Address = address,
-                                PhoneNumber = phoneNumber
+                                PhoneNumber = phoneNumber,
+                                Email=email
                             };
 
                             s_bl.Volunteer.Create(newVolunteer);

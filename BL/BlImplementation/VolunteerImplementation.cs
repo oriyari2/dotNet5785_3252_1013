@@ -17,7 +17,7 @@ internal class VolunteerImplementation : IVolunteer
         VolunteerManager.IsValidID(boVolunteer.Id);
         VolunteerManager.IsValidPhoneNumber(boVolunteer.PhoneNumber);
         double[] dis = VolunteerManager.GetCoordinates(boVolunteer.Address);//this function ia additon
-                                                                                                        //put latitude and longitud of adress
+                                                                                                 //put latitude and longitud of adress
         string password = VolunteerManager.GenerateStrongPassword();
         password = VolunteerManager.EncryptPassword(password);
 
