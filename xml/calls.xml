@@ -691,13 +691,13 @@
     <MaxTimeToEnd>2025-09-13T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
-    <Id>125</Id>
-    <CallType>food</CallType>
-    <VerbalDescription>er</VerbalDescription>
-    <Address>Hapisga 30, Jerusalem, Israel</Address>
-    <Latitude>31.7674594</Latitude>
-    <Longitude>35.1832238</Longitude>
-    <OpeningTime>2024-12-19T14:52:31.1659127+02:00</OpeningTime>
-    <MaxTimeToEnd>2025-01-02T12:00:00</MaxTimeToEnd>
+    <Id>69</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Address>Har Nof 4, Jerusalem, Israel</Address>
+    <Latitude>31.765</Latitude>
+    <Longitude>35.214</Longitude>
+    <OpeningTime>2023-10-14T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2025-10-14T00:00:00</MaxTimeToEnd>
   </Call>
 </Calls>
