@@ -34,7 +34,7 @@ $we added bonus of encode and decipher the password- 2 points$
 in callImplemenation in Read all in everi select new we initialize CallId from DO.Call.ReadAll even thogh in the table
 of CallInList we asked to intialize CallId from DO.Assignment.ReadAll becouse if the Id which mean Assignment id is null
 we cant get the CallId from DO.Assignment.ReadAll and in this specific use we can get the call id from DO.Call.ReadAll
-becouse it inside select (LinqToObject).
+because it inside select (LinqToObject).
 
 
 
