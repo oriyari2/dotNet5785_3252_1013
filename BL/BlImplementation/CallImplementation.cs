@@ -92,7 +92,7 @@ internal class CallImplementation : ICall
     public void ChooseCallToTreat(int volunteerId, int CallId)
     {
        var currentCall = VolunteerManager.GetCurrentCall(volunteerId);
-        if (currentCall == null)
+        if (currentCall != null)
             throw new BO.BlUserCantUpdateItemExeption("Volunteer cant choose new call to treat" +
                 " because he already has one");
         
