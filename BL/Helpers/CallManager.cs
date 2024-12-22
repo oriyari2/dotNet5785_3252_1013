@@ -10,6 +10,7 @@ namespace Helpers;  // Declares the Helpers namespace, containing utility classe
 /// </summary>
 internal static class CallManager
 {
+    internal static ObserverManager Observers = new(); //stage 5 
     // Static DAL instance used for data access operations.
     private static IDal s_dal = Factory.Get;
 
@@ -21,19 +22,19 @@ internal static class CallManager
         AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
 
         // Checks if the call has expired based on the MaxTimeToEnd and current time.
-        if (call.MaxTimeToEnd < ClockManager.Now)
+        if (call.MaxTimeToEnd < AdminManager.Now)
             return BO.Status.expired;  // Returns expired if the call time has passed.
 
         // If there is no assignment or the end type is self or manager (open/risknot)
         if (assignment == null || assignment.TheEndType == DO.EndType.self || assignment.TheEndType == DO.EndType.manager)
-            if ((ClockManager.Now - call.MaxTimeToEnd) > admin.GetRiskRange())  // Checks if the call exceeds the risk range.
+            if ((AdminManager.Now - call.MaxTimeToEnd) > admin.GetRiskRange())  // Checks if the call exceeds the risk range.
                 return BO.Status.riskOpen;  // Returns riskOpen if the call exceeds the risk range.
             else
                 return BO.Status.open;  // Returns open if the call is still within the range.
 
         // If the end type is null (treatment-related cases)
         if (assignment.TheEndType == null)
-            if ((ClockManager.Now - call.MaxTimeToEnd) > admin.GetRiskRange())  // Checks if the call exceeds the risk range.
+            if ((AdminManager.Now - call.MaxTimeToEnd) > admin.GetRiskRange())  // Checks if the call exceeds the risk range.
                 return BO.Status.riskTreatment;  // Returns riskTreatment if the call exceeds the risk range.
             else
                 return BO.Status.treatment;  // Returns treatment if within the range.
@@ -94,7 +95,7 @@ internal static class CallManager
     internal static void UpdateExpired()
     {
         // Step 1: Retrieves all calls where the MaxTimeToEnd has passed.
-        var expiredCalls = s_dal.Call.ReadAll(c => c.MaxTimeToEnd < ClockManager.Now);
+        var expiredCalls = s_dal.Call.ReadAll(c => c.MaxTimeToEnd < AdminManager.Now);
 
         // Step 2: Checks for calls without assignments and creates a new assignment with the expired status.
         foreach (var call in expiredCalls)
@@ -109,8 +110,8 @@ internal static class CallManager
                     Id: 0,  // Creates a new ID for the assignment.
                     CallId: call.Id,
                     VolunteerId: 0,  // Volunteer ID is set to 0 (no assignment).
-                    EntryTime: ClockManager.Now,  // Sets the entry time to the current time.
-                    ActualEndTime: ClockManager.Now,  // Sets the actual end time to the current time.
+                    EntryTime: AdminManager.Now,  // Sets the entry time to the current time.
+                    ActualEndTime: AdminManager.Now,  // Sets the actual end time to the current time.
                     TheEndType: DO.EndType.expired  // Sets the end type to expired.
                 );
                 s_dal.Assignment.Create(newAssignment);  // Creates the new assignment.
@@ -125,7 +126,7 @@ internal static class CallManager
             {
                 var updatedAssignment = assignment with
                 {
-                    ActualEndTime = ClockManager.Now,  // Sets the actual end time to the current time.
+                    ActualEndTime = AdminManager.Now,  // Sets the actual end time to the current time.
                     TheEndType = DO.EndType.expired  // Marks the end type as expired.
                 };
 

@@ -23,6 +23,7 @@ namespace Helpers
     /// </summary>
     internal static class VolunteerManager
     {
+        internal static ObserverManager Observers = new(); //stage 5 
         private static IDal s_dal = DalApi.Factory.Get;  // Initialize DAL to interact with data layer
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Helpers
                   MaxTimeToEnd = call.MaxTimeToEnd,
                   EntryTime = item.EntryTime,
                   Distance = volunteer?.Address != null ? VolunteerManager.CalculateDistance(volLon, volLat, call.Longitude, call.Latitude) : 0,
-                  status = (ClockManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
+                  status = (AdminManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
                             ? BO.Status.treatment
                             : BO.Status.riskTreatment
               }).FirstOrDefault();

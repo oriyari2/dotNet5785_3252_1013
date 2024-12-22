@@ -15,13 +15,13 @@ public class AdminImplementation : IAdmin
     /// Advances the clock by a specified time unit.
     /// </summary>
     /// <param name="unit">The time unit to advance (Minute, Hour, Day, Month, or Year).</param>
-    public void AdvanceClock(BO.TimeUnit unit) => ClockManager.UpdateClock(unit switch // Switch case to handle different time units
+    public void AdvanceClock(BO.TimeUnit unit) => AdminManager.UpdateClock(unit switch // Switch case to handle different time units
     {
-        BO.TimeUnit.Minute => ClockManager.Now.AddMinutes(1), // Add one minute
-        BO.TimeUnit.Hour => ClockManager.Now.AddHours(1), // Add one hour
-        BO.TimeUnit.Day => ClockManager.Now.AddDays(1), // Add one day
-        BO.TimeUnit.Month => ClockManager.Now.AddMonths(1), // Add one month
-        BO.TimeUnit.Year => ClockManager.Now.AddYears(1), // Add one year
+        BO.TimeUnit.Minute => AdminManager.Now.AddMinutes(1), // Add one minute
+        BO.TimeUnit.Hour => AdminManager.Now.AddHours(1), // Add one hour
+        BO.TimeUnit.Day => AdminManager.Now.AddDays(1), // Add one day
+        BO.TimeUnit.Month => AdminManager.Now.AddMonths(1), // Add one month
+        BO.TimeUnit.Year => AdminManager.Now.AddYears(1), // Add one year
         _ => DateTime.MinValue // Default case to return a minimum value if the unit is not recognized
     });
 
@@ -31,7 +31,7 @@ public class AdminImplementation : IAdmin
     /// <returns>The current date and time of the clock.</returns>
     public DateTime GetClock()
     {
-        return ClockManager.Now; // Return the current time managed by ClockManager.
+        return AdminManager.Now; // Return the current time managed by ClockManager.
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ public class AdminImplementation : IAdmin
     /// <returns>The time span representing the risk range.</returns>
     public TimeSpan GetRiskRange()
     {
-        return _dal.Config.RiskRange; // Retrieve the risk range configuration from the DAL.
+        return AdminManager.RiskRange; // Retrieve the risk range configuration from the DAL.
     }
 
     /// <summary>
@@ -49,7 +49,9 @@ public class AdminImplementation : IAdmin
     public void Intialize()
     {
         DalTest.Initialization.Do(); // Perform the DAL initialization
-        ClockManager.UpdateClock(ClockManager.Now); // Set the current time in the ClockManager
+        AdminManager.UpdateClock(AdminManager.Now); // Set the current time in the AdminManager
+        AdminManager.RiskRange = AdminManager.RiskRange; //Set the current risk range in the AdminManager in order to report to the observers
+
     }
 
     /// <summary>
@@ -58,8 +60,10 @@ public class AdminImplementation : IAdmin
     public void Reset()
     {
         _dal.ResetDB(); // Reset the database to its initial state
-        ClockManager.UpdateClock(ClockManager.Now); // Reset the clock to the current time
+        AdminManager.UpdateClock(AdminManager.Now); // Reset the clock to the current time
+        AdminManager.RiskRange = AdminManager.RiskRange;// Reset the risk range to the current risk range
         Console.WriteLine("Reset completed successfully."); // Inform the user that the reset was successful
+
     }
 
     /// <summary>
@@ -68,7 +72,19 @@ public class AdminImplementation : IAdmin
     /// <param name="riskRange">The new risk range value to set.</param>
     public void SetRiskRange(TimeSpan riskRange)
     {
-        _dal.Config.RiskRange = riskRange; // Set the new risk range in the DAL configuration.
+        AdminManager.RiskRange = riskRange; // Set the new risk range in the DAL configuration.
     }
+
+    #region Stage 5
+    public void AddClockObserver(Action clockObserver) =>
+    AdminManager.ClockUpdatedObservers += clockObserver;
+    public void RemoveClockObserver(Action clockObserver) =>
+    AdminManager.ClockUpdatedObservers -= clockObserver;
+    public void AddConfigObserver(Action configObserver) =>
+   AdminManager.ConfigUpdatedObservers += configObserver;
+    public void RemoveConfigObserver(Action configObserver) =>
+    AdminManager.ConfigUpdatedObservers -= configObserver;
+    #endregion Stage 5
+
 }
 

@@ -1,6 +1,6 @@
 ﻿namespace BlApi;
 
-public interface IVolunteer
+public interface IVolunteer: IObservable
 {
     public BO.RoleType LogIn(string name, string password);
 

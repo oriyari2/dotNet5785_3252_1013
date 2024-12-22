@@ -3,7 +3,7 @@
 
 namespace BlApi;
 
-public interface ICall
+public interface ICall: IObservable
 {
     public IEnumerable<int> CallsAmount();
 

@@ -14,6 +14,41 @@ internal class CallImplementation : ICall
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
 
     /// <summary>
+    /// Adds an observer that monitors updates for the entire list.
+    /// </summary>
+    /// <param name="listObserver">The callback action to be invoked on list updates.</param>
+    public void AddObserver(Action listObserver) =>
+        // Adds the provided observer for monitoring updates to the entire list.
+        CallManager.Observers.AddListObserver(listObserver);
+
+    /// <summary>
+    /// Adds an observer that monitors updates for a specific object.
+    /// </summary>
+    /// <param name="id">The unique identifier of the object to observe.</param>
+    /// <param name="observer">The callback action to be invoked on object updates.</param>
+    public void AddObserver(int id, Action observer) =>
+        // Adds the provided observer for monitoring updates to the object identified by the specified ID.
+        CallManager.Observers.AddObserver(id, observer);
+
+    /// <summary>
+    /// Removes an observer that was monitoring updates for the entire list.
+    /// </summary>
+    /// <param name="listObserver">The callback action that was observing list updates.</param>
+    public void RemoveObserver(Action listObserver) =>
+        // Removes the provided observer from monitoring updates to the entire list.
+        CallManager.Observers.RemoveListObserver(listObserver);
+
+    /// <summary>
+    /// Removes an observer that was monitoring updates for a specific object.
+    /// </summary>
+    /// <param name="id">The unique identifier of the object being observed.</param>
+    /// <param name="observer">The callback action that was observing the object updates.</param>
+    public void RemoveObserver(int id, Action observer) =>
+        // Removes the provided observer from monitoring updates to the object identified by the specified ID.
+        CallManager.Observers.RemoveObserver(id, observer);
+
+
+    /// <summary>
     /// Retrieves the amount of calls grouped by their status.
     /// </summary>
     /// <returns>Enumerable of integer counts representing the number of calls per status.</returns>
@@ -67,9 +102,9 @@ internal class CallImplementation : ICall
         // Create a new assignment object with updated end time and end type based on role.
         DO.Assignment newAssign;
         if (asker.Role == DO.RoleType.manager)
-            newAssign = assignment with { ActualEndTime = ClockManager.Now, TheEndType = DO.EndType.manager };
+            newAssign = assignment with { ActualEndTime = AdminManager.Now, TheEndType = DO.EndType.manager };
         else
-            newAssign = assignment with { ActualEndTime = ClockManager.Now, TheEndType = DO.EndType.self };
+            newAssign = assignment with { ActualEndTime = AdminManager.Now, TheEndType = DO.EndType.self };
 
         try
         {
@@ -109,7 +144,7 @@ internal class CallImplementation : ICall
             Id = 0,  // New assignment, so Id is set to 0
             CallId = CallId,  // Set the CallId
             VolunteerId = volunteerId,  // Set the VolunteerId
-            EntryTime = ClockManager.Now,  // Set the entry time to the current time
+            EntryTime = AdminManager.Now,  // Set the entry time to the current time
             ActualEndTime = null,  // End time is null at the start
             TheEndType = null  // End type is null at the start
         };
@@ -139,6 +174,7 @@ internal class CallImplementation : ICall
             // If the call already exists, throw a BO exception
             throw new BO.BlAlreadyExistsException($"Call with ID={call.Id} already exists", ex);
         }
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
     /// <summary>
@@ -170,6 +206,7 @@ internal class CallImplementation : ICall
             // If the call does not exist, throw a BO exception
             throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist", ex);
         }
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
     /// <summary>
@@ -197,7 +234,7 @@ internal class CallImplementation : ICall
             throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
 
         // Create a new assignment object with updated end time and end type
-        DO.Assignment newAssign = assignment with { ActualEndTime = ClockManager.Now, TheEndType = DO.EndType.treated };
+        DO.Assignment newAssign = assignment with { ActualEndTime = AdminManager.Now, TheEndType = DO.EndType.treated };
 
         try
         {
@@ -388,7 +425,7 @@ internal class CallImplementation : ICall
         var callInList = from item in listCall
                          let assignment = listAssignment.Where(s => s.CallId == item.Id).OrderByDescending(s => s.EntryTime).FirstOrDefault()
                          let volunteer = assignment != null ? _dal.Volunteer.Read(assignment.VolunteerId) : null
-                         let TempTimeToEnd = item.MaxTimeToEnd - (ClockManager.Now)
+                         let TempTimeToEnd = item.MaxTimeToEnd - (AdminManager.Now)
                          select new BO.CallInList
                          {
                              Id = assignment != null ? assignment.Id : null,
@@ -448,6 +485,7 @@ internal class CallImplementation : ICall
         return callInList;
     }
 
+
     /// <summary>
     /// Updates an existing call in the database.
     /// </summary>
@@ -468,6 +506,8 @@ internal class CallImplementation : ICall
             // Throw an exception if the update fails
             throw new BO.BlDoesNotExistException($"Call with ID={call.Id} does Not exist");
         }
+        CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
 }

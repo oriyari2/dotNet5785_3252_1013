@@ -1,6 +1,7 @@
 ﻿namespace BlImplementation;
 using BlApi;
 using Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
@@ -16,6 +17,41 @@ internal class VolunteerImplementation : IVolunteer
     /// Data access layer for interacting with volunteer data.
     /// </summary>
     private readonly DalApi.IDal _dal = DalApi.Factory.Get;
+
+    /// <summary>
+    /// Adds an observer that monitors updates for the entire list.
+    /// </summary>
+    /// <param name="listObserver">The callback action to be invoked on list updates.</param>
+    public void AddObserver(Action listObserver) =>
+        // Adds the provided observer for monitoring updates to the entire list.
+        VolunteerManager.Observers.AddListObserver(listObserver);
+
+    /// <summary>
+    /// Adds an observer that monitors updates for a specific object.
+    /// </summary>
+    /// <param name="id">The unique identifier of the object to observe.</param>
+    /// <param name="observer">The callback action to be invoked on object updates.</param>
+    public void AddObserver(int id, Action observer) =>
+        // Adds the provided observer for monitoring updates to the object identified by the specified ID.
+        VolunteerManager.Observers.AddObserver(id, observer);
+
+    /// <summary>
+    /// Removes an observer that was monitoring updates for the entire list.
+    /// </summary>
+    /// <param name="listObserver">The callback action that was observing list updates.</param>
+    public void RemoveObserver(Action listObserver) =>
+        // Removes the provided observer from monitoring updates to the entire list.
+        VolunteerManager.Observers.RemoveListObserver(listObserver);
+
+    /// <summary>
+    /// Removes an observer that was monitoring updates for a specific object.
+    /// </summary>
+    /// <param name="id">The unique identifier of the object being observed.</param>
+    /// <param name="observer">The callback action that was observing the object updates.</param>
+    public void RemoveObserver(int id, Action observer) =>
+        // Removes the provided observer from monitoring updates to the object identified by the specified ID.
+        VolunteerManager.Observers.RemoveObserver(id, observer);
+
 
     /// <summary>
     /// Creates a new volunteer in the system.
@@ -47,6 +83,7 @@ internal class VolunteerImplementation : IVolunteer
             // Handle case when volunteer already exists in the database
             throw new BO.BlAlreadyExistsException($"Volunteer with ID={boVolunteer.Id} already exists", ex);
         }
+        VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
     }
 
     /// <summary>
@@ -71,6 +108,7 @@ internal class VolunteerImplementation : IVolunteer
             // Handle case when the volunteer does not exist in the database
             throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist", ex);
         }
+        VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
     }
 
     /// <summary>
@@ -178,6 +216,7 @@ internal class VolunteerImplementation : IVolunteer
         return listSort; // Return the sorted list of volunteers
     }
 
+
     /// <summary>
     /// Updates the details of a volunteer.
     /// </summary>
@@ -229,6 +268,8 @@ internal class VolunteerImplementation : IVolunteer
             // Handle case when the volunteer does not exist
             throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteer.Id} does not exist", ex);
         }
+        VolunteerManager.Observers.NotifyItemUpdated(volunteer.Id);//update current volunteer and obserervers etc.
+        VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
     }
 }
 
