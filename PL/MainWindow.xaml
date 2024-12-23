@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-        Loaded="MainWindow_Loaded">
+        Loaded="MainWindow_Loaded"
+        Closed="MainWindow_Closed">
     <!--check what is the mistake here-->
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,15 +22,12 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Button Content="Handle Volunteers" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="0"/>
+            <!--button to handle the volunteer list-->
+            <Button Content="Handle Volunteers" Click="btnVolunteers_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="0"/>
             <Button Content="Handle Calls" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
             <Button Content="Reset DB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
             <Button Content="Intialize DB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="3"/>
-
-
-
         </Grid>
-
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
@@ -49,18 +47,22 @@
             <Button Content="Add one Month" Click="btnAddOneMonth_Click" HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="4" Width="150" Height="27"/>
             <Button Content="Add one Year" Click="btnAddOneYear_Click" HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="5" Width="150" Height="27"/>
             <Grid Grid.Row="7">
+                
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Content="Update" Click="btnUpdateRiskRange_Click" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentRiskRange}" FontSize="20" VerticalAlignment="Center"
-                         TextChanged="TextBox_TextChanged"/>
+                <Button Grid.Column="2" Content="Update" Click="btnUpdateRiskRange_Click" HorizontalAlignment="Left" 
+                        VerticalAlignment="Center" RenderTransformOrigin="-0.346,0.465" Margin="10,0,0,0" FontSize="14"/>
+                <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentRiskRange}"
+                         FontSize="17" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" />
+                <Label Content="Enter Risk Range and press: " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
 
             </Grid>
 
         </Grid>
 
-
     </Grid>
+    
 </Window>
