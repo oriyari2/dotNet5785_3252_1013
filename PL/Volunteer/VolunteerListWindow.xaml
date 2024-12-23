@@ -23,5 +23,8 @@
             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             <Label Content="Label" Grid.Column="0" HorizontalAlignment="Left" Margin="154,17,0,0" VerticalAlignment="Top"/>
         </Grid>
+        <!--data grid - table for showing the volunteer list-->
+        <DataGrid Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
     </Grid>
 </Window>
