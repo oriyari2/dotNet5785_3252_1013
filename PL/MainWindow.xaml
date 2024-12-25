@@ -25,8 +25,8 @@
             <!--button to handle the volunteer list-->
             <Button Content="Handle Volunteers" Click="btnVolunteers_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="0"/>
             <Button Content="Handle Calls" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
-            <Button Content="Reset DB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
-            <Button Content="Intialize DB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="3"/>
+            <Button Content="Reset DB" Click="btnReset_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
+            <Button Content="Intialize DB" Click="btnIntialize_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="3"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
