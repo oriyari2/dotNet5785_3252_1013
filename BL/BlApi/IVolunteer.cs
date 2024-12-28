@@ -4,7 +4,7 @@ public interface IVolunteer: IObservable
 {
     public BO.RoleType LogIn(string name, string password);
 
-    public IEnumerable<BO.VolunteerInList>  ReadAll(bool? active, BO.FieldsVolunteerInList field= BO.FieldsVolunteerInList.Id);
+    public IEnumerable<BO.VolunteerInList>  ReadAll(bool? active, BO.FieldsVolunteerInList field= BO.FieldsVolunteerInList.Id, BO.CallType? callType = null);
 
     public BO.Volunteer Read(int id);
 

@@ -180,12 +180,22 @@ internal class VolunteerImplementation : IVolunteer
     /// <param name="active">Filter for active volunteers. Null returns all volunteers.</param>
     /// <param name="field">The field to sort the list by.</param>
     /// <returns>A list of volunteers, sorted and filtered based on the provided criteria.</returns>
-    public IEnumerable<BO.VolunteerInList> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id)
+    public IEnumerable<BO.VolunteerInList> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id, BO.CallType? callType = null)
     {
         // Retrieve all volunteers from the database, filtering by active status if needed
         var listVol = active != null
             ? _dal.Volunteer.ReadAll(s => s.Active == active)
             : _dal.Volunteer.ReadAll();
+
+        // Filter the list by call type, if a call type is specified
+        if (callType != null && callType != BO.CallType.None)
+        {
+            listVol = listVol.Where(item =>
+            {
+                var currentCall = VolunteerManager.GetCurrentCall(item.Id);
+                return currentCall != null && VolunteerManager.GetCallType((int)currentCall) == callType;
+            });
+        }
 
         // Sorting the list based on the specified field
         var sortedList = field switch
