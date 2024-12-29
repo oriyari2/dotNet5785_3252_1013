@@ -24,7 +24,7 @@ namespace PL.Volunteer
 
         public VolunteerWindow()
         {
-            ButtonText = id == 0 ? "Add" : "Update";
+            //ButtonText = id == 0 ? "Add" : "Update";
             InitializeComponent();
         }
     }
