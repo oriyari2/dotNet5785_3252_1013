@@ -20,8 +20,6 @@ namespace PL.Volunteer
     public partial class VolunteerListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        ObserverManager.AddListObserver(RefreshVolunteerList);
-
         public VolunteerListWindow()
         {
             InitializeComponent();
@@ -61,6 +59,18 @@ namespace PL.Volunteer
                 : s_bl?.Volunteer.ReadAll(null, BO.FieldsVolunteerInList.Id, callTypeHelp)!;
         }
 
+        private void volunteerListObserver()=> RefreshVolunteerList();
+ 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        => s_bl.Volunteer.AddObserver(volunteerListObserver);
+
+        private void Window_Closed(object sender, EventArgs e)
+            => s_bl.Volunteer.RemoveObserver(volunteerListObserver);
+
+        private void DataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
-    
+
 }

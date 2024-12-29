@@ -19,8 +19,12 @@ namespace PL.Volunteer
     /// </summary>
     public partial class VolunteerWindow : Window
     {
+        public static readonly DependencyProperty ButtonText =
+           DependencyProperty.Register("ButtonText", typeof(string), typeof(VolunteerWindow), new PropertyMetadata(null));
+
         public VolunteerWindow()
         {
+            ButtonText = id == 0 ? "Add" : "Update";
             InitializeComponent();
         }
     }

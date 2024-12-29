@@ -8,7 +8,8 @@
         Title="MainWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Loaded="MainWindow_Loaded"
-        Closed="MainWindow_Closed">
+        Closed="MainWindow_Closed"
+        Background="#F2F4F7">
     <!--check what is the mistake here-->
     <Grid>
         <Grid.ColumnDefinitions>

@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
         Title="VolunteerListWindow" Height="640" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
+        Background="#F2F4F7">
+
     <!--External Grid-->
     <Grid>
         <Grid.RowDefinitions>
@@ -17,17 +21,86 @@
         <!--Internal, Upper Grid-->
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="127*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="266*"/>
+                <ColumnDefinition Width="400*"/>
             </Grid.ColumnDefinitions>
 
             <ComboBox ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}"
-            SelectedValue="{Binding callType, Mode=TwoWay}"  SelectionChanged="CallTypeSelectionChanged"
-            Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-            <Label Content="Label" Grid.Column="0" HorizontalAlignment="Left" Margin="154,17,0,0" VerticalAlignment="Top"/>
+            SelectedValue="{Binding Path=callType, Mode=TwoWay}"  SelectionChanged="CallTypeSelectionChanged"
+            Grid.Column="3" />
+            <Label Content="Select Call Type:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0"/>
         </Grid>
         <!--data grid - table for showing the volunteer list-->
-        <DataGrid Grid.Row="1" d:ItemsSource="{Binding Path=VolunteerList}" SelectionChanged="DataGrid_SelectionChanged"/>
+        <DataGrid ItemsSource="{Binding VolunteerList}" 
+          AutoGenerateColumns="False"
+          IsReadOnly="True" 
+          EnableRowVirtualization="True"
+          RowDetailsVisibilityMode="VisibleWhenSelected"
+          Grid.Row="1"
+          HorizontalAlignment="Stretch" 
+          VerticalAlignment="Stretch"
+          GridLinesVisibility="All" 
+          BorderBrush="#0D1821" 
+          BorderThickness="1">
+
+            <!-- הגדרת סגנון לכותרות -->
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#A3C77F" />
+                    <Setter Property="Foreground" Value="#0D1821" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="5" />
+                    <!-- ריווח פנימי -->
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.Columns>
+                <!-- עמודה למזהה -->
+                <DataGridTextColumn Binding="{Binding Id}" Header="Volunteer ID" Width="*" />
+
+                <!-- עמודה לשם -->
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*" />
+
+                <!-- עמודה למצב פעיל -->
+                <DataGridTemplateColumn Header="Active" Width="Auto" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Active}" IsEnabled="False" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- עמודה לסך כל הקריאות שטופלו -->
+                <DataGridTextColumn Binding="{Binding TotalHandled}" Header="Total Handled Calls" Width="Auto" />
+
+                <!-- עמודה לקריאות שבוטלו -->
+                <DataGridTextColumn Binding="{Binding TotalCanceled}" Header="Total Canceled Calls" Width="Auto" />
+
+                <!-- עמודה לקריאות שפג תוקפן -->
+                <DataGridTextColumn Binding="{Binding TotalExpired}" Header="Total Expired Calls" Width="Auto" />
+
+                <!-- עמודה לקריאה הנוכחית -->
+                <DataGridTemplateColumn Header="Current Call" Width="Auto" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding CurrentCall, TargetNullValue='None'}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- עמודה לסוג הקריאה -->
+                <DataGridTemplateColumn Header="Call Type" Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TheCallType}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
     </Grid>
 </Window>

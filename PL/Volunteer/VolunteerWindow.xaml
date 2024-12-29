@@ -5,8 +5,100 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
-        Title="VolunteerWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="VolunteerWindow" Height="450" Width="400">
+    <!-- משאבים גלובליים -->
+    <Window.Resources>
+        <!-- עיצוב לתוויות -->
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <!-- עיצוב לשדות קלט -->
+        <Style TargetType="Control">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="200" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <!-- הגדרת רשת -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- תוויות ושדות קלט -->
+        <Label Grid.Row="0" Grid.Column="0" Content="Id:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}" IsReadOnly="True" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Name:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}" />
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Phone Number:" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PhoneNumber}" />
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Email:" />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Email}" />
+
+        <Label Grid.Row="4" Grid.Column="0" Content="Password:" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Password}" />
+
+        <Label Grid.Row="5" Grid.Column="0" Content="Address:" />
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Address}" />
+
+        <Label Grid.Row="6" Grid.Column="0" Content="Latitude:" />
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Latitude}" />
+
+        <Label Grid.Row="7" Grid.Column="0" Content="Longitude:" />
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Longitude}" />
+
+        <Label Grid.Row="8" Grid.Column="0" Content="Role:" />
+        <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Roles}" SelectedItem="{Binding Role}" />
+
+        <Label Grid.Row="9" Grid.Column="0" Content="Active:" />
+        <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{Binding Active}" />
+
+        <Label Grid.Row="10" Grid.Column="0" Content="Max Distance:" />
+        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding MaxDistance}" />
+
+        <Label Grid.Row="11" Grid.Column="0" Content="Distance Type:" />
+        <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{Binding DistanceTypes}" SelectedItem="{Binding TheDistanceType}" />
+
+        <Label Grid.Row="12" Grid.Column="0" Content="Total Handled:" />
+        <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding TotalHandled}" IsReadOnly="True" />
+
+        <Label Grid.Row="13" Grid.Column="0" Content="Total Canceled:" />
+        <TextBox Grid.Row="13" Grid.Column="1" Text="{Binding TotalCanceled}" IsReadOnly="True" />
+
+        <Label Grid.Row="14" Grid.Column="0" Content="Total Expired:" />
+        <TextBox Grid.Row="14" Grid.Column="1" Text="{Binding TotalExpired}" IsReadOnly="True" />
+
+        <Label Grid.Row="15" Grid.Column="0" Content="Is Progress:" />
+        <TextBox Grid.Row="15" Grid.Column="1" Text="{Binding IsProgress}" />
+
+        <!-- כפתור לביצוע פעולה -->
+        <Button Grid.Row="16" Grid.ColumnSpan="2" Content="{Binding ButtonText}" HorizontalAlignment="Center" Margin="10" Command="{Binding SaveCommand}" />
     </Grid>
 </Window>
