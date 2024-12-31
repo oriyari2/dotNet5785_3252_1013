@@ -4,7 +4,10 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml" >
     <Application.Resources>
-        <local:CallTypeCollection x:Key="CallTypeCollectionKey" />
+        <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
+        <local:RoleTypeCollection x:Key="RoleTypeCollectionKey"/>
+        <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
+
         <Style TargetType="Button">
             <!-- עיצוב צבעים -->
             <Setter Property="Background"  Value="#A3C77F" />
