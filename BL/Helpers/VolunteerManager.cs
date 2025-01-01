@@ -46,7 +46,14 @@ namespace Helpers
         /// <returns>Details of the call in progress, if any</returns>
         internal static BO.CallInProgress callProgress(int id)
         {
-            var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null));  // Get active assignments
+            var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null));  // Get
+                                                                                                                  //
+                                                                                                                  //
+                                                                                                                  //
+                                                                                                                  //
+                                                                                                                  //
+                                                                                                                  //
+                                                                                                                  // assignments
             var volunteer = s_dal.Volunteer.Read(id) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist"); // Get volunteer details
             double volLon = (double)volunteer.Longitude;
             double volLat = (double)volunteer.Latitude;

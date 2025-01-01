@@ -43,7 +43,9 @@
           VerticalAlignment="Stretch"
           GridLinesVisibility="All" 
           BorderBrush="#0D1821" 
-          BorderThickness="1">
+          BorderThickness="1"
+          SelectedItem="{Binding SelectedVolunteer}" 
+          MouseDoubleClick="lsvVolunteersList_MouseDoubleClick" >
 
             <!-- הגדרת סגנון לכותרות -->
             <DataGrid.ColumnHeaderStyle>
@@ -101,6 +103,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAddUpdate_Click"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAdd_Click"/>
     </Grid>
 </Window>

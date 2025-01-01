@@ -294,12 +294,32 @@ public static class Initialization
         35.1907, 35.2091, 35.2181, 35.2133, 35.2046,35.2150, 35.1984, 35.2075,35.21};
         //longitudes corresponding to the list of addresses
 
+        int[] VolIds = {
+    218372043, // 
+    318207149, // 
+    211722251, // 
+    235246881, 
+    208979633, // 
+    208773994, // 
+    207249780, 
+    322638370, // 
+    316529080, // 
+    241441864,  
+    331295121,
+    215041013, 
+    214363350,
+    215089632, 
+    327887360, 
+    326549441
+    // 
+};
+
+
+
+
         for (int i = 0; i < 16; i++) //create 15 volunteers and 1 manager
         {
-            int VolId;
-            do
-                VolId = s_rand.Next(200000000, 400000000);
-            while (s_dal!.Volunteer!.Read(VolId) != null); //until find available id
+
 
             RoleType VulRole = (i == 0) ? RoleType.manager : RoleType.volunteer; //1 manager 15 volunteers
 
@@ -311,7 +331,7 @@ public static class Initialization
             string Password = "ps" + VolPhone;
             Password = EncryptPassword(Password);
 
-            s_dal!.Volunteer.Create(new(VolId, VolNames[i], VolPhone, VolEmail, Password, VolAdresses[i],
+            s_dal!.Volunteer.Create(new(VolIds[i], VolNames[i], VolPhone, VolEmail, Password, VolAdresses[i],
             VolLatitudes[i], VolLongitudes[i], VulRole, true, VolMaxDis, DistanceType.air));
             //add new Volunteer with right details to list
         }

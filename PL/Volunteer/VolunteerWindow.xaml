@@ -56,7 +56,8 @@
         <!-- תוויות ושדות קלט -->
         <Label Grid.Column="0" Content="Id:" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding currentVolunteer.Id,
-            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
+            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
+            IsReadOnly="{Binding ButtonText,Converter={StaticResource ConvertObjIdToTFkey}}" />
 
         <Label Grid.Row="1" Grid.Column="0" Content="Name:" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding currentVolunteer.Name,
@@ -71,56 +72,47 @@
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
 
         <Label Grid.Row="4" Grid.Column="0" Content="Password:" />
-        <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Text="{Binding currentVolunteer.Password,
-            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
+        <TextBox Grid.Row="4" Grid.Column="1"  Text="{Binding currentVolunteer.Password,
+            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsReadOnly="{Binding ButtonText,Converter={StaticResource ConvertObjPasswordToTFkey}}" />
 
         <Label Grid.Row="5" Grid.Column="0" Content="Address:"  />
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding currentVolunteer.Address,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  />
 
-        <Label Grid.Row="6" Grid.Column="0" Content="Latitude:" />
-        <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True" Text="{Binding currentVolunteer.Latitude,
-            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  />
+        <Label Grid.Row="6" Grid.Column="0" Content="Role:" />
+        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Source={StaticResource RoleTypeCollectionKey}}" 
+        SelectedValue="{Binding currentVolunteer.Role, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  />
 
-        <Label Grid.Row="7" Grid.Column="0" Content="Longitude:"  />
-        <TextBox Grid.Row="7" Grid.Column="1" IsReadOnly="True" Text="{Binding currentVolunteer.Longitude,
-            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
-
-        <Label Grid.Row="8" Grid.Column="0" Content="Role:" />
-        <ComboBox Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Source={StaticResource RoleTypeCollectionKey}}" 
-        SelectedValue="{Binding currentVolunteer.Role, Mode=TwoWay, NotifyOnValidationError=true, 
-        ValidatesOnExceptions=true}"  />
-
-        <Label Grid.Row="9" Grid.Column="0" Content="Active:"  />
-        <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{Binding currentVolunteer.Active, Mode=TwoWay, NotifyOnValidationError=true, 
+        <Label Grid.Row="7" Grid.Column="0" Content="Active:"  />
+        <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding currentVolunteer.Active, Mode=TwoWay, NotifyOnValidationError=true, 
             ValidatesOnExceptions=true}"/>
 
-        <Label Grid.Row="10" Grid.Column="0" Content="Max Distance:"  />
-        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding currentVolunteer.MaxDistance,
+        <Label Grid.Row="8" Grid.Column="0" Content="Max Distance:"  />
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding currentVolunteer.MaxDistance,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
 
-        <Label Grid.Row="11" Grid.Column="0" Content="Distance Type:" />
-        <ComboBox Grid.Row="11" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}" 
+        <Label Grid.Row="9" Grid.Column="0" Content="Distance Type:" />
+        <ComboBox Grid.Row="9" Grid.Column="1" ItemsSource="{Binding Source={StaticResource DistanceTypeCollectionKey}}" 
         SelectedValue="{Binding currentVolunteer.TheDistanceType, Mode=TwoWay, NotifyOnValidationError=true, 
         ValidatesOnExceptions=true}" />
 
-        <Label Grid.Row="12" Grid.Column="0" Content="Total Handled:"  />
-        <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding currentVolunteer.TotalHandled,
+        <Label Grid.Row="10" Grid.Column="0" Content="Total Handled:"  />
+        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding currentVolunteer.TotalHandled,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsReadOnly="True" />
 
-        <Label Grid.Row="13" Grid.Column="0" Content="Total Canceled:" />
-        <TextBox Grid.Row="13" Grid.Column="1" Text="{Binding currentVolunteer.TotalCanceled,
+        <Label Grid.Row="11" Grid.Column="0" Content="Total Canceled:" />
+        <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding currentVolunteer.TotalCanceled,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsReadOnly="True" />
 
-        <Label Grid.Row="14" Grid.Column="0" Content="Total Expired:" />
-        <TextBox Grid.Row="14" Grid.Column="1" Text="{Binding currentVolunteer.TotalExpired,
+        <Label Grid.Row="12" Grid.Column="0" Content="Total Expired:" />
+        <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding currentVolunteer.TotalExpired,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsReadOnly="True" />
 
-        <Label Grid.Row="15" Grid.Column="0" Content="Is Progress:"  />
-        <TextBox Grid.Row="15" Grid.Column="1" IsReadOnly="True" Text="{Binding currentVolunteer.IsProgress,
+        <Label Grid.Row="13" Grid.Column="0" Content="Is Progress:"  />
+        <TextBox Grid.Row="13" Grid.Column="1" IsReadOnly="True" Text="{Binding currentVolunteer.IsProgress,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
         <!-- כפתור לביצוע פעולה -->
-        <Button Grid.Row="16" Content="{Binding ButtonText}"  Click ="ButtonAddUpdate_Click" 
+        <Button Grid.Row="15" Content="{Binding ButtonText}"  Click ="ButtonAddUpdate_Click" 
         HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height= "30"  />
     </Grid>
 </Window>

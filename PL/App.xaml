@@ -7,6 +7,11 @@
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
         <local:RoleTypeCollection x:Key="RoleTypeCollectionKey"/>
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
+        <local:ConvertObjIdToTF x:Key="ConvertObjIdToTFkey" />
+        <local:ConvertRoleToTF x:Key="ConvertRoleToTFkey" />
+        <local:ConvertObjPasswordToTF x:Key="ConvertObjPasswordToTFkey" />
+
+        
 
         <Style TargetType="Button">
             <!-- עיצוב צבעים -->

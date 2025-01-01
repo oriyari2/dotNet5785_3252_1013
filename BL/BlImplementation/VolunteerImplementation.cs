@@ -267,7 +267,7 @@ internal class VolunteerImplementation : IVolunteer
             // Create the updated data object (DO) for the volunteer
             DO.Volunteer doVolunteer = new(volunteer.Id, volunteer.Name,
                 volunteer.PhoneNumber, volunteer.Email, password, volunteer.Address, cordinate[0],
-                cordinate[1], (DO.RoleType)volunteer.Role, true, volunteer.MaxDistance,
+                cordinate[1], (DO.RoleType)volunteer.Role, volunteer.Active, volunteer.MaxDistance,
                 (DO.DistanceType)volunteer.TheDistanceType);
 
             // Update the volunteer in the database

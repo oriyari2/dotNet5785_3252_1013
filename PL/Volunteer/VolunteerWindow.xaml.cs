@@ -12,47 +12,103 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Volunteer
+namespace PL.Volunteer;
+
+/// <summary>
+/// Interaction logic for VolunteerWindow.xaml
+/// </summary>
+public partial class VolunteerWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for VolunteerWindow.xaml
-    /// </summary>
-    public partial class VolunteerWindow : Window
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+    public static readonly DependencyProperty ButtonTextProperty =
+        DependencyProperty.Register("ButtonText", typeof(string), typeof(VolunteerWindow));
+
+    public string ButtonText
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        get { return (string)GetValue(ButtonTextProperty); }
+        set { SetValue(ButtonTextProperty, value); }
+    }
 
-        public static readonly DependencyProperty ButtonTextProperty =
-            DependencyProperty.Register("ButtonText", typeof(string), typeof(VolunteerWindow));
+    public VolunteerWindow(int id = 0)
+    {
+        ButtonText = id == 0 ? "Add" : "Update";
+        InitializeComponent();
+        DataContext = this;
+        currentVolunteer = (id != 0) ? s_bl.Volunteer.Read(id)! : new BO.Volunteer();
+    }
 
-        public string ButtonText
+    public BO.Volunteer currentVolunteer
+    {
+        get { return (BO.Volunteer)GetValue(currentVolunteerProperty); }
+        set { SetValue(currentVolunteerProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for currentVolunteer.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty currentVolunteerProperty =
+    DependencyProperty.Register("currentVolunteer", typeof(BO.Volunteer), typeof(VolunteerWindow), new PropertyMetadata(null));
+
+    private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
+    {
+        if (currentVolunteer == null)
         {
-            get { return (string)GetValue(ButtonTextProperty); }
-            set { SetValue(ButtonTextProperty, value); }
+            MessageBox.Show("Volunteer details are missing.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
         }
 
-        public VolunteerWindow(int id = 0)
+        if (ButtonText == "Add")
         {
-            ButtonText = id == 0 ? "Add" : "Update";
-            InitializeComponent();
-            DataContext = this;
-            currentVolunteer = (id != 0) ? s_bl.Volunteer.Read(id)! : new BO.Volunteer();
+            try
+            {
+                s_bl.Volunteer.Create(currentVolunteer);
+                MessageBox.Show("Volunteer added successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-
-        public BO.Volunteer currentVolunteer
+        else
         {
-            get { return (BO.Volunteer)GetValue(currentVolunteerProperty); }
-            set { SetValue(currentVolunteerProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for currentVolunteer.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty currentVolunteerProperty =
-        DependencyProperty.Register("currentVolunteer", typeof(BO.Volunteer), typeof(VolunteerWindow), new PropertyMetadata(null));
-
-        private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            s_bl.Volunteer.Create(currentVolunteer);
-            //s_bl.Volunteer.Update(id, currentVolunteer);
-
+            try
+            {
+                s_bl.Volunteer.Update(currentVolunteer.Id, currentVolunteer);//**
+                MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
+
+    private void queryVolunteer()
+    {
+        int id = currentVolunteer!.Id;
+        currentVolunteer = null;
+        currentVolunteer = s_bl.Volunteer.Read(id);
+    }
+
+    private void volunteerObserver()
+        => queryVolunteer();
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (currentVolunteer!.Id != 0)
+            s_bl.Volunteer.AddObserver(currentVolunteer!.Id, volunteerObserver);
+    }
+
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        if (currentVolunteer!.Id != 0)
+            s_bl.Volunteer.RemoveObserver(currentVolunteer!.Id, volunteerObserver);
+    }
+
+
 }
+
+
+
+
