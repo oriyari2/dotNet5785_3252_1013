@@ -4,22 +4,29 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml" >
     <Application.Resources>
+        <!-- Collection for call types -->
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
+        <!-- Collection for role types -->
         <local:RoleTypeCollection x:Key="RoleTypeCollectionKey"/>
+        <!-- Collection for distance types -->
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
+        <!-- Converter for object ID to true/false -->
         <local:ConvertObjIdToTF x:Key="ConvertObjIdToTFkey" />
+        <!-- Converter for role type to true/false -->
         <local:ConvertRoleToTF x:Key="ConvertRoleToTFkey" />
+        <!-- Converter for object password to true/false -->
         <local:ConvertObjPasswordToTF x:Key="ConvertObjPasswordToTFkey" />
 
-        
-
+        <!-- Default style for buttons -->
         <Style TargetType="Button">
-            <!-- עיצוב צבעים -->
+            <!-- Set button background color -->
             <Setter Property="Background"  Value="#A3C77F" />
+            <!-- Set button foreground (text) color -->
             <Setter Property="Foreground" Value="#0D1821" />
         </Style>
+        <!-- Default style for labels -->
         <Style TargetType="Label">
-            <!-- עיצוב צבעים -->
+            <!-- Set label foreground (text) color -->
             <Setter Property="Foreground" Value="#0D1821" />
         </Style>
     </Application.Resources>

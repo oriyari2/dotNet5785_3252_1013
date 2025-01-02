@@ -71,7 +71,7 @@ internal class VolunteerImplementation : IVolunteer
         // Create the corresponding data object (DO) for the volunteer
         DO.Volunteer doVolunteer = new(boVolunteer.Id, boVolunteer.Name,
             boVolunteer.PhoneNumber, boVolunteer.Email, password, boVolunteer.Address, dis[0],
-            dis[1], DO.RoleType.volunteer, true, boVolunteer.MaxDistance, (DO.DistanceType)boVolunteer.TheDistanceType);
+            dis[1], DO.RoleType.volunteer, boVolunteer.Active, boVolunteer.MaxDistance, (DO.DistanceType)boVolunteer.TheDistanceType);
 
         try
         {
