@@ -30,8 +30,14 @@ public partial class VolunteerWindow : Window
 
         // Initialize the CurrentVolunteer property: fetch an existing volunteer if an ID is provided,
         // or create a new volunteer object for adding a new one
-        CurrentVolunteer = (id != 0) ? s_bl.Volunteer.Read(id)! : new BO.Volunteer();
-        s_bl.Volunteer.AddObserver(CurrentVolunteer!.Id, volunteerObserver);
+        try
+        {
+            CurrentVolunteer = (id != 0) ? s_bl.Volunteer.Read(id)! : new BO.Volunteer();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
 
     }
 
@@ -104,7 +110,9 @@ public partial class VolunteerWindow : Window
     private void Window_Closed(object sender, EventArgs e)
     {
         if (CurrentVolunteer!.Id != 0)
-            // Remove the observer for the current volunteer when the window is closed
+        // Remove the observer for the current volunteer when the window is closed
+        {
             s_bl.Volunteer.RemoveObserver(CurrentVolunteer!.Id, volunteerObserver);
+        }
     }
 }

@@ -15,20 +15,6 @@
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>318207149</Id>
-    <Name>Eli Amar</Name>
-    <PhoneNumber>0542574116</PhoneNumber>
-    <Email>0542574116@gmail.com</Email>
-    <Password>sv38758:7449</Password>
-    <Address>Jaffa 23, Jerusalem, Israel</Address>
-    <Latitude>31.771</Latitude>
-    <Longitude>35.2137</Longitude>
-    <Role>volunteer</Role>
-    <Active>true</Active>
-    <MaxDistance>71762862</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>211722251</Id>
     <Name>Yair Cohen</Name>
     <PhoneNumber>0520862721</PhoneNumber>
@@ -82,20 +68,6 @@
     <Role>volunteer</Role>
     <Active>true</Active>
     <MaxDistance>762688291</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>207249780</Id>
-    <Name>yael cohen</Name>
-    <PhoneNumber>0554777159</PhoneNumber>
-    <Email>0554777159@gmail.com</Email>
-    <Password>sv3887:::48&lt;</Password>
-    <Address>Emek Refaim 15, Jerusalem, Israel</Address>
-    <Latitude>31.758</Latitude>
-    <Longitude>35.2072</Longitude>
-    <Role>volunteer</Role>
-    <Active>true</Active>
-    <MaxDistance>2124252795</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
@@ -222,6 +194,20 @@
     <Role>volunteer</Role>
     <Active>true</Active>
     <MaxDistance>1750914592</MaxDistance>
+    <TheDistanceType>air</TheDistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>207249780</Id>
+    <Name>yael cohen</Name>
+    <PhoneNumber>0554777159</PhoneNumber>
+    <Email>0554777159@gmail.com</Email>
+    <Password>&lt;8kjkim&amp;Copj</Password>
+    <Address>Emek Refaim 15, Jerusalem, Israel</Address>
+    <Latitude>31.7654991</Latitude>
+    <Longitude>35.2219079</Longitude>
+    <Role>volunteer</Role>
+    <Active>true</Active>
+    <MaxDistance>2124252795</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
 </ArrayOfVolunteer>
