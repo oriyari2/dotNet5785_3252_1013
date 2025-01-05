@@ -128,7 +128,7 @@
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsReadOnly="True" />
 
         <Label Grid.Row="13" Grid.Column="0" Content="Is Progress:" />
-        <!-- TextBox indicating if the Volunteer is in progress -->
+        <!-- TextBox indicating if the Volunteer is in progress  -->
         <TextBox 
     Grid.Row="13" 
     Grid.Column="1" 
