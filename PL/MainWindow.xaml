@@ -36,26 +36,22 @@
                     <Label Content="calls amount:" FontWeight="Bold" HorizontalAlignment="Center"  VerticalAlignment="Center" RenderTransformOrigin="0.497,1.464" />
                 </Grid>
                 <Grid Grid.Row="1">
-                    <StackPanel Grid.Column="0" VerticalAlignment="Top" Margin="10">
-                        <TextBlock Text="Pending" Margin="5"  />
-                        <TextBlock Text="InProgress" Margin="5"  />
-                        <TextBlock Text="Completed" Margin="5"  />
-                        <TextBlock Text="Pending" Margin="5"  />
-                        <TextBlock Text="InProgress" Margin="5" />
-                        <TextBlock Text="Completed" Margin="5"  />
-                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10">
-                            <TextBlock Text="{Binding callamounts[0]}" Margin="5" />
-                            <TextBlock Text="{Binding callamounts[1]}" Margin="5" />
-                            <TextBlock Text="{Binding callamounts[2]}" Margin="5" />
-                            <TextBlock Text="{Binding callamounts[3]}" Margin="5" />
-                            <TextBlock Text="{Binding callamounts[4]}" Margin="5" />
-                            <TextBlock Text="{Binding callamounts[5]}" Margin="5" />
-
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Pending:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="{Binding CallAmounts[0]}" Width="50" HorizontalAlignment="Right" />
                         </StackPanel>
-
-
-
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="InProgress:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="{Binding CallAmounts[1]}" Width="50" HorizontalAlignment="Right" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Completed:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="{Binding CallAmounts[2]}" Width="50" HorizontalAlignment="Right" />
+                        </StackPanel>
+                        <!-- הוסף שורות נוספות עבור סטטוסים נוספים במידת הצורך -->
                     </StackPanel>
+
 
                 </Grid>
 

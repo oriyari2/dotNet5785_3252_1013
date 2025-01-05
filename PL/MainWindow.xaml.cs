@@ -83,6 +83,7 @@ public partial class MainWindow : Window
         // Set initial values when the window is loaded
         CurrentTime = s_bl.Admin.GetClock(); // Set the current time from the backend
         CurrentRiskRange = s_bl.Admin.GetRiskRange(); // Set the current risk range from the backend
+        RefreshCallAmounts(); // וודא שזה רץ בזמן טעינת החלון
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
         s_bl.Admin.AddConfigObserver(configObserver); // Register for configuration updates
         s_bl.Call.AddObserver(callAmountsObserver);
@@ -192,19 +193,18 @@ public partial class MainWindow : Window
 
 
 
-    public int[] callamounts
+    public int[] CallAmounts
     {
-        get { return (int[])GetValue(callamountsProperty); }
-        set { SetValue(callamountsProperty, value); }
+        get { return (int[])GetValue(CallAmountsProperty); }
+        set { SetValue(CallAmountsProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for callsamount.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty callamountsProperty =
-        DependencyProperty.Register("callamounts", typeof(int[]), typeof(MainWindow), new PropertyMetadata(null));
+    public static readonly DependencyProperty CallAmountsProperty =
+        DependencyProperty.Register("CallAmounts", typeof(int[]), typeof(MainWindow), new PropertyMetadata(null));
 
     private void RefreshCallAmounts()
     {
-        callamounts = helpReadCallAmounts();
+        CallAmounts = helpReadCallAmounts(); // עדכון הכמויות ממקור הנתונים
     }
 
     private static int[] helpReadCallAmounts()
