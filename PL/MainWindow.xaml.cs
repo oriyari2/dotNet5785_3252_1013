@@ -1,4 +1,5 @@
-﻿using PL.Volunteer;
+﻿using BO;
+using PL.Volunteer;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -84,6 +85,8 @@ public partial class MainWindow : Window
         CurrentRiskRange = s_bl.Admin.GetRiskRange(); // Set the current risk range from the backend
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
         s_bl.Admin.AddConfigObserver(configObserver); // Register for configuration updates
+        s_bl.Call.AddObserver(callAmountsObserver);
+ 
     }
 
     private void MainWindow_Closed(object sender, EventArgs e)
@@ -91,6 +94,8 @@ public partial class MainWindow : Window
         // Cleanup observers when the window is closed
         s_bl.Admin.RemoveClockObserver(clockObserver);
         s_bl.Admin.RemoveConfigObserver(configObserver);
+        s_bl.Call.RemoveObserver(callAmountsObserver);
+
     }
 
     private void btnVolunteers_Click(object sender, RoutedEventArgs e)
@@ -184,4 +189,30 @@ public partial class MainWindow : Window
             Mouse.OverrideCursor = null;
         }
     }
+
+
+
+    public int[] callamounts
+    {
+        get { return (int[])GetValue(callamountsProperty); }
+        set { SetValue(callamountsProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for callsamount.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty callamountsProperty =
+        DependencyProperty.Register("callamounts", typeof(int[]), typeof(MainWindow), new PropertyMetadata(null));
+
+    private void RefreshCallAmounts()
+    {
+        callamounts = helpReadCallAmounts();
+    }
+
+    private static int[] helpReadCallAmounts()
+    {
+        return s_bl.Call.CallsAmount().ToArray();
+    }
+
+    private void callAmountsObserver() => RefreshCallAmounts();
+
+
 }

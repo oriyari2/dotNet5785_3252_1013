@@ -36,6 +36,10 @@ of CallInList we asked to intialize CallId from DO.Assignment.ReadAll becouse if
 we cant get the CallId from DO.Assignment.ReadAll and in this specific use we can get the call id from DO.Call.ReadAll
 because it inside select (LinqToObject).
 
+/stage4 final commit/
+
+/stage5 final commit/
+
 
 
 

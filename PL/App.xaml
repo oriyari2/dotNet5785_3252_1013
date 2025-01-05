@@ -28,6 +28,10 @@
         <Style TargetType="Label">
             <!-- Set label foreground (text) color -->
             <Setter Property="Foreground" Value="#0D1821" />
+            <!-- Set font size -->
+            <Setter Property="FontSize" Value="15" />
+            <!-- Make text bold -->
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
     </Application.Resources>
 </Application>
