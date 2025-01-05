@@ -3,57 +3,80 @@ using System.Windows.Data;
 
 namespace PL;
 
-// Converter to determine if the action is "Update"
+/// <summary>
+/// Converter to determine if the action is "Update".
+/// Returns true if the value is "Update", otherwise false.
+/// </summary>
 public class ConvertObjIdToTF : IValueConverter
 {
+    /// <summary>
+    /// Converts the input value to a boolean based on whether it equals "Update".
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <param name="targetType">The target type (ignored).</param>
+    /// <param name="parameter">Optional parameter (ignored).</param>
+    /// <param name="culture">The culture info.</param>
+    /// <returns>True if the value is "Update", otherwise false.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // Check if the value is "Update" and return true; otherwise, return false
-        if (value.ToString() == "Update")
-        {
-            return true;
-        }
-        return false;
+        return value.ToString() == "Update";
     }
 
-    // ConvertBack is not implemented because this converter is one-way
+    /// <summary>
+    /// ConvertBack is not implemented because this converter is one-way.
+    /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
 }
 
-// Converter to determine if the action is NOT "Update"
+/// <summary>
+/// Converter to determine if the action is NOT "Update".
+/// Returns false if the value is "Update", otherwise true.
+/// </summary>
 public class ConvertObjPasswordToTF : IValueConverter
 {
+    /// <summary>
+    /// Converts the input value to a boolean based on whether it does not equal "Update".
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <param name="targetType">The target type (ignored).</param>
+    /// <param name="parameter">Optional parameter (ignored).</param>
+    /// <param name="culture">The culture info.</param>
+    /// <returns>False if the value is "Update", otherwise true.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // Check if the value is "Update" and return false; otherwise, return true
-        if (value.ToString() == "Update")
-        {
-            return false;
-        }
-        return true;
+        return value.ToString() != "Update";
     }
 
-    // ConvertBack is not implemented because this converter is one-way
+    /// <summary>
+    /// ConvertBack is not implemented because this converter is one-way.
+    /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
 }
 
-
+/// <summary>
+/// Converter for displaying the progress status of a call.
+/// Converts a <see cref="BO.CallInProgress"/> object to a formatted string.
+/// </summary>
 public class CallInProgressConverter : IValueConverter
 {
+    /// <summary>
+    /// Converts a <see cref="BO.CallInProgress"/> object to a readable string format.
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <param name="targetType">The target type (ignored).</param>
+    /// <param name="parameter">Optional parameter (ignored).</param>
+    /// <param name="culture">The culture info.</param>
+    /// <returns>A formatted string representing the call details, or null if invalid.</returns>
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value == null)
-            return null; // אם אין נתונים, מחזיר null
-
         if (value is BO.CallInProgress callInProgress)
         {
-            // בניית מחרוזת המייצגת את הנתונים בצורה קריאה
             return $"ID: {callInProgress.Id}\n" +
                    $"Call ID: {callInProgress.CallId}\n" +
                    $"Type: {callInProgress.TheCallType}\n" +
@@ -66,32 +89,45 @@ public class CallInProgressConverter : IValueConverter
                    $"Status: {callInProgress.status}";
         }
 
-        return null; // במקרה של סוג לא מתאים
+        return null;
     }
 
+    /// <summary>
+    /// ConvertBack is not implemented because this converter is one-way.
+    /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException("ConvertBack is not supported.");
     }
 }
 
-// Converter to check if the role type is "manager"
+/// <summary>
+/// Converter to check if the role type is "manager".
+/// Returns true if the role is "manager", otherwise false.
+/// </summary>
 public class ConvertRoleToTF : IValueConverter
 {
+    /// <summary>
+    /// Converts the input role type to a boolean indicating whether it is "manager".
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <param name="targetType">The target type (ignored).</param>
+    /// <param name="parameter">Optional parameter (ignored).</param>
+    /// <param name="culture">The culture info.</param>
+    /// <returns>True if the role is "manager", otherwise false.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // Ensure the value is not null and can be parsed to the RoleType enum
         if (value != null && Enum.TryParse(value.ToString(), out BO.RoleType role))
         {
-            // Return true if the role is "manager"; otherwise, return false
             return role == BO.RoleType.manager;
         }
 
-        // Return false if the value is null or parsing fails
         return false;
     }
 
-    // ConvertBack is not implemented because this converter is one-way
+    /// <summary>
+    /// ConvertBack is not implemented because this converter is one-way.
+    /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();

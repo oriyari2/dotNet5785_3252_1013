@@ -11,32 +11,39 @@
     Closed="MainWindow_Closed"
     Background="#F2F4F7">
     <Grid>
-        <!-- Column definitions for layout. First column is narrower than the second. -->
+        <!-- Column definitions for layout: First column for time and risk management, second column for task handling, third column for additional tasks. -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width ="1.8*"/>
+            <!-- Wider first column -->
             <ColumnDefinition Width="*"/>
+            <!-- Second column -->
             <ColumnDefinition Width="*"/>
-
+            <!-- Third column -->
         </Grid.ColumnDefinitions>
 
-        <!-- First column with buttons for handling different tasks -->
+        <!-- Second column: Buttons for handling different tasks -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
+                <!-- Row for call amounts display -->
                 <RowDefinition Height="1*" />
+                <!-- Row for Reset DB button -->
                 <RowDefinition Height="1*" />
-
+                <!-- Row for Initialize DB button -->
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
+                    <!-- Label for "calls amount" -->
                     <RowDefinition Height="4.5*" />
+                    <!-- Details for different call statuses -->
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Label Content="calls amount:" FontWeight="Bold" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel Margin="10">
+                        <!-- Display details for various call statuses -->
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Text="open:" Width="150" FontWeight="Bold" />
                             <TextBlock Text="{Binding CallAmounts[0]}" Width="50" HorizontalAlignment="Right" />
@@ -62,86 +69,79 @@
                             <TextBlock Text="{Binding CallAmounts[5]}" Width="50" HorizontalAlignment="Right" />
                         </StackPanel>
                     </StackPanel>
-
-
-
                 </Grid>
-
             </Grid>
-
-
-            <!-- Button to reset the database. -->
+            <!-- Button to reset the database -->
             <Button Content="Reset DB" Click="btnReset_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
-
-            <!-- Button to initialize the database. -->
+            <!-- Button to initialize the database -->
             <Button Content="Intialize DB" Click="btnIntialize_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
         </Grid>
+
+        <!-- Third column: Additional buttons -->
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
+                <!-- Placeholder row -->
                 <RowDefinition Height="1*" />
+                <!-- Row for "Handle Volunteers" button -->
                 <RowDefinition Height="1*" />
+                <!-- Row for "Handle Calls" button -->
             </Grid.RowDefinitions>
-
-            <!-- Button to handle the volunteer list. -->
+            <!-- Button for handling volunteers -->
             <Button Content="Handle Volunteers" Click="btnVolunteers_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
-
-            <!-- Button to handle calls. -->
+            <!-- Button for handling calls -->
             <Button Content="Handle Calls" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
             <Border BorderBrush="Black" BorderThickness="1">
                 <Label Content="simulator area"/>
+                <!-- Placeholder for simulator area -->
             </Border>
-
         </Grid>
 
-        <!-- Second column with additional controls for time and risk range -->
+        <!-- First column: Time and risk range management -->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
+                <!-- Current time display -->
                 <RowDefinition Height="1*" />
+                <!-- Add one minute -->
                 <RowDefinition Height="1*" />
+                <!-- Add one hour -->
                 <RowDefinition Height="1*" />
+                <!-- Add one day -->
                 <RowDefinition Height="1*" />
+                <!-- Add one month -->
                 <RowDefinition Height="1*" />
+                <!-- Add one year -->
                 <RowDefinition Height="1*" />
+                <!-- Spacer -->
                 <RowDefinition Height="2*" />
+                <!-- Risk range input -->
             </Grid.RowDefinitions>
-
-            <!-- Display the current time (bound to CurrentTime property). -->
+            <!-- Display the current time -->
             <Label Content="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" />
-
-            <!-- Button to add one minute to the current time. -->
+            <!-- Buttons for adjusting time -->
             <Button Content="Add one Minute" Click="btnAddOneMinute_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="150" Height="27"/>
-
-            <!-- Button to add one hour to the current time. -->
             <Button Content="Add one Hour" Click="btnAddOneHour_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Width="150" Height="27"/>
-
-            <!-- Button to add one day to the current time. -->
             <Button Content="Add one Day" Click="btnAddOneDay_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="150" Height="27"/>
-
-            <!-- Button to add one month to the current time. -->
             <Button Content="Add one Month" Click="btnAddOneMonth_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Width="150" Height="27"/>
-
-            <!-- Button to add one year to the current time. -->
             <Button Content="Add one Year" Click="btnAddOneYear_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Width="150" Height="27"/>
-
-            <!-- Grid for Risk Range input and Update button -->
+            <!-- Risk range input and update -->
             <Grid Grid.Row="7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*" />
+                    <!-- Label column -->
                     <ColumnDefinition Width="3*" />
+                    <!-- TextBox column -->
                     <ColumnDefinition Width="3*" />
+                    <!-- Button column -->
                 </Grid.ColumnDefinitions>
-
-                <!-- Button to update the risk range. -->
+                <!-- Button to update risk range -->
                 <Button Grid.Column="2" Content="Update" Click="btnUpdateRiskRange_Click" HorizontalAlignment="Left" 
                         VerticalAlignment="Center" RenderTransformOrigin="-0.346,0.465" Margin="10,0,0,0" FontSize="14"/>
-
-                <!-- TextBox for the user to enter a risk range. -->
+                <!-- TextBox for entering risk range -->
                 <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentRiskRange}"
                          FontSize="17" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" />
-
-                <!-- Label prompting user to enter a risk range. -->
+                <!-- Label for risk range input -->
                 <Label Content="Enter Risk Range: " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
             </Grid>
         </Grid>

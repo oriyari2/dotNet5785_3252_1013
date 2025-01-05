@@ -11,33 +11,41 @@
         Closed="Window_Closed"
         Background="#F2F4F7">
 
-    <!-- External Grid -->
+    <!-- Main container grid for layout -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
+            <!-- Row for the upper content (ComboBox) -->
             <RowDefinition Height="500*"/>
+            <!-- Row for DataGrid displaying volunteer list -->
             <RowDefinition Height="Auto"/>
+            <!-- Row for the button at the bottom -->
         </Grid.RowDefinitions>
 
-        <!-- Internal, Upper Grid -->
+        <!-- Upper grid for ComboBox and label layout -->
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="127*"/>
+                <!-- Column for label -->
                 <ColumnDefinition Width="7*"/>
+                <!-- Spacer column -->
                 <ColumnDefinition Width="266*"/>
+                <!-- Column for ComboBox -->
                 <ColumnDefinition Width="400*"/>
+                <!-- Column for ComboBox to stretch -->
             </Grid.ColumnDefinitions>
 
-            <!-- ComboBox for selecting call type -->
+            <!-- ComboBox for selecting the call type -->
             <ComboBox ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}"
             SelectedValue="{Binding Path=callType, Mode=TwoWay}"  SelectionChanged="CallTypeSelectionChanged"
             Grid.Column="3" />
+            <!-- Placed in the fourth column -->
 
-            <!-- Label for ComboBox -->
+            <!-- Label for the ComboBox selection -->
             <Label Content="Select Call Type:" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,0,0,0"/>
         </Grid>
 
-        <!-- Data grid - table for displaying the volunteer list -->
+        <!-- DataGrid for displaying volunteer list -->
         <DataGrid ItemsSource="{Binding VolunteerList}" 
           AutoGenerateColumns="False"
           IsReadOnly="True" 
@@ -52,14 +60,19 @@
           SelectedItem="{Binding SelectedVolunteer}" 
           MouseDoubleClick="lsvVolunteersList_MouseDoubleClick" >
 
-            <!-- Style for column headers -->
+            <!-- Style for column headers in DataGrid -->
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#A3C77F" />
+                    <!-- Background color for headers -->
                     <Setter Property="Foreground" Value="#0D1821" />
+                    <!-- Text color for headers -->
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <!-- Align header content to center -->
                     <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <!-- Align header content vertically -->
                     <Setter Property="Padding" Value="5" />
+                    <!-- Padding inside header -->
                 </Style>
             </DataGrid.ColumnHeaderStyle>
 
@@ -67,10 +80,10 @@
                 <!-- Column for Volunteer ID -->
                 <DataGridTextColumn Binding="{Binding Id}" Header="Volunteer ID" Width="*" />
 
-                <!-- Column for Name -->
+                <!-- Column for Volunteer Name -->
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*" />
 
-                <!-- Column for Active status with checkbox -->
+                <!-- Column for Active status with a checkbox (read-only) -->
                 <DataGridTemplateColumn Header="Active" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -79,16 +92,16 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Column for total handled calls -->
+                <!-- Column for the total number of handled calls -->
                 <DataGridTextColumn Binding="{Binding TotalHandled}" Header="Total Handled Calls" Width="Auto" />
 
-                <!-- Column for total canceled calls -->
+                <!-- Column for the total number of canceled calls -->
                 <DataGridTextColumn Binding="{Binding TotalCanceled}" Header="Total Canceled Calls" Width="Auto" />
 
-                <!-- Column for total expired calls -->
+                <!-- Column for the total number of expired calls -->
                 <DataGridTextColumn Binding="{Binding TotalExpired}" Header="Total Expired Calls" Width="Auto" />
 
-                <!-- Column for current call -->
+                <!-- Column for the current call (if any) -->
                 <DataGridTemplateColumn Header="Current Call" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -97,7 +110,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Column for call type -->
+                <!-- Column for Call Type -->
                 <DataGridTemplateColumn Header="Call Type" Width="*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -106,20 +119,21 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Column with a delete button -->
+                <!-- Column with a delete button for each row -->
                 <DataGridTemplateColumn Header="Delete" Width="0.5*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Delete" 
                     Click="btnDelete_Click" 
                     Tag="{Binding Id}" />
+                            <!-- Delete button triggers a click event, passes volunteer ID as a tag -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Button for adding a new volunteer -->
+        <!-- Button for adding a new volunteer at the bottom of the window -->
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAdd_Click"/>
     </Grid>
 </Window>

@@ -5,30 +5,44 @@
              StartupUri="MainWindow.xaml" >
     <Application.Resources>
         <!-- Collection for call types -->
+        <!-- This resource provides a predefined collection of call types for data binding. -->
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
+
         <!-- Collection for role types -->
+        <!-- This resource provides a predefined collection of role types for data binding. -->
         <local:RoleTypeCollection x:Key="RoleTypeCollectionKey"/>
+
         <!-- Collection for distance types -->
+        <!-- This resource provides a predefined collection of distance types for data binding. -->
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
+
         <!-- Converter for object ID to true/false -->
+        <!-- This converter is used to enable or disable UI elements based on the presence of an object ID. -->
         <local:ConvertObjIdToTF x:Key="ConvertObjIdToTFkey" />
+
         <!-- Converter for role type to true/false -->
+        <!-- This converter is used to enable or disable UI elements based on the role type. -->
         <local:ConvertRoleToTF x:Key="ConvertRoleToTFkey" />
+
         <!-- Converter for object password to true/false -->
+        <!-- This converter is used to enable or disable password fields based on certain conditions. -->
         <local:ConvertObjPasswordToTF x:Key="ConvertObjPasswordToTFkey" />
-        
+
+        <!-- Converter for call progress -->
+        <!-- This converter is used to display the progress status of a call in the UI. -->
         <local:CallInProgressConverter x:Key="CallInProgressConverterkey" />
 
-        
-
         <!-- Default style for buttons -->
+        <!-- This style defines the default appearance for all buttons in the application. -->
         <Style TargetType="Button">
             <!-- Set button background color -->
             <Setter Property="Background"  Value="#A3C77F" />
             <!-- Set button foreground (text) color -->
             <Setter Property="Foreground" Value="#0D1821" />
         </Style>
+
         <!-- Default style for labels -->
+        <!-- This style defines the default appearance for all labels in the application. -->
         <Style TargetType="Label">
             <!-- Set label foreground (text) color -->
             <Setter Property="Foreground" Value="#0D1821" />

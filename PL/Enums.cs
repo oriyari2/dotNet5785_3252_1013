@@ -2,35 +2,56 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// Collection for enumerating all CallType values
+/// <summary>
+/// Collection for enumerating all <see cref="BO.CallType"/> values.
+/// </summary>
 internal class CallTypeCollection : IEnumerable
 {
-    // Static field that holds all values of the CallType enum
+    /// <summary>
+    /// Static field that holds all values of the <see cref="BO.CallType"/> enum.
+    /// </summary>
     static readonly IEnumerable<BO.CallType> s_enums =
         (Enum.GetValues(typeof(BO.CallType)) as IEnumerable<BO.CallType>)!;
 
-    // Returns an enumerator for iterating over the CallType values
+    /// <summary>
+    /// Returns an enumerator for iterating over the <see cref="BO.CallType"/> values.
+    /// </summary>
+    /// <returns>An enumerator for the <see cref="BO.CallType"/> values.</returns>
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
 
-// Collection for enumerating all RoleType values
+/// <summary>
+/// Collection for enumerating all <see cref="BO.RoleType"/> values.
+/// </summary>
 internal class RoleTypeCollection : IEnumerable
 {
-    // Static field that holds all values of the RoleType enum
+    /// <summary>
+    /// Static field that holds all values of the <see cref="BO.RoleType"/> enum.
+    /// </summary>
     static readonly IEnumerable<BO.RoleType> s_enums =
         (Enum.GetValues(typeof(BO.RoleType)) as IEnumerable<BO.RoleType>)!;
 
-    // Returns an enumerator for iterating over the RoleType values
+    /// <summary>
+    /// Returns an enumerator for iterating over the <see cref="BO.RoleType"/> values.
+    /// </summary>
+    /// <returns>An enumerator for the <see cref="BO.RoleType"/> values.</returns>
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
 
-// Collection for enumerating all DistanceType values
+/// <summary>
+/// Collection for enumerating all <see cref="BO.DistanceType"/> values.
+/// </summary>
 internal class DistanceTypeCollection : IEnumerable
 {
-    // Static field that holds all values of the DistanceType enum
+    /// <summary>
+    /// Static field that holds all values of the <see cref="BO.DistanceType"/> enum.
+    /// </summary>
     static readonly IEnumerable<BO.DistanceType> s_enums =
         (Enum.GetValues(typeof(BO.DistanceType)) as IEnumerable<BO.DistanceType>)!;
 
-    // Returns an enumerator for iterating over the DistanceType values
+    /// <summary>
+    /// Returns an enumerator for iterating over the <see cref="BO.DistanceType"/> values.
+    /// </summary>
+    /// <returns>An enumerator for the <see cref="BO.DistanceType"/> values.</returns>
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }

@@ -9,7 +9,9 @@ namespace PL.Volunteer;
 /// </summary>
 public partial class VolunteerListWindow : Window
 {
-    // Static instance of the business logic layer (BL)
+    /// <summary>
+    /// Static instance of the business logic layer (BL).
+    /// </summary>
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     public VolunteerListWindow()
@@ -17,81 +19,111 @@ public partial class VolunteerListWindow : Window
         InitializeComponent();
     }
 
-    // Dependency property for the VolunteerList, which is bound to the DataGrid in the XAML
+    /// <summary>
+    /// Dependency property for the VolunteerList, which is bound to the DataGrid in the XAML.
+    /// </summary>
     public IEnumerable<BO.VolunteerInList> VolunteerList
     {
         get { return (IEnumerable<BO.VolunteerInList>)GetValue(VolunteerListProperty); }
         set { SetValue(VolunteerListProperty, value); }
     }
 
-    // Registration of the dependency property for VolunteerList
+    /// <summary>
+    /// Registration of the dependency property for VolunteerList.
+    /// </summary>
     public static readonly DependencyProperty VolunteerListProperty =
         DependencyProperty.Register("VolunteerList", typeof(IEnumerable<BO.VolunteerInList>), typeof(VolunteerListWindow), new PropertyMetadata(null));
 
-    // Property to store the currently selected call type filter
+    /// <summary>
+    /// Property to store the currently selected call type filter.
+    /// </summary>
     public BO.CallType callType { get; set; } = BO.CallType.None;
 
-    // Event handler triggered when the call type ComboBox selection changes
+    /// <summary>
+    /// Event handler triggered when the call type ComboBox selection changes.
+    /// Updates the volunteer list based on the selected call type filter.
+    /// </summary>
     private void CallTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        // Updates the volunteer list based on the selected call type filter
         VolunteerList = helpReadAllVolunteer(callType);
     }
 
-    // Refreshes the VolunteerList property with updated data
+    /// <summary>
+    /// Refreshes the VolunteerList property with updated data.
+    /// </summary>
     private void RefreshVolunteerList()
     {
         VolunteerList = helpReadAllVolunteer(callType);
     }
 
-    // Helper method to fetch the list of volunteers based on the selected call type filter
+    /// <summary>
+    /// Helper method to fetch the list of volunteers based on the selected call type filter.
+    /// </summary>
+    /// <param name="callTypeHelp">The call type filter to apply.</param>
+    /// <returns>List of volunteers matching the filter.</returns>
     private static IEnumerable<BO.VolunteerInList> helpReadAllVolunteer(BO.CallType callTypeHelp)
     {
-        // Uses the ReadAll method from the BL to fetch the updated list
         return (callTypeHelp == BO.CallType.None)
             ? s_bl?.Volunteer.ReadAll(null, BO.FieldsVolunteerInList.Id, null)!
             : s_bl?.Volunteer.ReadAll(null, BO.FieldsVolunteerInList.Id, callTypeHelp)!;
     }
 
-    // Observer to refresh the volunteer list whenever there are updates
+    /// <summary>
+    /// Observer to refresh the volunteer list whenever there are updates.
+    /// </summary>
     private void volunteerListObserver() => RefreshVolunteerList();
 
-    // Adds the observer when the window is loaded
+    /// <summary>
+    /// Adds the observer when the window is loaded.
+    /// </summary>
     private void Window_Loaded(object sender, RoutedEventArgs e)
         => s_bl.Volunteer.AddObserver(volunteerListObserver);
 
-    // Removes the observer when the window is closed
+    /// <summary>
+    /// Removes the observer when the window is closed.
+    /// </summary>
     private void Window_Closed(object sender, EventArgs e)
         => s_bl.Volunteer.RemoveObserver(volunteerListObserver);
 
-    // Event handler for selection change in the DataGrid
+    /// <summary>
+    /// Event handler for selection change in the DataGrid.
+    /// Placeholder for additional functionality if needed.
+    /// </summary>
     private void DataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
     {
-        // Placeholder for additional functionality if needed
+        // Placeholder
     }
 
-    // Opens the VolunteerWindow to add a new volunteer when the Add button is clicked
+    /// <summary>
+    /// Opens the VolunteerWindow to add a new volunteer when the Add button is clicked.
+    /// </summary>
     private void btnAdd_Click(object sender, RoutedEventArgs e)
     {
         new VolunteerWindow().Show();
     }
 
-    // Property to store the currently selected volunteer in the DataGrid
+    /// <summary>
+    /// Property to store the currently selected volunteer in the DataGrid.
+    /// </summary>
     public BO.VolunteerInList? SelectedVolunteer { get; set; }
 
-    // Opens the VolunteerWindow for the selected volunteer when the user double-clicks a row in the DataGrid
+    /// <summary>
+    /// Opens the VolunteerWindow for the selected volunteer when the user double-clicks a row in the DataGrid.
+    /// </summary>
     private void lsvVolunteersList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (SelectedVolunteer != null)
             new VolunteerWindow(SelectedVolunteer.Id).Show();
     }
 
-    // Deletes the selected volunteer when the Delete button is clicked
+    /// <summary>
+    /// Deletes the selected volunteer when the Delete button is clicked.
+    /// Shows a confirmation dialog before performing the delete operation.
+    /// </summary>
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is int volunteerId)
         {
-            // Confirmation dialog to ensure the user wants to delete the volunteer
             var result = MessageBox.Show(
                 "Are you sure you want to delete the volunteer?",
                 "Confirmation",
@@ -100,21 +132,17 @@ public partial class VolunteerListWindow : Window
 
             if (result != MessageBoxResult.Yes)
             {
-                // User did not confirm the action
                 return;
             }
 
-            // Calls the Delete method from the BL to remove the volunteer
-           try
-            { 
-                s_bl.Volunteer.Delete(volunteerId); 
+            try
+            {
+                s_bl.Volunteer.Delete(volunteerId);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
-
-
 }
