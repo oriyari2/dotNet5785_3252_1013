@@ -33,15 +33,15 @@
                     <RowDefinition Height="4.5*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Label Content="calls amount:" FontWeight="Bold" HorizontalAlignment="Center"  VerticalAlignment="Center" RenderTransformOrigin="0.497,1.464" />
+                    <Label Content="calls amount:" FontWeight="Bold" HorizontalAlignment="Center"  VerticalAlignment="Center" />
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel Grid.Column="0" VerticalAlignment="Top" Margin="10">
-                        <TextBlock Text="Pending" Margin="5"  />
+                        <TextBlock Text="Pending" Margin="5" />
                         <TextBlock Text="InProgress" Margin="5"  />
                         <TextBlock Text="Completed" Margin="5"  />
-                        <TextBlock Text="Pending" Margin="5"  />
-                        <TextBlock Text="InProgress" Margin="5" />
+                        <TextBlock Text="Pending" Margin="5" />
+                        <TextBlock Text="InProgress" Margin="5"  />
                         <TextBlock Text="Completed" Margin="5"  />
                         <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10">
                             <TextBlock Text="{Binding callamounts[0]}" Margin="5" />
