@@ -1,5 +1,4 @@
-﻿using BO;
-using PL.Volunteer;
+﻿using PL.Volunteer;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,22 +34,30 @@ public partial class MainWindow : Window
     private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
     {
         s_bl.Admin.AdvanceClock(BO.TimeUnit.Minute); // Advance the clock by one minute
+        RefreshCallAmounts();
     }
     private void btnAddOneHour_Click(object sender, RoutedEventArgs e)
     {
         s_bl.Admin.AdvanceClock(BO.TimeUnit.Hour); // Advance the clock by one hour
+        RefreshCallAmounts();
+
     }
     private void btnAddOneDay_Click(object sender, RoutedEventArgs e)
     {
         s_bl.Admin.AdvanceClock(BO.TimeUnit.Day); // Advance the clock by one day
+        RefreshCallAmounts();
+
     }
     private void btnAddOneMonth_Click(object sender, RoutedEventArgs e)
     {
         s_bl.Admin.AdvanceClock(BO.TimeUnit.Month); // Advance the clock by one month
+        RefreshCallAmounts();
+
     }
     private void btnAddOneYear_Click(object sender, RoutedEventArgs e)
     {
         s_bl.Admin.AdvanceClock(BO.TimeUnit.Year); // Advance the clock by one year
+        RefreshCallAmounts();
     }
 
     public TimeSpan CurrentRiskRange
@@ -66,11 +73,13 @@ public partial class MainWindow : Window
     private void btnUpdateRiskRange_Click(object sender, RoutedEventArgs e)
     {
         s_bl.Admin.SetRiskRange(CurrentRiskRange); // Update the risk range based on user input
+        RefreshCallAmounts();
     }
 
     private void clockObserver() 
     {
         CurrentTime = s_bl.Admin.GetClock(); // Get the current time from the backend
+        RefreshCallAmounts();
     }
 
     private void configObserver() 
@@ -101,6 +110,18 @@ public partial class MainWindow : Window
 
     private void btnVolunteers_Click(object sender, RoutedEventArgs e)
     {
+
+        foreach (Window window in Application.Current.Windows)
+        {
+            // בודק אם יש כבר חלון פתוח מסוג VolunteerListWindow
+            if (window is VolunteerListWindow)
+            {
+                window.Activate(); // אם חלון כזה פתוח, מביא אותו לחזית
+                return; // אם החלון כבר פתוח, לא נפתח חלון חדש
+            }
+        }
+
+        // אם אין חלון פתוח, פותחים חלון חדש
         new VolunteerListWindow().Show(); // Open the VolunteerListWindow when the button is clicked
     }
 
@@ -131,6 +152,8 @@ public partial class MainWindow : Window
             }
             // 4. Call the Reset method in the BL to reset the database
             s_bl.Admin.Reset();
+            RefreshCallAmounts();
+
 
             // Success message after resetting the database
             MessageBox.Show("Database has been successfully reset.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -175,6 +198,7 @@ public partial class MainWindow : Window
             }
             // 4. Call the Initialize method in the BL to initialize the database
             s_bl.Admin.Intialize();
+            RefreshCallAmounts();
 
             // Success message after initializing the database
             MessageBox.Show("Database has been successfully initialized.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -190,8 +214,6 @@ public partial class MainWindow : Window
             Mouse.OverrideCursor = null;
         }
     }
-
-
 
     public int[] CallAmounts
     {

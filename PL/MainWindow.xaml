@@ -38,19 +38,31 @@
                 <Grid Grid.Row="1">
                     <StackPanel Margin="10">
                         <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="Pending:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="open:" Width="150" FontWeight="Bold" />
                             <TextBlock Text="{Binding CallAmounts[0]}" Width="50" HorizontalAlignment="Right" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="InProgress:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="treatment:" Width="150" FontWeight="Bold" />
                             <TextBlock Text="{Binding CallAmounts[1]}" Width="50" HorizontalAlignment="Right" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="Completed:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="close:" Width="150" FontWeight="Bold" />
                             <TextBlock Text="{Binding CallAmounts[2]}" Width="50" HorizontalAlignment="Right" />
                         </StackPanel>
-                        <!-- הוסף שורות נוספות עבור סטטוסים נוספים במידת הצורך -->
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="expired:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="{Binding CallAmounts[3]}" Width="50" HorizontalAlignment="Right" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="riskTreatment:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="{Binding CallAmounts[4]}" Width="50" HorizontalAlignment="Right" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="riskOpen:" Width="150" FontWeight="Bold" />
+                            <TextBlock Text="{Binding CallAmounts[5]}" Width="50" HorizontalAlignment="Right" />
+                        </StackPanel>
                     </StackPanel>
+
 
 
                 </Grid>
@@ -116,8 +128,8 @@
             <!-- Grid for Risk Range input and Update button -->
             <Grid Grid.Row="7">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
 

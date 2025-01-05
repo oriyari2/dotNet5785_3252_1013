@@ -43,6 +43,38 @@ public class ConvertObjPasswordToTF : IValueConverter
     }
 }
 
+
+public class CallInProgressConverter : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+            return null; // אם אין נתונים, מחזיר null
+
+        if (value is BO.CallInProgress callInProgress)
+        {
+            // בניית מחרוזת המייצגת את הנתונים בצורה קריאה
+            return $"ID: {callInProgress.Id}\n" +
+                   $"Call ID: {callInProgress.CallId}\n" +
+                   $"Type: {callInProgress.TheCallType}\n" +
+                   $"Description: {callInProgress.VerbalDescription ?? "N/A"}\n" +
+                   $"Address: {callInProgress.Address}\n" +
+                   $"Opening Time: {callInProgress.OpeningTime}\n" +
+                   $"Max Time to End: {callInProgress.MaxTimeToEnd?.ToString() ?? "N/A"}\n" +
+                   $"Entry Time: {callInProgress.EntryTime}\n" +
+                   $"Distance: {callInProgress.Distance} km\n" +
+                   $"Status: {callInProgress.status}";
+        }
+
+        return null; // במקרה של סוג לא מתאים
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException("ConvertBack is not supported.");
+    }
+}
+
 // Converter to check if the role type is "manager"
 public class ConvertRoleToTF : IValueConverter
 {

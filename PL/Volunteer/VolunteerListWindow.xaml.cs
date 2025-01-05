@@ -105,7 +105,14 @@ public partial class VolunteerListWindow : Window
             }
 
             // Calls the Delete method from the BL to remove the volunteer
-            s_bl.Volunteer.Delete(volunteerId);
+           try
+            { 
+                s_bl.Volunteer.Delete(volunteerId); 
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

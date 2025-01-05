@@ -240,6 +240,8 @@ internal class VolunteerImplementation : IVolunteer
         if (asker.Id != id && asker.Role != BO.RoleType.manager)
             throw new BO.BlUserCantUpdateItemExeption("The asker can't update this Volunteer");
 
+        if (volunteer.Active == false && volunteer.IsProgress != null) 
+            throw new BO.BlUserCantUpdateItemExeption("This volunteer cant become not active becouse he has call in progress");
         BO.Volunteer oldVolunteer = Read(volunteer.Id); // Get the current volunteer data
 
         // Validate the updated data

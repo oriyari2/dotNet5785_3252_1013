@@ -16,6 +16,10 @@
         <local:ConvertRoleToTF x:Key="ConvertRoleToTFkey" />
         <!-- Converter for object password to true/false -->
         <local:ConvertObjPasswordToTF x:Key="ConvertObjPasswordToTFkey" />
+        
+        <local:CallInProgressConverter x:Key="CallInProgressConverterkey" />
+
+        
 
         <!-- Default style for buttons -->
         <Style TargetType="Button">
