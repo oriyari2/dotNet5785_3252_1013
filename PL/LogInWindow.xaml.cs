@@ -49,14 +49,16 @@ public partial class LogInWindow : Window
                 foreach (Window window in Application.Current.Windows)
                 {
                     // Check if there is already an open window of type VolunteerListWindow
-                    if (window is MainWindow)
+                    if (window is ManagerChooseWindow)
                     {
                         window.Activate(); // If such a window is open, bring it to the front
                         return; // If the window is already open, don't open a new one
                     }
                 }
-                new MainWindow().Show(); // Open the VolunteerListWindow when the button is clicked
+                new ManagerChooseWindow().Show(); // Open the VolunteerListWindow when the button is clicked
             }
+            else
+                new MainVolunteerWindow().Show();
 
         }
         catch (Exception ex)

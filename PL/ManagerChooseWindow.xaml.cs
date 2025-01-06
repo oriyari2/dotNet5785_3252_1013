@@ -12,16 +12,36 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for ManagerChooseWindow.xaml
+/// </summary>
+public partial class ManagerChooseWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for ManagerChooseWindow.xaml
-    /// </summary>
-    public partial class ManagerChooseWindow : Window
+    public ManagerChooseWindow()
     {
-        public ManagerChooseWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
+    private void btnManagerWindow_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (Window window in Application.Current.Windows)
+        {
+            // Check if there is already an open window of type VolunteerListWindow
+            if (window is MainWindow)
+            {
+                window.Activate(); // If such a window is open, bring it to the front
+                return; // If the window is already open, don't open a new one
+            }
+        }
+        new MainWindow().Show();
+    }
+
+    private void btnVolunteerWindow_Click(object sender, RoutedEventArgs e)
+    {
+        new MainVolunteerWindow().Show();
+    }
+
+
 }
+

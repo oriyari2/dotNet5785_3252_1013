@@ -23,13 +23,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="115" Width="205" FontSize="25">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="115" Width="205" FontSize="25" Click="btnManagerWindow_Click">
                     <TextBlock Text="manager&#xA;screen" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
             </Grid>
 
             <Grid Grid.Column="1">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="115" Width="205" FontSize="25">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="115" Width="205" FontSize="25" Click="btnVolunteerWindow_Click">
                     <TextBlock Text="Volunteer&#xA;screen" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
             </Grid>
