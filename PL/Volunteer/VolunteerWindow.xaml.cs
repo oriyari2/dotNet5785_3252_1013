@@ -103,7 +103,7 @@ public partial class VolunteerWindow : Window
                 /// <summary>
                 /// Update the existing volunteer details.
                 /// </summary>
-                s_bl.Volunteer.Update(CurrentVolunteer.Id, CurrentVolunteer);
+                s_bl.Volunteer.Update(PO.LogInID, CurrentVolunteer);
                 MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 

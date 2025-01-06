@@ -66,7 +66,7 @@ internal class VolunteerImplementation : IVolunteer
         VolunteerManager.IsValidPhoneNumber(boVolunteer.PhoneNumber); // Check if the phone number is valid
         double[] dis = VolunteerManager.GetCoordinates(boVolunteer.Address); // Get latitude and longitude from address
         string password = VolunteerManager.GenerateStrongPassword(); // Generate a strong password
-        password = VolunteerManager.EncryptPassword(password); // Encrypt the password
+        password = VolunteerManager.EncryptPassword(password);
 
         // Create the corresponding data object (DO) for the volunteer
         DO.Volunteer doVolunteer = new(boVolunteer.Id, boVolunteer.Name,
@@ -114,23 +114,18 @@ internal class VolunteerImplementation : IVolunteer
     /// <summary>
     /// Logs in a volunteer by verifying their name and password.
     /// </summary>
-    /// <param name="name">The name of the volunteer.</param>
+    /// <param name="id">The id of the volunteer.</param>
     /// <param name="password">The password provided by the volunteer.</param>
     /// <returns>The role of the volunteer upon successful login.</returns>
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the volunteer does not exist.</exception>
     /// <exception cref="BO.BlIncorrectValueException">Thrown if the password is incorrect.</exception>
-    public BO.RoleType LogIn(string name, string password)
+    public BO.RoleType LogIn(int id, string password)
     {
-        var volunteer = _dal.Volunteer.ReadAll(s => (s.Name == name)).FirstOrDefault(); // Find volunteer by name
+        BO.Volunteer volunteer = Read(id); // Find volunteer by id, if not exist throw an expectation
 
-        if (volunteer == null)
-        {
-            // If volunteer is not found in the database, throw exception
-            throw new BO.BlDoesNotExistException($"Volunteer with Name={name} does Not exist");
-        }
 
         // Check if the password is correct by decrypting and comparing
-        if (VolunteerManager.DecryptPassword(volunteer.Password) != password)
+        if (volunteer.Password != password)
         {
             // If password does not match, throw exception
             throw new BO.BlIncorrectValueException("incorrect password");
@@ -252,9 +247,11 @@ internal class VolunteerImplementation : IVolunteer
         double[] cordinate = VolunteerManager.GetCoordinates(volunteer.Address); // Get coordinates from the address
 
         string password = volunteer.Password;
-        VolunteerManager.ValidateStrongPassword(password); // Validate if the password is strong
-        password = VolunteerManager.EncryptPassword(password); // Encrypt the password
-
+        if (password != oldVolunteer.Password)
+        { 
+            VolunteerManager.ValidateStrongPassword(password); // Validate if the password is strong
+            password = VolunteerManager.EncryptPassword(password); // Encrypt the password
+        }
         // Prevent updating restricted fields
         if (asker.Role != BO.RoleType.manager && volunteer.Role != BO.RoleType.volunteer)
             throw new BO.BlUserCantUpdateItemExeption("Volunteer Can't change the role of the volunteer");

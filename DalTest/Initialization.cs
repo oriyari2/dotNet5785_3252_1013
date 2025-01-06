@@ -314,10 +314,7 @@ public static class Initialization
     // 
 };
 
-
-
-
-        for (int i = 0; i < 16; i++) //create 15 volunteers and 1 manager
+    for (int i = 0; i < 16; i++) //create 15 volunteers and 1 manager
         {
 
 
@@ -328,7 +325,7 @@ public static class Initialization
             string VolEmail = VolPhone + "@gmail.com"; //valid email with the volunteer phone number
 
             double VolMaxDis = s_rand.Next(); //random distance
-            string Password = "ps" + VolPhone;
+            string Password = "pS" + VolPhone + "*";
             Password = EncryptPassword(Password);
 
             s_dal!.Volunteer.Create(new(VolIds[i], VolNames[i], VolPhone, VolEmail, Password, VolAdresses[i],

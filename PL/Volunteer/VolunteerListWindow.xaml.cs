@@ -138,6 +138,8 @@ public partial class VolunteerListWindow : Window
             try
             {
                 s_bl.Volunteer.Delete(volunteerId);
+                MessageBox.Show("Volunteer deleted successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
             catch (Exception ex)
             {

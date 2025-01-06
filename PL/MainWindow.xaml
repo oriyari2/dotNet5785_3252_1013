@@ -8,8 +8,7 @@
     Title="MainWindow" Height="450" Width="800"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     Loaded="MainWindow_Loaded"
-    Closed="MainWindow_Closed"
-    Background="#F2F4F7">
+    Closed="MainWindow_Closed">
     <Grid>
         <!-- Column definitions for layout: First column for time and risk management, second column for task handling, third column for additional tasks. -->
         <Grid.ColumnDefinitions>

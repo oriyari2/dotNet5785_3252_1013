@@ -526,14 +526,14 @@ static void Main(string[] args)
     /// <returns>A <see cref="BO.RoleType"/> representing the volunteer's role.</returns>
     private static BO.RoleType LogInHelp()
     {
-        Console.Write("Enter Volunteer Name to Log In: ");
-        string? name = Console.ReadLine(); // Get volunteer name input.
+        Console.Write("Enter Volunteer Id to Log In: ");
+        int.TryParse(Console.ReadLine(), out int id); // Get volunteer name input.
 
         Console.Write("Enter Volunteer Password to Log In: ");
         string? password = Console.ReadLine(); // Get volunteer password input.
 
         // Call the LogIn method from the business layer and return the role type.
-        return s_bl.Volunteer.LogIn(name, password);
+        return s_bl.Volunteer.LogIn(id, password);
     }
 
     /// <summary>

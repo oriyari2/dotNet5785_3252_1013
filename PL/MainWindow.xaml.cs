@@ -10,10 +10,11 @@ namespace PL;
 public partial class MainWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Singleton instance of the BL API
-
+   
     public MainWindow()
     {
         InitializeComponent(); // Initialize the UI components
+       
     }
 
     /// <summary>
@@ -24,6 +25,8 @@ public partial class MainWindow : Window
     {
         // Placeholder for text change handling, currently unused
     }
+
+
 
     // DependencyProperty for CurrentTime, enables animation, styling, binding, etc.
     public DateTime CurrentTime
