@@ -89,7 +89,7 @@
             <!-- Button for handling volunteers -->
             <Button Content="Handle Volunteers" Click="btnVolunteers_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
             <!-- Button for handling calls -->
-            <Button Content="Handle Calls" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
+            <Button Content="Handle Calls" Click="btnCalls_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
             <Border BorderBrush="Black" BorderThickness="1">
                 <Label Content="simulator area"/>
                 <!-- Placeholder for simulator area -->

@@ -20,6 +20,21 @@ internal class CallTypeCollection : IEnumerable
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 }
 
+internal class StatusCollection : IEnumerable
+{
+    /// <summary>
+    /// Static field that holds all values of the <see cref="BO.Status"/> enum.
+    /// </summary>
+    static readonly IEnumerable<BO.Status> s_enums =
+        (Enum.GetValues(typeof(BO.Status)) as IEnumerable<BO.Status>)!;
+
+    /// <summary>
+    /// Returns an enumerator for iterating over the <see cref="BO.Status"/> values.
+    /// </summary>
+    /// <returns>An enumerator for the <see cref="BO.Status"/> values.</returns>
+    public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
+}
+
 /// <summary>
 /// Collection for enumerating all <see cref="BO.RoleType"/> values.
 /// </summary>

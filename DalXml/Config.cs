@@ -61,8 +61,8 @@ internal static class Config
     /// </summary>
     internal static void Reset()
     {
-        NextCallId = 0; // Reset Call ID to 0.
-        NextAssignmentId = 0; // Reset Assignment ID to 0.
+        NextCallId = 1; // Reset Call ID to 0.
+        NextAssignmentId = 1; // Reset Assignment ID to 0.
         Clock = DateTime.Now; // Set the clock to the current system time.
         RiskRange = TimeSpan.Zero; // Clear the risk range by setting it to zero.
     }

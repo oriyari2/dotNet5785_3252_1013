@@ -1,4 +1,5 @@
-﻿using PL.Volunteer;
+﻿using PL.Call;
+using PL.Volunteer;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -164,6 +165,25 @@ public partial class MainWindow : Window
         // If no window is open, open a new one
         new VolunteerListWindow().Show(); // Open the VolunteerListWindow when the button is clicked
     }
+
+
+    private void btnCalls_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (Window window in Application.Current.Windows)
+        {
+            // Check if there is already an open window of type VolunteerListWindow
+            if (window is CallListWindow)
+            {
+                window.Activate(); // If such a window is open, bring it to the front
+                return; // If the window is already open, don't open a new one
+            }
+        }
+
+        // If no window is open, open a new one
+        new CallListWindow().Show(); // Open the VolunteerListWindow when the button is clicked
+    }
+
+    
 
     /// <summary>
     /// Resets the database after asking for user confirmation.

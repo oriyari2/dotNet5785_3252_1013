@@ -2,11 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
-             StartupUri="LogInWindow.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!-- Collection for call types -->
         <!-- This resource provides a predefined collection of call types for data binding. -->
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
+        <local:StatusCollection x:Key="StatusCollectionKey"/>
 
         <!-- Collection for role types -->
         <!-- This resource provides a predefined collection of role types for data binding. -->
@@ -31,6 +32,11 @@
         <!-- Converter for call progress -->
         <!-- This converter is used to display the progress status of a call in the UI. -->
         <local:CallInProgressConverter x:Key="CallInProgressConverterkey" />
+
+        <local:DateTimeFormatConverter x:Key="DateTimeFormatConverterkey" />
+
+        <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverterkey" />
+
 
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->
@@ -59,4 +65,13 @@
     </Application.Resources>
 </Application>
 
-<!--pS0594507653*-->
+<!--manager
+   218372043
+pS0594507653* -->
+
+<!-- volunteer
+215041013
+pS0561045516* -->
+    
+    
+    

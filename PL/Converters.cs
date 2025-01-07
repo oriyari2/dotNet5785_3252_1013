@@ -133,3 +133,45 @@ public class ConvertRoleToTF : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+public class DateTimeFormatConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is DateTime dateTime)
+        {
+            return dateTime.ToString("dd/MM/yyyy HH:mm");
+        }
+        return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+public class TimeSpanToStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is TimeSpan timeSpan)
+        {
+            // פורמט שמציג ימים, שעות ודקות
+            return $"{(int)timeSpan.TotalDays}d {timeSpan.Hours:D2}:{timeSpan.Minutes:D2}";
+        }
+        return string.Empty;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is string timeString && TimeSpan.TryParse(timeString, out TimeSpan result))
+        {
+            return result;
+        }
+        return TimeSpan.Zero;
+    }
+}
+
+

@@ -317,7 +317,6 @@ public static class Initialization
     for (int i = 0; i < 16; i++) //create 15 volunteers and 1 manager
         {
 
-
             RoleType VulRole = (i == 0) ? RoleType.manager : RoleType.volunteer; //1 manager 15 volunteers
 
             string VolPhone = "05" + s_rand.Next(10000000, 99999999).ToString(); //random valid phone number

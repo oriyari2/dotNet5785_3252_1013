@@ -34,30 +34,30 @@ public partial class VolunteerWindow : Window
     /// <param name="id">The ID of the volunteer to load. Defaults to 0 for adding a new volunteer.</param>
     public VolunteerWindow(int id = 0)
     {
-        /// <summary>
-        /// Set the button text based on whether adding or updating a volunteer.
-        /// </summary>
+        
+        // Set the button text based on whether adding or updating a volunteer.
+        
         ButtonText = id == 0 ? "Add" : "Update";
         InitializeComponent();
 
-        /// <summary>
-        /// Set the data context for data binding.
-        /// </summary>
+        
+        // Set the data context for data binding.
+        
         DataContext = this;
 
-        /// <summary>
-        /// Initialize the CurrentVolunteer property: fetch an existing volunteer if an ID is provided,
-        /// or create a new volunteer object for adding.
-        /// </summary>
+        
+        // Initialize the CurrentVolunteer property: fetch an existing volunteer if an ID is provided,
+        // or create a new volunteer object for adding.
+        
         try
         {
             CurrentVolunteer = (id != 0) ? s_bl.Volunteer.Read(id)! : new BO.Volunteer();
         }
         catch (Exception ex)
         {
-            /// <summary>
-            /// Show an error message if initialization fails.
-            /// </summary>
+            
+            // Show an error message if initialization fails.
+            
             MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
@@ -143,9 +143,9 @@ public partial class VolunteerWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         if (CurrentVolunteer!.Id != 0)
-            /// <summary>
-            /// Add an observer for the current volunteer if it exists.
-            /// </summary>
+            
+            // Add an observer for the current volunteer if it exists.
+            
             s_bl.Volunteer.AddObserver(CurrentVolunteer!.Id, volunteerObserver);
     }
 
@@ -155,9 +155,7 @@ public partial class VolunteerWindow : Window
     private void Window_Closed(object sender, EventArgs e)
     {
         if (CurrentVolunteer!.Id != 0)
-            /// <summary>
-            /// Remove the observer for the current volunteer when the window is closed.
-            /// </summary>
+            // Remove the observer for the current volunteer when the window is closed.
             s_bl.Volunteer.RemoveObserver(CurrentVolunteer!.Id, volunteerObserver);
     }
 }

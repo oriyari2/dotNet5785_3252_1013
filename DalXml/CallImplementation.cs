@@ -50,6 +50,20 @@ internal class CallImplementation : ICall
         );
     }
 
+    static XElement updateCallElement(Call item)
+    {
+        return new XElement("Call",
+            new XElement("Id", item.Id),
+            new XElement("CallType", item.TheCallType),
+            new XElement("VerbalDescription", item.VerbalDescription),
+            new XElement("Address", item.Address),
+            new XElement("Latitude", item.Latitude),
+            new XElement("Longitude", item.Longitude),
+            new XElement("OpeningTime", item.OpeningTime),
+            new XElement("MaxTimeToEnd", item.MaxTimeToEnd)
+        );
+    }
+
     /// <summary>
     /// Adds a new Call to the XML data.
     /// </summary>
@@ -143,7 +157,7 @@ internal class CallImplementation : ICall
             throw new DO.DalDoesNotExistException($"Call with ID={item.Id} does not exist");
 
         callElem.Remove();
-        callsRootElem.Add(createCallElement(item));
+        callsRootElem.Add(updateCallElement(item));
 
         XMLTools.SaveListToXMLElement(callsRootElem, Config.s_calls_xml);
     }

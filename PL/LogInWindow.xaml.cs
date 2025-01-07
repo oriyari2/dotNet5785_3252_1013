@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json.Linq;
 using PL.Volunteer;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,8 +20,7 @@ public partial class LogInWindow : Window
     public int CurrentId
     {
         get { return (int)GetValue(CurrentIdProperty); }
-        set { SetValue(CurrentIdProperty, value); 
-            PO.LogInID = value;}
+        set { SetValue(CurrentIdProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for CurrentId.  This enables animation, styling, binding, etc...
@@ -43,18 +43,12 @@ public partial class LogInWindow : Window
     {
         try 
         { 
-            BO.RoleType role = s_bl.Volunteer.LogIn(PO.LogInID, CurrentPassword);
+            BO.RoleType role = s_bl.Volunteer.LogIn(CurrentId, CurrentPassword);
             if(role==BO.RoleType.manager)
             {
-                foreach (Window window in Application.Current.Windows)
-                {
-                    // Check if there is already an open window of type VolunteerListWindow
-                    if (window is ManagerChooseWindow)
-                    {
-                        window.Activate(); // If such a window is open, bring it to the front
-                        return; // If the window is already open, don't open a new one
-                    }
-                }
+                
+                
+                PO.LogInID = CurrentId;
                 new ManagerChooseWindow().Show(); // Open the VolunteerListWindow when the button is clicked
             }
             else
