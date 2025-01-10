@@ -80,9 +80,7 @@
 
                 <!-- Column for Call ID -->
                 <DataGridTextColumn Binding="{Binding CallId}" Header="Call ID" Width="0.6*" />
-
-                <!-- Column for Record ID -->
-                <DataGridTextColumn Binding="{Binding Id}" Header="Assignment ID" Width="*" />
+   
 
                 <!-- Column for Call Type -->
                 <DataGridTemplateColumn Header="Call Type" Width="0.8*" >

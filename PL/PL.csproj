@@ -16,8 +16,6 @@
 
 	<ItemGroup>
 	  <None Remove="image.png" />
-	  <None Remove="image_with_colored_bg.png" />
-	  <None Remove="image_with_white_bg.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,8 +24,6 @@
 
 	<ItemGroup>
 	  <Resource Include="image.png" />
-	  <Resource Include="image_with_colored_bg.png" />
-	  <Resource Include="image_with_white_bg.png" />
 	</ItemGroup>
 
 </Project>

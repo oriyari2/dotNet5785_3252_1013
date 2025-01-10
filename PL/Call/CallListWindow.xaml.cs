@@ -173,7 +173,7 @@ public partial class CallListWindow : Window
             try
             {
                 s_bl.Call.CancelTreatment(PO.LogInID,Id);
-                MessageBox.Show("Call deleted successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Call canceled successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             catch (Exception ex)

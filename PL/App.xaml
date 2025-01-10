@@ -37,6 +37,7 @@
 
         <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverterkey" />
 
+        <local:OpeningTimeConverter x:Key="OpeningTimeConverterkey" />
 
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->

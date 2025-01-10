@@ -175,3 +175,24 @@ public class TimeSpanToStringConverter : IValueConverter
 }
 
 
+public class OpeningTimeConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // בדיקה אם הערך הוא null או זמן ברירת מחדל
+        if (value == null || (DateTime)value == default)
+        {
+            // מחזיר את השעה הנוכחית (שעון המערכת)
+            return DateTime.Now;
+        }
+
+        // אם לא, מחזיר את הערך הקיים
+        return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // במקרה הזה, אין צורך להחזיר חזרה את הערך (כי זה רק תצוגה)
+        return value;
+    }
+}

@@ -79,7 +79,7 @@ internal class CallImplementation : ICall
     {
         // Retrieve the assignment object based on its ID.
         var assignment = _dal.Assignment.Read(AssignmentId);
-
+        BO.Call call = Read(assignment.CallId);
         // Retrieve the volunteer (asker) object based on the RequesterId.
         var asker = _dal.Volunteer.Read(RequesterId);
 
@@ -95,9 +95,12 @@ internal class CallImplementation : ICall
         if (assignment.VolunteerId != RequesterId && asker.Role != DO.RoleType.manager)
             throw new BO.BlUserCantUpdateItemExeption($"Volunteer with id={RequesterId} can't change this assignment to cancel");
 
-        // Check if the assignment has already ended.
-        if (assignment.TheEndType != null || assignment.ActualEndTime != null)
-            throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
+        //// Check if the assignment has already ended.
+        //if (assignment.TheEndType != null || assignment.ActualEndTime != null)
+        //    throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
+         
+        if(call.status != BO.Status.treatment && call.status != BO.Status.riskTreatment)
+            throw new BO.BlUserCantUpdateItemExeption("You can only unassign if the call is currently in progress.");
 
         // Create a new assignment object with updated end time and end type based on role.
         DO.Assignment newAssign;
@@ -116,6 +119,8 @@ internal class CallImplementation : ICall
             // If updating fails, throw an exception indicating the assignment does not exist.
             throw new BO.BlDoesNotExistException($"Assignment with ID={AssignmentId} does not exist", ex);
         }
+        CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
     /// <summary>
@@ -151,7 +156,9 @@ internal class CallImplementation : ICall
 
         // Create the assignment in the data layer.
         _dal.Assignment.Create(assignment);
-    }
+        CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
+        }
 
 
     /// <summary>
@@ -163,7 +170,6 @@ internal class CallImplementation : ICall
     {
         // Call a helper method to convert BO.Call to DO.Call
         DO.Call doCall = CallManager.HelpCreateUodate(call);
-
         try
         {
             // Attempt to create the new call in the database
@@ -220,7 +226,6 @@ internal class CallImplementation : ICall
     {
         // Retrieve the assignment by ID
         var assignment = _dal.Assignment.Read(AssignmentId);
-
         // Check if the assignment does not exist
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
@@ -246,6 +251,9 @@ internal class CallImplementation : ICall
             // If the assignment does not exist, throw a BO exception
             throw new BO.BlDoesNotExistException($"Assignment with ID={AssignmentId} does not exist", ex);
         }
+
+        CallManager.Observers.NotifyItemUpdated(assignment.CallId);  //update current call  and obserervers etc.
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
     /// <summary>
@@ -420,12 +428,12 @@ internal class CallImplementation : ICall
 
         // Retrieve all assignments from the DAL
         var listAssignment = _dal.Assignment.ReadAll();
-
         // Join calls and assignments to create the list of calls in the desired format
         var callInList = from item in listCall
                          let assignment = listAssignment.Where(s => s.CallId == item.Id).OrderByDescending(s => s.EntryTime).FirstOrDefault()
                          let volunteer = assignment != null ? _dal.Volunteer.Read(assignment.VolunteerId) : null
                          let TempTimeToEnd = item.MaxTimeToEnd - (AdminManager.Now)
+                         let tmpstatus = CallManager.CheckStatus(assignment, item)
                          select new BO.CallInList
                          {
                              Id = assignment != null ? assignment.Id : null,
@@ -434,8 +442,8 @@ internal class CallImplementation : ICall
                              OpeningTime = item.OpeningTime,
                              TimeToEnd = TempTimeToEnd > TimeSpan.Zero ? TempTimeToEnd : null,
                              LastVolunteer = volunteer != null ? volunteer.Name : null,
-                             CompletionTreatment = assignment != null ? (assignment.TheEndType != null ? assignment.ActualEndTime - item.OpeningTime : null) : null,
-                             status = CallManager.CheckStatus(assignment, item),
+                             status = tmpstatus,
+                             CompletionTreatment = tmpstatus == BO.Status.close ? assignment.ActualEndTime - item.OpeningTime : null,
                              TotalAssignments = listAssignment.Where(s => s.CallId == item.Id).Count()
                          };
 
@@ -493,8 +501,18 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the call does not exist.</exception>
     public void Update(BO.Call call)
     {
+        var oldCall = _dal.Call.Read(call.Id);
         // Convert BO.Call to DO.Call
         DO.Call doCall = CallManager.HelpCreateUodate(call);
+
+        if (call.status == BO.Status.close || call.status == BO.Status.expired)
+            throw new BO.BlUserCantUpdateItemExeption("This call is closed");
+        if (call.status == BO.Status.treatment || call.status == BO.Status.riskTreatment)
+        {
+            if(doCall.Address != oldCall.Address || doCall.TheCallType != oldCall.TheCallType || 
+                doCall.VerbalDescription != oldCall.VerbalDescription)
+                throw new BO.BlUserCantUpdateItemExeption("These details cannot be changed because the call is already in progress.");
+        }
 
         try
         {

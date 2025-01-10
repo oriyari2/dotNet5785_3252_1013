@@ -19,7 +19,6 @@ public partial class CallWindow : Window
         
         ButtonText = callId == 0 ? "Add" : "Update";
         InitializeComponent();
-        
         // Set the data context for data binding.
         DataContext = this;
 
@@ -95,6 +94,7 @@ public partial class CallWindow : Window
                 /// <summary>
                 /// Add a new volunteer using the business logic layer.
                 /// </summary>
+                CurrentCall.OpeningTime = s_bl.Admin.GetClock();
                 s_bl.Call.Create(CurrentCall);
                 MessageBox.Show("Call added successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }

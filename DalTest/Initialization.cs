@@ -75,6 +75,13 @@ public static class Initialization
             else if (i % 3 == 0) // Call in treatment
             {
                 status = EndType.treated;
+                treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24));
+                if (selectedCall.MaxTimeToEnd.HasValue)
+                {
+                    treatmentEndTime = treatmentEndTime <= selectedCall.MaxTimeToEnd.Value
+                        ? treatmentEndTime
+                        : selectedCall.MaxTimeToEnd.Value.AddHours(-1); // Ensure within valid range
+                }
             }
             else if (i % 2 == 0) // Completed by manager
             {

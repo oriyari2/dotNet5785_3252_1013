@@ -25,23 +25,23 @@ internal static class CallManager
         if (call.MaxTimeToEnd < AdminManager.Now)
             return BO.Status.expired;  // Returns expired if the call time has passed.
 
-        // If there is no assignment or the end type is self or manager (open/risknot)
+        // If there is no assignment or the end type is self or manager (open/risk open)
         if (assignment == null || assignment.TheEndType == DO.EndType.self || assignment.TheEndType == DO.EndType.manager)
-            if ((AdminManager.Now - call.MaxTimeToEnd) > admin.GetRiskRange())  // Checks if the call exceeds the risk range.
+            if ((call.MaxTimeToEnd - AdminManager.Now) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
                 return BO.Status.riskOpen;  // Returns riskOpen if the call exceeds the risk range.
             else
                 return BO.Status.open;  // Returns open if the call is still within the range.
 
+        if (assignment.TheEndType == DO.EndType.treated)
+            return BO.Status.close;  // Returns close if the treatment is completed.
+
         // If the end type is null (treatment-related cases)
-        if (assignment.TheEndType == null)
-            if ((AdminManager.Now - call.MaxTimeToEnd) > admin.GetRiskRange())  // Checks if the call exceeds the risk range.
-                return BO.Status.riskTreatment;  // Returns riskTreatment if the call exceeds the risk range.
-            else
-                return BO.Status.treatment;  // Returns treatment if within the range.
+        if ((call.MaxTimeToEnd - AdminManager.Now) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
+            return BO.Status.riskTreatment;  // Returns riskTreatment if the call exceeds the risk range.
+        else
+            return BO.Status.treatment;  // Returns treatment if within the range.
 
         // If the assignment end type is treated, the call is closed.
-        else
-            return BO.Status.close;  // Returns close if the treatment is completed.
     }
 
     /// <summary>
@@ -70,10 +70,11 @@ internal static class CallManager
     internal static DO.Call HelpCreateUodate(BO.Call call)
     {
         double[] cordinate = VolunteerManager.GetCoordinates(call.Address);  // Retrieves the coordinates based on the address. Throws an exception if the address is invalid.
+        AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
 
         // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
-        if (call.MaxTimeToEnd < call.OpeningTime)
-            throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
+        if (call.MaxTimeToEnd < call.OpeningTime || call.MaxTimeToEnd < admin.GetClock())
+            throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time + risk range");
 
         // Returns a new DO.Call object with the updated values.
         return new()

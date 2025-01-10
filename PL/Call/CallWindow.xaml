@@ -41,6 +41,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
 
@@ -66,22 +67,40 @@
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
         <Label Grid.Row="4" Grid.Column="0" Content="Opening Time:" />
-        <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding CurrentCall.OpeningTime, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+        <TextBox IsReadOnly="True" Grid.Row="4" Grid.Column="1" 
+         Text="{Binding CurrentCall.OpeningTime, Converter={StaticResource OpeningTimeConverterkey}}" />
 
         <Label Grid.Row="5" Grid.Column="0" Content="Max Time To End:" />
         <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding CurrentCall.MaxTimeToEnd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
         <Label Grid.Row="6" Grid.Column="0" Content="Status:" />
-        <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
+        <ComboBox Grid.Row="6" Grid.Column="1" IsEnabled="false" ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
           SelectedValue="{Binding CurrentCall.status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
         <Label Grid.Row="7" Grid.Column="0" Content="Assigned Calls:" />
-        <ListBox Grid.Row="7" Grid.Column="1" ItemsSource="{Binding CurrentCall.listAssignForCall, Mode=TwoWay}" 
-         DisplayMemberPath="SomePropertyToDisplay" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
+            <ListBox ItemsSource="{Binding CurrentCall.listAssignForCall}" 
+             IsHitTestVisible="True">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding VolunteerId}" />
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="{Binding EntryTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
+                            <TextBlock Text="{Binding ActualEndTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
+                            <TextBlock Text="{Binding TheEndType}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+
+
+
 
 
         <!-- Action Button for saving or updating volunteer details -->
-        <Button Grid.Row="16" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
+        <Button Grid.Row="17" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
     HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="30" />
     </Grid>
 </Window>
