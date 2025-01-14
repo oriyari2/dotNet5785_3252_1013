@@ -581,6 +581,16 @@
     <MaxTimeToEnd>2026-10-02T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>59</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Address>HaMelitz 14, Jerusalem, Israel</Address>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2024-11-03T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-11-03T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>60</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
@@ -689,35 +699,5 @@
     <Longitude>35.214</Longitude>
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>124</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription>m</VerbalDescription>
-    <Address>HaPalmach 12, Jerusalem, Israel</Address>
-    <Latitude>31.768102</Latitude>
-    <Longitude>35.212685</Longitude>
-    <OpeningTime>0001-01-01T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2025-01-10T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>125</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription />
-    <Address>Shazar 7, Jerusalem, Israel</Address>
-    <Latitude>31.7135649</Latitude>
-    <Longitude>34.985179</Longitude>
-    <OpeningTime>2025-01-09T19:38:33</OpeningTime>
-    <MaxTimeToEnd />
-  </Call>
-  <Call>
-    <Id>59</Id>
-    <CallType>Shopping</CallType>
-    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>HaMelitz 14, Jerusalem, Israel</Address>
-    <Latitude>31.7648817</Latitude>
-    <Longitude>35.2190166</Longitude>
-    <OpeningTime>2024-11-03T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-11-10T00:00:00</MaxTimeToEnd>
   </Call>
 </Calls>

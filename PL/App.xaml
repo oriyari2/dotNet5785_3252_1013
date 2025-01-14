@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PL"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LoginWindow.xaml">
     <Application.Resources>
         <!-- Collection for call types -->
         <!-- This resource provides a predefined collection of call types for data binding. -->
@@ -68,7 +68,8 @@
 
 <!--manager
    218372043
-pS0594507653* -->
+pS0574506813*
+    -->
 
 <!-- volunteer
 215041013
