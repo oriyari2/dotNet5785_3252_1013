@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-    Title="LogInWindow" Height="450" Width="800">
+    Title="LogInWindow" Height="450" Width="500">
     <Grid >
         <Grid.RowDefinitions>
             <!-- Defines rows for different input fields and buttons -->
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.6*"/>
             <RowDefinition Height="0.9*"/>
-            <RowDefinition Height="0.6*"/>
-            <RowDefinition Height="0.6*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
             <Label Content="Welcome to Oref Eitan" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize ="32" Height="116" Width="356" />
@@ -26,10 +26,10 @@
                 <ColumnDefinition Width="1.1*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Label Content="ID:              " HorizontalAlignment="Right"  VerticalAlignment="Center" />
+                <Label Content="ID:              " HorizontalAlignment="Right"  VerticalAlignment="Center" FontSize="20" />
             </Grid>
             <Grid Grid.Column="1">
-                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentId, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  TextChanged="TextBox_TextChangedId" />
+                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentId, Mode=TwoWay}" VerticalAlignment="Center" Width="150" Height="25"  TextChanged="TextBox_TextChangedId" />
             </Grid>
         </Grid>
 
@@ -39,16 +39,16 @@
                 <ColumnDefinition Width="1.1*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Label Content="Password:  " HorizontalAlignment="Right" VerticalAlignment="Center" />
+                <Label Content="Password:  " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20"/>
             </Grid>
             <Grid Grid.Column="1">
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentPassword, Mode=TwoWay}"
-                         VerticalAlignment="Center" Width="120"  TextChanged="TextBox_TextChangedpass" Margin="-1,0,0,0"/>
+                         VerticalAlignment="Center" Width="150" Height="25" TextChanged="TextBox_TextChangedpass" Margin="-1,0,0,0"/>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="4">
-            <Button Content="Log In" HorizontalAlignment="center" VerticalAlignment="Center" Click="btnLogIn_Click" Width="106"  />
+            <Button Content="Log In" FontSize="20" HorizontalAlignment="center" VerticalAlignment="Center" Click="btnLogIn_Click" Width="170" Height="35"  />
         </Grid>
         <Image HorizontalAlignment="Center" Height="120" VerticalAlignment="Top" Width="120" Source="image.png" />
     </Grid>

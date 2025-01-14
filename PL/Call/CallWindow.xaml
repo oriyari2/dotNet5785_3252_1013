@@ -61,7 +61,7 @@
           SelectedValue="{Binding CurrentCall.TheCallType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
         <Label Grid.Row="2" Grid.Column="0" Content="Description:" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentCall.VerbalDescription, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentCall.VerbalDescription, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" TextWrapping="Wrap" />
 
         <Label Grid.Row="3" Grid.Column="0" Content="Address:" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />

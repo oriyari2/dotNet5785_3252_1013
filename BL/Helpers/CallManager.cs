@@ -22,12 +22,12 @@ internal static class CallManager
         AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
 
         // Checks if the call has expired based on the MaxTimeToEnd and current time.
-        if (call.MaxTimeToEnd < AdminManager.Now)
+        if (call.MaxTimeToEnd <= admin.GetClock())
             return BO.Status.expired;  // Returns expired if the call time has passed.
 
         // If there is no assignment or the end type is self or manager (open/risk open)
         if (assignment == null || assignment.TheEndType == DO.EndType.self || assignment.TheEndType == DO.EndType.manager)
-            if ((call.MaxTimeToEnd - AdminManager.Now) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
+            if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
                 return BO.Status.riskOpen;  // Returns riskOpen if the call exceeds the risk range.
             else
                 return BO.Status.open;  // Returns open if the call is still within the range.
@@ -36,7 +36,7 @@ internal static class CallManager
             return BO.Status.close;  // Returns close if the treatment is completed.
 
         // If the end type is null (treatment-related cases)
-        if ((call.MaxTimeToEnd - AdminManager.Now) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
+        if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
             return BO.Status.riskTreatment;  // Returns riskTreatment if the call exceeds the risk range.
         else
             return BO.Status.treatment;  // Returns treatment if within the range.
@@ -117,6 +117,7 @@ internal static class CallManager
                 );
                 s_dal.Assignment.Create(newAssignment);  // Creates the new assignment.
             }
+            
         }
 
         // Step 3: Updates assignments with null ActualEndTime for calls that are expired.

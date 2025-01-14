@@ -12,7 +12,7 @@
     <Grid>
         <!-- Column definitions for layout: First column for time and risk management, second column for task handling, third column for additional tasks. -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width ="1.8*"/>
+            <ColumnDefinition Width ="1.3*"/>
             <!-- Wider first column -->
             <ColumnDefinition Width="*"/>
             <!-- Second column -->
@@ -23,51 +23,62 @@
         <!-- Second column: Buttons for handling different tasks -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
                 <!-- Row for call amounts display -->
                 <RowDefinition Height="1*" />
                 <!-- Row for Reset DB button -->
                 <RowDefinition Height="1*" />
                 <!-- Row for Initialize DB button -->
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Background="#81A9B1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <!-- Label for "calls amount" -->
                     <RowDefinition Height="4.5*" />
                     <!-- Details for different call statuses -->
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Label Content="calls amount:" FontWeight="Bold" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                <Grid Grid.Row="0" >
+                    <Label Content="Calls:" FontWeight="Bold" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="16"/>
                 </Grid>
-                <Grid Grid.Row="1">
-                    <StackPanel Margin="10">
-                        <!-- Display details for various call statuses -->
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="open:" Width="150" FontWeight="Bold" />
-                            <TextBlock Text="{Binding CallAmounts[0]}" Width="50" HorizontalAlignment="Right" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="treatment:" Width="150" FontWeight="Bold" />
-                            <TextBlock Text="{Binding CallAmounts[1]}" Width="50" HorizontalAlignment="Right" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="close:" Width="150" FontWeight="Bold" />
-                            <TextBlock Text="{Binding CallAmounts[2]}" Width="50" HorizontalAlignment="Right" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="expired:" Width="150" FontWeight="Bold" />
-                            <TextBlock Text="{Binding CallAmounts[3]}" Width="50" HorizontalAlignment="Right" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="riskTreatment:" Width="150" FontWeight="Bold" />
-                            <TextBlock Text="{Binding CallAmounts[4]}" Width="50" HorizontalAlignment="Right" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Text="riskOpen:" Width="150" FontWeight="Bold" />
-                            <TextBlock Text="{Binding CallAmounts[5]}" Width="50" HorizontalAlignment="Right" />
-                        </StackPanel>
-                    </StackPanel>
+                <Grid Grid.Row="1" Margin="10" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <!-- עמודת התוויות -->
+                        <ColumnDefinition Width="50"/>
+                        <!-- עמודת המספרים -->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Open -->
+                    <TextBlock Text="Open:" Grid.Row="0" Grid.Column="0" FontWeight="Bold" FontSize="14" />
+                    <TextBlock Text="{Binding CallAmounts[0]}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" />
+
+                    <!-- Treatment -->
+                    <TextBlock Text="Treatment:" Grid.Row="1" Grid.Column="0" FontWeight="Bold" FontSize="14" />
+                    <TextBlock Text="{Binding CallAmounts[1]}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" />
+
+                    <!-- Close -->
+                    <TextBlock Text="Close:" Grid.Row="2" Grid.Column="0" FontWeight="Bold" FontSize="14" />
+                    <TextBlock Text="{Binding CallAmounts[2]}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" />
+
+                    <!-- Expired -->
+                    <TextBlock Text="Expired:" Grid.Row="3" Grid.Column="0" FontWeight="Bold" FontSize="14" />
+                    <TextBlock Text="{Binding CallAmounts[3]}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" />
+
+                    <!-- RiskTreatment -->
+                    <TextBlock Text="RiskTreatment:" Grid.Row="4" Grid.Column="0" FontWeight="Bold" FontSize="14" />
+                    <TextBlock Text="{Binding CallAmounts[4]}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" />
+
+                    <!-- RiskOpen -->
+                    <TextBlock Text="RiskOpen:" Grid.Row="5" Grid.Column="0" FontWeight="Bold" FontSize="14" />
+                    <TextBlock Text="{Binding CallAmounts[5]}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" FontSize="14" />
                 </Grid>
             </Grid>
             <!-- Button to reset the database -->
@@ -76,10 +87,11 @@
             <Button Content="Intialize DB" Click="btnIntialize_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
         </Grid>
 
+
         <!-- Third column: Additional buttons -->
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
                 <!-- Placeholder row -->
                 <RowDefinition Height="1*" />
                 <!-- Row for "Handle Volunteers" button -->
@@ -90,10 +102,8 @@
             <Button Content="Handle Volunteers" Click="btnVolunteers_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
             <!-- Button for handling calls -->
             <Button Content="Handle Calls" Click="btnCalls_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
-            <Border BorderBrush="Black" BorderThickness="1">
                 <Label Content="simulator area"/>
                 <!-- Placeholder for simulator area -->
-            </Border>
         </Grid>
 
         <!-- First column: Time and risk range management -->
@@ -117,13 +127,13 @@
                 <!-- Risk range input -->
             </Grid.RowDefinitions>
             <!-- Display the current time -->
-            <Label Content="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" />
+            <Label Content="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" />
             <!-- Buttons for adjusting time -->
-            <Button Content="Add one Minute" Click="btnAddOneMinute_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="150" Height="27"/>
-            <Button Content="Add one Hour" Click="btnAddOneHour_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Width="150" Height="27"/>
-            <Button Content="Add one Day" Click="btnAddOneDay_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="150" Height="27"/>
-            <Button Content="Add one Month" Click="btnAddOneMonth_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Width="150" Height="27"/>
-            <Button Content="Add one Year" Click="btnAddOneYear_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Width="150" Height="27"/>
+            <Button Content="Add Minute" Click="btnAddOneMinute_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="150" Height="27"/>
+            <Button Content="Add Hour" Click="btnAddOneHour_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Width="150" Height="27"/>
+            <Button Content="Add Day" Click="btnAddOneDay_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Width="150" Height="27"/>
+            <Button Content="Add Month" Click="btnAddOneMonth_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Width="150" Height="27"/>
+            <Button Content="Add Year" Click="btnAddOneYear_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Width="150" Height="27"/>
             <!-- Risk range input and update -->
             <Grid Grid.Row="7">
                 <Grid.ColumnDefinitions>
@@ -138,7 +148,7 @@
                 <Button Grid.Column="2" Content="Update" Click="btnUpdateRiskRange_Click" HorizontalAlignment="Left" 
                         VerticalAlignment="Center" RenderTransformOrigin="-0.346,0.465" Margin="10,0,0,0" FontSize="14"/>
                 <!-- TextBox for entering risk range -->
-                <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentRiskRange}"
+                <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentRiskRange, Converter= {StaticResource TimeSpanToStringConverterkey}}"
                          FontSize="17" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" />
                 <!-- Label for risk range input -->
                 <Label Content="Enter Risk Range: " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>

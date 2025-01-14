@@ -23,95 +23,120 @@ public static class Initialization
         var allVolunteers = s_dal!.Volunteer.ReadAll();
 
         // Remove the first two volunteers from the list
+        var availableVolunteers = allVolunteers.Skip(2).ToList();
 
-        var availableVolunteers = (allVolunteers.Skip(2)).ToList();
-
-        // Assignments to be created
-        int numAssignments = 50;
-
-        // Track assigned calls to ensure each call appears in only one assignment
-        var assignedCalls = new HashSet<int>();
+        // Keep track of assignments per volunteer and calls in treatment
+        var assignmentsPerVolunteer = new Dictionary<int, List<int>>(); // volunteerId -> list of callIds
+        var callsInTreatment = new HashSet<int>(); // callIds currently in treatment
+        var assignedCalls = new HashSet<int>(); // all assigned calls
 
         // Get the current system time
         DateTime currentTime = DateTime.Now;
 
-        // Generate a diversity of assignments
-        for (int i = 0; i < numAssignments; i++)
+        // Select 5 volunteers who will have multiple assignments
+        var specialVolunteers = availableVolunteers.Take(5).ToList();
+        var regularVolunteers = availableVolunteers.Skip(5).ToList();
+
+        // First, create assignments for special volunteers (with multiple calls)
+        foreach (var volunteer in specialVolunteers)
         {
-            // Select a random call that has not been assigned yet
-            var availableCalls = allCalls.Where(c => !assignedCalls.Contains(c.Id)).ToList();
-            if (availableCalls.Count == 0) break; // Stop if no unassigned calls are left
+            assignmentsPerVolunteer[volunteer.Id] = new List<int>();
 
-            int callIndex = s_rand.Next(0, availableCalls.Count);
-            var selectedCall = availableCalls[callIndex];
+            // Create one active treatment
+            var activeCall = allCalls.FirstOrDefault(c =>
+                !assignedCalls.Contains(c.Id) &&
+                c.MaxTimeToEnd > currentTime);
 
-            // Select a random volunteer from the reduced list
-            int volunteerIndex = s_rand.Next(0, availableVolunteers.Count());
-            var selectedVolunteer = availableVolunteers[volunteerIndex];
-
-            // Ensure treatment start time is within valid range
-            DateTime treatmentStartTime = selectedCall.OpeningTime.AddHours(s_rand.Next(1, 72));
-            if (selectedCall.MaxTimeToEnd.HasValue)
+            if (activeCall != null)
             {
-                treatmentStartTime = treatmentStartTime < selectedCall.MaxTimeToEnd.Value
-                    ? treatmentStartTime
-                    : selectedCall.MaxTimeToEnd.Value.AddMinutes(-10); // Adjust if necessary
+                DateTime treatmentStartTime = activeCall.OpeningTime.AddHours(s_rand.Next(1, 24));
+
+                s_dal!.Assignment.Create(new Assignment(0, activeCall.Id, volunteer.Id,
+                    treatmentStartTime, null, null));
+
+                assignmentsPerVolunteer[volunteer.Id].Add(activeCall.Id);
+                assignedCalls.Add(activeCall.Id);
+                callsInTreatment.Add(activeCall.Id);
             }
-            DateTime? treatmentEndTime = null;
-            EndType status;
 
-            // Decide assignment status based on diverse scenarios
-            if (i % 10 == 0) // Expired call, no treatment
+            // Create 3 additional completed/expired assignments
+            for (int i = 0; i < 3; i++)
             {
-                status = EndType.expired;
-                treatmentEndTime = selectedCall.MaxTimeToEnd.HasValue
-                    ? selectedCall.MaxTimeToEnd.Value.AddHours(-s_rand.Next(1, 48)) // Ensure end time is before MaxTimeToEnd
-                    : currentTime.AddHours(-s_rand.Next(1, 48)); // Ensure end time is in the past
-                if (treatmentEndTime >= currentTime)
+                var call = allCalls.FirstOrDefault(c =>
+                    !assignedCalls.Contains(c.Id));
+
+                if (call != null)
                 {
-                    treatmentEndTime = currentTime.AddHours(-s_rand.Next(1, 48)); // Force it into the past
+                    DateTime treatmentStartTime = call.OpeningTime.AddHours(s_rand.Next(1, 24));
+                    DateTime? treatmentEndTime;
+                    EndType? status;
+
+                    // Alternate between treated and expired
+                    if (i % 2 == 0 && call.MaxTimeToEnd <= currentTime)
+                    {
+                        status = EndType.expired;
+                        treatmentEndTime = call.MaxTimeToEnd;
+                    }
+                    else
+                    {
+                        status = EndType.treated;
+                        treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24));
+                        if (call.MaxTimeToEnd.HasValue && treatmentEndTime > call.MaxTimeToEnd.Value)
+                        {
+                            treatmentEndTime = call.MaxTimeToEnd.Value.AddHours(-1);
+                        }
+                    }
+
+                    s_dal!.Assignment.Create(new Assignment(0, call.Id, volunteer.Id,
+                        treatmentStartTime, treatmentEndTime, status));
+
+                    assignmentsPerVolunteer[volunteer.Id].Add(call.Id);
+                    assignedCalls.Add(call.Id);
                 }
             }
-            else if (i % 3 == 0) // Call in treatment
-            {
-                status = EndType.treated;
-                treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24));
-                if (selectedCall.MaxTimeToEnd.HasValue)
-                {
-                    treatmentEndTime = treatmentEndTime <= selectedCall.MaxTimeToEnd.Value
-                        ? treatmentEndTime
-                        : selectedCall.MaxTimeToEnd.Value.AddHours(-1); // Ensure within valid range
-                }
-            }
-            else if (i % 2 == 0) // Completed by manager
-            {
-                status = EndType.manager;
-                treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24));
-                if (selectedCall.MaxTimeToEnd.HasValue)
-                {
-                    treatmentEndTime = treatmentEndTime <= selectedCall.MaxTimeToEnd.Value
-                        ? treatmentEndTime
-                        : selectedCall.MaxTimeToEnd.Value.AddHours(-1); // Ensure within valid range
-                }
-            }
-            else // Self-cancellation
-            {
-                status = EndType.self;
-                treatmentEndTime = selectedCall.MaxTimeToEnd;
-            }
-
-            // Add the call to the assigned set
-            assignedCalls.Add(selectedCall.Id);
-
-            // Create the assignment
-            s_dal!.Assignment.Create(new Assignment(0, selectedCall.Id, selectedVolunteer.Id,
-                                                   treatmentStartTime, treatmentEndTime, status));
         }
-    }
 
-    /// <summary>
-    /// Creates calls in the system with realistic data such as descriptions, locations, and time ranges.
-    /// </summary>
+        // Create single assignments for regular volunteers
+        foreach (var volunteer in regularVolunteers)
+        {
+            var call = allCalls.FirstOrDefault(c =>
+                !assignedCalls.Contains(c.Id));
+
+            if (call != null)
+            {
+                DateTime treatmentStartTime = call.OpeningTime.AddHours(s_rand.Next(1, 24));
+                DateTime? treatmentEndTime;
+                EndType? status;
+
+                if (call.MaxTimeToEnd <= currentTime)
+                {
+                    status = EndType.expired;
+                    treatmentEndTime = call.MaxTimeToEnd;
+                }
+                else if (s_rand.Next(2) == 0)
+                {
+                    status = EndType.treated;
+                    treatmentEndTime = treatmentStartTime.AddHours(s_rand.Next(1, 24));
+                    if (call.MaxTimeToEnd.HasValue && treatmentEndTime > call.MaxTimeToEnd.Value)
+                    {
+                        treatmentEndTime = call.MaxTimeToEnd.Value.AddHours(-1);
+                    }
+                }
+                else
+                {
+                    status = null;
+                    treatmentEndTime = null;
+                }
+
+                s_dal!.Assignment.Create(new Assignment(0, call.Id, volunteer.Id,
+                    treatmentStartTime, treatmentEndTime, status));
+
+                assignedCalls.Add(call.Id);
+            }
+        }
+    }    /// <summary>
+         /// Creates calls in the system with realistic data such as descriptions, locations, and time ranges.
+         /// </summary>
     private static void createCall()
     {
         string[] Calldescription =

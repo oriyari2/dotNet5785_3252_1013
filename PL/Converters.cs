@@ -159,7 +159,7 @@ public class TimeSpanToStringConverter : IValueConverter
         if (value is TimeSpan timeSpan)
         {
             // פורמט שמציג ימים, שעות ודקות
-            return $"{(int)timeSpan.TotalDays}d {timeSpan.Hours:D2}:{timeSpan.Minutes:D2}";
+            return $"{(int)timeSpan.TotalDays}D {timeSpan.Hours:D2}:{timeSpan.Minutes:D2}";
         }
         return string.Empty;
     }
