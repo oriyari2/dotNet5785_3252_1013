@@ -155,12 +155,12 @@ public partial class CallListWindow : Window
         }
     }
 
-    private void btnCancle_Click(object sender, RoutedEventArgs e)
+    private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is int Id)
         {
             var result = MessageBox.Show(
-                "Are you sure you want to cancle the assignment of this call?",
+                "Are you sure you want to cancel the assignment of this call?",
                 "Confirmation",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);

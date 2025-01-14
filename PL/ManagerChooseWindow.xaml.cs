@@ -19,9 +19,10 @@ namespace PL;
 /// </summary>
 public partial class ManagerChooseWindow : Window
 {
-    public ManagerChooseWindow()
+    public ManagerChooseWindow( int id2=0)
     {
         InitializeComponent();
+        CurrentId = id2;
     }
     private void btnManagerWindow_Click(object sender, RoutedEventArgs e)
     {
@@ -36,10 +37,18 @@ public partial class ManagerChooseWindow : Window
         }
         new MainWindow().Show();
     }
+    public int CurrentId
+    {
+        get { return (int)GetValue(CurrentIdProperty); }
+        set { SetValue(CurrentIdProperty, value); }
+    }
 
+    // Using a DependencyProperty as the backing store for CurrentId.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrentIdProperty =
+        DependencyProperty.Register("CurrentId", typeof(int), typeof(ManagerChooseWindow), new PropertyMetadata(0));
     private void btnVolunteerWindow_Click(object sender, RoutedEventArgs e)
     {
-        new MainVolunteerWindow().Show();
+        new MainVolunteerWindow(CurrentId).Show();
     }
 
 

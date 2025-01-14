@@ -83,21 +83,33 @@
              IsHitTestVisible="True">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding VolunteerId}" />
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Text="{Binding EntryTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
-                            <TextBlock Text="{Binding ActualEndTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
-                            <TextBlock Text="{Binding TheEndType}" />
+                        <StackPanel Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Volunteer ID: " FontWeight="Bold"/>
+                                <TextBlock Text="{Binding VolunteerId}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Name: " FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Entry Time: " FontWeight="Bold"/>
+                                <TextBlock Text="{Binding EntryTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Actual End Time: " FontWeight="Bold"/>
+                                <TextBlock Text="{Binding ActualEndTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="End Type: " FontWeight="Bold"/>
+                                <TextBlock Text="{Binding TheEndType}" />
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+
             </ListBox>
         </ScrollViewer>
-
-
-
-
 
         <!-- Action Button for saving or updating volunteer details -->
         <Button Grid.Row="17" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 

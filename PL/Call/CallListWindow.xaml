@@ -147,13 +147,13 @@
                 </DataGridTemplateColumn>
 
                 
-                <DataGridTemplateColumn Header="Cancle" Width="0.5*" >
+                <DataGridTemplateColumn Header="Cancel" Width="0.5*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Cancle" 
-        Click="btnCancle_Click" 
+                            <Button Content="Cancel" 
+        Click="btnCancel_Click" 
         Tag="{Binding Id}" />
-                            <!-- Cancle button triggers a click event, passes record CallID as a tag -->
+                            <!-- Cancel button triggers a click event, passes record CallID as a tag -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

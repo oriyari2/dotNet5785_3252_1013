@@ -150,7 +150,7 @@ public static class Initialization
    "Haneviim 1, Jerusalem, Israel",
     "Yad Harutsim 3, Jerusalem, Israel",
     "Emek Refaim 8, Jerusalem, Israel",
-    "Shlomtzion HaMalka 9, Jerusalem, Israel",
+    "Yad Harutsim 9, Jerusalem, Israel",
     "Harav Kook 6, Jerusalem, Israel",
     "HaPalmach 12, Jerusalem, Israel",
     "Balfour 4, Jerusalem, Israel",

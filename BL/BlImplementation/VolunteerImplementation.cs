@@ -96,7 +96,7 @@ internal class VolunteerImplementation : IVolunteer
     {
         var volunteer = Read(id); // Check if volunteer exists by reading the volunteer's information
         if (volunteer.IsProgress != null) // If the volunteer has an ongoing assignment, prevent deletion
-            throw new BO.BlcantDeleteItem($"Volunteer with ID={id} can't be deleted");
+            throw new BO.BlcantDeleteItem($"Volunteer with ID={id} can't be deleted because he has a current call in progress");
 
         try
         {
@@ -235,7 +235,7 @@ internal class VolunteerImplementation : IVolunteer
         if (asker.Id != id && asker.Role != BO.RoleType.manager)
             throw new BO.BlUserCantUpdateItemExeption("The asker can't update this Volunteer");
 
-        if (volunteer.Active == false && volunteer.IsProgress != null) 
+        if (volunteer.Active == false && volunteer.IsProgress != null)
             throw new BO.BlUserCantUpdateItemExeption("This volunteer cant become not active becouse he has call in progress");
         BO.Volunteer oldVolunteer = Read(volunteer.Id); // Get the current volunteer data
 
@@ -248,10 +248,11 @@ internal class VolunteerImplementation : IVolunteer
 
         string password = volunteer.Password;
         if (password != oldVolunteer.Password)
-        { 
+        {
             VolunteerManager.ValidateStrongPassword(password); // Validate if the password is strong
-            password = VolunteerManager.EncryptPassword(password); // Encrypt the password
         }
+        password = VolunteerManager.EncryptPassword(password); // Encrypt the password
+
         // Prevent updating restricted fields
         if (asker.Role != BO.RoleType.manager && volunteer.Role != BO.RoleType.volunteer)
             throw new BO.BlUserCantUpdateItemExeption("Volunteer Can't change the role of the volunteer");
@@ -281,4 +282,3 @@ internal class VolunteerImplementation : IVolunteer
         VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
     }
 }
-

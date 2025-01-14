@@ -166,9 +166,29 @@ public class TimeSpanToStringConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string timeString && TimeSpan.TryParse(timeString, out TimeSpan result))
+        if (value is string timeString)
         {
-            return result;
+            try
+            {
+                // פיצול לפי פורמט הצפוי של "XD HH:MM"
+                var parts = timeString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length == 2 && parts[0].EndsWith("D"))
+                {
+                    // חלוקת היום והשעה
+                    var daysPart = parts[0].TrimEnd('D');
+                    var timePart = parts[1];
+
+                    if (int.TryParse(daysPart, out int days) && TimeSpan.TryParse(timePart, out TimeSpan timeOfDay))
+                    {
+                        return new TimeSpan(days, timeOfDay.Hours, timeOfDay.Minutes, 0);
+                    }
+                }
+            }
+            catch
+            {
+                // טיפול במקרה של קלט לא תקין
+            }
         }
         return TimeSpan.Zero;
     }

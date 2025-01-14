@@ -138,7 +138,7 @@
                    Converter={StaticResource CallInProgressConverterkey}, 
                    Mode=TwoWay, 
                    NotifyOnValidationError=true,  
-                   ValidatesOnExceptions=true}" />
+                   ValidatesOnExceptions=true}" TextWrapping="Wrap" />
 
         <!-- Action Button for saving or updating volunteer details -->
         <Button Grid.Row="16" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 

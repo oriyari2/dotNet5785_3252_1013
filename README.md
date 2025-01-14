@@ -17,7 +17,7 @@ $we add password bonus-2 points$
 $ We add Thread Safe full Lazy Initialization bonus- 2 points$
 
 in volunteerImplemenation of BO we decided to let the system delete a volunteer just if he do not have a call in program, 
-becouse otherwise even if he never treated a call but now he has a call in progress when we delete the volunteer it will create
+because otherwise even if he never treated a call but now he has a call in progress when we delete the volunteer it will create
 problemswith the current call
 
 in volunteerManager of BO we wrote a functions for each field that need check,that include every check he need include numbers etc.
@@ -32,7 +32,7 @@ $we added bonus of check that the password is strong-1 point $
 $we added bonus of encode and decipher the password- 2 points$
 
 in callImplemenation in Read all in everi select new we initialize CallId from DO.Call.ReadAll even thogh in the table
-of CallInList we asked to intialize CallId from DO.Assignment.ReadAll becouse if the Id which mean Assignment id is null
+of CallInList we asked to intialize CallId from DO.Assignment.ReadAll because if the Id which mean Assignment id is null
 we cant get the CallId from DO.Assignment.ReadAll and in this specific use we can get the call id from DO.Call.ReadAll
 because it inside select (LinqToObject).
 

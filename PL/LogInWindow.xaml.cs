@@ -49,10 +49,10 @@ public partial class LogInWindow : Window
                 
                 
                 PO.LogInID = CurrentId;
-                new ManagerChooseWindow().Show(); // Open the VolunteerListWindow when the button is clicked
+                new ManagerChooseWindow(CurrentId).Show(); // Open the VolunteerListWindow when the button is clicked
             }
             else
-                new MainVolunteerWindow().Show();
+                new MainVolunteerWindow(CurrentId).Show();
 
         }
         catch (Exception ex)

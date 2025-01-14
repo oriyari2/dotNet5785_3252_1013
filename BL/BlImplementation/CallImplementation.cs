@@ -199,8 +199,11 @@ internal class CallImplementation : ICall
             throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
 
         // Check if there are any assignments associated with the call
-        if (call.listAssignForCall == null || call.listAssignForCall.Count != 0)
-            throw new BO.BlcantDeleteItem($"Call with ID={id} can't be deleted");
+        if (call.listAssignForCall == null )
+            throw new BO.BlcantDeleteItem($"Call with ID={id} can't be deleted because it never had an assignment");
+        if (call.listAssignForCall.Count != 0)
+            throw new BO.BlcantDeleteItem($"Call with ID={id} can't be deleted because it has an open assignment");
+
 
         try
         {

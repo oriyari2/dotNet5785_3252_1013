@@ -34,7 +34,7 @@ public class Volunteer
 
     public string Email { get; set; } // Email address of the volunteer
 
-    public string? Password { get; set; } // Optional login password (place to bonus$$)
+    public string Password { get; set; } // Optional login password (place to bonus$$)
 
     public string? Address { get; set; } // Optional address of the volunteer
 
