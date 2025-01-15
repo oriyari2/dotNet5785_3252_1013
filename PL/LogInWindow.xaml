@@ -50,6 +50,6 @@
         <Grid Grid.Row="4">
             <Button Content="Log In" FontSize="20" HorizontalAlignment="center" VerticalAlignment="Center" Click="btnLogIn_Click" Width="170" Height="35"  />
         </Grid>
-        <Image HorizontalAlignment="Center" Height="120" VerticalAlignment="Top" Width="120" Source="image.png" />
+        <Image HorizontalAlignment="Center" Height="120" VerticalAlignment="Top" Width="150" Source="/newImage.png" />
     </Grid>
 </Window>

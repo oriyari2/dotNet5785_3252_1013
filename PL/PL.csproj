@@ -11,11 +11,18 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+		<ApplicationIcon>newImage.ico</ApplicationIcon>
+		<PackageIcon></PackageIcon>
 
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <None Remove="image.png" />
+	  <None Remove="newImage.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="newImage.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,6 +31,7 @@
 
 	<ItemGroup>
 	  <Resource Include="image.png" />
+	  <Resource Include="newImage.png" />
 	</ItemGroup>
 
 </Project>
