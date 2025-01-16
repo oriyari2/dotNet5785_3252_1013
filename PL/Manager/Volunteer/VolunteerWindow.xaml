@@ -99,7 +99,7 @@
         <Label Grid.Row="7" Grid.Column="0" Content="Active:" />
         <!-- CheckBox for Active Status -->
         <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding CurrentVolunteer.Active, Mode=TwoWay, NotifyOnValidationError=true, 
-            ValidatesOnExceptions=true}" />
+            ValidatesOnExceptions=true}" IsEnabled="{Binding CurrentVolunteer.IsProgress , Converter={StaticResource ActiveCheckboxConverterkey }}"/>
 
         <Label Grid.Row="8" Grid.Column="0" Content="Max Distance:" />
         <!-- TextBox for Maximum Distance -->

@@ -40,6 +40,8 @@ because it inside select (LinqToObject).
 
 /stage5 final commit/
 
+$we added the icon bonus- 1 points$
+
 
 
 

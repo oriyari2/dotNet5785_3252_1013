@@ -98,8 +98,8 @@ internal class CallImplementation : ICall
         //// Check if the assignment has already ended.
         //if (assignment.TheEndType != null || assignment.ActualEndTime != null)
         //    throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
-         
-        if(call.status != BO.Status.treatment && call.status != BO.Status.riskTreatment)
+
+        if (call.status != BO.Status.treatment && call.status != BO.Status.riskTreatment)
             throw new BO.BlUserCantUpdateItemExeption("You can only unassign if the call is currently in progress.");
 
         // Create a new assignment object with updated end time and end type based on role.
@@ -121,6 +121,8 @@ internal class CallImplementation : ICall
         }
         CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
         CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
+        VolunteerManager.Observers.NotifyItemUpdated(assignment.VolunteerId);  //update current call  and obserervers etc.
+        VolunteerManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
     /// <summary>
@@ -131,11 +133,11 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlDoesNotExistException">Thrown if no matching open call is found.</exception>
     public void ChooseCallToTreat(int volunteerId, int CallId)
     {
-       var currentCall = VolunteerManager.GetCurrentCall(volunteerId);
+        var currentCall = VolunteerManager.GetCurrentCall(volunteerId);
         if (currentCall != null)
             throw new BO.BlUserCantUpdateItemExeption("Volunteer cant choose new call to treat" +
                 " because he already has one");
-        
+
         // Retrieve the first open call that matches the given volunteerId and CallId from the list of open calls.
         var call = GetOpenCallInList(volunteerId, null, null).FirstOrDefault(s => s.Id == CallId);
 
@@ -158,7 +160,10 @@ internal class CallImplementation : ICall
         _dal.Assignment.Create(assignment);
         CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
         CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
-        }
+        VolunteerManager.Observers.NotifyItemUpdated(volunteerId);  //update current call  and obserervers etc.
+        VolunteerManager.Observers.NotifyListUpdated();
+
+    }
 
 
     /// <summary>
@@ -199,7 +204,7 @@ internal class CallImplementation : ICall
             throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
 
         // Check if there are any assignments associated with the call
-        if (call.listAssignForCall == null )
+        if (call.listAssignForCall == null)
             throw new BO.BlcantDeleteItem($"Call with ID={id} can't be deleted because it never had an assignment");
         if (call.listAssignForCall.Count != 0)
             throw new BO.BlcantDeleteItem($"Call with ID={id} can't be deleted because it has an open assignment");
@@ -257,6 +262,8 @@ internal class CallImplementation : ICall
 
         CallManager.Observers.NotifyItemUpdated(assignment.CallId);  //update current call  and obserervers etc.
         CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
+        VolunteerManager.Observers.NotifyItemUpdated(volunteerId);  //update current call  and obserervers etc.
+        VolunteerManager.Observers.NotifyListUpdated();
     }
 
     /// <summary>
@@ -512,7 +519,7 @@ internal class CallImplementation : ICall
             throw new BO.BlUserCantUpdateItemExeption("This call is closed");
         if (call.status == BO.Status.treatment || call.status == BO.Status.riskTreatment)
         {
-            if(doCall.Address != oldCall.Address || doCall.TheCallType != oldCall.TheCallType || 
+            if (doCall.Address != oldCall.Address || doCall.TheCallType != oldCall.TheCallType ||
                 doCall.VerbalDescription != oldCall.VerbalDescription)
                 throw new BO.BlUserCantUpdateItemExeption("These details cannot be changed because the call is already in progress.");
         }

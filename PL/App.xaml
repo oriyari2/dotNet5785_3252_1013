@@ -39,6 +39,9 @@
 
         <local:OpeningTimeConverter x:Key="OpeningTimeConverterkey" />
 
+        <local:ActiveCheckboxConverter x:Key="ActiveCheckboxConverterkey" />
+
+
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->
         <Style TargetType="Button">
@@ -68,12 +71,11 @@
 
 <!--manager
    218372043
-pS0593893248*
-    -->
+pS0568460407*    -->
 
-<!-- volunteer
-215041013
-pS0563153122*  -->
+<!--207249780
+pS0555567959*-->
+
     
     
     

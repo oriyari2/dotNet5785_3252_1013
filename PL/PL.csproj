@@ -17,7 +17,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="image.png" />
 	  <None Remove="newImage.png" />
 	</ItemGroup>
 
@@ -30,7 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="image.png" />
 	  <Resource Include="newImage.png" />
 	</ItemGroup>
 

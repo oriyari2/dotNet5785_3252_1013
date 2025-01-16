@@ -109,6 +109,7 @@ internal class VolunteerImplementation : IVolunteer
             throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist", ex);
         }
         VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
+        
     }
 
     /// <summary>

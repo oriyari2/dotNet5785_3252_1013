@@ -216,3 +216,19 @@ public class OpeningTimeConverter : IValueConverter
         return value;
     }
 }
+
+
+public class ActiveCheckboxConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // value הוא CurrentCall
+        // אם CurrentCall הוא null, מחזירים true (מאופשר), אחרת מחזירים false (לא מאופשר)
+        return value == null;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException(); // אין צורך במימוש ConvertBack
+    }
+}
