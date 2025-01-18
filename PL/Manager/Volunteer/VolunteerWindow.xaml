@@ -127,19 +127,68 @@
         <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding CurrentVolunteer.TotalExpired,
             Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" IsReadOnly="True" />
 
-        <Label Grid.Row="13" Grid.Column="0" Content="Is Progress:" />
+        <Label Grid.Row="13" Grid.Column="0" Content="In Progress:" />
         <!-- TextBox indicating if the Volunteer is in progress  -->
-        <TextBox 
-    Grid.Row="13" 
-    Grid.Column="1" 
-    Grid.RowSpan="3"
-    IsReadOnly="True" 
-    Text="{Binding CurrentVolunteer.IsProgress, 
-                   Converter={StaticResource CallInProgressConverterkey}, 
-                   Mode=TwoWay, 
-                   NotifyOnValidationError=true,  
-                   ValidatesOnExceptions=true}" TextWrapping="Wrap" />
+        <ScrollViewer Grid.Row="13" Grid.Column="1" Grid.RowSpan="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="0,2"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                    </Style>
+                </StackPanel.Resources>
 
+                <TextBlock>
+            <TextBlock Text="ID: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.Id}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Call ID: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.CallId}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Type: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.TheCallType}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Description: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.VerbalDescription, TargetNullValue=N/A}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Address: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.Address}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Opening Time: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.OpeningTime}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Max Time to End: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.MaxTimeToEnd, TargetNullValue=N/A}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Entry Time: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.EntryTime}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Distance: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.Distance, StringFormat={}{0} km}"/>
+        </TextBlock>
+
+                <TextBlock>
+            <TextBlock Text="Status: " FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentVolunteer.IsProgress.status}"/>
+        </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
         <!-- Action Button for saving or updating volunteer details -->
         <Button Grid.Row="16" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
         HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="30" />

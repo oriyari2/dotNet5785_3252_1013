@@ -78,36 +78,47 @@
           SelectedValue="{Binding CurrentCall.status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
         <Label Grid.Row="7" Grid.Column="0" Content="Assigned Calls:" />
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2">
             <ListBox ItemsSource="{Binding CurrentCall.listAssignForCall}" 
              IsHitTestVisible="True">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Volunteer ID: " FontWeight="Bold"/>
-                                <TextBlock Text="{Binding VolunteerId}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Name: " FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Entry Time: " FontWeight="Bold"/>
-                                <TextBlock Text="{Binding EntryTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Actual End Time: " FontWeight="Bold"/>
-                                <TextBlock Text="{Binding ActualEndTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="End Type: " FontWeight="Bold"/>
-                                <TextBlock Text="{Binding TheEndType}" />
+                            <StackPanel.Resources>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Margin" Value="0,2"/>
+                                </Style>
+                            </StackPanel.Resources>
+
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Volunteer ID: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding VolunteerId}" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Name: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Entry Time: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding EntryTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Actual End Time: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding ActualEndTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="End Type: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding TheEndType}" />
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
         </ScrollViewer>
 
