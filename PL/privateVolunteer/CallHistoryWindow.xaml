@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.privateVolunteer"
         mc:Ignorable="d"
-        Title="Closed Call History" Height="500" Width="950"
+        Title="Closed Call History" Height="450" Width="800"
         Loaded="Window_Loaded"
         Closed="Window_Closed">
 

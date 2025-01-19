@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Select Call" HorizontalAlignment="Center"   FontSize="17" VerticalAlignment="Center" Height="60" Width="130"/>
+            <Button Grid.Column="1" Content="Select Call" HorizontalAlignment="Center"   FontSize="17" VerticalAlignment="Center" Height="60" Width="130" Click="BtnSelectCall_Click"/>
             <Button Content="Calls History" HorizontalAlignment="Center"  VerticalAlignment="Center"  Height="60" Width="130" FontSize="17" Click="BtnCallsHistory_Click"/>
         </Grid>
         <Grid Grid.Row="0">

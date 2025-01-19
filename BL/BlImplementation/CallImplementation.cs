@@ -100,19 +100,19 @@ internal class CallImplementation : ICall
         //    throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
 
         if (call.status != BO.Status.treatment && call.status != BO.Status.riskTreatment)
-            throw new BO.BlUserCantUpdateItemExeption("You can only unassign if the call is currently in progress.");
+            throw new BO.BlUserCantUpdateItemExeption($"You can only unassign if the call {AssignmentId} is currently in progress.");
 
         // Create a new assignment object with updated end time and end type based on role.
         DO.Assignment newAssign;
-        if (asker.Role == DO.RoleType.manager)
+        if (asker.Role == DO.RoleType.manager&& assignment.VolunteerId != RequesterId)
             newAssign = assignment with { ActualEndTime = AdminManager.Now, TheEndType = DO.EndType.manager };
         else
             newAssign = assignment with { ActualEndTime = AdminManager.Now, TheEndType = DO.EndType.self };
-
         try
         {
             // Update the assignment in the data layer.
             _dal.Assignment.Update(newAssign);
+           Update(call);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -158,7 +158,7 @@ internal class CallImplementation : ICall
 
         // Create the assignment in the data layer.
         _dal.Assignment.Create(assignment);
-        CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
+        CallManager.Observers.NotifyItemUpdated(CallId);  //update current call  and obserervers etc.
         CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
         VolunteerManager.Observers.NotifyItemUpdated(volunteerId);  //update current call  and obserervers etc.
         VolunteerManager.Observers.NotifyListUpdated();
@@ -234,6 +234,8 @@ internal class CallImplementation : ICall
     {
         // Retrieve the assignment by ID
         var assignment = _dal.Assignment.Read(AssignmentId);
+        
+        BO.Call call = Read(assignment.CallId);
         // Check if the assignment does not exist
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
@@ -248,11 +250,12 @@ internal class CallImplementation : ICall
 
         // Create a new assignment object with updated end time and end type
         DO.Assignment newAssign = assignment with { ActualEndTime = AdminManager.Now, TheEndType = DO.EndType.treated };
-
+        
         try
         {
             // Attempt to update the assignment in the database
             _dal.Assignment.Update(newAssign);
+            Update(call);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -362,6 +365,7 @@ internal class CallImplementation : ICall
                                 TheCallType = call.TheCallType,
                                 Address = boCall.Address,
                                 OpeningTime = call.OpeningTime,
+                                MaxTimeToEnd=AdminManager.Now+call.TimeToEnd,
                                 Distance = volunteer?.Address != null ?
                                 VolunteerManager.CalculateDistance(latVol, lonVol, boCall.Latitude, boCall.Longitude)
                                 : 0  // Calculate the distance between the volunteer and the call

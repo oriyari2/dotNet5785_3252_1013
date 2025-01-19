@@ -5,8 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.privateVolunteer"
         mc:Ignorable="d"
-        Title="SelectCallWindow" Height="450" Width="800">
+        Title="Select Call " Height="450" Width="800"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="500*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ComboBox and Label for filtering by CallType -->
+        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="127*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="266*"/>
+                <ColumnDefinition Width="400*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Select Call Type:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3,0,0,0"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}"
+               SelectedValue="{Binding Path=callType, Mode=TwoWay}" 
+               Grid.Column="3"
+               SelectionChanged="CallTypeSelectionChanged"/>
+        </Grid>
+
+        <!-- DataGrid to display ClosedCallInList -->
+        <DataGrid ItemsSource="{Binding CallList}" 
+           AutoGenerateColumns="False"
+           IsReadOnly="True" 
+           EnableRowVirtualization="True"
+           RowDetailsVisibilityMode="VisibleWhenSelected"
+           Grid.Row="1"
+           HorizontalAlignment="Stretch" 
+           VerticalAlignment="Stretch"
+           GridLinesVisibility="All" 
+           BorderBrush="#0D1821" 
+           BorderThickness="1"
+           SelectedItem="{Binding SelectedCall, Mode=TwoWay}">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#A3C77F" />
+                    <Setter Property="Foreground" Value="#0D1821" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="5" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Call ID" Width="0.4*" />
+                <!-- Column for Call Type -->
+                <DataGridTemplateColumn Header="Call Type" Width="0.8*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TheCallType}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Address}" Header="Address" Width="1.5*" />
+                <DataGridTextColumn Binding="{Binding OpeningTime, Converter={StaticResource DateTimeFormatConverterkey}}" 
+                             Header="Opening Time" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding MaxTimeToEnd, Converter={StaticResource DateTimeFormatConverterkey}}" 
+                             Header="Time To End" Width="Auto" />
+                <DataGridTextColumn Binding="{Binding Distance, Converter={StaticResource DoubleConverterkey}}" Header="Distance" Width="0.4*" />
+                <DataGridTemplateColumn Header="Select" Width="0.5*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Select" 
+        Click="btnSelectCall_Click" 
+        Tag="{Binding Id}" />
+                            <!-- Delete button triggers a click event, passes record ID as a tag -->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

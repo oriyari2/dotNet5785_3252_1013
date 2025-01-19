@@ -232,3 +232,27 @@ public class ActiveCheckboxConverter : IValueConverter
         throw new NotImplementedException(); // אין צורך במימוש ConvertBack
     }
 }
+
+public class DoubleConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is double doubleValue)
+        {
+            // פורמט התוצאה עם ארבע ספרות אחרי הנקודה
+            return doubleValue.ToString("F4", CultureInfo.InvariantCulture);
+        }
+
+        return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is string stringValue && double.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double result))
+        {
+            return result;
+        }
+
+        return value;
+    }
+}

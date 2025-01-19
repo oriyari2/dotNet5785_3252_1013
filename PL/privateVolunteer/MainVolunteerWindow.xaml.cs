@@ -10,14 +10,14 @@ public partial class MainVolunteerWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Singleton instance of the BL API
 
-    public MainVolunteerWindow(int id3=0)
+    public MainVolunteerWindow(int id3 = 0)
     {
         InitializeComponent();
         DataContext = this;
         try
         {
             CurrentVolunteer = s_bl.Volunteer.Read(id3);
-            if(CurrentVolunteer.IsProgress!=null)
+            if (CurrentVolunteer.IsProgress != null)
             {
                 CurrentCall = s_bl.Call.Read(CurrentVolunteer.IsProgress.CallId);
             }
@@ -71,8 +71,8 @@ public partial class MainVolunteerWindow : Window
 
         try
         {
-                s_bl.Volunteer.Update(CurrentVolunteer.Id, CurrentVolunteer);
-                MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            s_bl.Volunteer.Update(CurrentVolunteer.Id, CurrentVolunteer);
+            MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)
         {
@@ -86,28 +86,28 @@ public partial class MainVolunteerWindow : Window
     private void BtnCancelTreatment_Click(object sender, RoutedEventArgs e)
     {
 
-            var result = MessageBox.Show(
-                "Are you sure you want to cancel your treatment for this call?",
-                "Confirmation",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+        var result = MessageBox.Show(
+            "Are you sure you want to cancel your treatment for this call?",
+            "Confirmation",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question);
 
-            if (result != MessageBoxResult.Yes)
-            {
-                return;
-            }
+        if (result != MessageBoxResult.Yes)
+        {
+            return;
+        }
 
-            try
-            {
-                s_bl.Call.CancelTreatment(CurrentVolunteer.Id,CurrentVolunteer.IsProgress.Id);
-                MessageBox.Show("Call canceled successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        try
+        {
+            s_bl.Call.CancelTreatment(CurrentVolunteer.Id, CurrentVolunteer.IsProgress.Id);
+            MessageBox.Show("Call canceled successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-       
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
     }
     private void BtnEndTreatmrnt_Click(object sender, RoutedEventArgs e)
     {
@@ -139,16 +139,18 @@ public partial class MainVolunteerWindow : Window
     {
         new CallHistoryWindow(CurrentVolunteer.Id).Show();
     }
+    private void BtnSelectCall_Click(object sender, RoutedEventArgs e)
+    {
+        new SelectCallWindow(CurrentVolunteer.Id).Show();
+    }
     
-
     private void MainVolunteerWindow_Loaded(object sender, RoutedEventArgs e)
     {
         // Set initial values when the window is loaded
 
         RefreshCallInProgress();
-
-
         s_bl.Call.AddObserver(callInProgressObserver);
+        s_bl.Volunteer.AddObserver(VolunteerObserver);
     }
 
     /// <summary>
@@ -157,8 +159,8 @@ public partial class MainVolunteerWindow : Window
     private void MainVolunteerWindow_Closed(object sender, EventArgs e)
     {
         // Cleanup observers when the window is closed
-
         s_bl.Call.RemoveObserver(callInProgressObserver);
+        s_bl.Volunteer.RemoveObserver(VolunteerObserver);
     }
 
     private void RefreshCallInProgress()
@@ -169,11 +171,11 @@ public partial class MainVolunteerWindow : Window
     /// <summary>
     /// Helper function to read the current call amounts from the backend.
     /// </summary>
-    private  BO.Call? helpReadCallInProgress()
+    private BO.Call? helpReadCallInProgress()
     {
-
-        if ((s_bl.Volunteer.Read(CurrentVolunteer.Id).IsProgress) != null)
-            return s_bl.Call.Read(CurrentVolunteer.IsProgress.CallId);
+        var volCall = s_bl.Volunteer.Read(CurrentVolunteer.Id).IsProgress;
+        if (volCall != null)
+            return s_bl.Call.Read(volCall.CallId);
         return null;
     }
 
@@ -182,5 +184,23 @@ public partial class MainVolunteerWindow : Window
     /// </summary>
     private void callInProgressObserver() => RefreshCallInProgress();
 
+
+    private void RefreshVolunteer()
+    {
+        CurrentVolunteer = helpReadVolunteer(); // Update the amounts from the data source
+    }
+
+    /// <summary>
+    /// Helper function to read the current call amounts from the backend.
+    /// </summary>
+    private BO.Volunteer helpReadVolunteer()
+    {
+        return s_bl.Volunteer.Read(CurrentVolunteer.Id);
+    }
+
+    /// <summary>
+    /// Observes changes in the call amounts and refreshes the displayed data.
+    /// </summary>
+    private void VolunteerObserver() => RefreshVolunteer();
 
 }

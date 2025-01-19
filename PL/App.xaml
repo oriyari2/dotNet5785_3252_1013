@@ -8,7 +8,7 @@
         <!-- This resource provides a predefined collection of call types for data binding. -->
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
         <local:StatusCollection x:Key="StatusCollectionKey"/>
-
+        <local:DoubleConverter x:Key="DoubleConverterkey" />
         <!-- Collection for role types -->
         <!-- This resource provides a predefined collection of role types for data binding. -->
         <local:RoleTypeCollection x:Key="RoleTypeCollectionKey"/>

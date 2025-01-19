@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfAssignment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Assignment>
-    <Id>71</Id>
-    <CallId>2</CallId>
-    <VolunteerId>211722251</VolunteerId>
-    <EntryTime>2024-02-02T21:00:00</EntryTime>
-    <ActualEndTime xsi:nil="true" />
-    <TheEndType xsi:nil="true" />
-  </Assignment>
-  <Assignment>
     <Id>72</Id>
     <CallId>1</CallId>
     <VolunteerId>211722251</VolunteerId>
@@ -63,14 +55,6 @@
     <EntryTime>2024-08-08T04:00:00</EntryTime>
     <ActualEndTime>2024-08-08T09:00:00</ActualEndTime>
     <TheEndType>treated</TheEndType>
-  </Assignment>
-  <Assignment>
-    <Id>79</Id>
-    <CallId>9</CallId>
-    <VolunteerId>208979633</VolunteerId>
-    <EntryTime>2024-09-09T01:00:00</EntryTime>
-    <ActualEndTime xsi:nil="true" />
-    <TheEndType xsi:nil="true" />
   </Assignment>
   <Assignment>
     <Id>80</Id>
@@ -263,5 +247,125 @@
     <EntryTime>2025-01-16T18:18:12</EntryTime>
     <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
     <TheEndType>expired</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>71</Id>
+    <CallId>2</CallId>
+    <VolunteerId>211722251</VolunteerId>
+    <EntryTime>2024-02-02T21:00:00</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>79</Id>
+    <CallId>9</CallId>
+    <VolunteerId>208979633</VolunteerId>
+    <EntryTime>2024-09-09T01:00:00</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>104</Id>
+    <CallId>2</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>manager</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>105</Id>
+    <CallId>2</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>106</Id>
+    <CallId>2</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>107</Id>
+    <CallId>9</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>108</Id>
+    <CallId>62</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>manager</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>109</Id>
+    <CallId>70</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>110</Id>
+    <CallId>2</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>111</Id>
+    <CallId>30</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>112</Id>
+    <CallId>30</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>113</Id>
+    <CallId>30</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>114</Id>
+    <CallId>69</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>115</Id>
+    <CallId>30</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>116</Id>
+    <CallId>30</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-16T18:18:12</EntryTime>
+    <ActualEndTime>2025-01-16T18:18:12</ActualEndTime>
+    <TheEndType>treated</TheEndType>
   </Assignment>
 </ArrayOfAssignment>

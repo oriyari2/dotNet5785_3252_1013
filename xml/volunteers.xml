@@ -29,20 +29,6 @@
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>208979633</Id>
-    <Name>Dina Klein</Name>
-    <PhoneNumber>0521825291</PhoneNumber>
-    <Email>0521825291@gmail.com</Email>
-    <Password>sV3854;585&lt;4-</Password>
-    <Address>HaNeviim 89, Jerusalem, Israel</Address>
-    <Latitude>31.783</Latitude>
-    <Longitude>35.2143</Longitude>
-    <Role>volunteer</Role>
-    <Active>true</Active>
-    <MaxDistance>10841790</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>322638370</Id>
     <Name>david azrad</Name>
     <PhoneNumber>0572400879</PhoneNumber>
@@ -222,6 +208,20 @@
     <Role>volunteer</Role>
     <Active>true</Active>
     <MaxDistance>1432811256</MaxDistance>
+    <TheDistanceType>air</TheDistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>208979633</Id>
+    <Name>Dina Klein</Name>
+    <PhoneNumber>0521825291</PhoneNumber>
+    <Email>0521825291@gmail.com</Email>
+    <Password>383;&lt;594;;-</Password>
+    <Address>HaNeviim 89, Jerusalem, Israel</Address>
+    <Latitude>31.7836988</Latitude>
+    <Longitude>35.226051</Longitude>
+    <Role>volunteer</Role>
+    <Active>true</Active>
+    <MaxDistance>10841790</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
 </ArrayOfVolunteer>
