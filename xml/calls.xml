@@ -11,6 +11,16 @@
     <MaxTimeToEnd>2024-01-01T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>2</Id>
+    <CallType>food</CallType>
+    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <Address>Yad Harutsim 3, Jerusalem, Israel</Address>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2024-02-02T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-02-02T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>3</Id>
     <CallType>food</CallType>
     <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
@@ -281,6 +291,16 @@
     <MaxTimeToEnd>2026-05-01T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>30</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Address>Hillel 25, Jerusalem, Israel</Address>
+    <Latitude>31.778</Latitude>
+    <Longitude>35.218</Longitude>
+    <OpeningTime>2024-06-02T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-06-02T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>31</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
@@ -294,7 +314,7 @@
     <Id>32</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Ramat Sharet 17, Jerusalem, Israel</Address>
+    <Address>Ramat Beit HaKerem 4, Jerusalem, Israel</Address>
     <Latitude>31.753</Latitude>
     <Longitude>35.216</Longitude>
     <OpeningTime>2024-08-04T00:00:00</OpeningTime>
@@ -361,6 +381,16 @@
     <MaxTimeToEnd>2026-02-10T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>39</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Address>Ein Gedi 10, Jerusalem, Israel</Address>
+    <Latitude>31.776</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2024-03-11T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-03-11T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>40</Id>
     <CallType>Transportation</CallType>
     <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
@@ -389,6 +419,16 @@
     <Longitude>35.217</Longitude>
     <OpeningTime>2024-06-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-06-14T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>43</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <Address>Begin 14, Jerusalem, Israel</Address>
+    <Latitude>31.764</Latitude>
+    <Longitude>35.213</Longitude>
+    <OpeningTime>2024-07-15T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-07-15T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>44</Id>
@@ -541,6 +581,16 @@
     <MaxTimeToEnd>2026-10-02T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>59</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Address>HaMelitz 14, Jerusalem, Israel</Address>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2024-11-03T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-11-03T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>60</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
@@ -591,6 +641,16 @@
     <MaxTimeToEnd>2026-04-08T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>65</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Address>Beit Yaakov 7, Jerusalem, Israel</Address>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.218</Longitude>
+    <OpeningTime>2024-05-09T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-05-09T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>66</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
@@ -639,55 +699,5 @@
     <Longitude>35.214</Longitude>
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>2</Id>
-    <CallType>Shopping</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
-    <Address>Yad Harutsim 3, Jerusalem, Israel</Address>
-    <Latitude>31.7540775</Latitude>
-    <Longitude>35.2173593</Longitude>
-    <OpeningTime>2024-02-02T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-02-02T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>59</Id>
-    <CallType>Shopping</CallType>
-    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>HaMelitz 14, Jerusalem, Israel</Address>
-    <Latitude>31.7648817</Latitude>
-    <Longitude>35.2190166</Longitude>
-    <OpeningTime>2024-11-03T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-11-03T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>39</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Ein Gedi 10, Jerusalem, Israel</Address>
-    <Latitude>31.7537089</Latitude>
-    <Longitude>35.2208206</Longitude>
-    <OpeningTime>2024-03-11T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-03-11T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>65</Id>
-    <CallType>Shopping</CallType>
-    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Beit Yaakov 7, Jerusalem, Israel</Address>
-    <Latitude>31.7853031</Latitude>
-    <Longitude>35.2116465</Longitude>
-    <OpeningTime>2024-05-09T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-05-09T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>30</Id>
-    <CallType>Cleaning</CallType>
-    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Hillel 25, Jerusalem, Israel</Address>
-    <Latitude>31.7801368</Latitude>
-    <Longitude>35.2185279</Longitude>
-    <OpeningTime>2024-06-02T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-06-02T00:00:00</MaxTimeToEnd>
   </Call>
 </Calls>

@@ -112,8 +112,7 @@ internal class CallImplementation : ICall
         {
             // Update the assignment in the data layer.
             _dal.Assignment.Update(newAssign);
-           var call2=Read(call.Id);
-            Update(call2);
+           
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -258,8 +257,7 @@ internal class CallImplementation : ICall
         {
             // Attempt to update the assignment in the database
             _dal.Assignment.Update(newAssign);
-            var call2 = Read(call.Id);
-            Update(call2);
+
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -360,7 +358,7 @@ internal class CallImplementation : ICall
         // Group assignments by CallId and take the most recent assignment for each call
         //var latestAssignments = allAssignments
         //    .GroupBy(a => a.CallId)
-        //    .Select(g => g.OrderByDescending(a => a.EntryTime).FirstOrDefault()); // Assuming AssignmentTime exists
+        //    .Select(g => g.OrderByDescending(a => a.Id).FirstOrDefault()); // Assuming AssignmentTime exists
 
         // Filter calls by "open" or "riskOpen" status
         var filteredCalls = from call in allCalls
@@ -422,7 +420,7 @@ internal class CallImplementation : ICall
 
         // Retrieve the assignments for the call
         var assignments = _dal.Assignment.ReadAll(s => s.CallId == id)
-                                        .OrderByDescending(s => s.EntryTime);
+                                        .OrderByDescending(s => s.Id);
         var latestAssignment = assignments.FirstOrDefault();
 
 
@@ -468,7 +466,7 @@ internal class CallImplementation : ICall
         var listAssignment = _dal.Assignment.ReadAll();
         // Join calls and assignments to create the list of calls in the desired format
         var callInList = from item in listCall
-                         let assignment = listAssignment.Where(s => s.CallId == item.Id).OrderByDescending(s => s.EntryTime).FirstOrDefault()
+                         let assignment = listAssignment.Where(s => s.CallId == item.Id).OrderByDescending(s => s.Id).FirstOrDefault()
                          let volunteer = assignment != null ? _dal.Volunteer.Read(assignment.VolunteerId) : null
                          let TempTimeToEnd = item.MaxTimeToEnd - (AdminManager.Now)
                          let tmpstatus = CallManager.CheckStatus(assignment, item)

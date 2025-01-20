@@ -178,7 +178,7 @@ public static class Initialization
     "King David 20, Jerusalem, Israel",
     "Hillel 25, Jerusalem, Israel",
     "Yoel Solomon 4, Jerusalem, Israel",
-    "Ramat Sharet 17, Jerusalem, Israel",
+    "Ramat Beit HaKerem 4, Jerusalem, Israel",
     "Ramat Beit HaKerem 2, Jerusalem, Israel",
     "Yermiyahu 3, Jerusalem, Israel",
     "Rabin 9, Jerusalem, Israel",
