@@ -277,7 +277,63 @@
     <CallId>39</CallId>
     <VolunteerId>218372043</VolunteerId>
     <EntryTime>2025-01-21T01:19:48</EntryTime>
-    <ActualEndTime xsi:nil="true" />
-    <TheEndType xsi:nil="true" />
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>106</Id>
+    <CallId>52</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>107</Id>
+    <CallId>45</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>108</Id>
+    <CallId>37</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>109</Id>
+    <CallId>65</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>110</Id>
+    <CallId>65</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>111</Id>
+    <CallId>37</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>112</Id>
+    <CallId>49</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>self</TheEndType>
   </Assignment>
 </ArrayOfAssignment>

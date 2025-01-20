@@ -144,16 +144,7 @@ public partial class MainVolunteerWindow : Window
         
         try
         {
-            foreach (Window window in Application.Current.Windows)
-            {
-                // Check if there is already an open window of type VolunteerListWindow
-                if (window is SelectCallWindow)
-                {
-                    window.Activate(); // If such a window is open, bring it to the front
-                    return; // If the window is already open, don't open a new one
-                }
-            }
-            // If no window is open, open a new one
+           
             new SelectCallWindow(CurrentVolunteer.Id).Show();
         }
         catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }

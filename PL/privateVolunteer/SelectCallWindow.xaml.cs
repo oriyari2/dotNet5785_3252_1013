@@ -156,7 +156,7 @@ public partial class SelectCallWindow : Window
                 RefreshCallList();
 
                 MessageBox.Show("Call selected successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                Close();
             }
             catch (Exception ex)
             {
