@@ -155,34 +155,6 @@
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>218372043</Id>
-    <Name>Dani Levy</Name>
-    <PhoneNumber>0583412985</PhoneNumber>
-    <Email>0583412985@gmail.com</Email>
-    <Password>383;&lt;594;;-</Password>
-    <Address>King George 1, Jerusalem, Israel</Address>
-    <Latitude>31.7829393</Latitude>
-    <Longitude>35.2177533</Longitude>
-    <Role>manager</Role>
-    <Active>true</Active>
-    <MaxDistance>970472814</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>211722251</Id>
-    <Name>Yair Cohen</Name>
-    <PhoneNumber>0563901061</PhoneNumber>
-    <Email>0563901061@gmail.com</Email>
-    <Password>383;&lt;594;;-</Password>
-    <Address>Agripas 45, Jerusalem, Israel</Address>
-    <Latitude>31.7835107</Latitude>
-    <Longitude>35.2145325</Longitude>
-    <Role>volunteer</Role>
-    <Active>true</Active>
-    <MaxDistance>1227482594</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>207249780</Id>
     <Name>yael cohen</Name>
     <PhoneNumber>0566316117</PhoneNumber>
@@ -222,6 +194,20 @@
     <Role>volunteer</Role>
     <Active>true</Active>
     <MaxDistance>10841790</MaxDistance>
+    <TheDistanceType>air</TheDistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>218372043</Id>
+    <Name>yalin </Name>
+    <PhoneNumber>0583412977</PhoneNumber>
+    <Email>0583412985@gmail.com</Email>
+    <Password>383;&lt;594;;-</Password>
+    <Address>King George 1, Jerusalem, Israel</Address>
+    <Latitude>31.7829393</Latitude>
+    <Longitude>35.2177533</Longitude>
+    <Role>manager</Role>
+    <Active>true</Active>
+    <MaxDistance>970472814</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
 </ArrayOfVolunteer>

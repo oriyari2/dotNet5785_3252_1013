@@ -141,7 +141,12 @@ public partial class MainVolunteerWindow : Window
     }
     private void BtnSelectCall_Click(object sender, RoutedEventArgs e)
     {
-        new SelectCallWindow(CurrentVolunteer.Id).Show();
+        
+        try
+        {
+            new SelectCallWindow(CurrentVolunteer.Id).Show();
+        }
+        catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
     }
     
     private void MainVolunteerWindow_Loaded(object sender, RoutedEventArgs e)

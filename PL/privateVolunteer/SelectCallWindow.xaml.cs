@@ -153,6 +153,8 @@ public partial class SelectCallWindow : Window
             try
             {
                 s_bl.Call.ChooseCallToTreat(CurrentVolunteer.Id,callId);
+                RefreshCallList();
+
                 MessageBox.Show("Call selected successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }

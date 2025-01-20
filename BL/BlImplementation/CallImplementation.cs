@@ -112,7 +112,8 @@ internal class CallImplementation : ICall
         {
             // Update the assignment in the data layer.
             _dal.Assignment.Update(newAssign);
-           Update(call);
+           var call2=Read(call.Id);
+            Update(call2);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -139,7 +140,7 @@ internal class CallImplementation : ICall
                 " because he already has one");
 
         // Retrieve the first open call that matches the given volunteerId and CallId from the list of open calls.
-        var call = GetOpenCallInList(volunteerId, null, null).FirstOrDefault(s => s.Id == CallId);
+        var call = GetOpenCallInList(volunteerId, null, null).OrderByDescending(s=>s.OpeningTime).FirstOrDefault(s => s.Id == CallId);
 
         // Check if the call doesn't exist or does not meet the conditions.
         if (call == null)
@@ -171,6 +172,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="call">The call object to be created.</param>
     /// <exception cref="BO.BlAlreadyExistsException">Thrown if the call already exists in the database.</exception>
+    /// 
     public void Create(BO.Call call)
     {
         // Call a helper method to convert BO.Call to DO.Call
@@ -255,7 +257,8 @@ internal class CallImplementation : ICall
         {
             // Attempt to update the assignment in the database
             _dal.Assignment.Update(newAssign);
-            Update(call);
+            var call2 = Read(call.Id);
+            Update(call2);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -353,19 +356,25 @@ internal class CallImplementation : ICall
         double lonVol = (double)volunteer.Longitude;
         double latVol = (double)volunteer.Latitude;
 
+        // Group assignments by CallId and take the most recent assignment for each call
+        //var latestAssignments = allAssignments
+        //    .GroupBy(a => a.CallId)
+        //    .Select(g => g.OrderByDescending(a => a.EntryTime).FirstOrDefault()); // Assuming AssignmentTime exists
+
         // Filter calls by "open" or "riskOpen" status
         var filteredCalls = from call in allCalls
-                            join assignment in allAssignments on call.Id equals assignment.CallId into callAssignments
-                            from assignment in callAssignments.DefaultIfEmpty() // Allows joining even if no assignment exists for a call
-                            where (call.status == BO.Status.open || call.status == BO.Status.riskOpen)
                             let boCall = Read(call.CallId) // Fetch the full call details
+                            //join assignment in latestAssignments on call.Id equals assignment?.CallId into callAssignments
+                            //from assignment in callAssignments.DefaultIfEmpty() // Allows joining even if no assignment exists for a call
+                            where (boCall.status == BO.Status.open || boCall.status == BO.Status.riskOpen)
+
                             select new BO.OpenCallInList
                             {
                                 Id = call.CallId,
                                 TheCallType = call.TheCallType,
                                 Address = boCall.Address,
                                 OpeningTime = call.OpeningTime,
-                                MaxTimeToEnd=AdminManager.Now+call.TimeToEnd,
+                                MaxTimeToEnd = AdminManager.Now + call.TimeToEnd,
                                 Distance = volunteer?.Address != null ?
                                 VolunteerManager.CalculateDistance(latVol, lonVol, boCall.Latitude, boCall.Longitude)
                                 : 0  // Calculate the distance between the volunteer and the call
@@ -411,7 +420,18 @@ internal class CallImplementation : ICall
         throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
 
         // Retrieve the assignments for the call
-        var assignment = _dal.Assignment.ReadAll(s => s.CallId == id);
+        var assignments = _dal.Assignment.ReadAll(s => s.CallId == id)
+                                        .OrderByDescending(s => s.EntryTime);
+        var latestAssignment = assignments.FirstOrDefault();
+        //var fff = latestAssignment.VolunteerId;
+        //latestAssignment = new()
+        //{
+        //    ActualEndTime = null,
+        //    TheEndType = null,
+        //    CallId = call.Id,
+        //    EntryTime = AdminManager.Now,
+        //    VolunteerId=fff
+        //};
 
         return new BO.Call()
         {
@@ -423,8 +443,9 @@ internal class CallImplementation : ICall
             Longitude = call.Longitude,
             OpeningTime = call.OpeningTime,
             MaxTimeToEnd = call.MaxTimeToEnd,
-            status = CallManager.CheckStatus(assignment.OrderByDescending(s => s.EntryTime).FirstOrDefault(), call),
-            listAssignForCall = assignment == null ? null : CallManager.GetCallAssignInList(assignment) // Handle case where no assignment exists
+            status = CallManager.CheckStatus(latestAssignment, call),
+            listAssignForCall = assignments == null ? null :
+                           CallManager.GetCallAssignInList(assignments)
         };
     }
 
@@ -518,7 +539,6 @@ internal class CallImplementation : ICall
         var oldCall = _dal.Call.Read(call.Id);
         // Convert BO.Call to DO.Call
         DO.Call doCall = CallManager.HelpCreateUodate(call);
-
         if (call.status == BO.Status.close || call.status == BO.Status.expired)
             throw new BO.BlUserCantUpdateItemExeption("This call is closed");
         if (call.status == BO.Status.treatment || call.status == BO.Status.riskTreatment)
@@ -543,3 +563,4 @@ internal class CallImplementation : ICall
     }
 
 }
+
