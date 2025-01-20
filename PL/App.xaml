@@ -9,6 +9,9 @@
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
         <local:StatusCollection x:Key="StatusCollectionKey"/>
         <local:DoubleConverter x:Key="DoubleConverterkey" />
+        <local:IsNotNullToBoolConverter x:Key="IsNotNullToBoolConverterkey" />
+        <local:IsNullToBoolConverter x:Key="IsNullToBoolConverterkey" />
+
         <!-- Collection for role types -->
         <!-- This resource provides a predefined collection of role types for data binding. -->
         <local:RoleTypeCollection x:Key="RoleTypeCollectionKey"/>

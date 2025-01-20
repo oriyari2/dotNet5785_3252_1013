@@ -18,7 +18,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Select Call" HorizontalAlignment="Center"   FontSize="17" VerticalAlignment="Center" Height="60" Width="130" Click="BtnSelectCall_Click"/>
+            <Button Grid.Column="1" Content="Select Call" HorizontalAlignment="Center"   FontSize="17" VerticalAlignment="Center" 
+                    Height="60" Width="130" Click="BtnSelectCall_Click" IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNullToBoolConverterkey}}"/>
             <Button Content="Calls History" HorizontalAlignment="Center"  VerticalAlignment="Center"  Height="60" Width="130" FontSize="17" Click="BtnCallsHistory_Click"/>
         </Grid>
         <Grid Grid.Row="0">
@@ -124,8 +125,12 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Cancel Treatment" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="150" FontSize="17" Height="35" Click="BtnCancelTreatment_Click"/>
-                        <Button Grid.Column="1" Content="End Treatment" HorizontalAlignment="Center"  Width="150" Height="35" FontSize="17" VerticalAlignment="Center" Click="BtnEndTreatmrnt_Click"/>
+                        <Button Content="Cancel Treatment" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="150" 
+                                FontSize="17" Height="35" Click="BtnCancelTreatment_Click" 
+                                IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNotNullToBoolConverterkey}}"/>
+                        <Button Grid.Column="1" Content="End Treatment" HorizontalAlignment="Center"  Width="150" Height="35" 
+                                FontSize="17" VerticalAlignment="Center" Click="BtnEndTreatmrnt_Click" 
+                                IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNotNullToBoolConverterkey}}"/>
                     </Grid>
 
                     <!-- Action Button for saving or updating volunteer details -->

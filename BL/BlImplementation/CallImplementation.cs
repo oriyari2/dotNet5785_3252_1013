@@ -77,8 +77,13 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlUserCantUpdateItemExeption">Thrown if the volunteer is not authorized to cancel the assignment.</exception>
     public void CancelTreatment(int RequesterId, int AssignmentId)
     {
+
         // Retrieve the assignment object based on its ID.
         var assignment = _dal.Assignment.Read(AssignmentId);
+        // Check if the assignment does not exist.
+        if (assignment == null)
+            throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
+
         BO.Call call = Read(assignment.CallId);
         // Retrieve the volunteer (asker) object based on the RequesterId.
         var asker = _dal.Volunteer.Read(RequesterId);
@@ -86,11 +91,7 @@ internal class CallImplementation : ICall
         // Check if the volunteer does not exist.
         if (asker == null)
             throw new BO.BlDoesNotExistException($"Volunteer with id={RequesterId} does Not exist\"");
-
-        // Check if the assignment does not exist.
-        if (assignment == null)
-            throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
-
+        
         // Check if the volunteer is not authorized to cancel the assignment (either not their own or not a manager).
         if (assignment.VolunteerId != RequesterId && asker.Role != DO.RoleType.manager)
             throw new BO.BlUserCantUpdateItemExeption($"Volunteer with id={RequesterId} can't change this assignment to cancel");
@@ -236,12 +237,13 @@ internal class CallImplementation : ICall
     {
         // Retrieve the assignment by ID
         var assignment = _dal.Assignment.Read(AssignmentId);
-        
-        BO.Call call = Read(assignment.CallId);
-        // Check if the assignment does not exist
+
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
 
+        BO.Call call = Read(assignment.CallId);
+        // Check if the assignment does not exist
+        
         // Check if the volunteer is not the one assigned to this assignment
         if (assignment.VolunteerId != volunteerId)
             throw new BO.BlUserCantUpdateItemExeption($"Volunteer with id={volunteerId} can't change this assignment to end");
@@ -422,17 +424,6 @@ internal class CallImplementation : ICall
         var assignments = _dal.Assignment.ReadAll(s => s.CallId == id)
                                         .OrderByDescending(s => s.Id);
         var latestAssignment = assignments.FirstOrDefault();
-
-
-        //var fff = latestAssignment.VolunteerId;
-        //latestAssignment = new()
-        //{
-        //    ActualEndTime = null,
-        //    TheEndType = null,
-        //    CallId = call.Id,
-        //    EntryTime = AdminManager.Now,
-        //    VolunteerId=fff
-        //};
 
         return new BO.Call()
         {

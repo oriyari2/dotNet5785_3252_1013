@@ -273,14 +273,6 @@
     <TheEndType>treated</TheEndType>
   </Assignment>
   <Assignment>
-    <Id>105</Id>
-    <CallId>39</CallId>
-    <VolunteerId>218372043</VolunteerId>
-    <EntryTime>2025-01-21T01:19:48</EntryTime>
-    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
-    <TheEndType>treated</TheEndType>
-  </Assignment>
-  <Assignment>
     <Id>106</Id>
     <CallId>52</CallId>
     <VolunteerId>218372043</VolunteerId>
@@ -335,5 +327,37 @@
     <EntryTime>2025-01-21T01:19:48</EntryTime>
     <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
     <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>105</Id>
+    <CallId>39</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>113</Id>
+    <CallId>63</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>114</Id>
+    <CallId>47</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime>2025-01-21T01:19:48</ActualEndTime>
+    <TheEndType>self</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>115</Id>
+    <CallId>47</CallId>
+    <VolunteerId>218372043</VolunteerId>
+    <EntryTime>2025-01-21T01:19:48</EntryTime>
+    <ActualEndTime xsi:nil="true" />
+    <TheEndType xsi:nil="true" />
   </Assignment>
 </ArrayOfAssignment>
