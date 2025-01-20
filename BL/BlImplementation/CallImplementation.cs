@@ -100,7 +100,7 @@ internal class CallImplementation : ICall
         //    throw new BO.BlUserCantUpdateItemExeption("This assignment already ended");
 
         if (call.status != BO.Status.treatment && call.status != BO.Status.riskTreatment)
-            throw new BO.BlUserCantUpdateItemExeption($"You can only unassign if the call {AssignmentId} is currently in progress.");
+            throw new BO.BlUserCantUpdateItemExeption($"You can only unassign if the call is currently in progress.");
 
         // Create a new assignment object with updated end time and end type based on role.
         DO.Assignment newAssign;
@@ -159,6 +159,7 @@ internal class CallImplementation : ICall
 
         // Create the assignment in the data layer.
         _dal.Assignment.Create(assignment);
+        
         CallManager.Observers.NotifyItemUpdated(CallId);  //update current call  and obserervers etc.
         CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
         VolunteerManager.Observers.NotifyItemUpdated(volunteerId);  //update current call  and obserervers etc.
@@ -423,6 +424,8 @@ internal class CallImplementation : ICall
         var assignments = _dal.Assignment.ReadAll(s => s.CallId == id)
                                         .OrderByDescending(s => s.EntryTime);
         var latestAssignment = assignments.FirstOrDefault();
+
+
         //var fff = latestAssignment.VolunteerId;
         //latestAssignment = new()
         //{
