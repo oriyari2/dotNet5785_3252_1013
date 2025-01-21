@@ -141,20 +141,6 @@
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>215041013</Id>
-    <Name>itay ben-david</Name>
-    <PhoneNumber>0558774904</PhoneNumber>
-    <Email>0558774904@gmail.com</Email>
-    <Password>sV388;::7&lt;37-</Password>
-    <Address>Ramban 21, Jerusalem, Israel</Address>
-    <Latitude>31.773</Latitude>
-    <Longitude>35.2046</Longitude>
-    <Role>volunteer</Role>
-    <Active>true</Active>
-    <MaxDistance>39391731</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>214363350</Id>
     <Name>maya peretz</Name>
     <PhoneNumber>0540348491</PhoneNumber>
@@ -221,7 +207,21 @@
     <Longitude>35.2177533</Longitude>
     <Role>manager</Role>
     <Active>true</Active>
-    <MaxDistance>75314239</MaxDistance>
+    <MaxDistance>30</MaxDistance>
+    <TheDistanceType>air</TheDistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>215041013</Id>
+    <Name>itay ben-david</Name>
+    <PhoneNumber>0558774904</PhoneNumber>
+    <Email>0558774904@gmail.com</Email>
+    <Password>383;&lt;594;;-</Password>
+    <Address>Ramban 21, Jerusalem, Israel</Address>
+    <Latitude>31.774589</Latitude>
+    <Longitude>35.2154986</Longitude>
+    <Role>volunteer</Role>
+    <Active>true</Active>
+    <MaxDistance>39391731</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
 </ArrayOfVolunteer>

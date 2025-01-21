@@ -37,7 +37,7 @@ static class XMLTools
     /// </exception>
     public static void SaveListToXMLSerializer<T>(List<T> list, string xmlFileName) where T : class
     {
-        string xmlFilePath = s_xmlDir + xmlFileName;
+        string xmlFilePath = s_xmlDir + xmlFileName;//אולי פה להחזיר לשים לב
 
         try
         {

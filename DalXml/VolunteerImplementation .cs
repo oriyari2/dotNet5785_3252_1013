@@ -58,6 +58,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <returns>
     /// The Volunteer with the specified ID, or null if no such Volunteer exists.
     /// </returns>
+    //[MethodImpl()]
     public Volunteer? Read(int id)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
