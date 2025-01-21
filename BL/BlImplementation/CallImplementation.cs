@@ -367,7 +367,10 @@ internal class CallImplementation : ICall
                             let boCall = Read(call.CallId) // Fetch the full call details
                             //join assignment in latestAssignments on call.Id equals assignment?.CallId into callAssignments
                             //from assignment in callAssignments.DefaultIfEmpty() // Allows joining even if no assignment exists for a call
-                            where (boCall.status == BO.Status.open || boCall.status == BO.Status.riskOpen)
+                            let tmpDistance= volunteer?.Address != null ?
+                                VolunteerManager.CalculateDistance(latVol, lonVol, boCall.Latitude, boCall.Longitude):0
+                                let MaxDis=volunteer.MaxDistance
+                            where ((boCall.status == BO.Status.open || boCall.status == BO.Status.riskOpen)&& (tmpDistance<= MaxDis|| MaxDis==null))
 
                             select new BO.OpenCallInList
                             {
@@ -375,10 +378,9 @@ internal class CallImplementation : ICall
                                 TheCallType = call.TheCallType,
                                 Address = boCall.Address,
                                 OpeningTime = call.OpeningTime,
+                                VerbalDescription=boCall.VerbalDescription,
                                 MaxTimeToEnd = AdminManager.Now + call.TimeToEnd,
-                                Distance = volunteer?.Address != null ?
-                                VolunteerManager.CalculateDistance(latVol, lonVol, boCall.Latitude, boCall.Longitude)
-                                : 0  // Calculate the distance between the volunteer and the call
+                                Distance = tmpDistance // Calculate the distance between the volunteer and the call
                             };
 
         // Apply the call type filter if provided

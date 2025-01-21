@@ -42,7 +42,8 @@
            GridLinesVisibility="All" 
            BorderBrush="#0D1821" 
            BorderThickness="1"
-           SelectedItem="{Binding SelectedCall, Mode=TwoWay}">
+           SelectedItem="{Binding SelectedCall, Mode=TwoWay}"
+                  SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#A3C77F" />

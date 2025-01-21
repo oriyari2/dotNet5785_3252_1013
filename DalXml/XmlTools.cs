@@ -1,6 +1,7 @@
 ﻿namespace Dal;
 
 using DO;
+using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -18,6 +19,7 @@ static class XMLTools
     /// <summary>
     /// Static constructor to ensure the XML directory exists.
     /// </summary>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     static XMLTools()
     {
         if (!Directory.Exists(s_xmlDir))
@@ -35,6 +37,7 @@ static class XMLTools
     /// <exception cref="DalXMLFileLoadCreateException">
     /// Thrown if there is an issue creating or writing to the XML file.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static void SaveListToXMLSerializer<T>(List<T> list, string xmlFileName) where T : class
     {
         string xmlFilePath = s_xmlDir + xmlFileName;//אולי פה להחזיר לשים לב
@@ -59,6 +62,7 @@ static class XMLTools
     /// <exception cref="DalXMLFileLoadCreateException">
     /// Thrown if there is an issue loading or deserializing the XML file.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static List<T> LoadListFromXMLSerializer<T>(string xmlFileName) where T : class
     {
         string xmlFilePath = s_xmlDir + xmlFileName;
@@ -88,6 +92,7 @@ static class XMLTools
     /// <exception cref="DalXMLFileLoadCreateException">
     /// Thrown if there is an issue creating or writing to the XML file.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static void SaveListToXMLElement(XElement rootElem, string xmlFileName)
     {
         string xmlFilePath = s_xmlDir + xmlFileName;
@@ -110,6 +115,7 @@ static class XMLTools
     /// <exception cref="DalXMLFileLoadCreateException">
     /// Thrown if there is an issue loading the XML file.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static XElement LoadListFromXMLElement(string xmlFileName)
     {
         string xmlFilePath = s_xmlDir + xmlFileName;
@@ -141,6 +147,7 @@ static class XMLTools
     /// <exception cref="FormatException">
     /// Thrown if the element value cannot be converted to an integer.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static int GetAndIncreaseConfigIntVal(string xmlFileName, string elemName)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -159,6 +166,7 @@ static class XMLTools
     /// <exception cref="FormatException">
     /// Thrown if the element value cannot be converted to an integer.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static int GetConfigIntVal(string xmlFileName, string elemName)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -175,6 +183,7 @@ static class XMLTools
     /// <exception cref="FormatException">
     /// Thrown if the element value cannot be converted to a DateTime.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static DateTime GetConfigDateVal(string xmlFileName, string elemName)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -188,6 +197,7 @@ static class XMLTools
     /// <param name="xmlFileName">The name of the XML file.</param>
     /// <param name="elemName">The name of the element to set.</param>
     /// <param name="elemVal">The integer value to set.</param>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static void SetConfigIntVal(string xmlFileName, string elemName, int elemVal)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -201,6 +211,7 @@ static class XMLTools
     /// <param name="xmlFileName">The name of the XML file.</param>
     /// <param name="elemName">The name of the element to set.</param>
     /// <param name="elemVal">The DateTime value to set.</param>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static void SetConfigDateVal(string xmlFileName, string elemName, DateTime elemVal)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -219,6 +230,7 @@ static class XMLTools
     /// <param name="element">The XElement containing the value.</param>
     /// <param name="name">The name of the element to convert.</param>
     /// <returns>A nullable enum of type T if conversion is successful, otherwise null.</returns>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
 
@@ -228,6 +240,7 @@ static class XMLTools
     /// <param name="element">The XElement containing the value.</param>
     /// <param name="name">The name of the element to convert.</param>
     /// <returns>A nullable DateTime if conversion is successful, otherwise null.</returns>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static DateTime? ToDateTimeNullable(this XElement element, string name) =>
         DateTime.TryParse((string?)element.Element(name), out var result) ? (DateTime?)result : null;
 
@@ -237,6 +250,7 @@ static class XMLTools
     /// <param name="element">The XElement containing the value.</param>
     /// <param name="name">The name of the element to convert.</param>
     /// <returns>A nullable double if conversion is successful, otherwise null.</returns>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static double? ToDoubleNullable(this XElement element, string name) =>
         double.TryParse((string?)element.Element(name), out var result) ? (double?)result : null;
 
@@ -246,6 +260,7 @@ static class XMLTools
     /// <param name="element">The XElement containing the value.</param>
     /// <param name="name">The name of the element to convert.</param>
     /// <returns>A nullable integer if conversion is successful, otherwise null.</returns>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static int? ToIntNullable(this XElement element, string name) =>
         int.TryParse((string?)element.Element(name), out var result) ? (int?)result : null;
 
@@ -259,6 +274,7 @@ static class XMLTools
     /// <param name="element">The XElement containing the value.</param>
     /// <param name="name">The name of the element to convert.</param>
     /// <returns>A nullable TimeSpan if conversion is successful, otherwise null.</returns>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static TimeSpan? ToTimeSpanNullable(this XElement element, string name) =>
         TimeSpan.TryParse((string?)element.Element(name), out var result) ? (TimeSpan?)result : null;
 
@@ -268,6 +284,7 @@ static class XMLTools
     /// <param name="xmlFileName">The name of the XML file.</param>
     /// <param name="elemName">The name of the element to set.</param>
     /// <param name="elemVal">The TimeSpan value to set.</param>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static void SetConfigTimeSpanVal(string xmlFileName, string elemName, TimeSpan elemVal)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);
@@ -284,6 +301,7 @@ static class XMLTools
     /// <exception cref="FormatException">
     /// Thrown if the element value cannot be converted to a TimeSpan.
     /// </exception>
+    //[MethodImpl(MethodImplOptions.Synchronized)]
     public static TimeSpan GetConfigTimeSpanVal(string xmlFileName, string elemName)
     {
         XElement root = XMLTools.LoadListFromXMLElement(xmlFileName);

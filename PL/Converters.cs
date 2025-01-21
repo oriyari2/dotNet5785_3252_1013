@@ -269,15 +269,29 @@ public class IsNotNullToBoolConverter : IValueConverter
     }
 }
 
-public class IsNullToBoolConverter : IValueConverter
+public class IsEnabledSelectConverter : IMultiValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        return value == null; // Return true if value is not null, otherwise false
+        // בדיקת מספר הערכים שהועברו
+        if (values.Length < 2)
+            return false;
+
+        // הערך הראשון
+        var firstValue = values[0];
+
+        // הערך השני
+        var secondValue = values[1] as bool?;
+
+        // בדיקת התנאים: הראשון שווה null והשני שווה true
+        return firstValue == null && secondValue == true;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
 }
+
+
+

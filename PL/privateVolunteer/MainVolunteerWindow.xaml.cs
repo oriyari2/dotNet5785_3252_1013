@@ -141,24 +141,32 @@ public partial class MainVolunteerWindow : Window
     }
     private void BtnSelectCall_Click(object sender, RoutedEventArgs e)
     {
-        
         try
         {
-            foreach (Window window in Application.Current.Windows)
+            // Check if there's already an open window for the current volunteer
+            var existingWindow = Application.Current.Windows
+                .OfType<SelectCallWindow>()
+                .FirstOrDefault(w => w.CurrentVolunteer.Id == CurrentVolunteer.Id);
+
+            if (existingWindow != null)
             {
-                // Check if there is already an open window of type VolunteerListWindow
-                if (window is SelectCallWindow)
-                {
-                    window.Activate(); // If such a window is open, bring it to the front
-                    return; // If the window is already open, don't open a new one
-                }
+                // Focus on the existing window
+                existingWindow.Focus();
             }
-            // If no window is open, open a new one
-            new SelectCallWindow(CurrentVolunteer.Id).Show();
+            else
+            {
+                // Create and show a new window
+                var newWindow = new SelectCallWindow(CurrentVolunteer.Id);
+                newWindow.Show();
+            }
         }
-        catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
-    
+
+
     private void MainVolunteerWindow_Loaded(object sender, RoutedEventArgs e)
     {
         // Set initial values when the window is loaded

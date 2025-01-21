@@ -10,7 +10,7 @@
         <local:StatusCollection x:Key="StatusCollectionKey"/>
         <local:DoubleConverter x:Key="DoubleConverterkey" />
         <local:IsNotNullToBoolConverter x:Key="IsNotNullToBoolConverterkey" />
-        <local:IsNullToBoolConverter x:Key="IsNullToBoolConverterkey" />
+        <local:IsEnabledSelectConverter x:Key="IsEnabledSelectConverterkey" />
 
         <!-- Collection for role types -->
         <!-- This resource provides a predefined collection of role types for data binding. -->

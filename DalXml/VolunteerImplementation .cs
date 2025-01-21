@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Implementation of the IVolunteer interface for managing volunteer data using XML.
@@ -16,6 +17,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="DalAlreadyExistsException">
     /// Thrown if a Volunteer with the same ID already exists.
     /// </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Volunteer item)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
@@ -35,6 +37,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="DalDoesNotExistException">
     /// Thrown if the Volunteer does not exist.
     /// </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
@@ -46,6 +49,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <summary>
     /// Deletes all Volunteers by saving an empty list to the XML file.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         XMLTools.SaveListToXMLSerializer(new List<Volunteer>(), Config.s_volunteers_xml);
@@ -58,11 +62,11 @@ internal class VolunteerImplementation : IVolunteer
     /// <returns>
     /// The Volunteer with the specified ID, or null if no such Volunteer exists.
     /// </returns>
-    //[MethodImpl()]
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Volunteer? Read(int id)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
-        XMLTools.SaveListToXMLSerializer(Volunteers, Config.s_volunteers_xml);
+      //  XMLTools.SaveListToXMLSerializer(Volunteers, Config.s_volunteers_xml);
         return Volunteers.FirstOrDefault(obj => obj.Id == id);
     }
 
@@ -73,10 +77,11 @@ internal class VolunteerImplementation : IVolunteer
     /// <returns>
     /// The first Volunteer that matches the filter, or null if no such Volunteer exists.
     /// </returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Volunteer? Read(Func<Volunteer, bool> filter)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
-        XMLTools.SaveListToXMLSerializer(Volunteers, Config.s_volunteers_xml);
+        //XMLTools.SaveListToXMLSerializer(Volunteers, Config.s_volunteers_xml);
         return Volunteers.FirstOrDefault(filter);
     }
 
@@ -89,6 +94,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <returns>
     /// A collection of Volunteers that match the filter, or all Volunteers if no filter is provided.
     /// </returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Volunteer> ReadAll(Func<Volunteer, bool>? filter = null)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);
@@ -97,7 +103,7 @@ internal class VolunteerImplementation : IVolunteer
             ? Volunteers.Where(filter)
             : Volunteers;
 
-        XMLTools.SaveListToXMLSerializer(Volunteers, Config.s_volunteers_xml);
+        //XMLTools.SaveListToXMLSerializer(Volunteers, Config.s_volunteers_xml);
 
         return result;
     }
@@ -109,6 +115,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="DalDoesNotExistException">
     /// Thrown if the Volunteer does not exist.
     /// </exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Volunteer item)
     {
         List<Volunteer> Volunteers = XMLTools.LoadListFromXMLSerializer<Volunteer>(Config.s_volunteers_xml);

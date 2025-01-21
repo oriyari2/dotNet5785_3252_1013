@@ -18,8 +18,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Select Call" HorizontalAlignment="Center"   FontSize="17" VerticalAlignment="Center" 
-                    Height="60" Width="130" Click="BtnSelectCall_Click" IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNullToBoolConverterkey}}"/>
+            <Button Grid.Column="1" Content="Select Call" HorizontalAlignment="Center" FontSize="17" VerticalAlignment="Center"
+        Height="60" Width="130" Click="BtnSelectCall_Click">
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource IsEnabledSelectConverterkey}">
+                        <Binding Path="CurrentCall" />
+                        <Binding Path="CurrentVolunteer.Active" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
             <Button Content="Calls History" HorizontalAlignment="Center"  VerticalAlignment="Center"  Height="60" Width="130" FontSize="17" Click="BtnCallsHistory_Click"/>
         </Grid>
         <Grid Grid.Row="0">

@@ -10,13 +10,14 @@ namespace PL.privateVolunteer;
 public partial class SelectCallWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
+   
     public SelectCallWindow(int id)
     {
         InitializeComponent();
         DataContext = this;
         try
         {
+           
             CurrentVolunteer = s_bl.Volunteer.Read(id);
             RefreshCallList();
         }
@@ -129,11 +130,26 @@ public partial class SelectCallWindow : Window
     /// <summary>
     /// Opens the CallWindow for the selected call when the user double-clicks a row in the DataGrid.
     /// </summary>
-    private void lsvCallsList_MouseClick(object sender, MouseButtonEventArgs e)
+
+    private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //if (SelectedCall != null)
-        //    new CallWindow(SelectedCall.Id).Show();
+        if (sender is DataGrid dataGrid)
+        {
+            // עדכון של SelectedCall עם השורה שנבחרה
+            SelectedCall = (BO.OpenCallInList)dataGrid.SelectedItem;
+
+            if (SelectedCall != null)
+            {
+                // הצגת הודעה עם תיאור הקריאה
+                MessageBox.Show(SelectedCall.VerbalDescription, "Call Description", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+                MessageBox.Show("jj", "Call Description", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        }
     }
+
+
 
     private void btnSelectCall_Click(object sender, RoutedEventArgs e)
     {

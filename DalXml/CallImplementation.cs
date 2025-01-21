@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 /// <summary>
@@ -69,6 +70,8 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="item">The Call to add.</param>
     /// <exception cref="DO.DalAlreadyExistsException">Thrown if a Call with the same ID already exists.</exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Call item)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
@@ -85,6 +88,8 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="id">The ID of the Call to delete.</param>
     /// <exception cref="DO.DalDoesNotExistException">Thrown if the Call does not exist.</exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);
@@ -100,6 +105,8 @@ internal class CallImplementation : ICall
     /// <summary>
     /// Deletes all Calls from the XML data.
     /// </summary>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         XElement callsRootElem = new XElement("Calls");
@@ -111,6 +118,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="id">The ID of the Call to read.</param>
     /// <returns>The Call object if found, or null if not.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Call? Read(int id)
     {
         XElement? callElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml).Elements().FirstOrDefault(st => (int?)st.Element("Id") == id);
@@ -122,6 +130,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="filter">The filter function to apply.</param>
     /// <returns>The first Call object matching the filter, or null if none are found.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Call? Read(Func<Call, bool> filter)
     {
         return XMLTools.LoadListFromXMLElement(Config.s_calls_xml).Elements().Select
@@ -133,6 +142,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="filter">An optional filter function.</param>
     /// <returns>An enumerable collection of Calls matching the filter, or all Calls if no filter is provided.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null)
     {
 
@@ -146,6 +156,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="item">The updated Call object.</param>
     /// <exception cref="DO.DalDoesNotExistException">Thrown if the Call does not exist.</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Call item)
     {
         XElement callsRootElem = XMLTools.LoadListFromXMLElement(Config.s_calls_xml);

@@ -140,10 +140,10 @@ public static class Initialization
     private static void createCall()
     {
         string[] Calldescription =
-            { "A volunteer is needed to drive the reserve soldier to his destination",
-            "Need two volunteers to take care of the children",
+            { "Need a volunteer to to drive the reserve soldier to his destination",
+            "Need a volunteer to take care of the children",
             "Need a volunteer to come shop at the supermarket for the family",
-            "We need a volunteer to come prepare a meal for the family.",
+            "Need a volunteer to come prepare a meal for the family.",
             "Need a volunteer to come help with house cleaning"};
 
         string[] CallAdresses = {

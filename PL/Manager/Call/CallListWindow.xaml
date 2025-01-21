@@ -152,7 +152,8 @@
                         <DataTemplate>
                             <Button Content="Cancel" 
         Click="btnCancel_Click" 
-        Tag="{Binding Id}" />
+        Tag="{Binding Id}" 
+/>
                             <!-- Cancel button triggers a click event, passes record CallID as a tag -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
