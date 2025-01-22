@@ -12,7 +12,7 @@
         <!-- This resource provides a predefined collection of status types for data binding. -->
         <local:StatusCollection x:Key="StatusCollectionKey"/>
 
-        <!-- Converter for double values -->
+        <!-- Converter for double values. -->
         <!-- This converter is used to handle double values in the UI. -->
         <local:DoubleConverter x:Key="DoubleConverterkey" />
 
