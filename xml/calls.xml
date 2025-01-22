@@ -261,6 +261,16 @@
     <MaxTimeToEnd>2026-02-26T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>27</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Address>Motza 8, Jerusalem, Israel</Address>
+    <Latitude>31.77</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2024-03-27T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-03-27T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>28</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
@@ -329,6 +339,16 @@
     <Longitude>35.219</Longitude>
     <OpeningTime>2024-10-06T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-06T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>35</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
+    <Address>Rabin 9, Jerusalem, Israel</Address>
+    <Latitude>31.759</Latitude>
+    <Longitude>35.215</Longitude>
+    <OpeningTime>2024-11-07T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-11-07T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>36</Id>
@@ -679,45 +699,5 @@
     <Longitude>35.214</Longitude>
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>104</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription />
-    <Address>Shazar 7, Jerusalem, Israel</Address>
-    <Latitude>31.7135649</Latitude>
-    <Longitude>34.985179</Longitude>
-    <OpeningTime>2025-01-22T23:20:54</OpeningTime>
-    <MaxTimeToEnd>2025-01-24T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>105</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription />
-    <Address>Shazar 7, Jerusalem, Israel</Address>
-    <Latitude>31.7135649</Latitude>
-    <Longitude>34.985179</Longitude>
-    <OpeningTime>2025-01-22T23:20:54</OpeningTime>
-    <MaxTimeToEnd>2025-01-29T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>106</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription />
-    <Address>Shazar 7, Jerusalem, Israel</Address>
-    <Latitude>31.7135649</Latitude>
-    <Longitude>34.985179</Longitude>
-    <OpeningTime>2025-01-22T23:20:54</OpeningTime>
-    <MaxTimeToEnd>2025-01-28T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>27</Id>
-    <CallType>Cleaning</CallType>
-    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Motza 8, Jerusalem, Israel</Address>
-    <Latitude>31.79279</Latitude>
-    <Longitude>35.168506</Longitude>
-    <OpeningTime>2024-03-27T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-03-27T00:00:00</MaxTimeToEnd>
   </Call>
 </Calls>
