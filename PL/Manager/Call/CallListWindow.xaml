@@ -13,25 +13,25 @@
     <!-- Main container grid for layout -->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
             <!-- Row for the upper content (ComboBox) -->
-            <RowDefinition Height="500*"/>
+            <RowDefinition Height="40*"/>
             <!-- Row for DataGrid displaying volunteer list -->
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="500*"/>
             <!-- Row for the button at the bottom -->
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Upper grid for ComboBox and label layout -->
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="127*"/>
                 <!-- Column for label -->
-                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="127*"/>
                 <!-- Spacer column -->
-                <ColumnDefinition Width="266*"/>
+                <ColumnDefinition Width="7*"/>
                 <!-- Column for ComboBox -->
-                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="266*"/>
                 <!-- Column for ComboBox to stretch -->
+                <ColumnDefinition Width="400*"/>
             </Grid.ColumnDefinitions>
 
             <!-- ComboBox for selecting the call type -->
@@ -62,25 +62,22 @@
             <!-- Style for column headers in DataGrid -->
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="Background" Value="#A3C77F" />
                     <!-- Background color for headers -->
-                    <Setter Property="Foreground" Value="#0D1821" />
+                    <Setter Property="Background" Value="#A3C77F" />
                     <!-- Text color for headers -->
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Foreground" Value="#0D1821" />
                     <!-- Align header content to center -->
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <!-- Align header content vertically -->
-                    <Setter Property="Padding" Value="5" />
                     <!-- Padding inside header -->
+                    <Setter Property="Padding" Value="5" />
                 </Style>
             </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
-               
 
                 <!-- Column for Call ID -->
                 <DataGridTextColumn Binding="{Binding CallId}" Header="Call ID" Width="0.6*" />
-   
 
                 <!-- Column for Call Type -->
                 <DataGridTemplateColumn Header="Call Type" Width="0.8*" >
@@ -106,7 +103,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
 
                 <!-- Column for Last Volunteer -->
                 <DataGridTextColumn Binding="{Binding LastVolunteer}" Header="Last Volunteer" Width="*" />
@@ -146,7 +142,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                
+                <!-- Column with a cancel button for each row -->
                 <DataGridTemplateColumn Header="Cancel" Width="0.5*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -166,4 +162,3 @@
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="btnAdd_Click"/>
     </Grid>
 </Window>
-    

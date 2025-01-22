@@ -3,7 +3,7 @@
   <Call>
     <Id>1</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Haneviim 1, Jerusalem, Israel</Address>
     <Latitude>31.778</Latitude>
     <Longitude>35.216</Longitude>
@@ -13,7 +13,7 @@
   <Call>
     <Id>2</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Yad Harutsim 3, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.213</Longitude>
@@ -23,7 +23,7 @@
   <Call>
     <Id>3</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Emek Refaim 8, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.217</Longitude>
@@ -33,7 +33,7 @@
   <Call>
     <Id>4</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Yad Harutsim 9, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.214</Longitude>
@@ -43,7 +43,7 @@
   <Call>
     <Id>5</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Harav Kook 6, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.212</Longitude>
@@ -53,7 +53,7 @@
   <Call>
     <Id>6</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>HaPalmach 12, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.211</Longitude>
@@ -63,7 +63,7 @@
   <Call>
     <Id>7</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Balfour 4, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.21</Longitude>
@@ -73,7 +73,7 @@
   <Call>
     <Id>8</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Agron 11, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.217</Longitude>
@@ -83,7 +83,7 @@
   <Call>
     <Id>9</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>Shazar 7, Jerusalem, Israel</Address>
     <Latitude>31.78</Latitude>
     <Longitude>35.218</Longitude>
@@ -93,7 +93,7 @@
   <Call>
     <Id>10</Id>
     <CallType>food</CallType>
-    <VerbalDescription>We need a volunteer to come prepare a meal for the family.</VerbalDescription>
+    <VerbalDescription>Need a volunteer to come prepare a meal for the family.</VerbalDescription>
     <Address>King George 32, Jerusalem, Israel</Address>
     <Latitude>31.776</Latitude>
     <Longitude>35.213</Longitude>
@@ -261,16 +261,6 @@
     <MaxTimeToEnd>2026-02-26T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
-    <Id>27</Id>
-    <CallType>Cleaning</CallType>
-    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
-    <Address>Motza 8, Jerusalem, Israel</Address>
-    <Latitude>31.77</Latitude>
-    <Longitude>35.208</Longitude>
-    <OpeningTime>2024-03-27T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-03-27T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
     <Id>28</Id>
     <CallType>Cleaning</CallType>
     <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
@@ -303,7 +293,7 @@
   <Call>
     <Id>31</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Yoel Solomon 4, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.21</Longitude>
@@ -313,7 +303,7 @@
   <Call>
     <Id>32</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Ramat Beit HaKerem 4, Jerusalem, Israel</Address>
     <Latitude>31.753</Latitude>
     <Longitude>35.216</Longitude>
@@ -323,7 +313,7 @@
   <Call>
     <Id>33</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Ramat Beit HaKerem 2, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.211</Longitude>
@@ -333,7 +323,7 @@
   <Call>
     <Id>34</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Yermiyahu 3, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.219</Longitude>
@@ -341,19 +331,9 @@
     <MaxTimeToEnd>2026-10-06T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
-    <Id>35</Id>
-    <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
-    <Address>Rabin 9, Jerusalem, Israel</Address>
-    <Latitude>31.759</Latitude>
-    <Longitude>35.215</Longitude>
-    <OpeningTime>2024-11-07T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-11-07T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
     <Id>36</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Malha Mall, Jerusalem, Israel</Address>
     <Latitude>31.752</Latitude>
     <Longitude>35.214</Longitude>
@@ -363,7 +343,7 @@
   <Call>
     <Id>37</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Jaffa Rd 120, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.217</Longitude>
@@ -373,7 +353,7 @@
   <Call>
     <Id>38</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Agripas 67, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.218</Longitude>
@@ -383,7 +363,7 @@
   <Call>
     <Id>39</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Ein Gedi 10, Jerusalem, Israel</Address>
     <Latitude>31.776</Latitude>
     <Longitude>35.216</Longitude>
@@ -393,7 +373,7 @@
   <Call>
     <Id>40</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>HaTayasim 3, Jerusalem, Israel</Address>
     <Latitude>31.769</Latitude>
     <Longitude>35.212</Longitude>
@@ -403,7 +383,7 @@
   <Call>
     <Id>41</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Mesilat Yesharim 5, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
@@ -413,7 +393,7 @@
   <Call>
     <Id>42</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Avraham Shalom Yehuda 8, Jerusalem, Israel</Address>
     <Latitude>31.76</Latitude>
     <Longitude>35.217</Longitude>
@@ -423,7 +403,7 @@
   <Call>
     <Id>43</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Begin 14, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.213</Longitude>
@@ -433,7 +413,7 @@
   <Call>
     <Id>44</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Shmu’el HaNavi 22, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.211</Longitude>
@@ -443,7 +423,7 @@
   <Call>
     <Id>45</Id>
     <CallType>Transportation</CallType>
-    <VerbalDescription>A volunteer is needed to drive the reserve soldier to his destination</VerbalDescription>
+    <VerbalDescription>Need a volunteer to to drive the reserve soldier to his destination</VerbalDescription>
     <Address>Golda Meir 33, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.214</Longitude>
@@ -453,7 +433,7 @@
   <Call>
     <Id>46</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Menachem Begin 40, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.209</Longitude>
@@ -463,7 +443,7 @@
   <Call>
     <Id>47</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Davidka Square 13, Jerusalem, Israel</Address>
     <Latitude>31.772</Latitude>
     <Longitude>35.21</Longitude>
@@ -473,7 +453,7 @@
   <Call>
     <Id>48</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Zion Square 1, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.207</Longitude>
@@ -483,7 +463,7 @@
   <Call>
     <Id>49</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Eliashar 5, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.208</Longitude>
@@ -493,7 +473,7 @@
   <Call>
     <Id>50</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Bezalel 3, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.209</Longitude>
@@ -503,7 +483,7 @@
   <Call>
     <Id>51</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>HaMasger 6, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.212</Longitude>
@@ -513,7 +493,7 @@
   <Call>
     <Id>52</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Einstein 9, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.215</Longitude>
@@ -523,7 +503,7 @@
   <Call>
     <Id>53</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Ben Gurion 12, Jerusalem, Israel</Address>
     <Latitude>31.754</Latitude>
     <Longitude>35.216</Longitude>
@@ -533,7 +513,7 @@
   <Call>
     <Id>54</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Alpert 10, Jerusalem, Israel</Address>
     <Latitude>31.751</Latitude>
     <Longitude>35.21</Longitude>
@@ -543,7 +523,7 @@
   <Call>
     <Id>55</Id>
     <CallType>Babysitting</CallType>
-    <VerbalDescription>Need two volunteers to take care of the children</VerbalDescription>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
     <Address>Abraham Lincoln 6, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.214</Longitude>
@@ -574,7 +554,7 @@
     <Id>58</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Mesilat Baruch 20, Jerusalem, Israel</Address>
+    <Address>HaPalmach 10, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.209</Longitude>
     <OpeningTime>2024-10-02T00:00:00</OpeningTime>
@@ -699,5 +679,45 @@
     <Longitude>35.214</Longitude>
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>104</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription />
+    <Address>Shazar 7, Jerusalem, Israel</Address>
+    <Latitude>31.7135649</Latitude>
+    <Longitude>34.985179</Longitude>
+    <OpeningTime>2025-01-22T23:20:54</OpeningTime>
+    <MaxTimeToEnd>2025-01-24T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>105</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription />
+    <Address>Shazar 7, Jerusalem, Israel</Address>
+    <Latitude>31.7135649</Latitude>
+    <Longitude>34.985179</Longitude>
+    <OpeningTime>2025-01-22T23:20:54</OpeningTime>
+    <MaxTimeToEnd>2025-01-29T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>106</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription />
+    <Address>Shazar 7, Jerusalem, Israel</Address>
+    <Latitude>31.7135649</Latitude>
+    <Longitude>34.985179</Longitude>
+    <OpeningTime>2025-01-22T23:20:54</OpeningTime>
+    <MaxTimeToEnd>2025-01-28T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>27</Id>
+    <CallType>Cleaning</CallType>
+    <VerbalDescription>Need a volunteer to come help with house cleaning</VerbalDescription>
+    <Address>Motza 8, Jerusalem, Israel</Address>
+    <Latitude>31.79279</Latitude>
+    <Longitude>35.168506</Longitude>
+    <OpeningTime>2024-03-27T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-03-27T00:00:00</MaxTimeToEnd>
   </Call>
 </Calls>

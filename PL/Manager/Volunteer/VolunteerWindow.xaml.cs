@@ -4,7 +4,8 @@ using System.Windows;
 namespace PL.Volunteer;
 
 /// <summary>
-/// Interaction logic for the VolunteerWindow.xaml
+/// Code-behind logic for the VolunteerWindow.xaml file.
+/// Manages the UI interactions and binds data to the ViewModel.
 /// </summary>
 public partial class VolunteerWindow : Window
 {
@@ -34,30 +35,22 @@ public partial class VolunteerWindow : Window
     /// <param name="id">The ID of the volunteer to load. Defaults to 0 for adding a new volunteer.</param>
     public VolunteerWindow(int id = 0)
     {
-        
         // Set the button text based on whether adding or updating a volunteer.
-        
         ButtonText = id == 0 ? "Add" : "Update";
         InitializeComponent();
 
-        
         // Set the data context for data binding.
-        
         DataContext = this;
 
-        
         // Initialize the CurrentVolunteer property: fetch an existing volunteer if an ID is provided,
         // or create a new volunteer object for adding.
-        
         try
         {
             CurrentVolunteer = (id != 0) ? s_bl.Volunteer.Read(id)! : new BO.Volunteer();
         }
         catch (Exception ex)
         {
-            
             // Show an error message if initialization fails.
-            
             MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
@@ -81,9 +74,7 @@ public partial class VolunteerWindow : Window
     {
         if (CurrentVolunteer == null)
         {
-            /// <summary>
-            /// Show an error message if volunteer details are missing.
-            /// </summary>
+            // Show an error message if volunteer details are missing.
             MessageBox.Show("Volunteer details are missing.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
@@ -92,31 +83,23 @@ public partial class VolunteerWindow : Window
         {
             if (ButtonText == "Add")
             {
-                /// <summary>
-                /// Add a new volunteer using the business logic layer.
-                /// </summary>
+                // Add a new volunteer using the business logic layer.
                 s_bl.Volunteer.Create(CurrentVolunteer);
                 MessageBox.Show("Volunteer added successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                /// <summary>
-                /// Update the existing volunteer details.
-                /// </summary>
+                // Update the existing volunteer details.
                 s_bl.Volunteer.Update(PO.LogInID, CurrentVolunteer);
                 MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
-            /// <summary>
-            /// Close the window after a successful operation.
-            /// </summary>
+            // Close the window after a successful operation.
             Close();
         }
         catch (Exception ex)
         {
-            /// <summary>
-            /// Show an error message if something goes wrong.
-            /// </summary>
+            // Show an error message if something goes wrong.
             MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
@@ -143,9 +126,7 @@ public partial class VolunteerWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         if (CurrentVolunteer!.Id != 0)
-            
             // Add an observer for the current volunteer if it exists.
-            
             s_bl.Volunteer.AddObserver(CurrentVolunteer!.Id, volunteerObserver);
     }
 

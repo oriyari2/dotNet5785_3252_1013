@@ -19,7 +19,7 @@ public class ConvertObjIdToTF : IValueConverter
     /// <returns>True if the value is "Update", otherwise false.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value.ToString() == "Update";
+        return value.ToString() == "Update"; // Checking if the value equals "Update"
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public class ConvertObjIdToTF : IValueConverter
     /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
 
@@ -47,7 +47,7 @@ public class ConvertObjPasswordToTF : IValueConverter
     /// <returns>False if the value is "Update", otherwise true.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value.ToString() != "Update";
+        return value.ToString() != "Update"; // Checking if the value is NOT "Update"
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class ConvertObjPasswordToTF : IValueConverter
     /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
 
@@ -75,8 +75,9 @@ public class CallInProgressConverter : IValueConverter
     /// <returns>A formatted string representing the call details, or null if invalid.</returns>
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is BO.CallInProgress callInProgress)
+        if (value is BO.CallInProgress callInProgress) // Check if the value is a CallInProgress object
         {
+            // Construct a formatted string with call details
             return $"ID: {callInProgress.Id}\n" +
                    $"Call ID: {callInProgress.CallId}\n" +
                    $"Type: {callInProgress.TheCallType}\n" +
@@ -89,7 +90,7 @@ public class CallInProgressConverter : IValueConverter
                    $"Status: {callInProgress.status}";
         }
 
-        return null;
+        return null; // Return null if the value is not a valid CallInProgress object
     }
 
     /// <summary>
@@ -97,7 +98,7 @@ public class CallInProgressConverter : IValueConverter
     /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException("ConvertBack is not supported.");
+        throw new NotImplementedException("ConvertBack is not supported."); // No conversion back is required
     }
 }
 
@@ -117,12 +118,12 @@ public class ConvertRoleToTF : IValueConverter
     /// <returns>True if the role is "manager", otherwise false.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value != null && Enum.TryParse(value.ToString(), out BO.RoleType role))
+        if (value != null && Enum.TryParse(value.ToString(), out BO.RoleType role)) // Try parsing the value to a RoleType enum
         {
-            return role == BO.RoleType.manager;
+            return role == BO.RoleType.manager; // Check if the role is manager
         }
 
-        return false;
+        return false; // Return false if the value is not a valid role
     }
 
     /// <summary>
@@ -130,168 +131,173 @@ public class ConvertRoleToTF : IValueConverter
     /// </summary>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
 
+/// <summary>
+/// Converter to format DateTime values.
+/// </summary>
 public class DateTimeFormatConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is DateTime dateTime)
+        if (value is DateTime dateTime) // Check if the value is a DateTime
         {
-            return dateTime.ToString("dd/MM/yyyy HH:mm");
+            return dateTime.ToString("dd/MM/yyyy HH:mm"); // Format the DateTime
         }
-        return value;
+        return value; // Return the original value if it's not a DateTime
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
 
-
+/// <summary>
+/// Converter for converting TimeSpan to a formatted string.
+/// </summary>
 public class TimeSpanToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is TimeSpan timeSpan)
+        if (value is TimeSpan timeSpan) // Check if the value is a TimeSpan
         {
-            // פורמט שמציג ימים, שעות ודקות
-            return $"{(int)timeSpan.TotalDays}D {timeSpan.Hours:D2}:{timeSpan.Minutes:D2}";
+            int days = (int)timeSpan.TotalDays; // Calculate total days
+            int hours = timeSpan.Hours; // Get the hours
+            int minutes = timeSpan.Minutes; // Get the minutes
+
+            return $"{days}D {hours:D2}:{minutes:D2}"; // Return a formatted string
         }
-        return string.Empty;
+        return string.Empty; // Return an empty string if the value is not a TimeSpan
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string timeString)
+        if (value is string timeString) // Check if the value is a string
         {
             try
             {
-                // פיצול לפי פורמט הצפוי של "XD HH:MM"
+                // Split the string into days and time parts
                 var parts = timeString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
                 if (parts.Length == 2 && parts[0].EndsWith("D"))
                 {
-                    // חלוקת היום והשעה
-                    var daysPart = parts[0].TrimEnd('D');
-                    var timePart = parts[1];
+                    string daysPart = parts[0].TrimEnd('D'); // Remove the 'D' character from days
+                    string timePart = parts[1]; // Get the time part
 
-                    if (int.TryParse(daysPart, out int days) && TimeSpan.TryParse(timePart, out TimeSpan timeOfDay))
+                    if (int.TryParse(daysPart, out int days) && TimeSpan.TryParseExact(timePart, "hh\\:mm", culture, out TimeSpan timeOfDay))
                     {
-                        return new TimeSpan(days, timeOfDay.Hours, timeOfDay.Minutes, 0);
+                        return new TimeSpan(days, timeOfDay.Hours, timeOfDay.Minutes, 0); // Return a TimeSpan object
                     }
                 }
             }
             catch
             {
-                // טיפול במקרה של קלט לא תקין
+                // Handle any parsing errors
             }
         }
-        return TimeSpan.Zero;
+        return TimeSpan.Zero; // Return zero TimeSpan if parsing fails
     }
 }
 
-
+/// <summary>
+/// Converter for handling default opening time values.
+/// </summary>
 public class OpeningTimeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // בדיקה אם הערך הוא null או זמן ברירת מחדל
-        if (value == null || (DateTime)value == default)
+        if (value == null || (DateTime)value == default) // Check if the value is null or the default DateTime
         {
-            // מחזיר את השעה הנוכחית (שעון המערכת)
-            return DateTime.Now;
+            return DateTime.Now; // Return the current system time
         }
 
-        // אם לא, מחזיר את הערך הקיים
-        return value;
+        return value; // Return the existing value if it's not null or default
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // במקרה הזה, אין צורך להחזיר חזרה את הערך (כי זה רק תצוגה)
-        return value;
+        return value; // No conversion back is required
     }
 }
 
-
+/// <summary>
+/// Converter for enabling/disabling checkboxes based on the current call.
+/// </summary>
 public class ActiveCheckboxConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // value הוא CurrentCall
-        // אם CurrentCall הוא null, מחזירים true (מאופשר), אחרת מחזירים false (לא מאופשר)
-        return value == null;
+        return value == null; // Enable if value is null, otherwise disable
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException(); // אין צורך במימוש ConvertBack
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
 
+/// <summary>
+/// Converter for formatting double values with four decimal places.
+/// </summary>
 public class DoubleConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is double doubleValue)
+        if (value is double doubleValue) // Check if the value is a double
         {
-            // פורמט התוצאה עם ארבע ספרות אחרי הנקודה
-            return doubleValue.ToString("F4", CultureInfo.InvariantCulture);
+            return doubleValue.ToString("F4", CultureInfo.InvariantCulture); // Format the double with four decimal places
         }
 
-        return value;
+        return value; // Return the original value if it's not a double
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is string stringValue && double.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double result))
         {
-            return result;
+            return result; // Return the parsed double value
         }
 
-        return value;
+        return value; // Return the original value if parsing fails
     }
 }
+
+/// <summary>
+/// Converter to check if the value is not null.
+/// </summary>
 public class IsNotNullToBoolConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value != null; // Return true if value is not null, otherwise false
+        return value != null; // Return true if the value is not null, otherwise false
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
 
+/// <summary>
+/// Converter for enabling selection based on multiple values.
+/// </summary>
 public class IsEnabledSelectConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        // בדיקת מספר הערכים שהועברו
-        if (values.Length < 2)
-            return false;
+        if (values.Length < 2) return false; // Check if there are at least two values
 
-        // הערך הראשון
-        var firstValue = values[0];
+        var firstValue = values[0]; // Get the first value
+        var secondValue = values[1] as bool?; // Get the second value as a boolean
 
-        // הערך השני
-        var secondValue = values[1] as bool?;
-
-        // בדיקת התנאים: הראשון שווה null והשני שווה true
-        return firstValue == null && secondValue == true;
+        return firstValue == null && secondValue == true; // Enable if the first value is null and second value is true
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException(); // No conversion back is required
     }
 }
-
-
-

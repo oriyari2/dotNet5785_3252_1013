@@ -5,10 +5,18 @@ using System.Windows.Input;
 
 namespace PL.privateVolunteer;
 
+/// <summary>
+/// Represents the CallHistoryWindow, which displays a list of closed calls for a specific volunteer.
+/// </summary>
 public partial class CallHistoryWindow : Window
 {
+    // Static instance of the BL interface.
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// Initializes a new instance of the CallHistoryWindow class.
+    /// </summary>
+    /// <param name="id">The ID of the volunteer.</param>
     public CallHistoryWindow(int id)
     {
         InitializeComponent();
@@ -25,6 +33,9 @@ public partial class CallHistoryWindow : Window
         }
     }
 
+    /// <summary>
+    /// Dependency property to store the current volunteer's details.
+    /// </summary>
     public BO.Volunteer CurrentVolunteer
     {
         get { return (BO.Volunteer)GetValue(CurrentVolunteerProperty); }
@@ -34,6 +45,9 @@ public partial class CallHistoryWindow : Window
     public static readonly DependencyProperty CurrentVolunteerProperty =
         DependencyProperty.Register("CurrentVolunteer", typeof(BO.Volunteer), typeof(CallHistoryWindow), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Dependency property to store the list of closed calls.
+    /// </summary>
     public IEnumerable<BO.ClosedCallInList> CallList
     {
         get { return (IEnumerable<BO.ClosedCallInList>)GetValue(CallListProperty); }
@@ -43,6 +57,7 @@ public partial class CallHistoryWindow : Window
     public static readonly DependencyProperty CallListProperty =
         DependencyProperty.Register("CallList", typeof(IEnumerable<BO.ClosedCallInList>), typeof(CallHistoryWindow), new PropertyMetadata(null));
 
+    // Property to store the selected call type filter.
     public BO.CallType callType { get; set; } = BO.CallType.None;
 
     /// <summary>
@@ -107,5 +122,4 @@ public partial class CallHistoryWindow : Window
     /// <summary>
     /// Opens the CallWindow for the selected call when the user double-clicks a row in the DataGrid.
     /// </summary>
-    
 }

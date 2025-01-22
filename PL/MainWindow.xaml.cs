@@ -6,28 +6,27 @@ using System.Windows.Input;
 
 namespace PL;
 /// <summary>
-/// Interaction logic for MainWindow.xaml
+/// Main window of the application, responsible for UI interactions and managing navigation between other windows.
 /// </summary>
 public partial class MainWindow : Window
 {
-    static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Singleton instance of the BL API
-   
+    // Singleton instance of the BL API
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
     public MainWindow()
     {
         InitializeComponent(); // Initialize the UI components
-       
+
     }
 
     /// <summary>
-    /// This function is triggered when the text in the TextBox is changed.
+    /// Triggered when the text in the TextBox is changed.
     /// Currently, it is not implemented.
     /// </summary>
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         // Placeholder for text change handling, currently unused
     }
-
-
 
     // DependencyProperty for CurrentTime, enables animation, styling, binding, etc.
     public DateTime CurrentTime
@@ -123,7 +122,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// This function is called when the window is loaded. It initializes necessary values and sets up observers.
+    /// Called when the window is loaded. Initializes necessary values and sets up observers.
     /// </summary>
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
@@ -166,7 +165,9 @@ public partial class MainWindow : Window
         new VolunteerListWindow().Show(); // Open the VolunteerListWindow when the button is clicked
     }
 
-
+    /// <summary>
+    /// Opens the CallListWindow if it is not already open, otherwise brings the existing window to the front.
+    /// </summary>
     private void btnCalls_Click(object sender, RoutedEventArgs e)
     {
         foreach (Window window in Application.Current.Windows)
@@ -180,17 +181,15 @@ public partial class MainWindow : Window
         }
 
         // If no window is open, open a new one
-        new CallListWindow().Show(); // Open the VolunteerListWindow when the button is clicked
+        new CallListWindow(null).Show(); // Open the VolunteerListWindow when the button is clicked
     }
-
-    
 
     /// <summary>
     /// Resets the database after asking for user confirmation.
     /// </summary>
     private void btnReset_Click(object sender, RoutedEventArgs e)
     {
-        // 1. Ask for user confirmation before resetting the database
+        // Ask for user confirmation before resetting the database
         var result = MessageBox.Show(
             "Are you sure you want to reset the database?",
             "Confirmation",
@@ -201,11 +200,11 @@ public partial class MainWindow : Window
             // User did not confirm the action, return early
             return;
         }
-        // 2. Change the mouse cursor to a waiting state
+        // Change the mouse cursor to a waiting state
         Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
         try
         {
-            // 3. Close all windows except for the main window
+            // Close all windows except for the main window
             foreach (Window openWindow in Application.Current.Windows)
             {
                 if (openWindow != this) // Keep the main window open
@@ -213,7 +212,7 @@ public partial class MainWindow : Window
                     openWindow.Close();
                 }
             }
-            // 4. Call the Reset method in the BL to reset the database
+            // Call the Reset method in the BL to reset the database
             s_bl.Admin.Reset();
             RefreshCallAmounts();
 
@@ -227,7 +226,7 @@ public partial class MainWindow : Window
         }
         finally
         {
-            // 5. Restore the mouse cursor to normal after the operation
+            // Restore the mouse cursor to normal after the operation
             Mouse.OverrideCursor = null;
         }
     }
@@ -237,7 +236,7 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnIntialize_Click(object sender, RoutedEventArgs e)
     {
-        // 1. Ask for user confirmation before initializing the database
+        // Ask for user confirmation before initializing the database
         var result = MessageBox.Show(
             "Are you sure you want to initialize the database?",
             "Confirmation",
@@ -249,11 +248,11 @@ public partial class MainWindow : Window
             // User did not confirm the action, return early
             return;
         }
-        // 2. Change the mouse cursor to a waiting state
+        // Change the mouse cursor to a waiting state
         Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
         try
         {
-            // 3. Close all windows except for the main window
+            // Close all windows except for the main window
             foreach (Window openWindow in Application.Current.Windows)
             {
                 if (openWindow != this) // Keep the main window open
@@ -261,7 +260,7 @@ public partial class MainWindow : Window
                     openWindow.Close();
                 }
             }
-            // 4. Call the Initialize method in the BL to initialize the database
+            // Call the Initialize method in the BL to initialize the database
             s_bl.Admin.Intialize();
             RefreshCallAmounts();
 
@@ -275,7 +274,7 @@ public partial class MainWindow : Window
         }
         finally
         {
-            // 5. Restore the mouse cursor to normal after the operation
+            // Restore the mouse cursor to normal after the operation
             Mouse.OverrideCursor = null;
         }
     }
@@ -311,4 +310,32 @@ public partial class MainWindow : Window
     /// Observes changes in the call amounts and refreshes the displayed data.
     /// </summary>
     private void callAmountsObserver() => RefreshCallAmounts();
+
+    /// <summary>
+    /// Handles status clicks and opens a filtered call list window.
+    /// </summary>
+    private void OnStatusClicked(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.Tag is string status)
+        {
+            // Map the clicked status to the BO.Status enum or similar
+            BO.Status? filterStatus = status switch
+            {
+                "Open" => BO.Status.open,
+                "Treatment" => BO.Status.treatment,
+                "Closed" => BO.Status.close,
+                "Expired" => BO.Status.expired,
+                "RiskTreatment" => BO.Status.riskTreatment,
+                "RiskOpen" => BO.Status.riskOpen,
+                _ => null
+            };
+
+            if (filterStatus.HasValue)
+            {
+                // Open a filtered call list window
+                var window = new CallListWindow(filterStatus);
+                window.Show();
+            }
+        }
+    }
 }

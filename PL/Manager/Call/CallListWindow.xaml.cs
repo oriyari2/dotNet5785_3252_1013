@@ -1,22 +1,42 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
 
 namespace PL.Call;
 
 /// <summary>
 /// Interaction logic for CallListWindow.xaml
+/// This window displays a list of calls and allows the user to manage them.
 /// </summary>
-
 public partial class CallListWindow : Window
 {
+    // Static instance of the business logic layer
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-    public CallListWindow()
+
+    /// <summary>
+    /// Constructor for the CallListWindow.
+    /// Initializes the window and sets the status filter if provided.
+    /// </summary>
+    /// <param name="status">Optional status filter for the call list.</param>
+    public CallListWindow(BO.Status? status = null)
     {
+        Status = status;
         InitializeComponent();
     }
+
+    /// <summary>
+    /// Dependency property to store the status filter for the call list.
+    /// </summary>
+    public BO.Status? Status
+    {
+        get { return (BO.Status?)GetValue(StatusProperty); }
+        set { SetValue(StatusProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Status. This enables animation, styling, binding, etc.
+    public static readonly DependencyProperty StatusProperty =
+        DependencyProperty.Register("Status", typeof(BO.Status?), typeof(CallListWindow), new PropertyMetadata(null));
+
     /// <summary>
     /// Dependency property for the CallList, which is bound to the DataGrid in the XAML.
     /// </summary>
@@ -39,7 +59,7 @@ public partial class CallListWindow : Window
 
     /// <summary>
     /// Event handler triggered when the call type ComboBox selection changes.
-    /// Updates the volunteer list based on the selected call type filter.
+    /// Updates the call list based on the selected call type filter.
     /// </summary>
     private void CallTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -47,7 +67,7 @@ public partial class CallListWindow : Window
     }
 
     /// <summary>
-    /// Refreshes the VolunteerList property with updated data.
+    /// Refreshes the CallList property with updated data.
     /// </summary>
     private void RefreshCallList()
     {
@@ -55,19 +75,26 @@ public partial class CallListWindow : Window
     }
 
     /// <summary>
-    /// Helper method to fetch the list of volunteers based on the selected call type filter.
+    /// Helper method to fetch the list of calls based on the selected call type filter.
     /// </summary>
     /// <param name="callTypeHelp">The call type filter to apply.</param>
-    /// <returns>List of volunteers matching the filter.</returns>
-    private static IEnumerable<BO.CallInList> helpReadAllCall(BO.CallType callTypeHelp)
+    /// <returns>List of calls matching the filter.</returns>
+    private IEnumerable<BO.CallInList> helpReadAllCall(BO.CallType callTypeHelp)
     {
-        return (callTypeHelp == BO.CallType.None)
-            ? s_bl?.Call.ReadAll(null ,null, BO.FieldsCallInList.CallId)!
+        // Fetch the list of calls based on the selected call type
+        var callStatusList = (callTypeHelp == BO.CallType.None)
+             ? s_bl?.Call.ReadAll(null, null, BO.FieldsCallInList.CallId)!
             : s_bl?.Call.ReadAll(BO.FieldsCallInList.TheCallType, callTypeHelp, BO.FieldsCallInList.CallId)!;
+
+        // Filter by status if a status filter is applied
+        if (Status != null)
+            return callStatusList.Where(w => w.status == Status);
+
+        return callStatusList;
     }
 
     /// <summary>
-    /// Observer to refresh the volunteer list whenever there are updates.
+    /// Observer to refresh the call list whenever there are updates.
     /// </summary>
     private void CallListObserver() => RefreshCallList();
 
@@ -89,11 +116,11 @@ public partial class CallListWindow : Window
     /// </summary>
     private void DataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
     {
-        // Placeholder
+        // Placeholder for additional functionality
     }
 
     /// <summary>
-    /// Opens the VolunteerWindow to add a new volunteer when the Add button is clicked.
+    /// Opens the CallWindow to add a new call when the Add button is clicked.
     /// </summary>
     private void btnAdd_Click(object sender, RoutedEventArgs e)
     {
@@ -101,12 +128,12 @@ public partial class CallListWindow : Window
     }
 
     /// <summary>
-    /// Property to store the currently selected volunteer in the DataGrid.
+    /// Property to store the currently selected call in the DataGrid.
     /// </summary>
     public BO.CallInList? SelectedCall { get; set; }
 
     /// <summary>
-    /// Opens the VolunteerWindow for the selected volunteer when the user double-clicks a row in the DataGrid.
+    /// Opens the CallWindow for the selected call when the user double-clicks a row in the DataGrid.
     /// </summary>
     private void lsvCallsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
@@ -115,13 +142,14 @@ public partial class CallListWindow : Window
     }
 
     /// <summary>
-    /// Deletes the selected volunteer when the Delete button is clicked.
+    /// Deletes the selected call when the Delete button is clicked.
     /// Shows a confirmation dialog before performing the delete operation.
     /// </summary>
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is int callId)
         {
+            // Show confirmation dialog
             var result = MessageBox.Show(
                 "Are you sure you want to delete the call?",
                 "Confirmation",
@@ -135,21 +163,28 @@ public partial class CallListWindow : Window
 
             try
             {
+                // Attempt to delete the call
                 s_bl.Call.Delete(callId);
                 MessageBox.Show("Call deleted successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             catch (Exception ex)
             {
+                // Show error message if deletion fails
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
 
+    /// <summary>
+    /// Cancels the assignment of the selected call when the Cancel button is clicked.
+    /// Shows a confirmation dialog before performing the cancellation.
+    /// </summary>
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is int Id)
         {
+            // Show confirmation dialog
             var result = MessageBox.Show(
                 "Are you sure you want to cancel the assignment of this call?",
                 "Confirmation",
@@ -163,15 +198,16 @@ public partial class CallListWindow : Window
 
             try
             {
-                s_bl.Call.CancelTreatment(PO.LogInID,Id);
+                // Attempt to cancel the assignment
+                s_bl.Call.CancelTreatment(PO.LogInID, Id);
                 MessageBox.Show("Call canceled successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             catch (Exception ex)
             {
+                // Show error message if cancellation fails
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
-
 }

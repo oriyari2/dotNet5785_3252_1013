@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using PL.privateVolunteer;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -14,6 +15,9 @@ public partial class VolunteerListWindow : Window
     /// </summary>
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VolunteerListWindow"/> class.
+    /// </summary>
     public VolunteerListWindow()
     {
         InitializeComponent();
@@ -137,7 +141,23 @@ public partial class VolunteerListWindow : Window
 
             try
             {
+                // Close all related windows before deleting the volunteer
+                var windowsToClose = Application.Current.Windows
+                 .OfType<Window>()
+                 .Where(w =>
+                     w is MainVolunteerWindow mvw && mvw.CurrentVolunteer.Id == volunteerId ||
+                     w is SelectCallWindow scw && scw.CurrentVolunteer.Id == volunteerId ||
+                     w is CallHistoryWindow chw && chw.CurrentVolunteer.Id == volunteerId ||
+                     w is VolunteerWindow vw && vw.CurrentVolunteer.Id == volunteerId).ToList();
+
+                foreach (var window in windowsToClose)
+                {
+                    window.Close();
+                }
+
+                // Delete the volunteer from the database
                 s_bl.Volunteer.Delete(volunteerId);
+
                 MessageBox.Show("Volunteer deleted successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             }

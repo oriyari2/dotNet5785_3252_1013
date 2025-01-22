@@ -10,19 +10,17 @@
     Loaded="Window_Loaded"
     Closed="Window_Closed">
 
-    <!-- Global Resources -->
+    <!-- Resources for styling controls in the window -->
     <Window.Resources>
-        <!-- Styling for Labels -->
+        <!-- Label style: sets alignment and margin -->
         <Style TargetType="Label">
-            <!-- Sets default alignment and margin for labels -->
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="5" />
         </Style>
 
-        <!-- Styling for Input Fields (Controls) -->
+        <!-- Control style: sets default alignment, width, and margin -->
         <Style TargetType="Control">
-            <!-- Sets default margin, width, and alignment for controls -->
             <Setter Property="Margin" Value="5" />
             <Setter Property="Width" Value="200" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -30,9 +28,9 @@
     </Window.Resources>
 
     <Grid Margin="10,10,10,-3">
-        <!-- Grid Definition -->
+        <!-- Row and column definitions for layout structure -->
         <Grid.RowDefinitions>
-            <!-- Defines rows for different input fields and buttons -->  
+            <!-- Each row corresponds to a specific input field or button -->
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -46,43 +44,52 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <!-- Defines two columns: one smaller for labels and one larger for input fields -->
+            <!-- Two-column layout: one for labels and one for input fields -->
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Labels and Input Fields for Call details -->
+        <!-- Input fields for Call details -->
+        <!-- Call ID: Read-only field for displaying the ID -->
         <Label Grid.Row="0" Grid.Column="0" Content="Id:" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentCall.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
          IsReadOnly="True" />
 
+        <!-- ComboBox for Call Type -->
         <Label Grid.Row="1" Grid.Column="0" Content="Call Type:" />
         <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}" 
           SelectedValue="{Binding CurrentCall.TheCallType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
+        <!-- TextBox for Call Description -->
         <Label Grid.Row="2" Grid.Column="0" Content="Description:" />
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentCall.VerbalDescription, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" TextWrapping="Wrap" />
 
+        <!-- Address field -->
         <Label Grid.Row="3" Grid.Column="0" Content="Address:" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
+        <!-- Opening time: Read-only field -->
         <Label Grid.Row="4" Grid.Column="0" Content="Opening Time:" />
         <TextBox IsReadOnly="True" Grid.Row="4" Grid.Column="1" 
-         Text="{Binding CurrentCall.OpeningTime, Converter={StaticResource OpeningTimeConverterkey}}" />
+        Text="{Binding CurrentTime, Converter={StaticResource DateTimeFormatConverterkey}}" />
 
+        <!-- DatePicker for Max Time To End -->
         <Label Grid.Row="5" Grid.Column="0" Content="Max Time To End:" />
         <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding CurrentCall.MaxTimeToEnd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
+        <!-- ComboBox for Status (read-only) -->
         <Label Grid.Row="6" Grid.Column="0" Content="Status:" />
         <ComboBox Grid.Row="6" Grid.Column="1" IsEnabled="false" ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
           SelectedValue="{Binding CurrentCall.status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
+        <!-- ListBox for Assigned Calls -->
         <Label Grid.Row="7" Grid.Column="0" Content="Assigned Calls:" />
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2">
             <ListBox ItemsSource="{Binding CurrentCall.listAssignForCall}" 
              IsHitTestVisible="True">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
+                        <!-- Template for displaying assigned call details -->
                         <StackPanel Margin="5">
                             <StackPanel.Resources>
                                 <Style TargetType="StackPanel">
@@ -122,7 +129,7 @@
             </ListBox>
         </ScrollViewer>
 
-        <!-- Action Button for saving or updating volunteer details -->
+        <!-- Button for saving or updating -->
         <Button Grid.Row="17" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
     HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="30" />
     </Grid>

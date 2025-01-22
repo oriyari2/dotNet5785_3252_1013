@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 
 /// <summary>
@@ -97,7 +98,13 @@ internal class VolunteerImplementation : IVolunteer
         var volunteer = Read(id); // Check if volunteer exists by reading the volunteer's information
         if (volunteer.IsProgress != null) // If the volunteer has an ongoing assignment, prevent deletion
             throw new BO.BlcantDeleteItem($"Volunteer with ID={id} can't be deleted because he has a current call in progress");
-
+        var allVolunteers = ReadAll(null);
+        var manager = from item in allVolunteers
+                      let Checkvolunteer = Read(item.Id).Role
+                      where Checkvolunteer == BO.RoleType.manager
+                      select item;
+        if(!manager.Any(s=>s.Id != id))
+            throw new BO.BlcantDeleteItem($"Volunteer with ID={id} can't be deleted because he is the last manager in the system");
         try
         {
             // Attempt to delete the volunteer from the database

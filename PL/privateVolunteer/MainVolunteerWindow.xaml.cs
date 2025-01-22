@@ -2,228 +2,249 @@
 using PL.privateVolunteer;
 using System.Windows;
 using System.Windows.Controls;
-namespace PL;
-/// <summary>
-/// Interaction logic for MainVolunteerWindow.xaml
-/// </summary>
-public partial class MainVolunteerWindow : Window
+
+namespace PL
 {
-    static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Singleton instance of the BL API
-
-    public MainVolunteerWindow(int id3 = 0)
+    /// <summary>
+    /// Interaction logic for MainVolunteerWindow.xaml
+    /// </summary>
+    public partial class MainVolunteerWindow : Window
     {
-        InitializeComponent();
-        DataContext = this;
-        try
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Singleton instance of the BL API
+
+        /// <summary>
+        /// Constructor that initializes the MainVolunteerWindow with optional volunteer ID.
+        /// </summary>
+        public MainVolunteerWindow(int id3 = 0)
         {
-            CurrentVolunteer = s_bl.Volunteer.Read(id3);
-            if (CurrentVolunteer.IsProgress != null)
+            InitializeComponent();
+            DataContext = this;
+            try
             {
-                CurrentCall = s_bl.Call.Read(CurrentVolunteer.IsProgress.CallId);
+                CurrentVolunteer = s_bl.Volunteer.Read(id3); // Retrieve volunteer details
+                if (CurrentVolunteer.IsProgress != null)
+                {
+                    CurrentCall = s_bl.Call.Read(CurrentVolunteer.IsProgress.CallId); // Retrieve current call if progress exists
+                }
+                else
+                    CurrentCall = null;
             }
-            else
-                CurrentCall = null;
-
-        }
-        catch (Exception ex)
-        {
-            /// <summary>
-            /// Show an error message if initialization fails.
-            /// </summary>
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-    public BO.Volunteer CurrentVolunteer
-    {
-        get { return (BO.Volunteer)GetValue(CurrentVolunteerProperty); }
-        set { SetValue(CurrentVolunteerProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for CurrentId.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty CurrentVolunteerProperty =
-        DependencyProperty.Register("CurrentVolunteer", typeof(BO.Volunteer), typeof(MainVolunteerWindow), new PropertyMetadata(null));
-
-
-
-    public BO.Call? CurrentCall
-    {
-        get { return (BO.Call?)GetValue(CurrentCallProperty); }
-        set { SetValue(CurrentCallProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for CurrentCall.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty CurrentCallProperty =
-        DependencyProperty.Register("CurrentCall", typeof(BO.Call), typeof(MainVolunteerWindow), new PropertyMetadata(null));
-
-
-
-    private void BtnUpdate_Click(object sender, RoutedEventArgs e)
-    {
-        if (CurrentVolunteer == null)
-        {
-            /// <summary>
-            /// Show an error message if volunteer details are missing.
-            /// </summary>
-            MessageBox.Show("Volunteer details are missing.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            return;
-        }
-
-        try
-        {
-            s_bl.Volunteer.Update(CurrentVolunteer.Id, CurrentVolunteer);
-            MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        catch (Exception ex)
-        {
-            /// <summary>
-            /// Show an error message if something goes wrong.
-            /// </summary>
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
-
-    private void BtnCancelTreatment_Click(object sender, RoutedEventArgs e)
-    {
-
-        var result = MessageBox.Show(
-            "Are you sure you want to cancel your treatment for this call?",
-            "Confirmation",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
-
-        if (result != MessageBoxResult.Yes)
-        {
-            return;
-        }
-
-        try
-        {
-            s_bl.Call.CancelTreatment(CurrentVolunteer.Id, CurrentVolunteer.IsProgress.Id);
-            MessageBox.Show("Call canceled successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-    }
-    private void BtnEndTreatmrnt_Click(object sender, RoutedEventArgs e)
-    {
-
-        var result = MessageBox.Show(
-            "Are you sure you want to end your treatment for this call?",
-            "Confirmation",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Question);
-
-        if (result != MessageBoxResult.Yes)
-        {
-            return;
-        }
-
-        try
-        {
-            s_bl.Call.EndTreatment(CurrentVolunteer.Id, CurrentVolunteer.IsProgress.Id);
-            MessageBox.Show("Call ended successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-    }
-    private void BtnCallsHistory_Click(object sender, RoutedEventArgs e)
-    {
-        new CallHistoryWindow(CurrentVolunteer.Id).Show();
-    }
-    private void BtnSelectCall_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            // Check if there's already an open window for the current volunteer
-            var existingWindow = Application.Current.Windows
-                .OfType<SelectCallWindow>()
-                .FirstOrDefault(w => w.CurrentVolunteer.Id == CurrentVolunteer.Id);
-
-            if (existingWindow != null)
+            catch (Exception ex)
             {
-                // Focus on the existing window
-                existingWindow.Focus();
-            }
-            else
-            {
-                // Create and show a new window
-                var newWindow = new SelectCallWindow(CurrentVolunteer.Id);
-                newWindow.Show();
+                // Show an error message if initialization fails.
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        catch (Exception ex)
+
+        /// <summary>
+        /// Gets or sets the current volunteer.
+        /// </summary>
+        public BO.Volunteer CurrentVolunteer
         {
-            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            get { return (BO.Volunteer)GetValue(CurrentVolunteerProperty); }
+            set { SetValue(CurrentVolunteerProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for CurrentVolunteer. This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentVolunteerProperty =
+            DependencyProperty.Register("CurrentVolunteer", typeof(BO.Volunteer), typeof(MainVolunteerWindow), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the current call associated with the volunteer.
+        /// </summary>
+        public BO.Call? CurrentCall
+        {
+            get { return (BO.Call?)GetValue(CurrentCallProperty); }
+            set { SetValue(CurrentCallProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentCall. This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentCallProperty =
+            DependencyProperty.Register("CurrentCall", typeof(BO.Call), typeof(MainVolunteerWindow), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Handles the click event of the "Update" button to update the volunteer's information.
+        /// </summary>
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentVolunteer == null)
+            {
+                // Show an error message if volunteer details are missing.
+                MessageBox.Show("Volunteer details are missing.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                s_bl.Volunteer.Update(CurrentVolunteer.Id, CurrentVolunteer); // Update volunteer information
+                MessageBox.Show("Volunteer updated successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                // Show an error message if something goes wrong during update.
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Handles the click event of the "Cancel Treatment" button to cancel the volunteer's treatment for the current call.
+        /// </summary>
+        private void BtnCancelTreatment_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show(
+                "Are you sure you want to cancel your treatment for this call?",
+                "Confirmation",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                s_bl.Call.CancelTreatment(CurrentVolunteer.Id, CurrentVolunteer.IsProgress.Id); // Cancel the treatment for the current call
+                MessageBox.Show("Call canceled successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                // Show an error message if something goes wrong during cancellation.
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Handles the click event of the "End Treatment" button to end the volunteer's treatment for the current call.
+        /// </summary>
+        private void BtnEndTreatmrnt_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show(
+                "Are you sure you want to end your treatment for this call?",
+                "Confirmation",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            try
+            {
+                s_bl.Call.EndTreatment(CurrentVolunteer.Id, CurrentVolunteer.IsProgress.Id); // End treatment for the current call
+                MessageBox.Show("Call ended successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                // Show an error message if something goes wrong during ending treatment.
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Handles the click event of the "Calls History" button to open the call history window for the volunteer.
+        /// </summary>
+        private void BtnCallsHistory_Click(object sender, RoutedEventArgs e)
+        {
+            new CallHistoryWindow(CurrentVolunteer.Id).Show(); // Open the call history window for the current volunteer
+        }
+
+        /// <summary>
+        /// Handles the click event of the "Select Call" button to open the call selection window for the volunteer.
+        /// </summary>
+        private void BtnSelectCall_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Check if there's already an open window for the current volunteer
+                var existingWindow = Application.Current.Windows
+                    .OfType<SelectCallWindow>()
+                    .FirstOrDefault(w => w.CurrentVolunteer.Id == CurrentVolunteer.Id);
+
+                if (existingWindow != null)
+                {
+                    // Focus on the existing window
+                    existingWindow.Focus();
+                }
+                else
+                {
+                    // Create and show a new window
+                    var newWindow = new SelectCallWindow(CurrentVolunteer.Id);
+                    newWindow.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Show an error message if something goes wrong during call selection.
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Event handler for when the window is loaded to set initial values and add observers.
+        /// </summary>
+        private void MainVolunteerWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Set initial values when the window is loaded
+            RefreshCallInProgress();
+            s_bl.Call.AddObserver(callInProgressObserver); // Add observer to monitor call progress
+            s_bl.Volunteer.AddObserver(VolunteerObserver); // Add observer to monitor volunteer progress
+        }
+
+        /// <summary>
+        /// Cleans up observers when the window is closed to prevent memory leaks.
+        /// </summary>
+        private void MainVolunteerWindow_Closed(object sender, EventArgs e)
+        {
+            // Cleanup observers when the window is closed
+            s_bl.Call.RemoveObserver(callInProgressObserver);
+            s_bl.Volunteer.RemoveObserver(VolunteerObserver);
+        }
+
+        /// <summary>
+        /// Refreshes the current call information for the volunteer.
+        /// </summary>
+        private void RefreshCallInProgress()
+        {
+            CurrentCall = helpReadCallInProgress(); // Update the current call from the data source
+        }
+
+        /// <summary>
+        /// Helper function to read the current call information from the backend.
+        /// </summary>
+        private BO.Call? helpReadCallInProgress()
+        {
+            var volCall = s_bl.Volunteer.Read(CurrentVolunteer.Id).IsProgress; // Get volunteer's call progress
+            if (volCall != null)
+                return s_bl.Call.Read(volCall.CallId); // Return the call details if in progress
+            return null;
+        }
+
+        /// <summary>
+        /// Observes changes in the call progress and refreshes the call data.
+        /// </summary>
+        private void callInProgressObserver() => RefreshCallInProgress();
+
+        /// <summary>
+        /// Refreshes the volunteer's information from the backend.
+        /// </summary>
+        private void RefreshVolunteer()
+        {
+            CurrentVolunteer = helpReadVolunteer(); // Update the volunteer data from the backend
+        }
+
+        /// <summary>
+        /// Helper function to read the current volunteer information from the backend.
+        /// </summary>
+        private BO.Volunteer helpReadVolunteer()
+        {
+            return s_bl.Volunteer.Read(CurrentVolunteer.Id); // Return the volunteer details
+        }
+
+        /// <summary>
+        /// Observes changes in the volunteer's progress and refreshes the volunteer data.
+        /// </summary>
+        private void VolunteerObserver() => RefreshVolunteer();
     }
-
-
-    private void MainVolunteerWindow_Loaded(object sender, RoutedEventArgs e)
-    {
-        // Set initial values when the window is loaded
-
-        RefreshCallInProgress();
-        s_bl.Call.AddObserver(callInProgressObserver);
-        s_bl.Volunteer.AddObserver(VolunteerObserver);
-    }
-
-    /// <summary>
-    /// Cleans up observers when the window is closed to prevent memory leaks.
-    /// </summary>
-    private void MainVolunteerWindow_Closed(object sender, EventArgs e)
-    {
-        // Cleanup observers when the window is closed
-        s_bl.Call.RemoveObserver(callInProgressObserver);
-        s_bl.Volunteer.RemoveObserver(VolunteerObserver);
-    }
-
-    private void RefreshCallInProgress()
-    {
-        CurrentCall = helpReadCallInProgress(); // Update the amounts from the data source
-    }
-
-    /// <summary>
-    /// Helper function to read the current call amounts from the backend.
-    /// </summary>
-    private BO.Call? helpReadCallInProgress()
-    {
-        var volCall = s_bl.Volunteer.Read(CurrentVolunteer.Id).IsProgress;
-        if (volCall != null)
-            return s_bl.Call.Read(volCall.CallId);
-        return null;
-    }
-
-    /// <summary>
-    /// Observes changes in the call amounts and refreshes the displayed data.
-    /// </summary>
-    private void callInProgressObserver() => RefreshCallInProgress();
-
-
-    private void RefreshVolunteer()
-    {
-        CurrentVolunteer = helpReadVolunteer(); // Update the amounts from the data source
-    }
-
-    /// <summary>
-    /// Helper function to read the current call amounts from the backend.
-    /// </summary>
-    private BO.Volunteer helpReadVolunteer()
-    {
-        return s_bl.Volunteer.Read(CurrentVolunteer.Id);
-    }
-
-    /// <summary>
-    /// Observes changes in the call amounts and refreshes the displayed data.
-    /// </summary>
-    private void VolunteerObserver() => RefreshVolunteer();
-
 }

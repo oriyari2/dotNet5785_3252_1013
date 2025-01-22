@@ -72,7 +72,7 @@ public static class Initialization
                     EndType? status;
 
                     // Alternate between treated and expired
-                    if (i % 2 == 0 && call.MaxTimeToEnd <= currentTime)
+                    if (call.MaxTimeToEnd <= currentTime)
                     {
                         status = EndType.expired;
                         treatmentEndTime = call.MaxTimeToEnd;
@@ -204,7 +204,7 @@ public static class Initialization
     "Abraham Lincoln 6, Jerusalem, Israel",
     "Ein Kerem Valley, Jerusalem, Israel",
     "HaKibbutz HaMeuhad 13, Jerusalem, Israel",
-    "Mesilat Baruch 20, Jerusalem, Israel",
+    "HaPalmach 10, Jerusalem, Israel",
     "HaMelitz 14, Jerusalem, Israel",
     "HaPalmach 45, Jerusalem, Israel",
     "HaKablan 33, Jerusalem, Israel",

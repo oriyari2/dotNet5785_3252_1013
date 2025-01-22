@@ -8,6 +8,8 @@
         Title="Select Call " Height="450" Width="800"
         Loaded="Window_Loaded"
         Closed="Window_Closed">
+
+    <!-- Grid for layout structure -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -23,7 +25,10 @@
                 <ColumnDefinition Width="400*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Label for 'Select Call Type' -->
             <Label Content="Select Call Type:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3,0,0,0"/>
+
+            <!-- ComboBox for selecting CallType -->
             <ComboBox ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}"
                SelectedValue="{Binding Path=callType, Mode=TwoWay}" 
                Grid.Column="3"
@@ -43,7 +48,9 @@
            BorderBrush="#0D1821" 
            BorderThickness="1"
            SelectedItem="{Binding SelectedCall, Mode=TwoWay}"
-                  SelectionChanged="DataGrid_SelectionChanged">
+           SelectionChanged="DataGrid_SelectionChanged">
+
+            <!-- DataGrid column header style -->
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#A3C77F" />
@@ -55,7 +62,9 @@
             </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
+                <!-- Call ID Column -->
                 <DataGridTextColumn Binding="{Binding Id}" Header="Call ID" Width="0.4*" />
+
                 <!-- Column for Call Type -->
                 <DataGridTemplateColumn Header="Call Type" Width="0.8*" >
                     <DataGridTemplateColumn.CellTemplate>
@@ -64,18 +73,29 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <!-- Address Column -->
                 <DataGridTextColumn Binding="{Binding Address}" Header="Address" Width="1.5*" />
+
+                <!-- Opening Time Column with DateTime format converter -->
                 <DataGridTextColumn Binding="{Binding OpeningTime, Converter={StaticResource DateTimeFormatConverterkey}}" 
                              Header="Opening Time" Width="Auto" />
+
+                <!-- Time To End Column with DateTime format converter -->
                 <DataGridTextColumn Binding="{Binding MaxTimeToEnd, Converter={StaticResource DateTimeFormatConverterkey}}" 
                              Header="Time To End" Width="Auto" />
+
+                <!-- Distance Column with Double format converter -->
                 <DataGridTextColumn Binding="{Binding Distance, Converter={StaticResource DoubleConverterkey}}" Header="Distance" Width="0.4*" />
+
+                <!-- Select Column with button to trigger selection -->
                 <DataGridTemplateColumn Header="Select" Width="0.5*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
+                            <!-- Button to select a call -->
                             <Button Content="Select" 
-        Click="btnSelectCall_Click" 
-        Tag="{Binding Id}" />
+                                    Click="btnSelectCall_Click" 
+                                    Tag="{Binding Id}" />
                             <!-- Delete button triggers a click event, passes record ID as a tag -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

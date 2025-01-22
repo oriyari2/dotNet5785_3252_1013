@@ -73,8 +73,11 @@ internal static class CallManager
         AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
 
         // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
-        if (call.MaxTimeToEnd < call.OpeningTime || call.MaxTimeToEnd < admin.GetClock())
+        if (call.MaxTimeToEnd < admin.GetClock() + admin.GetRiskRange())
             throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time + risk range");
+
+        if (call.MaxTimeToEnd < admin.GetClock())
+            throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
 
         // Returns a new DO.Call object with the updated values.
         return new()

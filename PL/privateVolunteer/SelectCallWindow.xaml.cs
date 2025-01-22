@@ -9,15 +9,20 @@ namespace PL.privateVolunteer;
 /// </summary>
 public partial class SelectCallWindow : Window
 {
+    // Static reference to the business logic API (BlApi)
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-   
+
+    /// <summary>
+    /// Constructor for SelectCallWindow.
+    /// Initializes the window and loads volunteer and call list data.
+    /// </summary>
     public SelectCallWindow(int id)
     {
         InitializeComponent();
         DataContext = this;
         try
         {
-           
+            // Fetch current volunteer by ID
             CurrentVolunteer = s_bl.Volunteer.Read(id);
             RefreshCallList();
         }
@@ -28,6 +33,9 @@ public partial class SelectCallWindow : Window
         }
     }
 
+    /// <summary>
+    /// Property for the current volunteer.
+    /// </summary>
     public BO.Volunteer CurrentVolunteer
     {
         get { return (BO.Volunteer)GetValue(CurrentVolunteerProperty); }
@@ -37,6 +45,9 @@ public partial class SelectCallWindow : Window
     public static readonly DependencyProperty CurrentVolunteerProperty =
         DependencyProperty.Register("CurrentVolunteer", typeof(BO.Volunteer), typeof(SelectCallWindow), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Property for the list of open calls.
+    /// </summary>
     public IEnumerable<BO.OpenCallInList> CallList
     {
         get { return (IEnumerable<BO.OpenCallInList>)GetValue(CallListProperty); }
@@ -46,6 +57,9 @@ public partial class SelectCallWindow : Window
     public static readonly DependencyProperty CallListProperty =
         DependencyProperty.Register("CallList", typeof(IEnumerable<BO.OpenCallInList>), typeof(SelectCallWindow), new PropertyMetadata(null));
 
+    /// <summary>
+    /// The selected call type for filtering calls.
+    /// </summary>
     public BO.CallType callType { get; set; } = BO.CallType.None;
 
     /// <summary>
@@ -63,11 +77,15 @@ public partial class SelectCallWindow : Window
     /// <returns>List of calls matching the filter.</returns>
     private IEnumerable<BO.OpenCallInList> helpReadAllCall(BO.CallType callTypeHelp)
     {
+        // Return list of calls filtered by call type
         return (callTypeHelp == BO.CallType.None)
             ? s_bl?.Call.GetOpenCallInList(CurrentVolunteer.Id, null, BO.FieldsOpenCallInList.Distance)!
             : s_bl?.Call.GetOpenCallInList(CurrentVolunteer.Id, callTypeHelp, BO.FieldsOpenCallInList.Distance)!;
     }
+
+    // Helper method for refreshing call list
     private void CallListObserver() => RefreshCallList();
+
     /// <summary>
     /// Event handler triggered when the call type ComboBox selection changes.
     /// Updates the call list based on the selected call type filter.
@@ -87,9 +105,9 @@ public partial class SelectCallWindow : Window
     /// </summary>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        s_bl.Call.AddObserver(CallListObserver);
+        s_bl.Call.AddObserver(CallListObserver); // Adds observer for call list
         // s_bl.Volunteer.AddObserver(CurrentVolunteer.Id, VolunteerObserver);
-        s_bl.Volunteer.AddObserver(VolunteerObserver);
+        s_bl.Volunteer.AddObserver(VolunteerObserver); // Adds observer for volunteer
         RefreshCallList();
     }
 
@@ -98,30 +116,30 @@ public partial class SelectCallWindow : Window
     /// </summary>
     private void Window_Closed(object sender, EventArgs e)
     {
-        s_bl.Call.RemoveObserver(CallListObserver);
+        s_bl.Call.RemoveObserver(CallListObserver); // Removes observer for call list
         // s_bl.Volunteer.RemoveObserver(CurrentVolunteer.Id, VolunteerObserver);
-         s_bl.Volunteer.RemoveObserver(VolunteerObserver);
+        s_bl.Volunteer.RemoveObserver(VolunteerObserver); // Removes observer for volunteer
     }
 
     /// <summary>
-    /// Observer to refresh the call list whenever there are updates.
+    /// Observer to refresh the volunteer data whenever there are updates.
     /// </summary>
-
     private void RefreshVolunteer()
     {
         CurrentVolunteer = helpReadVolunteer();
     }
 
     /// <summary>
-    /// Helper method to fetch the list of calls based on the selected call type filter.
+    /// Helper method to fetch the current volunteer details.
     /// </summary>
-    /// <param name="callTypeHelp">The call type filter to apply.</param>
-    /// <returns>List of calls matching the filter.</returns>
     private BO.Volunteer helpReadVolunteer()
     {
         return s_bl.Volunteer.Read(CurrentVolunteer.Id);
     }
+
+    // Observer method for volunteer data updates
     private void VolunteerObserver() => RefreshVolunteer();
+
     /// <summary>
     /// Property to store the currently selected call in the DataGrid.
     /// </summary>
@@ -130,27 +148,21 @@ public partial class SelectCallWindow : Window
     /// <summary>
     /// Opens the CallWindow for the selected call when the user double-clicks a row in the DataGrid.
     /// </summary>
-
     private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (sender is DataGrid dataGrid)
         {
-            // עדכון של SelectedCall עם השורה שנבחרה
+            // Update SelectedCall with the selected row
             SelectedCall = (BO.OpenCallInList)dataGrid.SelectedItem;
-
+            // Display a message with the description of the selected call
             if (SelectedCall != null)
-            {
-                // הצגת הודעה עם תיאור הקריאה
                 MessageBox.Show(SelectedCall.VerbalDescription, "Call Description", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-                MessageBox.Show("jj", "Call Description", MessageBoxButton.OK, MessageBoxImage.Information);
-
         }
     }
 
-
-
+    /// <summary>
+    /// Handles the click event of the select call button.
+    /// </summary>
     private void btnSelectCall_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button button && button.Tag is int callId)
@@ -168,14 +180,17 @@ public partial class SelectCallWindow : Window
 
             try
             {
-                s_bl.Call.ChooseCallToTreat(CurrentVolunteer.Id,callId);
+                // Attempt to select the call for the volunteer
+                s_bl.Call.ChooseCallToTreat(CurrentVolunteer.Id, callId);
                 RefreshCallList();
 
+                // Notify user of successful call selection
                 MessageBox.Show("Call selected successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }
             catch (Exception ex)
             {
+                // Show an error message if call selection fails.
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

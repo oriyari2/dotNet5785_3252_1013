@@ -9,6 +9,7 @@
         Loaded="Window_Loaded"
         Closed="Window_Closed">
 
+    <!-- Main container grid -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -24,7 +25,10 @@
                 <ColumnDefinition Width="400*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Label for call type selection -->
             <Label Content="Select Call Type:" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3,0,0,0"/>
+
+            <!-- ComboBox for selecting call type -->
             <ComboBox ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}"
                       SelectedValue="{Binding Path=callType, Mode=TwoWay}" 
                       Grid.Column="3"
@@ -44,6 +48,8 @@
                   BorderBrush="#0D1821" 
                   BorderThickness="1"
                   SelectedItem="{Binding SelectedCall, Mode=TwoWay}">
+
+            <!-- Style for DataGrid headers -->
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#A3C77F" />
@@ -54,8 +60,11 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
 
+            <!-- DataGrid columns definition -->
             <DataGrid.Columns>
+                <!-- Column for Call ID -->
                 <DataGridTextColumn Binding="{Binding Id}" Header="Call ID" Width="0.6*" />
+
                 <!-- Column for Call Type -->
                 <DataGridTemplateColumn Header="Call Type" Width="0.8*" >
                     <DataGridTemplateColumn.CellTemplate>
@@ -64,13 +73,23 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <!-- Column for Address -->
                 <DataGridTextColumn Binding="{Binding Address}" Header="Address" Width="1.5*" />
+
+                <!-- Column for Opening Time -->
                 <DataGridTextColumn Binding="{Binding OpeningTime, Converter={StaticResource DateTimeFormatConverterkey}}" 
                                     Header="Opening Time" Width="Auto" />
+
+                <!-- Column for Entry Time -->
                 <DataGridTextColumn Binding="{Binding EntryTime, Converter={StaticResource DateTimeFormatConverterkey}}" 
                                     Header="Entry Time" Width="Auto" />
+
+                <!-- Column for Actual End Time -->
                 <DataGridTextColumn Binding="{Binding ActualEndTime, Converter={StaticResource DateTimeFormatConverterkey}}" 
                                     Header="Actual End Time" Width="Auto" />
+
+                <!-- Column for End Type -->
                 <DataGridTextColumn Binding="{Binding TheEndType}" Header="End Type" Width="1*" />
             </DataGrid.Columns>
         </DataGrid>

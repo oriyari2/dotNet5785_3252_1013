@@ -7,9 +7,21 @@
         <!-- Collection for call types -->
         <!-- This resource provides a predefined collection of call types for data binding. -->
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
+
+        <!-- Collection for status types -->
+        <!-- This resource provides a predefined collection of status types for data binding. -->
         <local:StatusCollection x:Key="StatusCollectionKey"/>
+
+        <!-- Converter for double values -->
+        <!-- This converter is used to handle double values in the UI. -->
         <local:DoubleConverter x:Key="DoubleConverterkey" />
+
+        <!-- Converter to check if an object is not null -->
+        <!-- This converter is used to convert non-null objects to boolean values. -->
         <local:IsNotNullToBoolConverter x:Key="IsNotNullToBoolConverterkey" />
+
+        <!-- Converter to enable/disable select elements -->
+        <!-- This converter is used to enable or disable selection UI elements based on conditions. -->
         <local:IsEnabledSelectConverter x:Key="IsEnabledSelectConverterkey" />
 
         <!-- Collection for role types -->
@@ -21,29 +33,36 @@
         <local:DistanceTypeCollection x:Key="DistanceTypeCollectionKey"/>
 
         <!-- Converter for object ID to true/false -->
-        <!-- This converter is used to enable or disable UI elements based on the presence of an object ID. -->
+        <!-- This converter enables or disables UI elements based on the presence of an object ID. -->
         <local:ConvertObjIdToTF x:Key="ConvertObjIdToTFkey" />
 
         <!-- Converter for role type to true/false -->
-        <!-- This converter is used to enable or disable UI elements based on the role type. -->
+        <!-- This converter enables or disables UI elements based on the role type. -->
         <local:ConvertRoleToTF x:Key="ConvertRoleToTFkey" />
 
         <!-- Converter for object password to true/false -->
-        <!-- This converter is used to enable or disable password fields based on certain conditions. -->
+        <!-- This converter enables or disables password-related UI elements based on conditions. -->
         <local:ConvertObjPasswordToTF x:Key="ConvertObjPasswordToTFkey" />
 
         <!-- Converter for call progress -->
-        <!-- This converter is used to display the progress status of a call in the UI. -->
+        <!-- This converter is used to display the call progress status in the UI. -->
         <local:CallInProgressConverter x:Key="CallInProgressConverterkey" />
 
+        <!-- Converter for formatting DateTime values -->
+        <!-- This converter is used to format DateTime objects in the UI. -->
         <local:DateTimeFormatConverter x:Key="DateTimeFormatConverterkey" />
 
+        <!-- Converter for converting TimeSpan to string -->
+        <!-- This converter is used to format TimeSpan objects as strings for display in the UI. -->
         <local:TimeSpanToStringConverter x:Key="TimeSpanToStringConverterkey" />
 
+        <!-- Converter for opening time formatting -->
+        <!-- This converter is used to format opening times in the UI. -->
         <local:OpeningTimeConverter x:Key="OpeningTimeConverterkey" />
 
+        <!-- Converter for active checkbox state -->
+        <!-- This converter is used to manage checkbox states in the UI based on specific conditions. -->
         <local:ActiveCheckboxConverter x:Key="ActiveCheckboxConverterkey" />
-
 
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->
@@ -64,9 +83,11 @@
             <!-- Make text bold -->
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
-        
-        <Style TargetType= "Window">
-            <!-- Set label foreground (text) color -->
+
+        <!-- Default style for windows -->
+        <!-- This style defines the default appearance for all windows in the application. -->
+        <Style TargetType="Window">
+            <!-- Set window background color -->
             <Setter Property="Background" Value="#F2F4F7" />
         </Style>
     </Application.Resources>
@@ -78,7 +99,3 @@
 
 <!--207249780
 0508926188*-->
-
-    
-    
-    

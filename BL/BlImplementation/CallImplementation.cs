@@ -532,16 +532,18 @@ internal class CallImplementation : ICall
     {
         var oldCall = _dal.Call.Read(call.Id);
         // Convert BO.Call to DO.Call
-        DO.Call doCall = CallManager.HelpCreateUodate(call);
-        if (call.status == BO.Status.close || call.status == BO.Status.expired)
+        if (call.status == BO.Status.close)
             throw new BO.BlUserCantUpdateItemExeption("This call is closed");
+        if (call.status == BO.Status.expired)
+            throw new BO.BlUserCantUpdateItemExeption("This call is expired");
+        DO.Call doCall = CallManager.HelpCreateUodate(call);
+
         if (call.status == BO.Status.treatment || call.status == BO.Status.riskTreatment)
         {
             if (doCall.Address != oldCall.Address || doCall.TheCallType != oldCall.TheCallType ||
                 doCall.VerbalDescription != oldCall.VerbalDescription)
                 throw new BO.BlUserCantUpdateItemExeption("These details cannot be changed because the call is already in progress.");
         }
-
         try
         {
             // Attempt to update the call in the DAL
