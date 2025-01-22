@@ -555,7 +555,7 @@ internal class CallImplementation : ICall
             throw new BO.BlDoesNotExistException($"Call with ID={call.Id} does Not exist");
         }
         CallManager.Observers.NotifyItemUpdated(call.Id);  //update current call  and obserervers etc.
-        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
+        CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc
     }
 
 }
