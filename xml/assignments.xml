@@ -33,14 +33,6 @@
     <TheEndType>treated</TheEndType>
   </Assignment>
   <Assignment>
-    <Id>75</Id>
-    <CallId>5</CallId>
-    <VolunteerId>235246881</VolunteerId>
-    <EntryTime>2024-05-05T05:00:00</EntryTime>
-    <ActualEndTime xsi:nil="true" />
-    <TheEndType xsi:nil="true" />
-  </Assignment>
-  <Assignment>
     <Id>76</Id>
     <CallId>6</CallId>
     <VolunteerId>235246881</VolunteerId>
@@ -263,5 +255,29 @@
     <EntryTime>2025-01-23T00:31:29</EntryTime>
     <ActualEndTime>2025-01-23T00:31:29</ActualEndTime>
     <TheEndType>expired</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>104</Id>
+    <CallId>47</CallId>
+    <VolunteerId>215041013</VolunteerId>
+    <EntryTime>2025-01-23T00:31:29</EntryTime>
+    <ActualEndTime>2025-01-23T00:31:29</ActualEndTime>
+    <TheEndType>treated</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>75</Id>
+    <CallId>5</CallId>
+    <VolunteerId>235246881</VolunteerId>
+    <EntryTime>2024-05-05T05:00:00</EntryTime>
+    <ActualEndTime>2025-01-23T00:31:29</ActualEndTime>
+    <TheEndType>manager</TheEndType>
+  </Assignment>
+  <Assignment>
+    <Id>105</Id>
+    <CallId>30</CallId>
+    <VolunteerId>215041013</VolunteerId>
+    <EntryTime>2025-01-23T00:31:29</EntryTime>
+    <ActualEndTime xsi:nil="true" />
+    <TheEndType xsi:nil="true" />
   </Assignment>
 </ArrayOfAssignment>
