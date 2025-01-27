@@ -5,6 +5,7 @@ using BlImplementation;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Net;
+using BO;
 
 namespace Helpers;
 
@@ -41,28 +42,28 @@ internal static class VolunteerManager
         lock (AdminManager.BlMutex)
         {
             var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null));  // Get assignments
-        var volunteer = s_dal.Volunteer.Read(id) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist"); // Get volunteer details
-        double volLon = (double)volunteer.Longitude;
-        double volLat = (double)volunteer.Latitude;
-        AdminImplementation admin = new(); // Instantiate admin for risk range checking
-        BO.CallInProgress? callInProgress =
-         (from item in assignments
-          let call = s_dal.Call.Read(item.CallId)
-          select new BO.CallInProgress
-          {
-              Id = item.Id,
-              CallId = item.CallId,
-              TheCallType = (BO.CallType)call.TheCallType,
-              VerbalDescription = call.VerbalDescription,
-              Address = call.Address,
-              OpeningTime = call.OpeningTime,
-              MaxTimeToEnd = call.MaxTimeToEnd,
-              EntryTime = item.EntryTime,
-              Distance = volunteer?.Address != null ? VolunteerManager.CalculateDistance(volLon, volLat, call.Longitude, call.Latitude) : 0,
-              status = (AdminManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
-                        ? BO.Status.treatment
-                        : BO.Status.riskTreatment
-          }).FirstOrDefault();
+            var volunteer = s_dal.Volunteer.Read(id) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist"); // Get volunteer details
+            double volLon = (double)volunteer.Longitude;
+            double volLat = (double)volunteer.Latitude;
+            AdminImplementation admin = new(); // Instantiate admin for risk range checking
+            BO.CallInProgress? callInProgress =
+             (from item in assignments
+              let call = s_dal.Call.Read(item.CallId)
+              select new BO.CallInProgress
+              {
+                  Id = item.Id,
+                  CallId = item.CallId,
+                  TheCallType = (BO.CallType)call.TheCallType,
+                  VerbalDescription = call.VerbalDescription,
+                  Address = call.Address,
+                  OpeningTime = call.OpeningTime,
+                  MaxTimeToEnd = call.MaxTimeToEnd,
+                  EntryTime = item.EntryTime,
+                  Distance = volunteer?.Address != null ? VolunteerManager.CalculateDistance(volLon, volLat, call.Longitude, call.Latitude) : 0,
+                  status = (AdminManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
+                            ? BO.Status.treatment
+                            : BO.Status.riskTreatment
+              }).FirstOrDefault();
 
             return callInProgress;
         }
@@ -361,18 +362,35 @@ internal static class VolunteerManager
         int counter = 0;
         foreach (DO.Volunteer doVolunteer in DoVolList)
         {
+            CallInProgress? currentCall = callProgress(doVolunteer.Id);
             counter++;
-            if(callProgress( doVolunteer.Id)==null)
+            if (currentCall == null)
             {
                 if (counter % 3 == 0)
                 {
-                    var availableCalls=GetOpen 
-                      
+                    var availableCalls = CallManager.GetOpenCallInList(doVolunteer.Id, null, null);
+                    int cntOpenCall = availableCalls.Count();
+                    if (cntOpenCall != 0)
+                    {
+                        int callId = availableCalls.Skip(s_rand.Next(0, cntOpenCall)).First()!.Id;
+                        CallManager.ChooseCallToTreat(doVolunteer.Id, callId);
+                    }
                 }
             }
+            else
+            {
+                DateTime maxTime = currentCall.OpeningTime.AddHours(currentCall.Distance).AddMonths(1);
+                if (AdminManager.Now > maxTime)
+                {
+                    CallManager.EndTreatment(doVolunteer.Id, currentCall.Id);
+                }
+                else if (counter % 10 == 0)
+                {
+                    CallManager.CancelTreatment(doVolunteer.Id, currentCall.Id);
+                }
+            }
+
         }
-
-
     }
     #endregion
 }
