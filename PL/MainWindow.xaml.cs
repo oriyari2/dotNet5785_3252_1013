@@ -60,8 +60,13 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnAddOneHour_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.AdvanceClock(BO.TimeUnit.Hour); // Advance the clock by one hour
-        RefreshCallAmounts();
+        try{s_bl.Admin.AdvanceClock(BO.TimeUnit.Hour); // Advance the clock by one hour
+            RefreshCallAmounts();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     /// <summary>
@@ -69,8 +74,13 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnAddOneDay_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.AdvanceClock(BO.TimeUnit.Day); // Advance the clock by one day
-        RefreshCallAmounts();
+       try{ s_bl.Admin.AdvanceClock(BO.TimeUnit.Day); // Advance the clock by one day
+            RefreshCallAmounts();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     /// <summary>
@@ -78,8 +88,13 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnAddOneMonth_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.AdvanceClock(BO.TimeUnit.Month); // Advance the clock by one month
-        RefreshCallAmounts();
+        try{s_bl.Admin.AdvanceClock(BO.TimeUnit.Month); // Advance the clock by one month
+            RefreshCallAmounts();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     /// <summary>
@@ -87,8 +102,13 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnAddOneYear_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.AdvanceClock(BO.TimeUnit.Year); // Advance the clock by one year
-        RefreshCallAmounts();
+       try{ s_bl.Admin.AdvanceClock(BO.TimeUnit.Year); // Advance the clock by one year
+            RefreshCallAmounts();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     // DependencyProperty for CurrentRiskRange, enables animation, styling, binding, etc.

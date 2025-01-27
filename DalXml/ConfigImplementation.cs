@@ -12,9 +12,7 @@ internal class ConfigImplementation : IConfig
     /// </summary>
     public DateTime Clock
     {
-        [MethodImpl(MethodImplOptions.Synchronized)]
         get => Config.Clock; // Retrieves the clock from the Config class
-        [MethodImpl(MethodImplOptions.Synchronized)]
         set => Config.Clock = value; // Sets the clock value in the Config class
     }
 
@@ -23,16 +21,13 @@ internal class ConfigImplementation : IConfig
     /// </summary>
     public TimeSpan RiskRange
     {
-        [MethodImpl(MethodImplOptions.Synchronized)]
         get => Config.RiskRange; // Retrieves the risk range from the Config class
-        [MethodImpl(MethodImplOptions.Synchronized)]
         set => Config.RiskRange = value; // Sets the risk range value in the Config class
     }
 
     /// <summary>
     ///Method to reset the configuration settings
     /// </summary>
-    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Reset()
     {
         Config.Reset(); // Calls the Reset method of the Config class

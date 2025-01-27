@@ -242,18 +242,7 @@ internal static class VolunteerManager
     #endregion
 
     #region distance
-    /// <summary>
-    /// Returns the distance between two addresses based on their coordinates.
-    /// </summary>
-    /// <param name="address1">The first address</param>
-    /// <param name="address2">The second address</param>
-    /// <returns>The distance between the two addresses in meters</returns>
-    public static double GetDistance(string address1, string address2)
-    {
-        var coord1 = GetCoordinates(address1);  // Get coordinates of address1
-        var coord2 = GetCoordinates(address2);  // Get coordinates of address2
-        return CalculateDistance(coord1[0], coord1[1], coord2[0], coord2[1]);  // Calculate and return distance
-    }
+    
 
     /// <summary>
     /// Calculates the distance between two sets of latitude and longitude coordinates.

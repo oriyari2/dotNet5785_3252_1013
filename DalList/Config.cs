@@ -1,4 +1,6 @@
-﻿namespace Dal;
+﻿using System.Runtime.CompilerServices;
+
+namespace Dal;
 
 /// <summary>
 ///Static class for configuration settings
@@ -13,12 +15,25 @@ internal static class Config
     private static int s_nextAssignmentId = StartAssignmentId; // Tracks the next available assignment ID
     internal static int NextAssignmentId { get => s_nextAssignmentId++; } // Property to get the next assignment ID and increment
 
-    internal static DateTime Clock { get; set; } = DateTime.Now; // Property for the current date and time
-    internal static TimeSpan RiskRange { get; set; } = TimeSpan.Zero; // Property for the risk range duration
+    internal static DateTime Clock 
+    {
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        get;
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        set; 
+    } = DateTime.Now; // Property for the current date and time
+    internal static TimeSpan RiskRange 
+    {
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        get;
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        set; 
+    } = TimeSpan.Zero; // Property for the risk range duration
 
     /// <summary>
     ///Method to reset configuration settings
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     internal static void Reset()
     {
         s_nextAssignmentId = StartAssignmentId; // Reset the assignment ID counter

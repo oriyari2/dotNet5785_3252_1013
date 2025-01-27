@@ -481,6 +481,16 @@
     <MaxTimeToEnd>2026-12-20T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>49</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
+    <Address>Eliashar 5, Jerusalem, Israel</Address>
+    <Latitude>31.767</Latitude>
+    <Longitude>35.208</Longitude>
+    <OpeningTime>2024-01-21T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-01-21T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>50</Id>
     <CallType>Babysitting</CallType>
     <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
@@ -509,6 +519,16 @@
     <Longitude>35.215</Longitude>
     <OpeningTime>2024-04-24T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-04-24T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
+    <Id>53</Id>
+    <CallType>Babysitting</CallType>
+    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
+    <Address>Ben Gurion 12, Jerusalem, Israel</Address>
+    <Latitude>31.754</Latitude>
+    <Longitude>35.216</Longitude>
+    <OpeningTime>2024-05-25T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-05-25T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>54</Id>
@@ -679,15 +699,5 @@
     <Longitude>35.214</Longitude>
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
-    <Id>53</Id>
-    <CallType>Cleaning</CallType>
-    <VerbalDescription>Need a volunteer to take care of the children</VerbalDescription>
-    <Address>Ben Gurion 12, Jerusalem, Israel</Address>
-    <Latitude>31.754</Latitude>
-    <Longitude>35.216</Longitude>
-    <OpeningTime>2024-05-25T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-05-25T00:00:00</MaxTimeToEnd>
   </Call>
 </Calls>

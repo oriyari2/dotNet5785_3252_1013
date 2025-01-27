@@ -27,7 +27,8 @@ internal static class AdminManager //stage 4
         get => s_dal.Config.RiskRange;
         set
         {
-            s_dal.Config.RiskRange = value;
+            lock (BlMutex)//not sure if need
+                s_dal.Config.RiskRange = value;
             ConfigUpdatedObservers?.Invoke(); // stage 5
         }
     }
@@ -66,7 +67,9 @@ internal static class AdminManager //stage 4
     internal static void UpdateClock(DateTime newClock) //stage 4-7
     {
         //var oldClock = s_dal.Config.Clock; //stage 4
-        s_dal.Config.Clock = newClock; //stage 4
+
+        lock (BlMutex)//not sure if need
+            s_dal.Config.Clock = newClock; //stage 4
 
         if (_periodicTask is null || _periodicTask.IsCompleted) //stage 7
             _periodicTask = Task.Run(() => CallManager.UpdateExpired());

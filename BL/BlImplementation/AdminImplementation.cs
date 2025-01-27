@@ -20,7 +20,6 @@ public class AdminImplementation : IAdmin
         AdminManager.ThrowOnSimulatorIsRunning();
         AdminManager.UpdateClock(unit switch // Switch case to handle different time units
         {
-
             BO.TimeUnit.Minute => AdminManager.Now.AddMinutes(1), // Add one minute
             BO.TimeUnit.Hour => AdminManager.Now.AddHours(1), // Add one hour
             BO.TimeUnit.Day => AdminManager.Now.AddDays(1), // Add one day
@@ -46,7 +45,7 @@ public class AdminImplementation : IAdmin
     public TimeSpan GetRiskRange()
     {
         return AdminManager.RiskRange; // Retrieve the risk range configuration from the DAL.
-    }
+    }  
 
     /// <summary>
     /// Initializes the database and clock.
