@@ -44,8 +44,15 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
     {
-        s_bl.Admin.AdvanceClock(BO.TimeUnit.Minute); // Advance the clock by one minute
-        RefreshCallAmounts();
+        try
+        {
+            s_bl.Admin.AdvanceClock(BO.TimeUnit.Minute); // Advance the clock by one minute
+            RefreshCallAmounts();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     /// <summary>
