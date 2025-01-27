@@ -366,7 +366,7 @@ internal static class VolunteerManager
             {
                 if (counter % 3 == 0)
                 {
-                    var availableCalls=GetOpen
+                    var availableCalls=GetOpen 
                       
                 }
             }
