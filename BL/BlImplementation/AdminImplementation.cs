@@ -15,15 +15,20 @@ public class AdminImplementation : IAdmin
     /// Advances the clock by a specified time unit.
     /// </summary>
     /// <param name="unit">The time unit to advance (Minute, Hour, Day, Month, or Year).</param>
-    public void AdvanceClock(BO.TimeUnit unit) => AdminManager.UpdateClock(unit switch // Switch case to handle different time units
+    public void AdvanceClock(BO.TimeUnit unit)
     {
-        BO.TimeUnit.Minute => AdminManager.Now.AddMinutes(1), // Add one minute
-        BO.TimeUnit.Hour => AdminManager.Now.AddHours(1), // Add one hour
-        BO.TimeUnit.Day => AdminManager.Now.AddDays(1), // Add one day
-        BO.TimeUnit.Month => AdminManager.Now.AddMonths(1), // Add one month
-        BO.TimeUnit.Year => AdminManager.Now.AddYears(1), // Add one year
-        _ => DateTime.MinValue // Default case to return a minimum value if the unit is not recognized
-    });
+        AdminManager.ThrowOnSimulatorIsRunning();
+        AdminManager.UpdateClock(unit switch // Switch case to handle different time units
+        {
+
+            BO.TimeUnit.Minute => AdminManager.Now.AddMinutes(1), // Add one minute
+            BO.TimeUnit.Hour => AdminManager.Now.AddHours(1), // Add one hour
+            BO.TimeUnit.Day => AdminManager.Now.AddDays(1), // Add one day
+            BO.TimeUnit.Month => AdminManager.Now.AddMonths(1), // Add one month
+            BO.TimeUnit.Year => AdminManager.Now.AddYears(1), // Add one year
+            _ => DateTime.MinValue // Default case to return a minimum value if the unit is not recognized
+        });
+    }
 
     /// <summary>
     /// Gets the current clock time.
@@ -48,10 +53,8 @@ public class AdminImplementation : IAdmin
     /// </summary>
     public void Intialize()
     {
-        DalTest.Initialization.Do(); // Perform the DAL initialization
-        AdminManager.UpdateClock(AdminManager.Now); // Set the current time in the AdminManager
-        AdminManager.RiskRange = AdminManager.RiskRange; //Set the current risk range in the AdminManager in order to report to the observers
-
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.InitializeDB(); //stage 7
     }
 
     /// <summary>
@@ -59,11 +62,8 @@ public class AdminImplementation : IAdmin
     /// </summary>
     public void Reset()
     {
-        _dal.ResetDB(); // Reset the database to its initial state
-        AdminManager.UpdateClock(AdminManager.Now); // Reset the clock to the current time
-        AdminManager.RiskRange = AdminManager.RiskRange;// Reset the risk range to the current risk range
-        Console.WriteLine("Reset completed successfully."); // Inform the user that the reset was successful
-
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.ResetDB(); //stage 7
     }
 
     /// <summary>
@@ -72,6 +72,7 @@ public class AdminImplementation : IAdmin
     /// <param name="riskRange">The new risk range value to set.</param>
     public void SetRiskRange(TimeSpan riskRange)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         AdminManager.RiskRange = riskRange; // Set the new risk range in the DAL configuration.
     }
 
@@ -85,6 +86,15 @@ public class AdminImplementation : IAdmin
     public void RemoveConfigObserver(Action configObserver) =>
     AdminManager.ConfigUpdatedObservers -= configObserver;
     #endregion Stage 5
+
+    public void StartSimulator(int interval)  //stage 7
+    {
+        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
+        AdminManager.Start(interval); //stage 7
+    }
+
+    public void StopSimulator()
+    => AdminManager.Stop(); //stage 7
 
 }
 

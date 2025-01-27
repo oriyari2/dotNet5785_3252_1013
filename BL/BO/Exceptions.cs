@@ -25,6 +25,17 @@ public class BlAlreadyExistsException : Exception
                 : base(message, innerException) { }
 }
 
+[Serializable]
+public class BLTemporaryNotAvailableException : Exception
+{
+    // Constructor that takes a message to describe the exception.
+    public BLTemporaryNotAvailableException(string? message) : base(message) { }
+
+    // Constructor that takes a message and an inner exception.
+    public BLTemporaryNotAvailableException(string message, Exception innerException)
+                : base(message, innerException) { }
+}
+
 // Exception for invalid values passed in business logic operations.
 [Serializable]
 public class BlInvalidValueExeption : Exception

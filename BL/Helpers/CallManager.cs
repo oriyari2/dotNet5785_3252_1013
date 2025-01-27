@@ -49,8 +49,10 @@ internal static class CallManager
     /// </summary>
     internal static List<BO.CallAssignInList> GetCallAssignInList(IEnumerable<DO.Assignment> assignment)
     {
+        IEnumerable<BO.CallAssignInList> toReturn;
         // Projects the assignments to a list of CallAssignInList objects.
-        var toReturn = from item in assignment
+        lock (AdminManager.BlMutex)
+            toReturn = from item in assignment
                        let volunteerr = (s_dal.Volunteer.Read(item.VolunteerId))  // Retrieves volunteer details.
                        select new BO.CallAssignInList()
                        {
@@ -67,9 +69,11 @@ internal static class CallManager
     /// <summary>
     /// Creates or updates a call based on the provided BO.Call object.
     /// </summary>
-    internal static DO.Call HelpCreateUodate(BO.Call call)
+    internal static DO.Call HelpCreateUpdate(BO.Call call, double[] cordinate=null)
     {
-        double[] cordinate = VolunteerManager.GetCoordinates(call.Address);  // Retrieves the coordinates based on the address. Throws an exception if the address is invalid.
+        
+        if (cordinate==null)
+           cordinate = VolunteerManager.GetCoordinates(call.Address);  // Retrieves the coordinates based on the address. Throws an exception if the address is invalid.
         AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
 
         // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
@@ -93,18 +97,26 @@ internal static class CallManager
         };
     }
 
+    internal static IEnumerable<BO.OpenCallInList> HelpGetOpen(IEnumerable<BO.OpenCallInList>) 
+    { 
+
+    }
     /// <summary>
     /// Updates expired calls by checking the current assignments and their time status.
     /// </summary>
     internal static void UpdateExpired()
     {
+        IEnumerable<DO.Call> expiredCalls;
         // Step 1: Retrieves all calls where the MaxTimeToEnd has passed.
-        var expiredCalls = s_dal.Call.ReadAll(c => c.MaxTimeToEnd < AdminManager.Now);
+        lock (AdminManager.BlMutex)
+            expiredCalls = s_dal.Call.ReadAll(c => c.MaxTimeToEnd < AdminManager.Now);
 
         // Step 2: Checks for calls without assignments and creates a new assignment with the expired status.
         foreach (var call in expiredCalls)
         {
-            var hasAssignment = s_dal.Assignment
+            bool hasAssignment;
+            lock (AdminManager.BlMutex)
+                hasAssignment = s_dal.Assignment
                 .ReadAll(a => a.CallId == call.Id)
                 .Any();
 
@@ -118,13 +130,18 @@ internal static class CallManager
                     ActualEndTime: AdminManager.Now,  // Sets the actual end time to the current time.
                     TheEndType: DO.EndType.expired  // Sets the end type to expired.
                 );
-                s_dal.Assignment.Create(newAssignment);  // Creates the new assignment.
+                lock (AdminManager.BlMutex)
+                    s_dal.Assignment.Create(newAssignment);  // Creates the new assignment.
             }
             
         }
 
+        IEnumerable<DO.Assignment> listAssi;
         // Step 3: Updates assignments with null ActualEndTime for calls that are expired.
-        foreach (var assignment in s_dal.Assignment.ReadAll(a => a.ActualEndTime == null))
+        lock (AdminManager.BlMutex)
+           listAssi =s_dal.Assignment.ReadAll(a => a.ActualEndTime == null);
+        
+        foreach (var assignment in listAssi)
         {
             var call = expiredCalls.FirstOrDefault(c => c.Id == assignment.CallId);
             if (call != null)  // If the call is still marked as expired
@@ -134,9 +151,10 @@ internal static class CallManager
                     ActualEndTime = AdminManager.Now,  // Sets the actual end time to the current time.
                     TheEndType = DO.EndType.expired  // Marks the end type as expired.
                 };
-
-                s_dal.Assignment.Update(updatedAssignment);  // Updates the assignment with the new values.
+                lock (AdminManager.BlMutex)
+                    s_dal.Assignment.Update(updatedAssignment);  // Updates the assignment with the new values.
             }
         }
+        CallManager.Observers.NotifyListUpdated();
     }
 }

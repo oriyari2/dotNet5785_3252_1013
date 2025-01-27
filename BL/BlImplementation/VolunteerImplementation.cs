@@ -61,6 +61,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="BO.BlAlreadyExistsException">Thrown if a volunteer with the same ID already exists.</exception>
     public void Create(BO.Volunteer boVolunteer)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Validate the volunteer's data using utility functions
         VolunteerManager.IsValidEmail(boVolunteer.Email); // Check if the email is valid
         VolunteerManager.IsValidID(boVolunteer.Id); // Check if the ID is valid
@@ -77,7 +78,8 @@ internal class VolunteerImplementation : IVolunteer
         try
         {
             // Attempt to add the volunteer to the database
-            _dal.Volunteer.Create(doVolunteer);
+            lock (AdminManager.BlMutex)
+                _dal.Volunteer.Create(doVolunteer);
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -95,6 +97,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the volunteer does not exist.</exception>
     public void Delete(int id)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         var volunteer = Read(id); // Check if volunteer exists by reading the volunteer's information
         if (volunteer.IsProgress != null) // If the volunteer has an ongoing assignment, prevent deletion
             throw new BO.BlcantDeleteItem($"Volunteer with ID={id} can't be deleted because he has a current call in progress");
@@ -108,7 +111,8 @@ internal class VolunteerImplementation : IVolunteer
         try
         {
             // Attempt to delete the volunteer from the database
-            _dal.Volunteer.Delete(id);
+            lock (AdminManager.BlMutex)
+                _dal.Volunteer.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -152,7 +156,9 @@ internal class VolunteerImplementation : IVolunteer
     public BO.Volunteer Read(int id)
     {
         // Try to read the volunteer from the database
-        var doVolunteer = _dal.Volunteer.Read(id) ??
+        DO.Volunteer? doVolunteer;
+        lock (AdminManager.BlMutex)
+             doVolunteer = _dal.Volunteer.Read(id) ??
         throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
 
         // Map the data object (DO) to the business object (BO)
@@ -186,7 +192,9 @@ internal class VolunteerImplementation : IVolunteer
     public IEnumerable<BO.VolunteerInList> ReadAll(bool? active, BO.FieldsVolunteerInList field = BO.FieldsVolunteerInList.Id, BO.CallType? callType = null)
     {
         // Retrieve all volunteers from the database, filtering by active status if needed
-        var listVol = active != null
+        IEnumerable<DO.Volunteer> listVol;
+        lock (AdminManager.BlMutex)
+            listVol = active != null
             ? _dal.Volunteer.ReadAll(s => s.Active == active)
             : _dal.Volunteer.ReadAll();
 
@@ -239,6 +247,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the volunteer does not exist.</exception>
     public void Update(int id, BO.Volunteer volunteer)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         BO.Volunteer asker = Read(id); // Get the volunteer that is trying to update
         if (asker.Id != id && asker.Role != BO.RoleType.manager)
             throw new BO.BlUserCantUpdateItemExeption("The asker can't update this Volunteer");
@@ -252,7 +261,12 @@ internal class VolunteerImplementation : IVolunteer
         VolunteerManager.IsValidID(volunteer.Id); // Check if the ID is valid
         VolunteerManager.IsValidPhoneNumber(volunteer.PhoneNumber); // Check if the phone number is valid
 
-        double[] cordinate = VolunteerManager.GetCoordinates(volunteer.Address); // Get coordinates from the address
+        double[] cordinate;
+        if (oldVolunteer.Address != volunteer.Address|| oldVolunteer.Latitude==null|| oldVolunteer.Longitude==null)
+            cordinate = VolunteerManager.GetCoordinates(volunteer.Address); // Get coordinates from the address
+        else
+
+            cordinate = [(double)oldVolunteer.Latitude,(double)oldVolunteer.Longitude];
 
         string password = volunteer.Password;
         if (password != oldVolunteer.Password)
@@ -279,7 +293,8 @@ internal class VolunteerImplementation : IVolunteer
                 (DO.DistanceType)volunteer.TheDistanceType);
 
             // Update the volunteer in the database
-            _dal.Volunteer.Update(doVolunteer);
+            lock (AdminManager.BlMutex)
+                _dal.Volunteer.Update(doVolunteer);
         }
         catch (DO.DalDoesNotExistException ex)
         {

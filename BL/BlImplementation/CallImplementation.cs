@@ -3,8 +3,7 @@ using BlApi;
 using Helpers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
+using System.Linq;
 /*
         //CallManager
         //VolunteerManager 
@@ -77,16 +76,20 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlUserCantUpdateItemExeption">Thrown if the volunteer is not authorized to cancel the assignment.</exception>
     public void CancelTreatment(int RequesterId, int AssignmentId)
     {
-
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Retrieve the assignment object based on its ID.
-        var assignment = _dal.Assignment.Read(AssignmentId);
+        DO.Assignment? assignment;
+        lock (AdminManager.BlMutex)
+             assignment = _dal.Assignment.Read(AssignmentId);
         // Check if the assignment does not exist.
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
 
         BO.Call call = Read(assignment.CallId);
         // Retrieve the volunteer (asker) object based on the RequesterId.
-        var asker = _dal.Volunteer.Read(RequesterId);
+        DO.Volunteer? asker;
+        lock (AdminManager.BlMutex)
+            asker = _dal.Volunteer.Read(RequesterId);
 
         // Check if the volunteer does not exist.
         if (asker == null)
@@ -112,7 +115,8 @@ internal class CallImplementation : ICall
         try
         {
             // Update the assignment in the data layer.
-            _dal.Assignment.Update(newAssign);
+            lock (AdminManager.BlMutex)
+                _dal.Assignment.Update(newAssign);
            
         }
         catch (DO.DalDoesNotExistException ex)
@@ -134,6 +138,7 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlDoesNotExistException">Thrown if no matching open call is found.</exception>
     public void ChooseCallToTreat(int volunteerId, int CallId)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         var currentCall = VolunteerManager.GetCurrentCall(volunteerId);
         if (currentCall != null)
             throw new BO.BlUserCantUpdateItemExeption("Volunteer cant choose new call to treat" +
@@ -158,7 +163,8 @@ internal class CallImplementation : ICall
         };
 
         // Create the assignment in the data layer.
-        _dal.Assignment.Create(assignment);
+        lock (AdminManager.BlMutex)
+            _dal.Assignment.Create(assignment);
         
         CallManager.Observers.NotifyItemUpdated(CallId);  //update current call  and obserervers etc.
         CallManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
@@ -176,12 +182,14 @@ internal class CallImplementation : ICall
     /// 
     public void Create(BO.Call call)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Call a helper method to convert BO.Call to DO.Call
-        DO.Call doCall = CallManager.HelpCreateUodate(call);
+        DO.Call doCall = CallManager.HelpCreateUpdate(call);
         try
         {
             // Attempt to create the new call in the database
-            _dal.Call.Create(doCall);
+            lock (AdminManager.BlMutex)
+                _dal.Call.Create(doCall);
         }
         catch (DO.DalAlreadyExistsException ex)
         {
@@ -199,6 +207,7 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlcantDeleteItem">Thrown if the call cannot be deleted (due to assignments).</exception>
     public void Delete(int id)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Retrieve the call object by ID
         BO.Call call = Read(id);
 
@@ -216,7 +225,8 @@ internal class CallImplementation : ICall
         try
         {
             // Attempt to delete the call from the database
-            _dal.Call.Delete(id);
+            lock (AdminManager.BlMutex)
+                _dal.Call.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -235,8 +245,11 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlUserCantUpdateItemExeption">Thrown if the volunteer is not authorized to end the assignment.</exception>
     public void EndTreatment(int volunteerId, int AssignmentId)
     {
+        AdminManager.ThrowOnSimulatorIsRunning();
         // Retrieve the assignment by ID
-        var assignment = _dal.Assignment.Read(AssignmentId);
+        DO.Assignment? assignment;
+        lock (AdminManager.BlMutex)
+            assignment = _dal.Assignment.Read(AssignmentId);
 
         if (assignment == null)
             throw new BO.BlDoesNotExistException($"Assignment with id={AssignmentId} does Not exist\"");
@@ -258,7 +271,8 @@ internal class CallImplementation : ICall
         try
         {
             // Attempt to update the assignment in the database
-            _dal.Assignment.Update(newAssign);
+            lock (AdminManager.BlMutex)
+                _dal.Assignment.Update(newAssign);
 
         }
         catch (DO.DalDoesNotExistException ex)
@@ -283,10 +297,14 @@ internal class CallImplementation : ICall
     public IEnumerable<BO.ClosedCallInList> GetClosedCallInList(int volunteerId, BO.CallType? callTypeFilter, BO.FieldsClosedCallInList? sortField)
     {
         // Retrieve all calls from the DAL (Data Access Layer)
-        var allCalls = _dal.Call.ReadAll();
+        IEnumerable<DO.Call> allCalls;
+        lock (AdminManager.BlMutex)
+            allCalls = _dal.Call.ReadAll();
 
         // Retrieve all assignments from the DAL
-        var allAssignments = _dal.Assignment.ReadAll();
+        IEnumerable<DO.Assignment> allAssignments;
+        lock (AdminManager.BlMutex)
+           allAssignments = _dal.Assignment.ReadAll();
 
         // Filter the calls by volunteer ID and closed status (TheEndType != null)
         var filteredCalls = from call in allCalls
@@ -343,7 +361,9 @@ internal class CallImplementation : ICall
     public IEnumerable<BO.OpenCallInList> GetOpenCallInList(int volunteerId, BO.CallType? callTypeFilter, BO.FieldsOpenCallInList? sortField)
     {
         // Retrieve the volunteer from the DAL
-        DO.Volunteer volunteer = _dal.Volunteer.Read(volunteerId);
+        DO.Volunteer volunteer;
+        lock (AdminManager.BlMutex)
+            volunteer = _dal.Volunteer.Read(volunteerId);
         if (volunteer == null)
             throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteerId} does not exists");
 
@@ -351,7 +371,9 @@ internal class CallImplementation : ICall
         var allCalls = ReadAll(null, null, null);
 
         // Retrieve all assignments from the DAL
-        var allAssignments = _dal.Assignment.ReadAll();
+        IEnumerable<DO.Assignment> allAssignments;
+        lock (AdminManager.BlMutex)
+            allAssignments = _dal.Assignment.ReadAll();
 
         // Calculate the volunteer's latitude and longitude
         double lonVol = (double)volunteer.Longitude;
@@ -419,11 +441,15 @@ internal class CallImplementation : ICall
     public BO.Call Read(int id)
     {
         // Retrieve the call from the DAL
-        var call = _dal.Call.Read(id) ??
+        DO.Call call;
+        lock (AdminManager.BlMutex)
+            call = _dal.Call.Read(id) ??
         throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
 
         // Retrieve the assignments for the call
-        var assignments = _dal.Assignment.ReadAll(s => s.CallId == id)
+        IOrderedEnumerable<DO.Assignment> assignments;
+        lock (AdminManager.BlMutex)
+            assignments = _dal.Assignment.ReadAll(s => s.CallId == id)
                                         .OrderByDescending(s => s.Id);
         var latestAssignment = assignments.FirstOrDefault();
 
@@ -452,13 +478,20 @@ internal class CallImplementation : ICall
     /// <returns>A list of calls, filtered and sorted as requested.</returns>
     public IEnumerable<BO.CallInList> ReadAll(BO.FieldsCallInList? filter, object? toFilter, BO.FieldsCallInList? toSort)
     {
+        IEnumerable<DO.Call> listCall;
         // Retrieve all calls from the DAL
-        var listCall = _dal.Call.ReadAll();
+        lock (AdminManager.BlMutex)
+            listCall = _dal.Call.ReadAll();
 
         // Retrieve all assignments from the DAL
-        var listAssignment = _dal.Assignment.ReadAll();
+        IEnumerable<DO.Assignment> listAssignment;
+        lock (AdminManager.BlMutex)
+           listAssignment = _dal.Assignment.ReadAll();
         // Join calls and assignments to create the list of calls in the desired format
-        var callInList = from item in listCall
+
+        IEnumerable< BO.CallInList>? callInList;
+        lock (AdminManager.BlMutex)
+            callInList = from item in listCall
                          let assignment = listAssignment.Where(s => s.CallId == item.Id).OrderByDescending(s => s.Id).FirstOrDefault()
                          let volunteer = assignment != null ? _dal.Volunteer.Read(assignment.VolunteerId) : null
                          let TempTimeToEnd = item.MaxTimeToEnd - (AdminManager.Now)
@@ -530,14 +563,22 @@ internal class CallImplementation : ICall
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the call does not exist.</exception>
     public void Update(BO.Call call)
     {
-        var oldCall = _dal.Call.Read(call.Id);
+        AdminManager.ThrowOnSimulatorIsRunning();
+        DO.Call? oldCall;
+        lock (AdminManager.BlMutex)
+            oldCall = _dal.Call.Read(call.Id);
         // Convert BO.Call to DO.Call
         if (call.status == BO.Status.close)
             throw new BO.BlUserCantUpdateItemExeption("This call is closed");
         if (call.status == BO.Status.expired)
             throw new BO.BlUserCantUpdateItemExeption("This call is expired");
-        DO.Call doCall = CallManager.HelpCreateUodate(call);
-
+        
+        DO.Call doCall;
+        if (oldCall.Address!=call.Address)
+           doCall = CallManager.HelpCreateUpdate(call);
+        else
+            doCall = CallManager.HelpCreateUpdate(call,[call.Latitude,call.Longitude]);
+        
         if (call.status == BO.Status.treatment || call.status == BO.Status.riskTreatment)
         {
             if (doCall.Address != oldCall.Address || doCall.TheCallType != oldCall.TheCallType ||
@@ -547,7 +588,8 @@ internal class CallImplementation : ICall
         try
         {
             // Attempt to update the call in the DAL
-            _dal.Call.Update(doCall);
+            lock (AdminManager.BlMutex)
+                _dal.Call.Update(doCall);
         }
         catch
         {

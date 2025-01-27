@@ -1,6 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Implementation of the ICall interface, managing CRUD operations for Call entities.
@@ -11,6 +12,7 @@ internal class CallImplementation : ICall
     /// Creates a new Call entity and adds it to the data source.
     /// </summary>
     /// <param name="item">The Call object to be added.</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Create(Call item)
     {
         Call newItem = item with { Id = Config.NextCallId }; // Create a new Call with the next available ID
@@ -22,6 +24,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="id">The ID of the Call to be deleted.</param>
     /// <exception cref="Exception">Thrown if the Call with the specified ID is not found.</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         Call? objToDelete = Read(id); // Retrieve the Call object to delete using its ID
@@ -39,6 +42,7 @@ internal class CallImplementation : ICall
     /// <summary>
     /// Deletes all Call entities from the data source.
     /// </summary>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteAll()
     {
         DataSource.Calls.Clear(); // Clear the entire list of Calls in the data source
@@ -49,6 +53,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="id">The ID of the Call to be read.</param>
     /// <returns>The Call object if found; otherwise, null.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Call? Read(int id)
     {
         return DataSource.Calls.FirstOrDefault(obj => obj.Id == id);
@@ -60,6 +65,7 @@ internal class CallImplementation : ICall
     /// Reads all Call entities from the data source.
     /// </summary>
     /// <returns>A list containing all Call objects in the data source.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Call> ReadAll(Func<Call, bool>? filter = null) // Defines a function that returns a collection of calls, with an optional custom filter
     => filter != null // Checks if a filter condition was provided
            ? from item in DataSource.Calls // If there is a filter, starts a query on the calls collection
@@ -74,6 +80,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="item">The updated Call object.</param>
     /// <exception cref="Exception">Thrown if the Call to update is not found.</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Call item)
     {
         Delete(item.Id); // Delete the existing Call object by its ID; throws an exception if not found
@@ -85,6 +92,7 @@ internal class CallImplementation : ICall
     /// </summary>
     /// <param name="filter">A predicate function to filter the Call objects.</param>
     /// <returns>The first matching Call object, or null if no match is found.</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Call? Read(Func<Call, bool> filter)
     {
         return DataSource.Calls.FirstOrDefault(filter); // Searches for the first Call that matches the filter
