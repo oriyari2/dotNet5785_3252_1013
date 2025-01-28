@@ -277,52 +277,74 @@ internal static class VolunteerManager
     /// </summary>
     /// <param name="address">Address to be geocoded</param>
     /// <returns>Array of latitude and longitude values</returns>
-    public static double[] GetCoordinates(string address) // Handle exceptions for invalid addresses
+    public static async Task<double[]> GetCoordinatesAsync(string address)
     {
         if (string.IsNullOrWhiteSpace(address))
         {
-            throw new ArgumentException("Address cannot be empty or null.", nameof(address));  // Check for null or empty address
+            throw new ArgumentException("Address cannot be empty or null.", nameof(address));
         }
 
-        string apiKey = "https://geocode.maps.co/search?q=address&api_key=67627d3f6df90712511821ksqbfefac";  // Replace with your actual API key
-        string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key={apiKey}";  // Construct URL
-        HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);  // Create web request
+        string apiKey = "https://geocode.maps.co/search?q=address&api_key=67627d3f6df90712511821ksqbfefac";
+        string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key={apiKey}";
 
         try
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);  // Create another web request
-            request.Method = "GET";  // Set request method to GET
+            using var client = new HttpClient();
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode(); // Throws if not 200-299
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())  // Get response
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var results = JsonSerializer.Deserialize<LocationResult[]>(jsonResponse, options);
+
+            if (results == null || results.Length == 0)
             {
-                if (response.StatusCode != HttpStatusCode.OK)  // Check for errors
-                {
-                    throw new Exception($"Error in request: {response.StatusCode}");
-                }
-
-                using (StreamReader reader = new StreamReader(response.GetResponseStream()))  // Read the response stream
-                {
-                    string jsonResponse = reader.ReadToEnd();  // Get the response body
-
-                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };  // Set JSON options
-                    var results = JsonSerializer.Deserialize<LocationResult[]>(jsonResponse, options);  // Deserialize JSON response
-
-                    if (results == null || results.Length == 0)  // If no results found
-                    {
-                        throw new Exception("No coordinates found for the given address.");
-                    }
-
-                    return new double[] { double.Parse(results[0].Lat), double.Parse(results[0].Lon) };  // Return coordinates
-                }
+                throw new Exception("No coordinates found for the given address.");
             }
+
+            return new double[] { double.Parse(results[0].Lat), double.Parse(results[0].Lon) };
         }
-        catch (WebException ex)
+        catch (HttpRequestException ex)
         {
-            throw new Exception("Error sending web request: " + ex.Message);  // Handle web exceptions
+            throw new Exception("Error sending web request: " + ex.Message);
         }
         catch (Exception ex)
         {
-            throw new Exception("General error: " + ex.Message);  // Handle other exceptions
+            throw new Exception("General error: " + ex.Message);
+        }
+    }
+
+
+
+    internal static async Task GetCoordinates(DO.Volunteer doVolunteer)
+    {
+        if (doVolunteer.Address is not null)
+        {
+            double[]? loc = await GetCoordinatesAsync(doVolunteer.Address);
+            if (loc is not null)
+            {
+                doVolunteer = doVolunteer with { Latitude = loc[0], Longitude = loc[1] };
+                lock (AdminManager.BlMutex)
+                    s_dal.Volunteer.Update(doVolunteer);
+                Observers.NotifyListUpdated();
+                Observers.NotifyItemUpdated(doVolunteer.Id);
+            }
+        }
+    }
+
+    internal static async Task GetCoordinates(DO.Call doCall)
+    {
+        if (doCall.Address is not null)
+        {
+            double[]? loc = await GetCoordinatesAsync(doCall.Address);
+            if (loc is not null)
+            {
+                doCall = doCall with { Latitude = loc[0], Longitude = loc[1] };
+                lock (AdminManager.BlMutex)
+                    s_dal.Call.Update(doCall);
+                CallManager.Observers.NotifyListUpdated();
+                CallManager.Observers.NotifyItemUpdated(doCall.Id);
+            }
         }
     }
 

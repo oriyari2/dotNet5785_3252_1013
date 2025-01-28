@@ -15,13 +15,13 @@ namespace PL
         /// <summary>
         /// Constructor that initializes the MainVolunteerWindow with optional volunteer ID.
         /// </summary>
-        public MainVolunteerWindow(int id3 = 0)
+        public MainVolunteerWindow(int id = 0)
         {
             InitializeComponent();
             DataContext = this;
             try
             {
-                CurrentVolunteer = s_bl.Volunteer.Read(id3); // Retrieve volunteer details
+                CurrentVolunteer = s_bl.Volunteer.Read(id); // Retrieve volunteer details
                 if (CurrentVolunteer.IsProgress != null)
                 {
                     CurrentCall = s_bl.Call.Read(CurrentVolunteer.IsProgress.CallId); // Retrieve current call if progress exists
@@ -207,7 +207,16 @@ namespace PL
         /// </summary>
         private void RefreshCallInProgress()
         {
-            CurrentCall = helpReadCallInProgress(); // Update the current call from the data source
+            var newCall = helpReadCallInProgress();
+            if (newCall?.status == BO.Status.expired)
+            {
+                CurrentCall = null;
+                RefreshVolunteer();
+            }
+            else
+            {
+                CurrentCall = newCall;
+            }
         }
 
         /// <summary>
@@ -215,10 +224,23 @@ namespace PL
         /// </summary>
         private BO.Call? helpReadCallInProgress()
         {
-            var volCall = s_bl.Volunteer.Read(CurrentVolunteer.Id).IsProgress; // Get volunteer's call progress
-            if (volCall != null)
-                return s_bl.Call.Read(volCall.CallId); // Return the call details if in progress
-            return null;
+            try
+            {
+                var volunteer = s_bl.Volunteer.Read(CurrentVolunteer.Id);
+                if (volunteer.IsProgress != null)
+                {
+                    var call = s_bl.Call.Read(volunteer.IsProgress.CallId);
+                    // אם הקריאה פגת תוקף, נחזיר null
+                    if (call.status == BO.Status.expired)
+                        return null;
+                    return call;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>

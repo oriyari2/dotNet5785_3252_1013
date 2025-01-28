@@ -19,34 +19,37 @@ internal static class CallManager
     /// </summary>
     internal static BO.Status CheckStatus(DO.Assignment? assignment, DO.Call call)
     {
-        AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
+        AdminImplementation admin = new();
 
-        // Checks if the call has expired based on the MaxTimeToEnd and current time.
+        // First check if the call was successfully treated
+        if (assignment?.TheEndType == DO.EndType.treated)
+            return BO.Status.close;
+
+        // Then check if the assignment is marked as expired
+        if (assignment?.TheEndType == DO.EndType.expired)
+            return BO.Status.expired;
+
+        // Then check for time expiration
         if (call.MaxTimeToEnd <= admin.GetClock())
-            return BO.Status.expired;  // Returns expired if the call time has passed.
+            return BO.Status.expired;
 
-        // If there is no assignment or the end type is self or manager (open/risk open)
+        // Then handle open and risk states
         if (assignment == null || assignment.TheEndType == DO.EndType.self || assignment.TheEndType == DO.EndType.manager)
-            if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
-                return BO.Status.riskOpen;  // Returns riskOpen if the call exceeds the risk range.
+        {
+            if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())
+                return BO.Status.riskOpen;
             else
-                return BO.Status.open;  // Returns open if the call is still within the range.
+                return BO.Status.open;
+        }
 
-        if (assignment.TheEndType == DO.EndType.treated)
-            return BO.Status.close;  // Returns close if the treatment is completed.
-
-        // If the end type is null (treatment-related cases)
-        if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())  // Checks if the call exceeds the risk range.
-            return BO.Status.riskTreatment;  // Returns riskTreatment if the call exceeds the risk range.
+        // Finally handle treatment states
+        if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())
+            return BO.Status.riskTreatment;
         else
-            return BO.Status.treatment;  // Returns treatment if within the range.
-
-        // If the assignment end type is treated, the call is closed.
-    }
-
-    /// <summary>
-    /// Gets a list of calls with their assignment information.
-    /// </summary>
+            return BO.Status.treatment;
+    }    /// <summary>
+         /// Gets a list of calls with their assignment information.
+         /// </summary>
     internal static List<BO.CallAssignInList> GetCallAssignInList(IEnumerable<DO.Assignment> assignment)
     {
         IEnumerable<BO.CallAssignInList> toReturn;
@@ -72,8 +75,7 @@ internal static class CallManager
     internal static DO.Call HelpCreateUpdate(BO.Call call, double[] cordinate=null)
     {
         
-        if (cordinate==null)
-           cordinate = VolunteerManager.GetCoordinates(call.Address);  // Retrieves the coordinates based on the address. Throws an exception if the address is invalid.
+         // Retrieves the coordinates based on the address. Throws an exception if the address is invalid.
         AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
 
         // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
@@ -84,76 +86,98 @@ internal static class CallManager
             throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
 
         // Returns a new DO.Call object with the updated values.
-        return new()
+        DO.Call newCall =  new()
         {
             Id = call.Id,
             TheCallType = (DO.CallType)call.TheCallType,  // Converts the call type to DO.CallType.
             VerbalDescription = call.VerbalDescription,  // Sets the verbal description.
             Address = call.Address,  // Sets the address.
-            Latitude = cordinate[0],  // Sets the latitude.
-            Longitude = cordinate[1],  // Sets the longitude.
+            Latitude = 0,  // Sets the latitude.
+            Longitude = 0,  // Sets the longitude.
             OpeningTime = call.OpeningTime,  // Sets the opening time.
             MaxTimeToEnd = call.MaxTimeToEnd  // Sets the max time to end.
         };
+        VolunteerManager.GetCoordinates(newCall);
+        return newCall;
     }
-    
+
     /// <summary>
     /// Updates expired calls by checking the current assignments and their time status.
     /// </summary>
     internal static void UpdateExpired()
     {
         IEnumerable<DO.Call> expiredCalls;
-        // Step 1: Retrieves all calls where the MaxTimeToEnd has passed.
+        // Step 1: Retrieve only calls that have expired AND haven't been treated
         lock (AdminManager.BlMutex)
-            expiredCalls = s_dal.Call.ReadAll(c => c.MaxTimeToEnd < AdminManager.Now);
+        {
+            expiredCalls = s_dal.Call.ReadAll(c =>
+                c.MaxTimeToEnd < AdminManager.Now &&
+                !s_dal.Assignment.ReadAll(a =>
+                    a.CallId == c.Id &&
+                    a.TheEndType == DO.EndType.treated
+                ).Any()
+            );
+        }
 
-        // Step 2: Checks for calls without assignments and creates a new assignment with the expired status.
+        // Step 2: Handle calls without assignments
         foreach (var call in expiredCalls)
         {
             bool hasAssignment;
             lock (AdminManager.BlMutex)
                 hasAssignment = s_dal.Assignment
-                .ReadAll(a => a.CallId == call.Id)
-                .Any();
+                    .ReadAll(a => a.CallId == call.Id)
+                    .Any();
 
-            if (!hasAssignment)  // If there is no assignment for the call yet
+            if (!hasAssignment)
             {
                 var newAssignment = new DO.Assignment(
-                    Id: 0,  // Creates a new ID for the assignment.
+                    Id: 0,
                     CallId: call.Id,
-                    VolunteerId: 0,  // Volunteer ID is set to 0 (no assignment).
-                    EntryTime: AdminManager.Now,  // Sets the entry time to the current time.
-                    ActualEndTime: AdminManager.Now,  // Sets the actual end time to the current time.
-                    TheEndType: DO.EndType.expired  // Sets the end type to expired.
+                    VolunteerId: 0,
+                    EntryTime: AdminManager.Now,
+                    ActualEndTime: AdminManager.Now,
+                    TheEndType: DO.EndType.expired
                 );
+
                 lock (AdminManager.BlMutex)
-                    s_dal.Assignment.Create(newAssignment);  // Creates the new assignment.
+                    s_dal.Assignment.Create(newAssignment);
+
+                // Notify for new expired assignment
+                Observers.NotifyItemUpdated(call.Id);
+                Observers.NotifyListUpdated();
             }
-            
         }
 
+        // Step 3: Update existing assignments that haven't ended yet
         IEnumerable<DO.Assignment> listAssi;
-        // Step 3: Updates assignments with null ActualEndTime for calls that are expired.
         lock (AdminManager.BlMutex)
-           listAssi =s_dal.Assignment.ReadAll(a => a.ActualEndTime == null);
-        
+            listAssi = s_dal.Assignment.ReadAll(a =>
+                a.ActualEndTime == null &&
+                a.TheEndType != DO.EndType.treated
+            );
+
         foreach (var assignment in listAssi)
         {
             var call = expiredCalls.FirstOrDefault(c => c.Id == assignment.CallId);
-            if (call != null)  // If the call is still marked as expired
+            if (call != null)
             {
                 var updatedAssignment = assignment with
                 {
-                    ActualEndTime = AdminManager.Now,  // Sets the actual end time to the current time.
-                    TheEndType = DO.EndType.expired  // Marks the end type as expired.
+                    ActualEndTime = AdminManager.Now,
+                    TheEndType = DO.EndType.expired
                 };
+
                 lock (AdminManager.BlMutex)
-                    s_dal.Assignment.Update(updatedAssignment);  // Updates the assignment with the new values.
+                    s_dal.Assignment.Update(updatedAssignment);
+
+                // Notify both call and volunteer observers
+                Observers.NotifyItemUpdated(call.Id);
+                Observers.NotifyListUpdated();
+                VolunteerManager.Observers.NotifyItemUpdated(assignment.VolunteerId);
+                VolunteerManager.Observers.NotifyListUpdated();
             }
         }
-        Observers.NotifyListUpdated();
     }
-
     #region MoveFromImplemenation
     internal static void CancelTreatment(int RequesterId, int AssignmentId)
     {

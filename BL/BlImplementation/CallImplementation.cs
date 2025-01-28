@@ -134,30 +134,32 @@ internal class CallImplementation : ICall
     /// <returns>A list of closed calls in the specified format.</returns>
     public IEnumerable<BO.ClosedCallInList> GetClosedCallInList(int volunteerId, BO.CallType? callTypeFilter, BO.FieldsClosedCallInList? sortField)
     {
-        // Retrieve all calls from the DAL (Data Access Layer)
         IEnumerable<DO.Call> allCalls;
         lock (AdminManager.BlMutex)
             allCalls = _dal.Call.ReadAll();
 
-        // Retrieve all assignments from the DAL
         IEnumerable<DO.Assignment> allAssignments;
         lock (AdminManager.BlMutex)
-           allAssignments = _dal.Assignment.ReadAll();
+            allAssignments = _dal.Assignment.ReadAll();
 
-        // Filter the calls by volunteer ID and closed status (TheEndType != null)
         var filteredCalls = from call in allCalls
                             join assignment in allAssignments
                             on call.Id equals assignment.CallId
-                            where assignment.VolunteerId == volunteerId && assignment.TheEndType != null
+                            where assignment.VolunteerId == volunteerId &&
+                                 (assignment.TheEndType != null ||
+                                  assignment.TheEndType == DO.EndType.expired ||
+                                  call.MaxTimeToEnd < AdminManager.Now)  // מוסיף גם קריאות שפג תוקפן
                             select new BO.ClosedCallInList
                             {
                                 Id = call.Id,
-                                TheCallType = (BO.CallType)call.TheCallType, // Converts the call type to BO enumeration
+                                TheCallType = (BO.CallType)call.TheCallType,
                                 Address = call.Address,
                                 OpeningTime = call.OpeningTime,
                                 EntryTime = assignment.EntryTime,
-                                ActualEndTime = assignment.ActualEndTime,
-                                TheEndType = (BO.EndType)assignment.TheEndType // Convert EndType to BO enumeration
+                                ActualEndTime = assignment.ActualEndTime ?? AdminManager.Now,  // אם אין זמן סיום, משתמש בזמן הנוכחי
+                                TheEndType = assignment.TheEndType == null && call.MaxTimeToEnd < AdminManager.Now ?
+                                           BO.EndType.expired :
+                                           (BO.EndType)assignment.TheEndType
                             };
 
         // Apply the call type filter if provided

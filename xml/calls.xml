@@ -700,4 +700,14 @@
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
   </Call>
+  <Call>
+    <Id>103</Id>
+    <CallType>Transportation</CallType>
+    <VerbalDescription>dd</VerbalDescription>
+    <Address>Agron 11, Jerusalem, Israel</Address>
+    <Latitude>0</Latitude>
+    <Longitude>0</Longitude>
+    <OpeningTime>2025-01-28T21:30:22</OpeningTime>
+    <MaxTimeToEnd>2025-01-31T00:00:00</MaxTimeToEnd>
+  </Call>
 </Calls>
