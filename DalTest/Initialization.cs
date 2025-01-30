@@ -45,25 +45,8 @@ public static class Initialization
         35.1907, 35.2091, 35.2181, 35.2133, 35.2046,35.2150, 35.1984, 35.2075,35.21};
         //longitudes corresponding to the list of addresses
 
-        int[] VolIds = {
-    218372043, // 
-    318207149, // 
-    211722251, // 
-    235246881,
-    208979633, // 
-    208773994, // 
-    207249780,
-    322638370, // 
-    316529080, // 
-    241441864,
-    331295121,
-    215041013,
-    214363350,
-    215089632,
-    327887360,
-    326549441
-    // 
-};
+        int[] VolIds = { 218372043, 318207149, 211722251, 235246881,208979633, 208773994, 207249780, 322638370, 
+    316529080, 241441864, 331295121, 215041013, 214363350, 215089632, 327887360, 326549441 };
 
         for (int i = 0; i < 16; i++) //create 15 volunteers and 1 manager
         {
@@ -95,7 +78,7 @@ public static class Initialization
     private static void createAssignment()
     {
         var allCalls = s_dal!.Call.ReadAll();
-        var allVolunteers = s_dal!.Volunteer.ReadAll();
+        var allVolunteers = s_dal!.Volunteer.ReadAll().Where(s=>s.Active == true);
 
         // Remove the first two volunteers from the list
         var availableVolunteers = allVolunteers.Skip(2).ToList();

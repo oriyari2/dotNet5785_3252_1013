@@ -20,8 +20,19 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent(); // Initialize the UI components
-
     }
+
+
+
+    public static readonly DependencyProperty FlagSimulatorProperty =
+     DependencyProperty.Register("FlagSimulator", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+
+    public bool FlagSimulator
+    {
+        get { return (bool)GetValue(FlagSimulatorProperty); }
+        set { SetValue(FlagSimulatorProperty, value); }
+    }
+
 
     /// <summary>
     /// Triggered when the text in the TextBox is changed.
@@ -42,6 +53,19 @@ public partial class MainWindow : Window
     // Using a DependencyProperty as the backing store for CurrentTime
     public static readonly DependencyProperty CurrentTimeProperty =
         DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
+
+
+
+    public int Interval
+    {
+        get { return (int)GetValue(IntervalProperty); }
+        set { SetValue(IntervalProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Interval.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IntervalProperty =
+        DependencyProperty.Register("Interval", typeof(int), typeof(MainWindow), new PropertyMetadata(0));
+
 
     /// <summary>
     /// Advances the clock by one minute when the button is clicked.
@@ -384,4 +408,31 @@ public partial class MainWindow : Window
             }
         }
     }
+
+    private void ToggleSimulatorButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (FlagSimulator == true)  // אם הסימולטור פועל
+            {
+                s_bl.Admin.StopSimulator();  // נעצור את הסימולטור
+                FlagSimulator = false;
+            }
+            else  // אם הסימולטור לא פועל
+            {
+                if (Interval == 0)  // בדוק שהאינטרוול לא 0
+                {
+                    MessageBox.Show("Please set a valid interval before starting the simulator.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                s_bl.Admin.StartSimulator(Interval);  // נתחיל את הסימולטור עם אינטרוול
+                FlagSimulator = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
 }

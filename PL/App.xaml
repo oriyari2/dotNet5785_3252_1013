@@ -64,6 +64,12 @@
         <!-- This converter is used to manage checkbox states in the UI based on specific conditions. -->
         <local:ActiveCheckboxConverter x:Key="ActiveCheckboxConverterkey" />
 
+        <local:SimulatorStatusConverter x:Key="SimulatorStatusConverterkey"/>
+
+        <local:SimulatorEnableConverter x:Key="SimulatorEnableConverterkey"/>
+
+        <local:CoordinatesValidationConverter x:Key="CoordinatesValidationConverterkey"/>
+
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->
         <Style TargetType="Button">

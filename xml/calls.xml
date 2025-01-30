@@ -671,16 +671,6 @@
     <MaxTimeToEnd>2026-07-11T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
-    <Id>68</Id>
-    <CallType>Shopping</CallType>
-    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Harav Kook 9, Jerusalem, Israel</Address>
-    <Latitude>31.764</Latitude>
-    <Longitude>35.215</Longitude>
-    <OpeningTime>2024-08-12T00:00:00</OpeningTime>
-    <MaxTimeToEnd>2026-08-12T00:00:00</MaxTimeToEnd>
-  </Call>
-  <Call>
     <Id>69</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
@@ -691,12 +681,22 @@
     <MaxTimeToEnd>2026-09-13T00:00:00</MaxTimeToEnd>
   </Call>
   <Call>
+    <Id>68</Id>
+    <CallType>Shopping</CallType>
+    <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
+    <Address></Address>
+    <Latitude />
+    <Longitude />
+    <OpeningTime>2024-08-12T00:00:00</OpeningTime>
+    <MaxTimeToEnd>2026-08-12T00:00:00</MaxTimeToEnd>
+  </Call>
+  <Call>
     <Id>70</Id>
     <CallType>Shopping</CallType>
     <VerbalDescription>Need a volunteer to come shop at the supermarket for the family</VerbalDescription>
-    <Address>Har Nof 4, Jerusalem, Israel</Address>
-    <Latitude>31.765</Latitude>
-    <Longitude>35.214</Longitude>
+    <Address>kkkk</Address>
+    <Latitude>47.9460795</Latitude>
+    <Longitude>106.282391</Longitude>
     <OpeningTime>2024-10-14T00:00:00</OpeningTime>
     <MaxTimeToEnd>2026-10-14T00:00:00</MaxTimeToEnd>
   </Call>

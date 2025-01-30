@@ -1,5 +1,8 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL;
 
@@ -299,5 +302,66 @@ public class IsEnabledSelectConverter : IMultiValueConverter
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException(); // No conversion back is required
+    }
+}
+
+public class SimulatorStatusConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool isSimulatorRunning)
+        {
+            return isSimulatorRunning ? "Stop" : "Start";
+        }
+        return "Start"; // ברירת מחדל
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // אם יש צורך להמיר חזרה, זה לא נדרש כאן
+        throw new NotImplementedException();
+    }
+}
+
+public class SimulatorEnableConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool isSimulatorRunning)
+        {
+            return !isSimulatorRunning;
+        }
+        else
+            return false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        // אם יש צורך להמיר חזרה, זה לא נדרש כאן
+        throw new NotImplementedException();
+    }
+}
+
+public class CoordinatesValidationConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        // if (values.Length < 3) return Brushes.Black;
+
+        object firstValue = values[0];
+        object secondValue = values[1];
+        object thirdValue = values[2];
+
+        if (firstValue != null && (secondValue == null || thirdValue == null))
+        {
+            return Brushes.Red;
+        }
+
+        return Brushes.White;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

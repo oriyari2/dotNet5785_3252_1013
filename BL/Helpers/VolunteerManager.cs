@@ -493,6 +493,8 @@ internal static class VolunteerManager
     #region Simulation
     private static readonly Random s_rand = new();
     private static int s_simulatorCounter = 0;
+    private static int s_Counter = 0; //for the func to choose completely random volunteers every iteration
+
     internal static void SimulateAssignForVolunteer()
     {
         Thread.CurrentThread.Name = $"Simulator{++s_simulatorCounter}";
@@ -500,21 +502,20 @@ internal static class VolunteerManager
         IEnumerable<DO.Volunteer> DoVolList;
         lock (AdminManager.BlMutex) //stage 7
             DoVolList = s_dal.Volunteer.ReadAll(v => v.Active == true).ToList();
-        int counter = 0;
         foreach (DO.Volunteer doVolunteer in DoVolList)
         {
             CallInProgress? currentCall = callProgress(doVolunteer.Id);
-            counter++;
+            s_Counter++;
             if (currentCall == null)
             {
-                if (counter % 3 == 0)
+                if (s_Counter % 3 == 0)
                 {
                     var availableCalls = CallManager.GetOpenCallInList(doVolunteer.Id, null, null);
                     int cntOpenCall = availableCalls.Count();
                     if (cntOpenCall != 0)
                     {
                         int callId = availableCalls.Skip(s_rand.Next(0, cntOpenCall)).First()!.Id;
-                        CallManager.ChooseCallToTreat(doVolunteer.Id, callId);
+                        CallManager.ChooseCallToTreat(doVolunteer.Id, callId, true);
                     }
                 }
             }
@@ -523,11 +524,11 @@ internal static class VolunteerManager
                 DateTime maxTime = currentCall.OpeningTime.AddHours(currentCall.Distance).AddMonths(1);
                 if (AdminManager.Now > maxTime)
                 {
-                    CallManager.EndTreatment(doVolunteer.Id, currentCall.Id);
+                    CallManager.EndTreatment(doVolunteer.Id, currentCall.Id, true);
                 }
-                else if (counter % 10 == 0)
+                else if (s_Counter % 10 == 0)
                 {
-                    CallManager.CancelTreatment(doVolunteer.Id, currentCall.Id);
+                    CallManager.CancelTreatment(doVolunteer.Id, currentCall.Id, true);
                 }
             }
 

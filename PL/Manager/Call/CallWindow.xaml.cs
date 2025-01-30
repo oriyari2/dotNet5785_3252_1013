@@ -60,7 +60,17 @@ namespace PL.Call
         public BO.Call CurrentCall
         {
             get { return (BO.Call)GetValue(CurrentCallProperty); }
-            set { SetValue(CurrentCallProperty, value); }
+            set
+            {
+                SetValue(CurrentCallProperty, value);
+                // Force UI update
+                if (value != null)
+                {
+                    var latitude = value.Latitude;
+                    var longitude = value.Longitude;
+                    SetValue(CurrentCallProperty, value);
+                }
+            }
         }
 
         public static readonly DependencyProperty CurrentCallProperty =

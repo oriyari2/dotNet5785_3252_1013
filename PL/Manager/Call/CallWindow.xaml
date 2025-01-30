@@ -66,7 +66,16 @@
 
         <!-- Address field -->
         <Label Grid.Row="3" Grid.Column="0" Content="Address:" />
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+        <TextBox Grid.Row="3" Grid.Column="1" 
+         Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true}" >
+            <TextBox.Background>
+                <MultiBinding Converter="{StaticResource CoordinatesValidationConverterkey}">
+                    <Binding Path="CurrentCall.Address" />
+                    <Binding Path="CurrentCall.Latitude" />
+                    <Binding Path="CurrentCall.Longitude" />
+                </MultiBinding>
+            </TextBox.Background>
+        </TextBox>
 
         <!-- Opening time: Read-only field -->
         <Label Grid.Row="4" Grid.Column="0" Content="Opening Time:" />

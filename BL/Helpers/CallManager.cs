@@ -158,9 +158,10 @@ internal static class CallManager
         }
     }
     #region MoveFromImplemenation
-    internal static void CancelTreatment(int RequesterId, int AssignmentId)
+    internal static void CancelTreatment(int RequesterId, int AssignmentId, bool isSimulation = false)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
+        if(isSimulation ==  false) 
+            AdminManager.ThrowOnSimulatorIsRunning();
         // Retrieve the assignment object based on its ID.
         DO.Assignment? assignment;
         lock (AdminManager.BlMutex)
@@ -214,9 +215,10 @@ internal static class CallManager
         VolunteerManager.Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
-    internal static void ChooseCallToTreat(int volunteerId, int CallId)
+    internal static void ChooseCallToTreat(int volunteerId, int CallId, bool isSimulation = false)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
+        if(isSimulation == false) 
+            AdminManager.ThrowOnSimulatorIsRunning();
         var currentCall = VolunteerManager.GetCurrentCall(volunteerId);
         if (currentCall != null)
             throw new BO.BlUserCantUpdateItemExeption("Volunteer cant choose new call to treat" +
@@ -309,9 +311,10 @@ internal static class CallManager
         Observers.NotifyListUpdated();  //update list of calls  and obserervers etc.
     }
 
-    internal static void EndTreatment(int volunteerId, int AssignmentId)
+    internal static void EndTreatment(int volunteerId, int AssignmentId, bool isSimulation = false)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
+        if(isSimulation == false)
+            AdminManager.ThrowOnSimulatorIsRunning();
         // Retrieve the assignment by ID
         DO.Assignment? assignment;
         lock (AdminManager.BlMutex)
