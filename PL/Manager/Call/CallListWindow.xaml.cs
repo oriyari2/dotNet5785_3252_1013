@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL.Call;
 
@@ -12,6 +13,9 @@ public partial class CallListWindow : Window
 {
     // Static instance of the business logic layer
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
+
 
     /// <summary>
     /// Constructor for the CallListWindow.
@@ -96,20 +100,41 @@ public partial class CallListWindow : Window
     /// <summary>
     /// Observer to refresh the call list whenever there are updates.
     /// </summary>
-    private void CallListObserver() => RefreshCallList();
+    private void CallListObserver()
+    {
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshCallList();
+            });
+    }
 
     /// <summary>
     /// Adds the observer when the window is loaded.
     /// </summary>
     private void Window_Loaded(object sender, RoutedEventArgs e)
-        => s_bl.Call.AddObserver(CallListObserver);
+{
+        s_bl.Call.AddObserver(CallListObserver);
+        s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
 
+    }
     /// <summary>
     /// Removes the observer when the window is closed.
     /// </summary>
     private void Window_Closed(object sender, EventArgs e)
-        => s_bl.Call.RemoveObserver(CallListObserver);
+{
+        s_bl.Call.RemoveObserver(CallListObserver);
+        s_bl.Admin.RemoveClockObserver(clockObserver); // Removes observer for volunteer
 
+    }
+    private void clockObserver()
+    {
+        if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+            _observerOperation2 = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshCallList();
+            });
+    }
     /// <summary>
     /// Event handler for selection change in the DataGrid.
     /// Placeholder for additional functionality if needed.

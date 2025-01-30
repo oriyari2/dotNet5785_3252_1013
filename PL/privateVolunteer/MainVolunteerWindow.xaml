@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainVolunteerWindow" Height="700" Width="900"
+        Title="Main Volunteer Window" Height="700" Width="900"
         Loaded="MainVolunteerWindow_Loaded"
         Closed="MainVolunteerWindow_Closed">
     <Grid>
@@ -124,7 +124,6 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
-
                         </ListBox>
                     </ScrollViewer>
                     <Grid Grid.Row ="14" Grid.ColumnSpan="2">

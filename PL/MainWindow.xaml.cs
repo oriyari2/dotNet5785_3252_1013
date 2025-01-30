@@ -3,6 +3,7 @@ using PL.Volunteer;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL;
 /// <summary>
@@ -12,6 +13,9 @@ public partial class MainWindow : Window
 {
     // Singleton instance of the BL API
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation3 = null; //stage 7
 
     public MainWindow()
     {
@@ -136,8 +140,12 @@ public partial class MainWindow : Window
     /// </summary>
     private void clockObserver()
     {
-        CurrentTime = s_bl.Admin.GetClock(); // Get the current time from the backend
-        RefreshCallAmounts();
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                CurrentTime = s_bl.Admin.GetClock(); // Get the current time from the backend
+                RefreshCallAmounts();
+            });
     }
 
     /// <summary>
@@ -145,7 +153,11 @@ public partial class MainWindow : Window
     /// </summary>
     private void configObserver()
     {
-        CurrentRiskRange = s_bl.Admin.GetRiskRange(); // Get the current risk range from the backend
+        if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+            _observerOperation2 = Dispatcher.BeginInvoke(() =>
+            {
+                CurrentRiskRange = s_bl.Admin.GetRiskRange(); // Get the current risk range from the backend
+            });
     }
 
     /// <summary>
@@ -336,7 +348,14 @@ public partial class MainWindow : Window
     /// <summary>
     /// Observes changes in the call amounts and refreshes the displayed data.
     /// </summary>
-    private void callAmountsObserver() => RefreshCallAmounts();
+    private void callAmountsObserver() 
+    {
+        if (_observerOperation3 is null || _observerOperation3.Status == DispatcherOperationStatus.Completed)
+            _observerOperation3 = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshCallAmounts();
+            });
+    }
 
     /// <summary>
     /// Handles status clicks and opens a filtered call list window.

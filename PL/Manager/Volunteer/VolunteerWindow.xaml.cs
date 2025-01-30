@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace PL.Volunteer;
 
@@ -13,6 +14,8 @@ public partial class VolunteerWindow : Window
     /// Static instance of the business logic layer (BL).
     /// </summary>
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
 
     /// <summary>
     /// Dependency property for the button text ("Add" or "Update").
@@ -118,8 +121,13 @@ public partial class VolunteerWindow : Window
     /// Observer method to refresh the volunteer data when notified of changes.
     /// </summary>
     private void volunteerObserver()
-        => queryVolunteer();
-
+{
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                queryVolunteer();
+            });
+}
     /// <summary>
     /// Event handler for when the window is loaded.
     /// </summary>
@@ -128,6 +136,8 @@ public partial class VolunteerWindow : Window
         if (CurrentVolunteer!.Id != 0)
             // Add an observer for the current volunteer if it exists.
             s_bl.Volunteer.AddObserver(CurrentVolunteer!.Id, volunteerObserver);
+        s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+
     }
 
     /// <summary>
@@ -138,5 +148,15 @@ public partial class VolunteerWindow : Window
         if (CurrentVolunteer!.Id != 0)
             // Remove the observer for the current volunteer when the window is closed.
             s_bl.Volunteer.RemoveObserver(CurrentVolunteer!.Id, volunteerObserver);
+        s_bl.Admin.RemoveClockObserver(clockObserver); // Register for clock updates
+    }
+
+    private void clockObserver()
+    {
+        if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+            _observerOperation2 = Dispatcher.BeginInvoke(() =>
+            {
+                queryVolunteer();
+            });
     }
 }

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL.Volunteer;
 
@@ -14,6 +15,9 @@ public partial class VolunteerListWindow : Window
     /// Static instance of the business logic layer (BL).
     /// </summary>
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="VolunteerListWindow"/> class.
@@ -75,20 +79,40 @@ public partial class VolunteerListWindow : Window
     /// <summary>
     /// Observer to refresh the volunteer list whenever there are updates.
     /// </summary>
-    private void volunteerListObserver() => RefreshVolunteerList();
-
+    private void volunteerListObserver()
+{
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshVolunteerList();
+            });
+}
     /// <summary>
     /// Adds the observer when the window is loaded.
     /// </summary>
     private void Window_Loaded(object sender, RoutedEventArgs e)
-        => s_bl.Volunteer.AddObserver(volunteerListObserver);
+{
+        s_bl.Volunteer.AddObserver(volunteerListObserver);
+        s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
 
+    }
     /// <summary>
     /// Removes the observer when the window is closed.
     /// </summary>
     private void Window_Closed(object sender, EventArgs e)
-        => s_bl.Volunteer.RemoveObserver(volunteerListObserver);
+{
+        s_bl.Volunteer.RemoveObserver(volunteerListObserver);
+        s_bl.Admin.RemoveClockObserver(clockObserver); // Register for clock updates
+    }
 
+    private void clockObserver()
+    {
+        if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+            _observerOperation2 = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshVolunteerList();
+            });
+    }
     /// <summary>
     /// Event handler for selection change in the DataGrid.
     /// Placeholder for additional functionality if needed.

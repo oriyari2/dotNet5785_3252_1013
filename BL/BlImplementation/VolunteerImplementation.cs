@@ -153,32 +153,7 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the volunteer does not exist.</exception>
     public BO.Volunteer Read(int id)
     {
-        // Try to read the volunteer from the database
-        DO.Volunteer? doVolunteer;
-        lock (AdminManager.BlMutex)
-            doVolunteer = _dal.Volunteer.Read(id) ??
-       throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
-
-        // Map the data object (DO) to the business object (BO)
-        return new BO.Volunteer()
-        {
-            Id = id,
-            Name = doVolunteer.Name,
-            PhoneNumber = doVolunteer.PhoneNumber,
-            Email = doVolunteer.Email,
-            Password = VolunteerManager.DecryptPassword(doVolunteer.Password), // Decrypt password for the volunteer
-            Address = doVolunteer.Address,
-            Latitude = doVolunteer.Latitude,
-            Longitude = doVolunteer.Longitude,
-            Role = (BO.RoleType)doVolunteer.Role,
-            Active = doVolunteer.Active,
-            MaxDistance = doVolunteer.MaxDistance,
-            TheDistanceType = (BO.DistanceType)doVolunteer.TheDistanceType,
-            TotalHandled = VolunteerManager.TotalCall(id, DO.EndType.treated), // Get total handled calls
-            TotalCanceled = VolunteerManager.TotalCall(id, DO.EndType.self), // Get total canceled calls
-            TotalExpired = VolunteerManager.TotalCall(id, DO.EndType.expired), // Get total expired calls
-            IsProgress = VolunteerManager.callProgress(id) // Check if the volunteer has any ongoing call
-        };
+       return VolunteerManager.Read(id);
     }
 
     /// <summary>
@@ -245,64 +220,6 @@ internal class VolunteerImplementation : IVolunteer
     /// <exception cref="BO.BlDoesNotExistException">Thrown if the volunteer does not exist.</exception>
     public void Update(int id, BO.Volunteer volunteer)
     {
-        AdminManager.ThrowOnSimulatorIsRunning();
-        BO.Volunteer asker = Read(id); // Get the volunteer that is trying to update
-        if (asker.Id != id && asker.Role != BO.RoleType.manager)
-            throw new BO.BlUserCantUpdateItemExeption("The asker can't update this Volunteer");
-
-        if (volunteer.Active == false && volunteer.IsProgress != null)
-            throw new BO.BlUserCantUpdateItemExeption("This volunteer cant become not active becouse he has call in progress");
-        BO.Volunteer oldVolunteer = Read(volunteer.Id); // Get the current volunteer data
-
-        // Validate the updated data
-        VolunteerManager.IsValidEmail(volunteer.Email); // Check if the email is valid
-        VolunteerManager.IsValidID(volunteer.Id); // Check if the ID is valid
-        VolunteerManager.IsValidPhoneNumber(volunteer.PhoneNumber); // Check if the phone number is valid
-
-        string password = volunteer.Password;
-        if (password != oldVolunteer.Password)
-        {
-            VolunteerManager.ValidateStrongPassword(password); // Validate if the password is strong
-        }
-        password = VolunteerManager.EncryptPassword(password); // Encrypt the password
-
-        // Prevent updating restricted fields
-        if (asker.Role != BO.RoleType.manager && volunteer.Role != BO.RoleType.volunteer)
-            throw new BO.BlUserCantUpdateItemExeption("Volunteer Can't change the role of the volunteer");
-
-        if (volunteer.TotalCanceled != oldVolunteer.TotalCanceled ||
-            volunteer.TotalExpired != oldVolunteer.TotalExpired ||
-            volunteer.TotalHandled != oldVolunteer.TotalHandled)
-            throw new BO.BlUserCantUpdateItemExeption("Total calls can't be modified!");
-
-        try
-        {
-            double[] cordinate = null;
-            if (oldVolunteer.Address == volunteer.Address && oldVolunteer.Latitude != null && oldVolunteer.Longitude != null)
-            {
-                cordinate = [(double)oldVolunteer.Latitude, (double)oldVolunteer.Longitude];
-            }
-            
-                DO.Volunteer doVolunteer = new(volunteer.Id, volunteer.Name,
-               volunteer.PhoneNumber, volunteer.Email, password, volunteer.Address, cordinate[0],
-               cordinate[1], (DO.RoleType)volunteer.Role, volunteer.Active, volunteer.MaxDistance,
-               (DO.DistanceType)volunteer.TheDistanceType);
-
-            // Update the volunteer in the database
-            lock (AdminManager.BlMutex)
-                _dal.Volunteer.Update(doVolunteer);
-            VolunteerManager.GetCoordinates(doVolunteer); // Get coordinates from the address
-            
-
-            // Create the updated data object (DO) for the volunteer
-
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            // Handle case when the volunteer does not exist
-            throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteer.Id} does not exist", ex);
-        }
-        VolunteerManager.Observers.NotifyItemUpdated(volunteer.Id);//update current volunteer and obserervers etc.
-        VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
+        VolunteerManager.Update(id, volunteer);
     }
 }

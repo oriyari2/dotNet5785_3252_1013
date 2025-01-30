@@ -15,6 +15,7 @@ public class AdminImplementation : IAdmin
     /// Advances the clock by a specified time unit.
     /// </summary>
     /// <param name="unit">The time unit to advance (Minute, Hour, Day, Month, or Year).</param>
+    /// 
     public void AdvanceClock(BO.TimeUnit unit)
     {
         AdminManager.ThrowOnSimulatorIsRunning();

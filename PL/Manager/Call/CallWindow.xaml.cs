@@ -1,5 +1,6 @@
 ﻿using PL.Volunteer;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace PL.Call
 {
@@ -12,6 +13,8 @@ namespace PL.Call
         /// Static instance of the business logic layer (BL).
         /// </summary>
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
+        private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
 
         /// <summary>
         /// Constructor for the CallWindow, with an optional call ID.
@@ -80,7 +83,12 @@ namespace PL.Call
         /// </summary>
         private void clockObserver()
         {
-            CurrentTime = s_bl.Admin.GetClock(); // Get the current time from the backend
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    CurrentTime = s_bl.Admin.GetClock(); // Get the current time from the backend
+                    queryCall();
+                });
         }
 
         /// <summary>
@@ -133,8 +141,14 @@ namespace PL.Call
         /// Observer method to refresh the call data when notified of changes.
         /// </summary>
         private void callObserver()
-            => queryCall();
+{
+            if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+                _observerOperation2 = Dispatcher.BeginInvoke(() =>
+                {
+                    queryCall();
+                });
 
+}
         /// <summary>
         /// Event handler for when the window is loaded.
         /// </summary>

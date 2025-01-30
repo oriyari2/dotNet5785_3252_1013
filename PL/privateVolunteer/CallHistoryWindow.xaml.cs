@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL.privateVolunteer;
 
@@ -12,6 +13,8 @@ public partial class CallHistoryWindow : Window
 {
     // Static instance of the BL interface.
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
 
     /// <summary>
     /// Initializes a new instance of the CallHistoryWindow class.
@@ -100,6 +103,7 @@ public partial class CallHistoryWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         s_bl.Call.AddObserver(CallListObserver);
+        s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
         RefreshCallList();
     }
 
@@ -107,18 +111,37 @@ public partial class CallHistoryWindow : Window
     /// Removes the observer when the window is closed.
     /// </summary>
     private void Window_Closed(object sender, EventArgs e)
-        => s_bl.Call.RemoveObserver(CallListObserver);
+    {
+        s_bl.Call.RemoveObserver(CallListObserver);
+        s_bl.Admin.RemoveClockObserver(clockObserver);
+    }
 
     /// <summary>
     /// Observer to refresh the call list whenever there are updates.
     /// </summary>
-    private void CallListObserver() => RefreshCallList();
+    private void CallListObserver()  
+    {
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshCallList();
+
+            });
+    }
 
     /// <summary>
     /// Property to store the currently selected call in the DataGrid.
     /// </summary>
     public BO.ClosedCallInList? SelectedCall { get; set; }
 
+    private void clockObserver()
+    {
+        if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+            _observerOperation2 = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshCallList();
+            });
+    }
     /// <summary>
     /// Opens the CallWindow for the selected call when the user double-clicks a row in the DataGrid.
     /// </summary>

@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:PL"
     mc:Ignorable="d"
-    Title="MainWindow" Height="450" Width="800"
+    Title="Main Window" Height="450" Width="800"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     Loaded="MainWindow_Loaded"
     Closed="MainWindow_Closed">
@@ -111,6 +111,7 @@
             <!-- Button for handling calls -->
             <Button Content="Handle Calls" Click="btnCalls_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
             <Label Content="simulator area"/>
+            
             <!-- Placeholder for simulator area -->
         </Grid>
 
@@ -160,6 +161,7 @@
                          FontSize="17" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" />
                 <!-- Label for risk range input -->
                 <Label Content="Enter Risk Range: " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
+                
             </Grid>
         </Grid>
     </Grid>

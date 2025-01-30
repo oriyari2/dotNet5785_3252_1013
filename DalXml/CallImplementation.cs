@@ -17,20 +17,21 @@ internal class CallImplementation : ICall
     /// <param name="s">The XElement representing a Call.</param>
     /// <returns>A Call object populated with data from the XElement.</returns>
     /// <exception cref="FormatException">Thrown if data conversion fails.</exception>
-    static Call getCall(XElement s)
+    static DO.Call getCall(XElement s)
     {
         return new DO.Call()
         {
             Id = s.ToIntNullable("Id") ?? throw new FormatException("can't convert id"),
             TheCallType = s.ToEnumNullable<DO.CallType>("CallType") ?? throw new FormatException("can't convert CallType"),
             VerbalDescription = (string?)s.Element("VerbalDescription") ?? null,
-            Address= (string?)s.Element("Address") ??"",
-            Latitude = s.ToDoubleNullable("Latitude") ?? throw new FormatException("can't convert double"),
-            Longitude = s.ToDoubleNullable("Longitude") ?? throw new FormatException("can't convert double"),
+            Address = (string?)s.Element("Address") ?? "",
+            Latitude = s.ToDoubleNullable("Latitude"),  // השאר null אם אין נתון תקף
+            Longitude = s.ToDoubleNullable("Longitude"), // השאר null אם אין נתון תקף
             OpeningTime = s.ToDateTimeNullable("OpeningTime") ?? throw new FormatException("can't convert DateTime"),
             MaxTimeToEnd = s.ToDateTimeNullable("MaxTimeToEnd") ?? default(DateTime)
         };
     }
+
 
     /// <summary>
     /// Converts a Call object to an XElement.

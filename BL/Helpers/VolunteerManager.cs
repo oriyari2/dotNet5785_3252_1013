@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Net;
 using BO;
+using DO;
 
 namespace Helpers;
 
@@ -41,14 +42,21 @@ internal static class VolunteerManager
     {
         lock (AdminManager.BlMutex)
         {
-            var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null));  // Get assignments
-            var volunteer = s_dal.Volunteer.Read(id) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist"); // Get volunteer details
-            double volLon = (double)volunteer.Longitude;
-            double volLat = (double)volunteer.Latitude;
+            var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null) && s.TheEndType != DO.EndType.expired);  // Get assignments
+            var volunteer = s_dal.Volunteer.Read(id) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does not exist"); // Get volunteer details
+            
+            // בדיקה האם קיימות קורדינטות למתנדב
+            double? volLon = volunteer.Longitude;
+            double? volLat = volunteer.Latitude;
+
             AdminImplementation admin = new(); // Instantiate admin for risk range checking
+
             BO.CallInProgress? callInProgress =
              (from item in assignments
               let call = s_dal.Call.Read(item.CallId)
+              let tmpstatus = CallManager.CheckStatus(item, call)
+              let callLon = call.Longitude
+              let callLat = call.Latitude
               select new BO.CallInProgress
               {
                   Id = item.Id,
@@ -59,12 +67,16 @@ internal static class VolunteerManager
                   OpeningTime = call.OpeningTime,
                   MaxTimeToEnd = call.MaxTimeToEnd,
                   EntryTime = item.EntryTime,
-                  Distance = volunteer?.Address != null ? VolunteerManager.CalculateDistance(volLon, volLat, call.Longitude, call.Latitude) : 0,
-                  status = (AdminManager.Now - call.MaxTimeToEnd) <= admin.GetRiskRange()
-                            ? BO.Status.treatment
-                            : BO.Status.riskTreatment
-              }).FirstOrDefault();
 
+                  // חישוב מרחק רק אם לכל הנתונים יש ערכים
+                  Distance = (volLon.HasValue && volLat.HasValue && callLon.HasValue && callLat.HasValue)
+                            ? VolunteerManager.CalculateDistance((double)volLat, (double)volLon, (double)callLat, (double)callLon)
+                            : 0,
+
+                  status = tmpstatus
+              }).FirstOrDefault();
+            if (callInProgress!= null && callInProgress.status == BO.Status.expired)
+                return null;
             return callInProgress;
         }
     }
@@ -76,10 +88,11 @@ internal static class VolunteerManager
     /// <returns>The ID of the current call or null if no call is in progress.</returns>
     internal static int? GetCurrentCall(int id)
     {
-        DO.Assignment? assignment;
-        lock (AdminManager.BlMutex)
-            assignment = s_dal.Assignment.ReadAll(t => t.ActualEndTime == null && id == t.VolunteerId).FirstOrDefault();  // Get ongoing assignments
-        return assignment?.CallId;  // Return current call ID
+        BO.CallInProgress? call =  callProgress(id);
+        if (call != null)
+            return call.CallId;
+        else
+            return null;
     }
 
 
@@ -95,6 +108,123 @@ internal static class VolunteerManager
             call = s_dal.Call.Read(id); // Get the call by ID
         return (BO.CallType)call.TheCallType;  // Return call type
     }
+
+    #region moveFromImplementation
+    internal static BO.Volunteer Read(int id)
+    {
+        // Try to read the volunteer from the database
+        DO.Volunteer? doVolunteer;
+        lock (AdminManager.BlMutex)
+            doVolunteer = s_dal.Volunteer.Read(id) ??
+       throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
+
+        // Map the data object (DO) to the business object (BO)
+        return new BO.Volunteer()
+        {
+            Id = id,
+            Name = doVolunteer.Name,
+            PhoneNumber = doVolunteer.PhoneNumber,
+            Email = doVolunteer.Email,
+            Password = VolunteerManager.DecryptPassword(doVolunteer.Password), // Decrypt password for the volunteer
+            Address = doVolunteer.Address,
+            Latitude = doVolunteer.Latitude,
+            Longitude = doVolunteer.Longitude,
+            Role = (BO.RoleType)doVolunteer.Role,
+            Active = doVolunteer.Active,
+            MaxDistance = doVolunteer.MaxDistance,
+            TheDistanceType = (BO.DistanceType)doVolunteer.TheDistanceType,
+            TotalHandled = VolunteerManager.TotalCall(id, DO.EndType.treated), // Get total handled calls
+            TotalCanceled = VolunteerManager.TotalCall(id, DO.EndType.self), // Get total canceled calls
+            TotalExpired = VolunteerManager.TotalCall(id, DO.EndType.expired), // Get total expired calls
+            IsProgress = VolunteerManager.callProgress(id) // Check if the volunteer has any ongoing call
+        };
+    }
+
+    internal static void Update(int id, BO.Volunteer volunteer)
+    {
+        AdminManager.ThrowOnSimulatorIsRunning();
+        BO.Volunteer asker = Read(id); // Get the volunteer that is trying to update
+        if (asker.Id != id && asker.Role != BO.RoleType.manager)
+            throw new BO.BlUserCantUpdateItemExeption("The asker can't update this Volunteer");
+
+        if (volunteer.Active == false && volunteer.IsProgress != null)
+            throw new BO.BlUserCantUpdateItemExeption("This volunteer cant become not active becouse he has call in progress");
+        BO.Volunteer oldVolunteer = Read(volunteer.Id); // Get the current volunteer data
+
+        // Validate the updated data
+        VolunteerManager.IsValidEmail(volunteer.Email); // Check if the email is valid
+        VolunteerManager.IsValidID(volunteer.Id); // Check if the ID is valid
+        VolunteerManager.IsValidPhoneNumber(volunteer.PhoneNumber); // Check if the phone number is valid
+
+        string password = volunteer.Password;
+        if (password != oldVolunteer.Password)
+        {
+            VolunteerManager.ValidateStrongPassword(password); // Validate if the password is strong
+        }
+        password = VolunteerManager.EncryptPassword(password); // Encrypt the password
+
+        // Prevent updating restricted fields
+        if (asker.Role != BO.RoleType.manager && volunteer.Role != BO.RoleType.volunteer)
+            throw new BO.BlUserCantUpdateItemExeption("Volunteer Can't change the role of the volunteer");
+
+        if (volunteer.TotalCanceled != oldVolunteer.TotalCanceled ||
+            volunteer.TotalExpired != oldVolunteer.TotalExpired ||
+            volunteer.TotalHandled != oldVolunteer.TotalHandled)
+            throw new BO.BlUserCantUpdateItemExeption("Total calls can't be modified!");
+
+        try
+        {
+            double[]? coordinates = null;
+
+            // אם הכתובת לא השתנתה ויש כבר קואורדינטות קיימות, נשמור אותן
+            if (oldVolunteer.Address == volunteer.Address && oldVolunteer.Latitude != null && oldVolunteer.Longitude != null)
+            {
+                coordinates = new double[] { (double)oldVolunteer.Latitude, (double)oldVolunteer.Longitude };
+            }
+
+            // יצירת אובייקט המתנדב עם הקואורדינטות הרלוונטיות
+            DO.Volunteer doVolunteer = new(
+                volunteer.Id,
+                volunteer.Name,
+                volunteer.PhoneNumber,
+                volunteer.Email,
+                password,
+                volunteer.Address,
+                coordinates != null ? coordinates[0] : null,
+                coordinates != null ? coordinates[1] : null,
+                (DO.RoleType)volunteer.Role,
+                volunteer.Active,
+                volunteer.MaxDistance,
+                (DO.DistanceType)volunteer.TheDistanceType
+            );
+
+            // עדכון המתנדב בבסיס הנתונים
+            lock (AdminManager.BlMutex)
+            {
+                s_dal.Volunteer.Update(doVolunteer);
+            }
+
+            // אם הכתובת השתנתה, נשלח לעדכון הקואורדינטות מחדש
+            if (coordinates == null)
+            {
+                _ = VolunteerManager.GetCoordinates(doVolunteer);
+            }
+
+
+            // Create the updated data object (DO) for the volunteer
+
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            // Handle case when the volunteer does not exist
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={volunteer.Id} does not exist", ex);
+        }
+        VolunteerManager.Observers.NotifyItemUpdated(volunteer.Id);//update current volunteer and obserervers etc.
+        VolunteerManager.Observers.NotifyListUpdated();//update list of volunteers and obserervers etc.
+    }
+
+
+    #endregion
 
     #region isValidInput
     /// <summary>
@@ -322,13 +452,13 @@ internal static class VolunteerManager
         {
             double[]? loc = await GetCoordinatesAsync(doVolunteer.Address);
             if (loc is not null)
-            {
                 doVolunteer = doVolunteer with { Latitude = loc[0], Longitude = loc[1] };
-                lock (AdminManager.BlMutex)
-                    s_dal.Volunteer.Update(doVolunteer);
-                Observers.NotifyListUpdated();
-                Observers.NotifyItemUpdated(doVolunteer.Id);
-            }
+            else
+                doVolunteer = doVolunteer with { Latitude = null, Longitude = null };
+            lock (AdminManager.BlMutex)
+                s_dal.Volunteer.Update(doVolunteer);
+            Observers.NotifyListUpdated();
+            Observers.NotifyItemUpdated(doVolunteer.Id);
         }
     }
 
@@ -404,5 +534,6 @@ internal static class VolunteerManager
         }
     }
     #endregion
+
 }
 

@@ -2,6 +2,7 @@
 using PL.privateVolunteer;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace PL
 {
@@ -11,6 +12,9 @@ namespace PL
     public partial class MainVolunteerWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); // Singleton instance of the BL API
+        private volatile DispatcherOperation? _observerOperation = null; //stage 7
+        private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
+        private volatile DispatcherOperation? _observerOperation3 = null; //stage 7
 
         /// <summary>
         /// Constructor that initializes the MainVolunteerWindow with optional volunteer ID.
@@ -186,10 +190,11 @@ namespace PL
         /// </summary>
         private void MainVolunteerWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Set initial values when the window is loaded
-            RefreshCallInProgress();
+            RefreshVolunteer();
             s_bl.Call.AddObserver(callInProgressObserver); // Add observer to monitor call progress
             s_bl.Volunteer.AddObserver(VolunteerObserver); // Add observer to monitor volunteer progress
+            s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+
         }
 
         /// <summary>
@@ -200,8 +205,18 @@ namespace PL
             // Cleanup observers when the window is closed
             s_bl.Call.RemoveObserver(callInProgressObserver);
             s_bl.Volunteer.RemoveObserver(VolunteerObserver);
+            s_bl.Admin.RemoveClockObserver(clockObserver);
         }
 
+        private void clockObserver()
+        {
+            if (_observerOperation3 is null || _observerOperation3.Status == DispatcherOperationStatus.Completed)
+                _observerOperation3 = Dispatcher.BeginInvoke(() =>
+                {
+                    RefreshVolunteer();
+                    RefreshCallInProgress();
+                });
+        }
         /// <summary>
         /// Refreshes the current call information for the volunteer.
         /// </summary>
@@ -210,8 +225,8 @@ namespace PL
             var newCall = helpReadCallInProgress();
             if (newCall?.status == BO.Status.expired)
             {
-                CurrentCall = null;
                 RefreshVolunteer();
+                CurrentCall = null;
             }
             else
             {
@@ -246,8 +261,14 @@ namespace PL
         /// <summary>
         /// Observes changes in the call progress and refreshes the call data.
         /// </summary>
-        private void callInProgressObserver() => RefreshCallInProgress();
-
+        private void callInProgressObserver() 
+{
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                    RefreshCallInProgress();
+                });
+}
         /// <summary>
         /// Refreshes the volunteer's information from the backend.
         /// </summary>
@@ -267,6 +288,13 @@ namespace PL
         /// <summary>
         /// Observes changes in the volunteer's progress and refreshes the volunteer data.
         /// </summary>
-        private void VolunteerObserver() => RefreshVolunteer();
+        private void VolunteerObserver()
+{
+            if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+                _observerOperation2 = Dispatcher.BeginInvoke(() =>
+                {
+                    RefreshVolunteer();
+                });
+} 
     }
 }

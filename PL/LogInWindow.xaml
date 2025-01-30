@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-    Title="LogInWindow" Height="450" Width="500">
+    Title="Log In Window" Height="450" Width="500">
     <!-- Main grid layout for the window -->
     <Grid>
         <!-- Defines rows for different input fields and buttons -->

@@ -20,8 +20,8 @@ public record Call
     CallType TheCallType,
     string? VerbalDescription,
     string Address,
-    double Latitude,
-    double Longitude,
+    double? Latitude,
+    double? Longitude,
     DateTime OpeningTime,
     DateTime? MaxTimeToEnd
     )

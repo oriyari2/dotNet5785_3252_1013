@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PL.privateVolunteer;
 
@@ -11,6 +12,9 @@ public partial class SelectCallWindow : Window
 {
     // Static reference to the business logic API (BlApi)
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    private volatile DispatcherOperation? _observerOperation = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation2 = null; //stage 7
+    private volatile DispatcherOperation? _observerOperation3 = null; //stage 7
 
     /// <summary>
     /// Constructor for SelectCallWindow.
@@ -84,8 +88,14 @@ public partial class SelectCallWindow : Window
     }
 
     // Helper method for refreshing call list
-    private void CallListObserver() => RefreshCallList();
-
+    private void CallListObserver()
+{
+        if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+            _observerOperation = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshCallList();
+            });
+}
     /// <summary>
     /// Event handler triggered when the call type ComboBox selection changes.
     /// Updates the call list based on the selected call type filter.
@@ -106,8 +116,8 @@ public partial class SelectCallWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         s_bl.Call.AddObserver(CallListObserver); // Adds observer for call list
-        // s_bl.Volunteer.AddObserver(CurrentVolunteer.Id, VolunteerObserver);
         s_bl.Volunteer.AddObserver(VolunteerObserver); // Adds observer for volunteer
+        s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
         RefreshCallList();
     }
 
@@ -117,10 +127,19 @@ public partial class SelectCallWindow : Window
     private void Window_Closed(object sender, EventArgs e)
     {
         s_bl.Call.RemoveObserver(CallListObserver); // Removes observer for call list
-        // s_bl.Volunteer.RemoveObserver(CurrentVolunteer.Id, VolunteerObserver);
         s_bl.Volunteer.RemoveObserver(VolunteerObserver); // Removes observer for volunteer
+        s_bl.Admin.RemoveClockObserver(clockObserver);
     }
 
+    private void clockObserver()
+    {
+        if (_observerOperation3 is null || _observerOperation3.Status == DispatcherOperationStatus.Completed)
+            _observerOperation3 = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshVolunteer();
+                RefreshCallList();
+            });
+    }
     /// <summary>
     /// Observer to refresh the volunteer data whenever there are updates.
     /// </summary>
@@ -138,8 +157,14 @@ public partial class SelectCallWindow : Window
     }
 
     // Observer method for volunteer data updates
-    private void VolunteerObserver() => RefreshVolunteer();
-
+    private void VolunteerObserver() 
+{
+        if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
+            _observerOperation2 = Dispatcher.BeginInvoke(() =>
+            {
+                RefreshVolunteer();
+            });
+}
     /// <summary>
     /// Property to store the currently selected call in the DataGrid.
     /// </summary>

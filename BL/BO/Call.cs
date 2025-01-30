@@ -28,9 +28,9 @@ public class Call
 
     public string Address { get; set; } // Address related to the call
 
-    public double Latitude { get; set; } // Latitude of the call's location
+    public double? Latitude { get; set; } // Latitude of the call's location
 
-    public double Longitude { get; set; } // Longitude of the call's location
+    public double? Longitude { get; set; } // Longitude of the call's location
 
     public DateTime OpeningTime { get; set; } // Time when the call was opened
 

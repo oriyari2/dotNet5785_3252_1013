@@ -76,16 +76,20 @@ public static class Initialization
 
             double VolMaxDis = s_rand.Next(); //random distance
             string Password = "pS" + VolPhone + "*";
+            if (VolIds[i] == 218372043)
+                Password = "0508926188*";
+            if (VolIds[i] == 326549441)
+                Password = "Password12#";
             Password = EncryptPassword(Password);
 
             s_dal!.Volunteer.Create(new(VolIds[i], VolNames[i], VolPhone, VolEmail, Password, VolAdresses[i],
             VolLatitudes[i], VolLongitudes[i], VulRole, true, VolMaxDis, DistanceType.air));
             //add new Volunteer with right details to list
         }
-        s_dal!.Volunteer.Create(new(309366532, "Rivka Azrad", "0508926188", "rivkaazrad@gmail.com", "0508926188*", "Hapisga 10, Jerusalem, Israel",
+        s_dal!.Volunteer.Create(new(309366532, "Rivka Azrad", "0508926188", "rivkaazrad@gmail.com", EncryptPassword("0571891588*"), "Hapisga 10, Jerusalem, Israel",
             31.7683, 35.2137, RoleType.volunteer, false, 60000000, DistanceType.air));
-        s_dal!.Volunteer.Create(new(214763252, "Orya Cohen", "0504185888", "aazrad@gmail.com", "0508926188*", "Hapisga 15, Jerusalem, Israel",
-            31.7683, 35.2137, RoleType.volunteer, false, 70000000, DistanceType.air));
+        s_dal!.Volunteer.Create(new(214763252, "Oriya Yitzhaky", "0504185888", "aazrad@gmail.com", EncryptPassword("0586121631*"), "Hapisga 15, Jerusalem, Israel",
+            31.7683, 35.2137, RoleType.volunteer, false, null, DistanceType.air));
     }
 
     private static void createAssignment()
