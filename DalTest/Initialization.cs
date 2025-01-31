@@ -311,8 +311,8 @@ public static class Initialization
             double latitude = CallLatitudes[i]; // Get latitude from the list
             string? description = ""; // Initialize description as an empty string
             CallType callType = CallType.food; // Default call type is food
-            DateTime start = new DateTime(s_dal!.Config.Clock.Year - 1, i % 12 + 1, i % 28 + 1); // Set call start date to one year before the current year
-            DateTime end = new DateTime(s_dal!.Config.Clock.Year + 1, i % 12 + 1, i % 28 + 1); // Set call end date to one year after the current year
+            DateTime start = s_dal!.Config.Clock.AddDays((-(i % 10 + (i * i) % 50)));
+            DateTime end = s_dal!.Config.Clock.AddDays((i % 10 + (i * i) % 50));
             if (i % 10 == 0) // If the current index is divisible by 10
             {
                 end = start; // Set the end date to the same as the start date (expired)
@@ -386,7 +386,6 @@ public static class Initialization
         Console.WriteLine("Initializing Assignment list ..."); // Log message for assignment list initialization
         createAssignment(); // Create and populate the assignment list
     }
-
 }
 
 

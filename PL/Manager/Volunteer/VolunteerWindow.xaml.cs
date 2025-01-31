@@ -75,13 +75,6 @@ public partial class VolunteerWindow : Window
     /// </summary>
     private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
     {
-        if (CurrentVolunteer == null)
-        {
-            // Show an error message if volunteer details are missing.
-            MessageBox.Show("Volunteer details are missing.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            return;
-        }
-
         try
         {
             if (ButtonText == "Add")
@@ -112,22 +105,27 @@ public partial class VolunteerWindow : Window
     /// </summary>
     private void queryVolunteer()
     {
-        int id = CurrentVolunteer!.Id;
-        CurrentVolunteer = null;
-        CurrentVolunteer = s_bl.Volunteer.Read(id);
+        int id;
+        if (CurrentVolunteer != null)
+        {
+            id = CurrentVolunteer!.Id;
+            CurrentVolunteer = null;
+            if(id!=0)
+            CurrentVolunteer = s_bl.Volunteer.Read(id);
+        }
     }
 
     /// <summary>
     /// Observer method to refresh the volunteer data when notified of changes.
     /// </summary>
     private void volunteerObserver()
-{
+    {
         if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
             _observerOperation = Dispatcher.BeginInvoke(() =>
             {
                 queryVolunteer();
             });
-}
+    }
     /// <summary>
     /// Event handler for when the window is loaded.
     /// </summary>
@@ -145,7 +143,7 @@ public partial class VolunteerWindow : Window
     /// </summary>
     private void Window_Closed(object sender, EventArgs e)
     {
-        if (CurrentVolunteer!.Id != 0)
+        if (CurrentVolunteer != null && CurrentVolunteer!.Id != 0)
             // Remove the observer for the current volunteer when the window is closed.
             s_bl.Volunteer.RemoveObserver(CurrentVolunteer!.Id, volunteerObserver);
         s_bl.Admin.RemoveClockObserver(clockObserver); // Register for clock updates

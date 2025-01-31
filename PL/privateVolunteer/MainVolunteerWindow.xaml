@@ -80,6 +80,11 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="Address:" />
                     <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True" Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
+                    
+
+
+
+
                     <Label Grid.Row="6" Grid.Column="0" Content="Opening Time:" />
                     <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="1"  
       Text="{Binding CurrentCall.OpeningTime, Converter={StaticResource OpeningTimeConverterkey}}" />
@@ -210,7 +215,22 @@
                     <Label Grid.Row="6" Grid.Column="0" Content="Address:" />
                     <!-- TextBox for Address -->
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding CurrentVolunteer.Address,
-        Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
+        Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" >
+                    <TextBox.BorderBrush>
+                        <MultiBinding Converter="{StaticResource CoordinatesValidationConverterkey}">
+                            <Binding Path="CurrentVolunteer.Address" />
+                                <Binding Path="CurrentVolunteer.Latitude" />
+                                <Binding Path="CurrentVolunteer.Longitude" />
+                        </MultiBinding>
+                    </TextBox.BorderBrush>
+                    <TextBox.BorderThickness>
+                        <MultiBinding Converter="{StaticResource BorderThicknessConverterkey}">
+                                <Binding Path="CurrentVolunteer.Address" />
+                                <Binding Path="CurrentVolunteer.Latitude" />
+                                <Binding Path="CurrentVolunteer.Longitude" />
+                        </MultiBinding>
+                    </TextBox.BorderThickness>
+                    </TextBox>
 
                     <Label Grid.Row="7" Grid.Column="0" Content="Role:" />
                     <!-- ComboBox for selecting Role -->

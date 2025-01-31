@@ -60,8 +60,8 @@ internal class VolunteerImplementation : IVolunteer
     {
         AdminManager.ThrowOnSimulatorIsRunning();
         // Validate the volunteer's data using utility functions
-        VolunteerManager.IsValidEmail(boVolunteer.Email); // Check if the email is valid
         VolunteerManager.IsValidID(boVolunteer.Id); // Check if the ID is valid
+        VolunteerManager.IsValidEmail(boVolunteer.Email); // Check if the email is valid
         VolunteerManager.IsValidPhoneNumber(boVolunteer.PhoneNumber); // Check if the phone number is valid
         string password = VolunteerManager.GenerateStrongPassword(); // Generate a strong password
         password = VolunteerManager.EncryptPassword(password);

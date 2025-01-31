@@ -125,7 +125,7 @@
 
                 <Label Content="Clock Interval (min):" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Grid.Row="0" Grid.Column="0"/>
                 <TextBox Text="{Binding Interval, UpdateSourceTrigger=PropertyChanged}"
-                         HorizontalAlignment="Left" Width="100" Height ="40" Grid.Row="0" Grid.Column="1" FontSize="14"/>
+                         HorizontalAlignment="Left" Width="70" Height ="20" Grid.Row="0" Grid.Column="1" FontSize="14" IsEnabled="{Binding FlagSimulator, Converter={StaticResource SimulatorEnableConverterkey}}"/>
                 <Button Content="{Binding FlagSimulator, Converter={StaticResource SimulatorStatusConverterkey}}" 
         Click="ToggleSimulatorButton_Click"
         HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="2"

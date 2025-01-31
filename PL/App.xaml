@@ -8,6 +8,7 @@
         <!-- This resource provides a predefined collection of call types for data binding. -->
         <local:CallTypeCollection x:Key="CallTypeCollectionKey"/>
 
+
         <!-- Collection for status types -->
         <!-- This resource provides a predefined collection of status types for data binding. -->
         <local:StatusCollection x:Key="StatusCollectionKey"/>
@@ -69,6 +70,9 @@
         <local:SimulatorEnableConverter x:Key="SimulatorEnableConverterkey"/>
 
         <local:CoordinatesValidationConverter x:Key="CoordinatesValidationConverterkey"/>
+
+        <local:BorderThicknessConverter x:Key="BorderThicknessConverterkey"/>
+        
 
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->

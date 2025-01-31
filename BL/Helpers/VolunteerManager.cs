@@ -40,17 +40,24 @@ internal static class VolunteerManager
     /// <returns>Details of the call in progress, if any</returns>
     internal static BO.CallInProgress? callProgress(int id)
     {
+        IEnumerable<Assignment> assignments;
+        DO.Volunteer? volunteer;
         lock (AdminManager.BlMutex)
         {
-            var assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null) && s.TheEndType != DO.EndType.expired);  // Get assignments
-            var volunteer = s_dal.Volunteer.Read(id) ?? throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does not exist"); // Get volunteer details
-            
+            assignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.ActualEndTime == null) && s.TheEndType != DO.EndType.expired);  // Get assignments
+            volunteer = s_dal.Volunteer.Read(id);
+        }
+        if(volunteer==null)
+             throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does not exist"); // Get volunteer details
+
+         
             // בדיקה האם קיימות קורדינטות למתנדב
             double? volLon = volunteer.Longitude;
             double? volLat = volunteer.Latitude;
 
             AdminImplementation admin = new(); // Instantiate admin for risk range checking
-
+        lock (AdminManager.BlMutex)
+        {
             BO.CallInProgress? callInProgress =
              (from item in assignments
               let call = s_dal.Call.Read(item.CallId)
@@ -115,8 +122,9 @@ internal static class VolunteerManager
         // Try to read the volunteer from the database
         DO.Volunteer? doVolunteer;
         lock (AdminManager.BlMutex)
-            doVolunteer = s_dal.Volunteer.Read(id) ??
-       throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
+            doVolunteer = s_dal.Volunteer.Read(id);
+       if(doVolunteer==null)
+            throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does Not exist");
 
         // Map the data object (DO) to the business object (BO)
         return new BO.Volunteer()

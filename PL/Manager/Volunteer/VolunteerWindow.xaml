@@ -89,7 +89,24 @@
         <Label Grid.Row="5" Grid.Column="0" Content="Address:" />
         <!-- TextBox for Address -->
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding CurrentVolunteer.Address,
-            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
+            Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}">
+            <TextBox.BorderBrush>
+            <MultiBinding Converter="{StaticResource CoordinatesValidationConverterkey}">
+                <Binding Path="CurrentVolunteer.Address" />
+                    <Binding Path="CurrentVolunteer.Latitude" />
+                    <Binding Path="CurrentVolunteer.Longitude" />
+            </MultiBinding>
+        </TextBox.BorderBrush>
+        <TextBox.BorderThickness>
+            <MultiBinding Converter="{StaticResource BorderThicknessConverterkey}">
+                    <Binding Path="CurrentVolunteer.Address" />
+                    <Binding Path="CurrentVolunteer.Latitude" />
+                    <Binding Path="CurrentVolunteer.Longitude" />
+            </MultiBinding>
+        </TextBox.BorderThickness>
+
+        </TextBox>
+
 
         <Label Grid.Row="6" Grid.Column="0" Content="Role:" />
         <!-- ComboBox for selecting Role -->

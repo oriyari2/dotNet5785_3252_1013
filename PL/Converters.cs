@@ -357,7 +357,35 @@ public class CoordinatesValidationConverter : IMultiValueConverter
             return Brushes.Red;
         }
 
-        return Brushes.White;
+        return Brushes.Black;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class BorderThicknessConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values.Length < 3)
+            return new Thickness(1); // ערך ברירת מחדל
+
+        string address = values[0] as string;
+        double? latitude = values[1] as double?;
+        double? longitude = values[2] as double?;
+
+        // דוגמה: אם הכתובת ריקה, עשי גבול עבה יותר
+        if (string.IsNullOrEmpty(address))
+            return new Thickness(2);
+
+        // אם הלונגיטוד לא תקין, גבול אדום ודק
+        if (longitude == null || longitude == 0)
+            return new Thickness(2);
+
+        return new Thickness(1); // ברירת מחדל
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

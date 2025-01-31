@@ -1,5 +1,6 @@
 ﻿using BlImplementation;
 using DalApi;
+using System;
 using System.Net;
 using System.Xml.Linq;
 
@@ -76,14 +77,17 @@ internal static class CallManager
     {
         // Retrieves the coordinates based on the address. Throws an exception if the address is invalid.
         AdminImplementation admin = new();  // Creates an instance of AdminImplementation to access admin settings.
+        if (call.MaxTimeToEnd.HasValue)
+        {
+            // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
+            if (call.MaxTimeToEnd < admin.GetClock() + admin.GetRiskRange())
+                throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time + risk range");
 
-        // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
-        if (call.MaxTimeToEnd < admin.GetClock() + admin.GetRiskRange())
-            throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time + risk range");
-
-        if (call.MaxTimeToEnd < admin.GetClock())
-            throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
-
+            if (call.MaxTimeToEnd < admin.GetClock())
+                throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
+        }
+        else
+            call.MaxTimeToEnd = null;
         // Returns a new DO.Call object with the updated values.
         DO.Call newCall = new()
         {
@@ -430,8 +434,10 @@ internal static class CallManager
         // Retrieve the call from the DAL
         DO.Call call;
         lock (AdminManager.BlMutex)
-            call = s_dal.Call.Read(id) ??
-        throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
+            call = s_dal.Call.Read(id);
+        if (call == null)
+            throw new BO.BlDoesNotExistException($"Call with ID={id} does Not exist");
+        
 
         // Retrieve the assignments for the call
         IOrderedEnumerable<DO.Assignment> assignments;

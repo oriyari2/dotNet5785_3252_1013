@@ -68,13 +68,21 @@
         <Label Grid.Row="3" Grid.Column="0" Content="Address:" />
         <TextBox Grid.Row="3" Grid.Column="1" 
          Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true}" >
-            <TextBox.Background>
+            <TextBox.BorderBrush>
                 <MultiBinding Converter="{StaticResource CoordinatesValidationConverterkey}">
                     <Binding Path="CurrentCall.Address" />
                     <Binding Path="CurrentCall.Latitude" />
                     <Binding Path="CurrentCall.Longitude" />
                 </MultiBinding>
-            </TextBox.Background>
+            </TextBox.BorderBrush>
+             <TextBox.BorderThickness>
+        <MultiBinding Converter="{StaticResource BorderThicknessConverterkey}">
+            <Binding Path="CurrentCall.Address" />
+            <Binding Path="CurrentCall.Latitude" />
+            <Binding Path="CurrentCall.Longitude" />
+        </MultiBinding>
+    </TextBox.BorderThickness>
+
         </TextBox>
 
         <!-- Opening time: Read-only field -->

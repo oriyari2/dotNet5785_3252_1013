@@ -20,6 +20,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent(); // Initialize the UI components
+        Interval = 1000;
     }
 
 
@@ -68,7 +69,8 @@ public partial class MainWindow : Window
 
 
     /// <summary>
-    /// Advances the clock by one minute when the button is clicked.
+    /// Advances the c
+    /// by one minute when the button is clicked.
     /// </summary>
     private void btnAddOneMinute_Click(object sender, RoutedEventArgs e)
     {
@@ -203,6 +205,11 @@ public partial class MainWindow : Window
     /// </summary>
     private void MainWindow_Closed(object sender, EventArgs e)
     {
+        if (FlagSimulator == true)  // אם הסימולטור פועל
+        {
+            s_bl.Admin.StopSimulator();  // נעצור את הסימולטור
+            FlagSimulator = false;
+        }
         // Cleanup observers when the window is closed
         s_bl.Admin.RemoveClockObserver(clockObserver);
         s_bl.Admin.RemoveConfigObserver(configObserver);
@@ -214,15 +221,15 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnVolunteers_Click(object sender, RoutedEventArgs e)
     {
-        foreach (Window window in Application.Current.Windows)
-        {
-            // Check if there is already an open window of type VolunteerListWindow
-            if (window is VolunteerListWindow)
-            {
-                window.Activate(); // If such a window is open, bring it to the front
-                return; // If the window is already open, don't open a new one
-            }
-        }
+        //foreach (Window window in Application.Current.Windows)
+        //{
+        //    // Check if there is already an open window of type VolunteerListWindow
+        //    if (window is VolunteerListWindow)
+        //    {
+        //        window.Activate(); // If such a window is open, bring it to the front
+        //        return; // If the window is already open, don't open a new one
+        //    }
+        //}
 
         // If no window is open, open a new one
         new VolunteerListWindow().Show(); // Open the VolunteerListWindow when the button is clicked
@@ -233,15 +240,15 @@ public partial class MainWindow : Window
     /// </summary>
     private void btnCalls_Click(object sender, RoutedEventArgs e)
     {
-        foreach (Window window in Application.Current.Windows)
-        {
-            // Check if there is already an open window of type VolunteerListWindow
-            if (window is CallListWindow)
-            {
-                window.Activate(); // If such a window is open, bring it to the front
-                return; // If the window is already open, don't open a new one
-            }
-        }
+        //foreach (Window window in Application.Current.Windows)
+        //{
+        //    // Check if there is already an open window of type VolunteerListWindow
+        //    if (window is CallListWindow)
+        //    {
+        //        window.Activate(); // If such a window is open, bring it to the front
+        //        return; // If the window is already open, don't open a new one
+        //    }
+        //}
 
         // If no window is open, open a new one
         new CallListWindow(null).Show(); // Open the VolunteerListWindow when the button is clicked

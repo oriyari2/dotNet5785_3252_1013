@@ -79,14 +79,16 @@ namespace PL.Call
         /// <summary>
         /// Dependency property for the current time.
         /// </summary>
-        public DateTime CurrentTime
+        public DateTime CurrentTime //for the opening time or curent time
         {
-            get { return (DateTime)GetValue(CurrentTimeProperty); }
-            set { SetValue(CurrentTimeProperty, value); }
+            get { return (DateTime)GetValue(CurrentOpeningTimeProperty); }
+            set { SetValue(CurrentOpeningTimeProperty, value); }
         }
 
-        public static readonly DependencyProperty CurrentTimeProperty =
+        public static readonly DependencyProperty CurrentOpeningTimeProperty =
             DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(CallWindow), new PropertyMetadata(null));
+
+
 
         /// <summary>
         /// Observer method to update the current time from the backend clock.
@@ -96,7 +98,7 @@ namespace PL.Call
             if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
                 _observerOperation = Dispatcher.BeginInvoke(() =>
                 {
-                    CurrentTime = s_bl.Admin.GetClock(); // Get the current time from the backend
+                    CurrentTime = ButtonText == "Update" ? CurrentCall.OpeningTime : s_bl.Admin.GetClock(); // Get the current time from the backend
                     queryCall();
                 });
         }
@@ -144,7 +146,9 @@ namespace PL.Call
         private void queryCall()
         {
             int id = CurrentCall!.Id;
-            CurrentCall = s_bl.Call.Read(id);
+            if(id!=0) 
+                CurrentCall = s_bl.Call.Read(id);
+
         }
 
         /// <summary>
@@ -168,7 +172,7 @@ namespace PL.Call
                 // Add an observer for the current call if it exists.
                 s_bl.Call.AddObserver(CurrentCall!.Id, callObserver);
 
-            CurrentTime = s_bl.Admin.GetClock(); // Set the current time from the backend
+           CurrentTime = ButtonText == "Update" ? CurrentCall.OpeningTime : s_bl.Admin.GetClock(); // Get the current time from the backend
             s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
         }
 
