@@ -92,7 +92,9 @@
 
         <!-- DatePicker for Max Time To End -->
         <Label Grid.Row="5" Grid.Column="0" Content="Max Time To End:" />
-        <DatePicker Grid.Row="5" Grid.Column="1" SelectedDate="{Binding CurrentCall.MaxTimeToEnd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+        <DatePicker Grid.Row="5" Grid.Column="1" 
+            SelectedDate="{Binding CurrentCall.MaxTimeToEnd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+            IsHitTestVisible="True"/>
 
         <!-- ComboBox for Status (read-only) -->
         <Label Grid.Row="6" Grid.Column="0" Content="Status:" />

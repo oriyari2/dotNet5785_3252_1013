@@ -1,4 +1,5 @@
 ﻿using BlImplementation;
+using BO;
 using DalApi;
 using System;
 using System.Net;
@@ -31,20 +32,20 @@ internal static class CallManager
             return BO.Status.expired;
 
         // Then check for time expiration
-        if (call.MaxTimeToEnd <= admin.GetClock())
+        if (call.MaxTimeToEnd != DateTime.MinValue && call.MaxTimeToEnd <= admin.GetClock())
             return BO.Status.expired;
 
         // Then handle open and risk states
         if (assignment == null || assignment.TheEndType == DO.EndType.self || assignment.TheEndType == DO.EndType.manager)
         {
-            if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())
+            if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange() && call.MaxTimeToEnd != DateTime.MinValue)
                 return BO.Status.riskOpen;
             else
                 return BO.Status.open;
         }
 
         // Finally handle treatment states
-        if ((call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())
+        if (call.MaxTimeToEnd != DateTime.MinValue &&( call.MaxTimeToEnd - admin.GetClock()) <= admin.GetRiskRange())
             return BO.Status.riskTreatment;
         else
             return BO.Status.treatment;
@@ -80,10 +81,10 @@ internal static class CallManager
         if (call.MaxTimeToEnd.HasValue)
         {
             // Checks if the MaxTimeToEnd is smaller than the OpeningTime, throws exception if true.
-            if (call.MaxTimeToEnd < admin.GetClock() + admin.GetRiskRange())
+            if (call.MaxTimeToEnd != DateTime.MinValue && call.MaxTimeToEnd < admin.GetClock() + admin.GetRiskRange())
                 throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time + risk range");
 
-            if (call.MaxTimeToEnd < admin.GetClock())
+            if (call.MaxTimeToEnd != DateTime.MinValue && call.MaxTimeToEnd < admin.GetClock())
                 throw new BO.BlUserCantUpdateItemExeption("Max Time To End of Call can't be smaller than the Opening Time");
         }
         else
@@ -113,7 +114,7 @@ internal static class CallManager
         lock (AdminManager.BlMutex)
         {
             expiredCalls = s_dal.Call.ReadAll(c =>
-                c.MaxTimeToEnd < AdminManager.Now
+                c.MaxTimeToEnd != DateTime.MinValue && c.MaxTimeToEnd < AdminManager.Now
             );
         }
 
@@ -143,7 +144,7 @@ internal static class CallManager
 
         IEnumerable<DO.Assignment> listAssi;
         lock (AdminManager.BlMutex)
-            listAssi = s_dal.Assignment.ReadAll(a => a.TheEndType != DO.EndType.treated);
+            listAssi = s_dal.Assignment.ReadAll(a => a.TheEndType != DO.EndType.treated && a.TheEndType != DO.EndType.expired);
 
         foreach (var assignment in listAssi)
         {
@@ -480,8 +481,12 @@ internal static class CallManager
             callInList = from item in listCall
                          let assignment = listAssignment.Where(s => s.CallId == item.Id).OrderByDescending(s => s.Id).FirstOrDefault()
                          let volunteer = assignment != null ? s_dal.Volunteer.Read(assignment.VolunteerId) : null
-                         let TempTimeToEnd = item.MaxTimeToEnd - (AdminManager.Now)
-                         let tmpstatus = CallManager.CheckStatus(assignment, item)
+                         let tmpstatus = CheckStatus(assignment, item)
+                         let TempTimeToEnd = (item.MaxTimeToEnd != null && item.MaxTimeToEnd != DateTime.MinValue &&
+                                              tmpstatus != Status.close && tmpstatus != Status.expired)
+                                             ? item.MaxTimeToEnd - AdminManager.Now
+                                             : null
+
                          select new BO.CallInList
                          {
                              Id = assignment != null ? assignment.Id : null,

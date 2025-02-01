@@ -148,7 +148,7 @@ internal class CallImplementation : ICall
                             where assignment.VolunteerId == volunteerId &&
                                  (assignment.TheEndType != null ||
                                   assignment.TheEndType == DO.EndType.expired ||
-                                  call.MaxTimeToEnd < AdminManager.Now)  // מוסיף גם קריאות שפג תוקפן
+                                  call.MaxTimeToEnd != DateTime.MinValue && call.MaxTimeToEnd < AdminManager.Now)  // מוסיף גם קריאות שפג תוקפן
                             select new BO.ClosedCallInList
                             {
                                 Id = call.Id,
@@ -156,8 +156,8 @@ internal class CallImplementation : ICall
                                 Address = call.Address,
                                 OpeningTime = call.OpeningTime,
                                 EntryTime = assignment.EntryTime,
-                                ActualEndTime = assignment.ActualEndTime ?? AdminManager.Now,  // אם אין זמן סיום, משתמש בזמן הנוכחי
-                                TheEndType = assignment.TheEndType == null && call.MaxTimeToEnd < AdminManager.Now ?
+                                ActualEndTime = assignment.ActualEndTime != null || assignment.ActualEndTime != DateTime.MinValue ? assignment.ActualEndTime : AdminManager.Now,  // אם אין זמן סיום, משתמש בזמן הנוכחי
+                                TheEndType = assignment.TheEndType == null && call.MaxTimeToEnd != DateTime.MinValue &&  call.MaxTimeToEnd < AdminManager.Now ?
                                            BO.EndType.expired :
                                            (BO.EndType)assignment.TheEndType
                             };

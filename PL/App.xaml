@@ -72,7 +72,6 @@
         <local:CoordinatesValidationConverter x:Key="CoordinatesValidationConverterkey"/>
 
         <local:BorderThicknessConverter x:Key="BorderThicknessConverterkey"/>
-        
 
         <!-- Default style for buttons -->
         <!-- This style defines the default appearance for all buttons in the application. -->

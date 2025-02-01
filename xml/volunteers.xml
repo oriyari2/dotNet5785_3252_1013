@@ -1,213 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfVolunteer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Volunteer>
-    <Id>218372043</Id>
-    <Name>Dani Levy</Name>
-    <PhoneNumber>0597730284</PhoneNumber>
-    <Email>0597730284@gmail.com</Email>
-    <Password>383;&lt;594;;-</Password>
-    <Address>King George 1, Jerusalem, Israel</Address>
-    <Latitude>31.776</Latitude>
-    <Longitude>35.2218</Longitude>
-    <Role>manager</Role>
-    <Active>true</Active>
-    <MaxDistance>1303883044</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
     <Id>318207149</Id>
     <Name>Eli Amar</Name>
-    <PhoneNumber>0553915010</PhoneNumber>
-    <Email>0553915010@gmail.com</Email>
-    <Password>sV3886&lt;48343-</Password>
+    <PhoneNumber>0565804938</PhoneNumber>
+    <Email>0565804938@gmail.com</Email>
+    <Password>sV3898;37&lt;6;-</Password>
     <Address>Jaffa 23, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.2137</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>1760519221</MaxDistance>
-    <TheDistanceType>air</TheDistanceType>
-  </Volunteer>
-  <Volunteer>
-    <Id>211722251</Id>
-    <Name>Yair Cohen</Name>
-    <PhoneNumber>0547909933</PhoneNumber>
-    <Email>0547909933@gmail.com</Email>
-    <Password>sV387:&lt;3&lt;&lt;66-</Password>
-    <Address>Agripas 45, Jerusalem, Israel</Address>
-    <Latitude>31.777</Latitude>
-    <Longitude>35.2212</Longitude>
-    <Role>volunteer</Role>
-    <Active>true</Active>
-    <MaxDistance>70502221</MaxDistance>
+    <MaxDistance>390481447</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>235246881</Id>
     <Name>Ariela Levin</Name>
-    <PhoneNumber>0552886028</PhoneNumber>
-    <Email>0552886028@gmail.com</Email>
-    <Password>sV3885;;935;-</Password>
+    <PhoneNumber>0587826319</PhoneNumber>
+    <Email>0587826319@gmail.com</Email>
+    <Password>sV38;:;5964&lt;-</Password>
     <Address>Ben Yehuda 67, Jerusalem, Israel</Address>
     <Latitude>31.779</Latitude>
     <Longitude>35.2135</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>1769695973</MaxDistance>
+    <MaxDistance>1774174083</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>208979633</Id>
     <Name>Dina Klein</Name>
-    <PhoneNumber>0523959786</PhoneNumber>
-    <Email>0523959786@gmail.com</Email>
-    <Password>sV3856&lt;8&lt;:;9-</Password>
+    <PhoneNumber>0539966785</PhoneNumber>
+    <Email>0539966785@gmail.com</Email>
+    <Password>sV386&lt;&lt;99:;8-</Password>
     <Address>HaNeviim 89, Jerusalem, Israel</Address>
     <Latitude>31.783</Latitude>
     <Longitude>35.2143</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>396238962</MaxDistance>
+    <MaxDistance>2146487972</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>208773994</Id>
     <Name>Shira Israelof</Name>
-    <PhoneNumber>0552074751</PhoneNumber>
-    <Email>0552074751@gmail.com</Email>
-    <Password>sV38853:7:84-</Password>
+    <PhoneNumber>0561008011</PhoneNumber>
+    <Email>0561008011@gmail.com</Email>
+    <Password>sV389433;344-</Password>
     <Address>Yad Harutsim 101, Jerusalem, Israel</Address>
     <Latitude>31.791</Latitude>
     <Longitude>35.2007</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>2007419756</MaxDistance>
+    <MaxDistance>971114917</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>207249780</Id>
     <Name>yael cohen</Name>
-    <PhoneNumber>0550679043</PhoneNumber>
-    <Email>0550679043@gmail.com</Email>
-    <Password>sV38839:&lt;376-</Password>
+    <PhoneNumber>0527931329</PhoneNumber>
+    <Email>0527931329@gmail.com</Email>
+    <Password>sV385:&lt;6465&lt;-</Password>
     <Address>Emek Refaim 15, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.2072</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>1361055146</MaxDistance>
+    <MaxDistance>1650692395</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>322638370</Id>
     <Name>david azrad</Name>
-    <PhoneNumber>0517946001</PhoneNumber>
-    <Email>0517946001@gmail.com</Email>
-    <Password>sV384:&lt;79334-</Password>
+    <PhoneNumber>0527977506</PhoneNumber>
+    <Email>0527977506@gmail.com</Email>
+    <Password>sV385:&lt;::839-</Password>
     <Address>Malha Rd 33, Jerusalem, Israel</Address>
     <Latitude>31.75</Latitude>
     <Longitude>35.1907</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>1835115707</MaxDistance>
+    <MaxDistance>1122524543</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>316529080</Id>
     <Name>miri levi</Name>
-    <PhoneNumber>0588785550</PhoneNumber>
-    <Email>0588785550@gmail.com</Email>
-    <Password>sV38;;:;8883-</Password>
+    <PhoneNumber>0512304965</PhoneNumber>
+    <Email>0512304965@gmail.com</Email>
+    <Password>sV3845637&lt;98-</Password>
     <Address>Harav Kook 2, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.2091</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>1588801424</MaxDistance>
+    <MaxDistance>456372195</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>241441864</Id>
     <Name>amir shalom</Name>
-    <PhoneNumber>0596011179</PhoneNumber>
-    <Email>0596011179@gmail.com</Email>
-    <Password>sV38&lt;93444:&lt;-</Password>
+    <PhoneNumber>0511335385</PhoneNumber>
+    <Email>0511335385@gmail.com</Email>
+    <Password>sV38446686;8-</Password>
     <Address>Hillel 40, Jerusalem, Israel</Address>
     <Latitude>31.778</Latitude>
     <Longitude>35.2181</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>125631919</MaxDistance>
+    <MaxDistance>123792882</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>331295121</Id>
     <Name>ronit shahar</Name>
-    <PhoneNumber>0550612155</PhoneNumber>
-    <Email>0550612155@gmail.com</Email>
-    <Password>sV3883945488-</Password>
+    <PhoneNumber>0566469908</PhoneNumber>
+    <Email>0566469908@gmail.com</Email>
+    <Password>sV389979&lt;&lt;3;-</Password>
     <Address>Davidka Square 5, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.2133</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>1941512296</MaxDistance>
+    <MaxDistance>1130845654</MaxDistance>
+    <TheDistanceType>air</TheDistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>215041013</Id>
+    <Name>itay ben-david</Name>
+    <PhoneNumber>0576082864</PhoneNumber>
+    <Email>0576082864@gmail.com</Email>
+    <Password>sV38:93;5;97-</Password>
+    <Address>Ramban 21, Jerusalem, Israel</Address>
+    <Latitude>31.773</Latitude>
+    <Longitude>35.2046</Longitude>
+    <Role>volunteer</Role>
+    <Active>true</Active>
+    <MaxDistance>1309197178</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>214363350</Id>
     <Name>maya peretz</Name>
-    <PhoneNumber>0574315823</PhoneNumber>
-    <Email>0574315823@gmail.com</Email>
-    <Password>sV38:7648;56-</Password>
+    <PhoneNumber>0546672207</PhoneNumber>
+    <Email>0546672207@gmail.com</Email>
+    <Password>sV38799:553:-</Password>
     <Address>Tchernichovsky 37, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.215</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>507023367</MaxDistance>
+    <MaxDistance>547641550</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>215089632</Id>
     <Name>yoni abergil</Name>
-    <PhoneNumber>0549782342</PhoneNumber>
-    <Email>0549782342@gmail.com</Email>
-    <Password>sV387&lt;:;5675-</Password>
+    <PhoneNumber>0546771826</PhoneNumber>
+    <Email>0546771826@gmail.com</Email>
+    <Password>sV3879::4;59-</Password>
     <Address>HaPalmach 11, Jerusalem, Israel</Address>
     <Latitude>31.78</Latitude>
     <Longitude>35.1984</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>509219514</MaxDistance>
+    <MaxDistance>551310401</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>327887360</Id>
     <Name>lior haddad</Name>
-    <PhoneNumber>0595549486</PhoneNumber>
-    <Email>0595549486@gmail.com</Email>
-    <Password>sV38&lt;887&lt;7;9-</Password>
+    <PhoneNumber>0527384356</PhoneNumber>
+    <Email>0527384356@gmail.com</Email>
+    <Password>sV385:6;7689-</Password>
     <Address>Keren HaYesod 90, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.2075</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>480989968</MaxDistance>
+    <MaxDistance>1418144158</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
     <Id>326549441</Id>
     <Name>rivka azrad</Name>
-    <PhoneNumber>0539225152</PhoneNumber>
-    <Email>0539225152@gmail.com</Email>
+    <PhoneNumber>0597328988</PhoneNumber>
+    <Email>0597328988@gmail.com</Email>
     <Password>Sdvvzrug45&amp;</Password>
     <Address>Hapisga 30, Jerusalem, Israel</Address>
     <Latitude>31.78</Latitude>
     <Longitude>35.21</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>936196835</MaxDistance>
+    <MaxDistance>626581614</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
@@ -239,17 +225,31 @@
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
   <Volunteer>
-    <Id>215041013</Id>
-    <Name>itay ben david</Name>
-    <PhoneNumber>0514798936</PhoneNumber>
-    <Email>0514798936@gmail.com</Email>
-    <Password>sV3847:&lt;;&lt;69-</Password>
-    <Address>Ramban 21, Jerusalem, Israel</Address>
-    <Latitude>31.773</Latitude>
-    <Longitude>35.2046</Longitude>
+    <Id>218372043</Id>
+    <Name>Dani Levy</Name>
+    <PhoneNumber>0578728135</PhoneNumber>
+    <Email>0578728135@gmail.com</Email>
+    <Password>383;&lt;594;;-</Password>
+    <Address>King George 1, Jerusalem, Israel</Address>
+    <Latitude>31.776</Latitude>
+    <Longitude>35.2218</Longitude>
+    <Role>manager</Role>
+    <Active>true</Active>
+    <MaxDistance>366751018</MaxDistance>
+    <TheDistanceType>air</TheDistanceType>
+  </Volunteer>
+  <Volunteer>
+    <Id>211722251</Id>
+    <Name>Yair Cohen</Name>
+    <PhoneNumber>0563280805</PhoneNumber>
+    <Email>0563280805@gmail.com</Email>
+    <Password>sV38965;3;38-</Password>
+    <Address>Agripas 45, Jerusalem, Israel</Address>
+    <Latitude>31.777</Latitude>
+    <Longitude>35.2212</Longitude>
     <Role>volunteer</Role>
     <Active>true</Active>
-    <MaxDistance>129803688</MaxDistance>
+    <MaxDistance>365920231</MaxDistance>
     <TheDistanceType>air</TheDistanceType>
   </Volunteer>
 </ArrayOfVolunteer>
