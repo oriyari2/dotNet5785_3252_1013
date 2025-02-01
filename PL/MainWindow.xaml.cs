@@ -416,30 +416,36 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Handles the click event for the toggle simulator button. Starts or stops the simulator depending on its current state.
+    /// </summary>
+    /// <param name="sender">The source of the event (the button).</param>
+    /// <param name="e">Event data associated with the click event.</param>
     private void ToggleSimulatorButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            if (FlagSimulator == true)  // אם הסימולטור פועל
+            if (FlagSimulator == true)  // If the simulator is currently running
             {
-                s_bl.Admin.StopSimulator();  // נעצור את הסימולטור
-                FlagSimulator = false;
+                s_bl.Admin.StopSimulator();  // Stop the simulator
+                FlagSimulator = false; // Update the flag to indicate the simulator has stopped
             }
-            else  // אם הסימולטור לא פועל
+            else  // If the simulator is not running
             {
-                if (Interval == 0)  // בדוק שהאינטרוול לא 0
+                if (Interval == 0)  // Check if the interval is set to 0 (invalid)
                 {
                     MessageBox.Show("Please set a valid interval before starting the simulator.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    return; // Exit the method without starting the simulator if the interval is invalid
                 }
-                s_bl.Admin.StartSimulator(Interval);  // נתחיל את הסימולטור עם אינטרוול
-                FlagSimulator = true;
+                s_bl.Admin.StartSimulator(Interval);  // Start the simulator with the specified interval
+                FlagSimulator = true; // Update the flag to indicate the simulator is running
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);  // Show error message if an exception occurs
         }
     }
+
 
 }

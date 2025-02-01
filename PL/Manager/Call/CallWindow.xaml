@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Call"
         mc:Ignorable="d"
-        Title="Call Window" Height="650" Width="400"
+        Title="Call Window" Height="550" Width="400"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     Loaded="Window_Loaded"
     Closed="Window_Closed">
@@ -40,7 +40,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="4*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -75,13 +75,13 @@
                     <Binding Path="CurrentCall.Longitude" />
                 </MultiBinding>
             </TextBox.BorderBrush>
-             <TextBox.BorderThickness>
-        <MultiBinding Converter="{StaticResource BorderThicknessConverterkey}">
-            <Binding Path="CurrentCall.Address" />
-            <Binding Path="CurrentCall.Latitude" />
-            <Binding Path="CurrentCall.Longitude" />
-        </MultiBinding>
-    </TextBox.BorderThickness>
+            <TextBox.BorderThickness>
+                <MultiBinding Converter="{StaticResource BorderThicknessConverterkey}">
+                    <Binding Path="CurrentCall.Address" />
+                    <Binding Path="CurrentCall.Latitude" />
+                    <Binding Path="CurrentCall.Longitude" />
+                </MultiBinding>
+            </TextBox.BorderThickness>
 
         </TextBox>
 
@@ -149,7 +149,7 @@
         </ScrollViewer>
 
         <!-- Button for saving or updating -->
-        <Button Grid.Row="17" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
-    HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="30" />
+        <Button FontSize="13" Grid.Row="17" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
+    HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="40" />
     </Grid>
 </Window>

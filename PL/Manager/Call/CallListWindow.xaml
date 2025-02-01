@@ -36,8 +36,8 @@
 
             <!-- ComboBox for selecting the call type -->
             <ComboBox ItemsSource="{Binding Source={StaticResource CallTypeCollectionKey}}"
-        SelectedValue="{Binding Path=callType, Mode=TwoWay}"  SelectionChanged="CallTypeSelectionChanged"
-        Grid.Column="3" />
+                      SelectedValue="{Binding Path=callType, Mode=TwoWay}" SelectionChanged="CallTypeSelectionChanged"
+                      Grid.Column="3" />
             <!-- Placed in the fourth column -->
 
             <!-- Label for the ComboBox selection -->
@@ -46,18 +46,18 @@
 
         <!-- DataGrid for displaying volunteer list -->
         <DataGrid ItemsSource="{Binding CallList}" 
-      AutoGenerateColumns="False"
-      IsReadOnly="True" 
-      EnableRowVirtualization="True"
-      RowDetailsVisibilityMode="VisibleWhenSelected"
-      Grid.Row="1"
-      HorizontalAlignment="Stretch" 
-      VerticalAlignment="Stretch"
-      GridLinesVisibility="All" 
-      BorderBrush="#0D1821" 
-      BorderThickness="1"
-      SelectedItem="{Binding SelectedCall}" 
-      MouseDoubleClick="lsvCallsList_MouseDoubleClick" >
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True" 
+                  EnableRowVirtualization="True"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  Grid.Row="1"
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch"
+                  GridLinesVisibility="All" 
+                  BorderBrush="#0D1821" 
+                  BorderThickness="1"
+                  SelectedItem="{Binding SelectedCall}" 
+                  MouseDoubleClick="lsvCallsList_MouseDoubleClick" >
 
             <!-- Style for column headers in DataGrid -->
             <DataGrid.ColumnHeaderStyle>
@@ -90,16 +90,15 @@
 
                 <!-- Column for Opening Time -->
                 <DataGridTextColumn Binding="{Binding OpeningTime, Converter={StaticResource DateTimeFormatConverterkey}}" 
-                    Header="Opening Time" Width="Auto" />
-
+                                    Header="Opening Time" Width="Auto" />
 
                 <!-- Column for Time to End -->
                 <DataGridTemplateColumn Header="Time to End" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock 
-                Text="{Binding TimeToEnd, Converter={StaticResource TimeSpanToStringConverterkey}}" 
-                HorizontalAlignment="Center" />
+                                Text="{Binding TimeToEnd, Converter={StaticResource TimeSpanToStringConverterkey}}" 
+                                HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -112,8 +111,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock 
-                Text="{Binding CompletionTreatment, Converter={StaticResource TimeSpanToStringConverterkey}}" 
-                HorizontalAlignment="Center" />
+                                Text="{Binding CompletionTreatment, Converter={StaticResource TimeSpanToStringConverterkey}}" 
+                                HorizontalAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -135,8 +134,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Delete" 
-                        Click="btnDelete_Click" 
-                        Tag="{Binding CallId}" />
+                                    Click="btnDelete_Click" 
+                                    Tag="{Binding CallId}" />
                             <!-- Delete button triggers a click event, passes record ID as a tag -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -147,9 +146,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Cancel" 
-        Click="btnCancel_Click" 
-        Tag="{Binding Id}" 
-/>
+                                    Click="btnCancel_Click" 
+                                    Tag="{Binding Id}" />
                             <!-- Cancel button triggers a click event, passes record CallID as a tag -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

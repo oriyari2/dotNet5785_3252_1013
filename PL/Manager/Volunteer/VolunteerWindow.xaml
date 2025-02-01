@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Volunteer"
         mc:Ignorable="d"
-        Title="Volunteer Window" Height="650" Width="400"
+        Title="Volunteer Window" Height="660" Width="400"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Loaded="Window_Loaded"
         Closed="Window_Closed">
@@ -207,7 +207,7 @@
             </StackPanel>
         </ScrollViewer>
         <!-- Action Button for saving or updating volunteer details -->
-        <Button Grid.Row="16" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
-        HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="30" />
+        <Button Grid.Row="16" FontSize="13" Content="{Binding ButtonText}"  Click="ButtonAddUpdate_Click" 
+        HorizontalAlignment="Left" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}"  Grid.Column="1" Width="150" Height="40" />
     </Grid>
 </Window>

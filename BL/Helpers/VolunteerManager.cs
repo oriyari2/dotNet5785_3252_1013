@@ -51,7 +51,7 @@ internal static class VolunteerManager
              throw new BO.BlDoesNotExistException($"Volunteer with ID={id} does not exist"); // Get volunteer details
 
          
-            // בדיקה האם קיימות קורדינטות למתנדב
+            // check if there is coordinates for volunteer
             double? volLon = volunteer.Longitude;
             double? volLat = volunteer.Latitude;
 
@@ -184,13 +184,13 @@ internal static class VolunteerManager
         {
             double[]? coordinates = null;
 
-            // אם הכתובת לא השתנתה ויש כבר קואורדינטות קיימות, נשמור אותן
+            //if the adresss is the same, there is no need to check coordinates again
             if (oldVolunteer.Address == volunteer.Address && oldVolunteer.Latitude != null && oldVolunteer.Longitude != null)
             {
                 coordinates = new double[] { (double)oldVolunteer.Latitude, (double)oldVolunteer.Longitude };
             }
 
-            // יצירת אובייקט המתנדב עם הקואורדינטות הרלוונטיות
+            // create the volunteer with the neede coordinates
             DO.Volunteer doVolunteer = new(
                 volunteer.Id,
                 volunteer.Name,
@@ -206,13 +206,13 @@ internal static class VolunteerManager
                 (DO.DistanceType)volunteer.TheDistanceType
             );
 
-            // עדכון המתנדב בבסיס הנתונים
+            // Updating the volunteer in the database
             lock (AdminManager.BlMutex)
             {
                 s_dal.Volunteer.Update(doVolunteer);
             }
 
-            // אם הכתובת השתנתה, נשלח לעדכון הקואורדינטות מחדש
+            // If the address has changed, we will send you a new update of the coordinates.
             if (coordinates == null)
             {
                 _ = VolunteerManager.GetCoordinates(doVolunteer);
@@ -380,7 +380,6 @@ internal static class VolunteerManager
     #endregion
 
     #region distance
-    
 
     /// <summary>
     /// Calculates the distance between two sets of latitude and longitude coordinates.
@@ -401,13 +400,14 @@ internal static class VolunteerManager
         double deltaLat = lat2Rad - lat1Rad;  // Latitude difference
         double deltaLon = lon2Rad - lon1Rad;  // Longitude difference
 
+        // Haversine formula to calculate the great-circle distance
         double a = Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2) +
                    Math.Cos(lat1Rad) * Math.Cos(lat2Rad) *
-                   Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);  // Haversine formula
+                   Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
 
         double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));  // Calculate angle
 
-        return EarthRadius * c;  // Return distance
+        return EarthRadius * c;  // Return the calculated distance in meters
     }
 
     /// <summary>
@@ -419,69 +419,75 @@ internal static class VolunteerManager
     {
         if (string.IsNullOrWhiteSpace(address))
         {
-            throw new ArgumentException("Address cannot be empty or null.", nameof(address));
+            throw new ArgumentException("Address cannot be empty or null.", nameof(address));  // Ensure address is not null or empty
         }
 
-        string apiKey = "https://geocode.maps.co/search?q=address&api_key=67627d3f6df90712511821ksqbfefac";
-        string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key={apiKey}";
+        string apiKey = "https://geocode.maps.co/search?q=address&api_key=67627d3f6df90712511821ksqbfefac";  // API key for geocoding service
+        string url = $"https://geocode.maps.co/search?q={Uri.EscapeDataString(address)}&api_key={apiKey}";  // Construct URL with address and API key
 
         try
         {
             using var client = new HttpClient();
-            var response = await client.GetAsync(url);
+            var response = await client.GetAsync(url);  // Send request to geocoding API
             response.EnsureSuccessStatusCode(); // Throws if not 200-299
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var results = JsonSerializer.Deserialize<LocationResult[]>(jsonResponse, options);
+            var jsonResponse = await response.Content.ReadAsStringAsync();  // Read the response content as string
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };  // Set JSON deserialization options
+            var results = JsonSerializer.Deserialize<LocationResult[]>(jsonResponse, options);  // Deserialize JSON to LocationResult array
 
             if (results == null || results.Length == 0)
             {
-                throw new Exception("No coordinates found for the given address.");
+                throw new Exception("No coordinates found for the given address.");  // Throw exception if no results are found
             }
 
-            return new double[] { double.Parse(results[0].Lat), double.Parse(results[0].Lon) };
+            return new double[] { double.Parse(results[0].Lat), double.Parse(results[0].Lon) };  // Return coordinates as array
         }
         catch (HttpRequestException ex)
         {
-            throw new Exception("Error sending web request: " + ex.Message);
+            throw new Exception("Error sending web request: " + ex.Message);  // Handle HTTP request errors
         }
         catch (Exception ex)
         {
-            throw new Exception("General error: " + ex.Message);
+            throw new Exception("General error: " + ex.Message);  // Handle general errors
         }
     }
 
-
-
+    /// <summary>
+    /// Asynchronously updates the coordinates for a volunteer object based on its address.
+    /// </summary>
+    /// <param name="doVolunteer">Volunteer object containing address to be geocoded</param>
     internal static async Task GetCoordinates(DO.Volunteer doVolunteer)
     {
-        if (doVolunteer.Address is not null)
+        if (doVolunteer.Address is not null)  // Check if address is not null
         {
-            double[]? loc = await GetCoordinatesAsync(doVolunteer.Address);
+            double[]? loc = await GetCoordinatesAsync(doVolunteer.Address);  // Get coordinates using geocoding API
             if (loc is not null)
-                doVolunteer = doVolunteer with { Latitude = loc[0], Longitude = loc[1] };
+                doVolunteer = doVolunteer with { Latitude = loc[0], Longitude = loc[1] };  // Update volunteer with latitude and longitude
             else
-                doVolunteer = doVolunteer with { Latitude = null, Longitude = null };
-            lock (AdminManager.BlMutex)
-                s_dal.Volunteer.Update(doVolunteer);
-            Observers.NotifyListUpdated();
-            Observers.NotifyItemUpdated(doVolunteer.Id);
+                doVolunteer = doVolunteer with { Latitude = null, Longitude = null };  // Set coordinates to null if not found
+            lock (AdminManager.BlMutex)  // Lock to prevent concurrent access
+                s_dal.Volunteer.Update(doVolunteer);  // Update volunteer in the database
+            Observers.NotifyListUpdated();  // Notify observers of list update
+            Observers.NotifyItemUpdated(doVolunteer.Id);  // Notify observers of item update
         }
     }
 
+    /// <summary>
+    /// Asynchronously updates the coordinates for a call object based on its address.
+    /// </summary>
+    /// <param name="doCall">Call object containing address to be geocoded</param>
     internal static async Task GetCoordinates(DO.Call doCall)
     {
-        if (doCall.Address is not null)
+        if (doCall.Address is not null)  // Check if address is not null
         {
-            double[]? loc = await GetCoordinatesAsync(doCall.Address);
+            double[]? loc = await GetCoordinatesAsync(doCall.Address);  // Get coordinates using geocoding API
             if (loc is not null)
             {
-                doCall = doCall with { Latitude = loc[0], Longitude = loc[1] };
-                lock (AdminManager.BlMutex)
-                    s_dal.Call.Update(doCall);
-                CallManager.Observers.NotifyListUpdated();
-                CallManager.Observers.NotifyItemUpdated(doCall.Id);
+                doCall = doCall with { Latitude = loc[0], Longitude = loc[1] };  // Update call with latitude and longitude
+                lock (AdminManager.BlMutex)  // Lock to prevent concurrent access
+                    s_dal.Call.Update(doCall);  // Update call in the database
+                CallManager.Observers.NotifyListUpdated();  // Notify observers of list update
+                CallManager.Observers.NotifyItemUpdated(doCall.Id);  // Notify observers of item update
             }
         }
     }
@@ -492,57 +498,86 @@ internal static class VolunteerManager
     private class LocationResult
     {
         public string Lat { get; set; }  // Latitude as string in the JSON response
-
-
         public string Lon { get; set; } // Longitude as string in the JSON response
     }
+
     #endregion
 
-    #region Simulation
-    private static readonly Random s_rand = new();
-    private static int s_simulatorCounter = 0;
-    private static int s_Counter = 0; //for the func to choose completely random volunteers every iteration
 
+    #region Simulation
+
+    // Static random number generator used throughout the simulation
+    private static readonly Random s_rand = new();
+
+    // Counter to track the number of simulator threads
+    private static int s_simulatorCounter = 0;
+
+    // Counter to randomly choose volunteers every iteration
+    private static int s_Counter = 0; // for the func to choose completely random volunteers every iteration
+
+    /// <summary>
+    /// Simulates the assignment of volunteers to calls. It processes all active volunteers and assigns them calls.
+    /// </summary>
     internal static void SimulateAssignForVolunteer()
     {
+        // Set the thread's name for identification purposes
         Thread.CurrentThread.Name = $"Simulator{++s_simulatorCounter}";
 
+        // Declare a list to store active volunteers
         IEnumerable<DO.Volunteer> DoVolList;
+
+        // Locking the critical section to ensure thread safety while accessing the volunteer data
         lock (AdminManager.BlMutex) //stage 7
             DoVolList = s_dal.Volunteer.ReadAll(v => v.Active == true).ToList();
+
+        // Loop through each active volunteer
         foreach (DO.Volunteer doVolunteer in DoVolList)
         {
+            // Check if the volunteer currently has an ongoing call
             CallInProgress? currentCall = callProgress(doVolunteer.Id);
+
+            // Increment the global counter for tracking iterations
             s_Counter++;
+
+            // If the volunteer doesn't have an active call
             if (currentCall == null)
             {
+                // Every 3rd iteration, try to assign an open call to the volunteer
                 if (s_Counter % 3 == 0)
                 {
+                    // Get the list of open calls for the volunteer
                     var availableCalls = CallManager.GetOpenCallInList(doVolunteer.Id, null, null);
                     int cntOpenCall = availableCalls.Count();
+
+                    // If there are open calls available, randomly choose one to assign
                     if (cntOpenCall != 0)
                     {
                         int callId = availableCalls.Skip(s_rand.Next(0, cntOpenCall)).First()!.Id;
+                        // Assign the selected call to the volunteer
                         CallManager.ChooseCallToTreat(doVolunteer.Id, callId, true);
                     }
                 }
             }
             else
             {
+                // Calculate the maximum time the volunteer can be busy with the current call
                 DateTime maxTime = currentCall.OpeningTime.AddHours(currentCall.Distance).AddMonths(1);
+
+                // If the current time exceeds the maximum time, end the treatment
                 if (AdminManager.Now > maxTime)
                 {
                     CallManager.EndTreatment(doVolunteer.Id, currentCall.Id, true);
                 }
+                // Every 10th iteration, cancel the treatment for the current volunteer
                 else if (s_Counter % 10 == 0)
                 {
                     CallManager.CancelTreatment(doVolunteer.Id, currentCall.Id, true);
                 }
             }
-
         }
     }
     #endregion
+
 
 }
 

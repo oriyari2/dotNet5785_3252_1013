@@ -13,6 +13,8 @@ $we add password bonus-2 points$
 /stage2 final commit/
 
 /stage3 final commit/
+$ We add Initial password by manager bonus- 1 points$
+
 
 $ We add Thread Safe full Lazy Initialization bonus- 2 points$
 
@@ -42,6 +44,13 @@ because it inside select (LinqToObject).
 
 $we added the icon bonus- 1 points$
 
+/stage6 final commit/
+
+/stage7 final commit/
+
+$we added the IMultiValueConverter bonus- 1 points$
+
+ 
 
 
 

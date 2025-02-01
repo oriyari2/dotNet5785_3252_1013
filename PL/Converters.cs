@@ -305,91 +305,168 @@ public class IsEnabledSelectConverter : IMultiValueConverter
     }
 }
 
+/// <summary>
+/// This class is responsible for converting the simulation status to a string for UI binding.
+/// </summary>
 public class SimulatorStatusConverter : IValueConverter
 {
+    /// <summary>
+    /// Converts a boolean value indicating whether the simulator is running to a corresponding string.
+    /// </summary>
+    /// <param name="value">The value to be converted (bool).</param>
+    /// <param name="targetType">The target type for the conversion (string).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>A string indicating whether to "Start Simulation" or "Stop Simulation".</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool isSimulatorRunning)
         {
-            return isSimulatorRunning ? "Stop" : "Start";
+            return isSimulatorRunning ? "Stop Simulation" : "Start Simulation";
         }
-        return "Start"; // ברירת מחדל
+        return "Start Simulation"; // Default value if conversion fails
     }
 
+    /// <summary>
+    /// ConvertBack is not needed in this case, so we throw a NotImplementedException.
+    /// </summary>
+    /// <param name="value">The value to convert back (not used here).</param>
+    /// <param name="targetType">The target type for conversion (not used here).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>Throws NotImplementedException.</returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // אם יש צורך להמיר חזרה, זה לא נדרש כאן
+        // Conversion back is not required, so we throw an exception.
         throw new NotImplementedException();
     }
 }
 
+/// <summary>
+/// This class converts the simulator running status to enable/disable state for UI binding.
+/// </summary>
 public class SimulatorEnableConverter : IValueConverter
 {
+    /// <summary>
+    /// Converts a boolean value indicating whether the simulator is running to a boolean indicating if the simulation can be enabled.
+    /// </summary>
+    /// <param name="value">The value to be converted (bool).</param>
+    /// <param name="targetType">The target type for the conversion (bool).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>Returns true if the simulator is not running, otherwise false.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool isSimulatorRunning)
         {
-            return !isSimulatorRunning;
+            return !isSimulatorRunning; // Enable if the simulator is not running
         }
         else
-            return false;
+            return false; // Default to false if the value is not a boolean
     }
 
+    /// <summary>
+    /// ConvertBack is not needed in this case, so we throw a NotImplementedException.
+    /// </summary>
+    /// <param name="value">The value to convert back (not used here).</param>
+    /// <param name="targetType">The target type for conversion (not used here).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>Throws NotImplementedException.</returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        // אם יש צורך להמיר חזרה, זה לא נדרש כאן
+        // Conversion back is not required, so we throw an exception.
         throw new NotImplementedException();
     }
 }
 
+/// <summary>
+/// This class validates the coordinates and provides a color based on the validation result for UI binding.
+/// </summary>
 public class CoordinatesValidationConverter : IMultiValueConverter
 {
+    /// <summary>
+    /// Converts three coordinate values into a color to indicate whether the coordinates are valid.
+    /// </summary>
+    /// <param name="values">An array of values: first value is the address, second and third are coordinates.</param>
+    /// <param name="targetType">The target type for the conversion (Brush).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>A Brush (Red if coordinates are invalid, Black if valid).</returns>
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        // if (values.Length < 3) return Brushes.Black;
-
+        // If the address is not null, but the coordinates are missing, return Red color.
         object firstValue = values[0];
         object secondValue = values[1];
         object thirdValue = values[2];
 
         if (firstValue != null && (secondValue == null || thirdValue == null))
         {
-            return Brushes.Red;
+            return Brushes.Red; // Invalid if one or both coordinates are missing
         }
 
-        return Brushes.Black;
+        return Brushes.Black; // Valid coordinates
     }
 
+    /// <summary>
+    /// ConvertBack is not needed in this case, so we throw a NotImplementedException.
+    /// </summary>
+    /// <param name="value">The value to convert back (not used here).</param>
+    /// <param name="targetTypes">The target types for conversion (not used here).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>Throws NotImplementedException.</returns>
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
+        // Conversion back is not required, so we throw an exception.
         throw new NotImplementedException();
     }
 }
 
+/// <summary>
+/// This class calculates the border thickness based on the address and coordinates for UI binding.
+/// </summary>
 public class BorderThicknessConverter : IMultiValueConverter
 {
+    /// <summary>
+    /// Converts address and coordinate values into border thickness based on validity.
+    /// </summary>
+    /// <param name="values">An array of values: first is the address, second is latitude, third is longitude.</param>
+    /// <param name="targetType">The target type for the conversion (Thickness).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>A Thickness object based on the input values.</returns>
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Length < 3)
-            return new Thickness(1); // ערך ברירת מחדל
+            return new Thickness(1); // Default value if not enough values are provided
 
         string address = values[0] as string;
         double? latitude = values[1] as double?;
         double? longitude = values[2] as double?;
 
-        // דוגמה: אם הכתובת ריקה, עשי גבול עבה יותר
+        // If the address is empty, make the border thicker
         if (string.IsNullOrEmpty(address))
-            return new Thickness(2);
+            return new Thickness(2); // Thicker border if address is empty
 
-        // אם הלונגיטוד לא תקין, גבול אדום ודק
+        // If the longitude is invalid (null or zero), return a red thin border
         if (longitude == null || longitude == 0)
-            return new Thickness(2);
+            return new Thickness(2); // Thicker border for invalid longitude
 
-        return new Thickness(1); // ברירת מחדל
+        return new Thickness(1); // Default border thickness
     }
 
+    /// <summary>
+    /// ConvertBack is not needed in this case, so we throw a NotImplementedException.
+    /// </summary>
+    /// <param name="value">The value to convert back (not used here).</param>
+    /// <param name="targetTypes">The target types for conversion (not used here).</param>
+    /// <param name="parameter">Additional parameters (not used here).</param>
+    /// <param name="culture">Culture information (not used here).</param>
+    /// <returns>Throws NotImplementedException.</returns>
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
+        // Conversion back is not required, so we throw an exception.
         throw new NotImplementedException();
     }
 }

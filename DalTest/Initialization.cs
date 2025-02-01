@@ -1,5 +1,4 @@
 ﻿namespace DalTest;
-using Dal;
 using DalApi;
 using DO;
 using System;
@@ -349,7 +348,7 @@ public static class Initialization
 
     internal static int GetShift => 3; // הסטת תווים עבור ההצפנה
 
-    // פונקציה להצפנת סיסמה
+    // function for encrypt the password
     internal static string EncryptPassword(string password)
     {
  

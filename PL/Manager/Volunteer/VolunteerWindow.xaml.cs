@@ -110,8 +110,8 @@ public partial class VolunteerWindow : Window
         {
             id = CurrentVolunteer!.Id;
             CurrentVolunteer = null;
-            if(id!=0)
-            CurrentVolunteer = s_bl.Volunteer.Read(id);
+            if (id != 0)
+                CurrentVolunteer = s_bl.Volunteer.Read(id);
         }
     }
 
@@ -126,6 +126,7 @@ public partial class VolunteerWindow : Window
                 queryVolunteer();
             });
     }
+
     /// <summary>
     /// Event handler for when the window is loaded.
     /// </summary>
@@ -135,7 +136,6 @@ public partial class VolunteerWindow : Window
             // Add an observer for the current volunteer if it exists.
             s_bl.Volunteer.AddObserver(CurrentVolunteer!.Id, volunteerObserver);
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
-
     }
 
     /// <summary>
@@ -149,6 +149,9 @@ public partial class VolunteerWindow : Window
         s_bl.Admin.RemoveClockObserver(clockObserver); // Register for clock updates
     }
 
+    /// <summary>
+    /// Observer method for clock updates.
+    /// </summary>
     private void clockObserver()
     {
         if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)

@@ -119,7 +119,7 @@ public partial class CallHistoryWindow : Window
     /// <summary>
     /// Observer to refresh the call list whenever there are updates.
     /// </summary>
-    private void CallListObserver()  
+    private void CallListObserver()
     {
         if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
             _observerOperation = Dispatcher.BeginInvoke(() =>
@@ -142,7 +142,6 @@ public partial class CallHistoryWindow : Window
                 RefreshCallList();
             });
     }
-    /// <summary>
-    /// Opens the CallWindow for the selected call when the user double-clicks a row in the DataGrid.
-    /// </summary>
+
+    
 }

@@ -67,6 +67,7 @@ public partial class CallListWindow : Window
     /// </summary>
     private void CallTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        // Refresh the call list based on the selected call type
         CallList = helpReadAllCall(callType);
     }
 
@@ -75,6 +76,7 @@ public partial class CallListWindow : Window
     /// </summary>
     private void RefreshCallList()
     {
+        // Refresh the list of calls
         CallList = helpReadAllCall(callType);
     }
 
@@ -87,8 +89,8 @@ public partial class CallListWindow : Window
     {
         // Fetch the list of calls based on the selected call type
         var callStatusList = (callTypeHelp == BO.CallType.None)
-             ? s_bl?.Call.ReadAll(null, null, BO.FieldsCallInList.CallId)!
-            : s_bl?.Call.ReadAll(BO.FieldsCallInList.TheCallType, callTypeHelp, BO.FieldsCallInList.CallId)!;
+             ? s_bl?.Call.ReadAll(null, null, BO.FieldsCallInList.CallId)! // Fetch all calls if no specific type
+            : s_bl?.Call.ReadAll(BO.FieldsCallInList.TheCallType, callTypeHelp, BO.FieldsCallInList.CallId)!; // Filter by call type
 
         // Filter by status if a status filter is applied
         if (Status != null)
@@ -105,6 +107,7 @@ public partial class CallListWindow : Window
         if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
             _observerOperation = Dispatcher.BeginInvoke(() =>
             {
+                // Refresh the call list when an update occurs
                 RefreshCallList();
             });
     }
@@ -113,28 +116,35 @@ public partial class CallListWindow : Window
     /// Adds the observer when the window is loaded.
     /// </summary>
     private void Window_Loaded(object sender, RoutedEventArgs e)
-{
+    {
+        // Register observers for call updates and clock updates
         s_bl.Call.AddObserver(CallListObserver);
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
-
     }
+
     /// <summary>
     /// Removes the observer when the window is closed.
     /// </summary>
     private void Window_Closed(object sender, EventArgs e)
-{
+    {
+        // Remove observers when the window is closed
         s_bl.Call.RemoveObserver(CallListObserver);
         s_bl.Admin.RemoveClockObserver(clockObserver); // Removes observer for volunteer
-
     }
+
+    /// <summary>
+    /// Observer for clock updates.
+    /// </summary>
     private void clockObserver()
     {
         if (_observerOperation2 is null || _observerOperation2.Status == DispatcherOperationStatus.Completed)
             _observerOperation2 = Dispatcher.BeginInvoke(() =>
             {
+                // Refresh the call list when a clock update occurs
                 RefreshCallList();
             });
     }
+
     /// <summary>
     /// Event handler for selection change in the DataGrid.
     /// Placeholder for additional functionality if needed.
@@ -149,6 +159,7 @@ public partial class CallListWindow : Window
     /// </summary>
     private void btnAdd_Click(object sender, RoutedEventArgs e)
     {
+        // Open the CallWindow to add a new call
         new CallWindow().Show();
     }
 
@@ -163,6 +174,7 @@ public partial class CallListWindow : Window
     private void lsvCallsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (SelectedCall != null)
+            // Open the CallWindow for the selected call
             new CallWindow(SelectedCall.CallId).Show();
     }
 

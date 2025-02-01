@@ -33,22 +33,6 @@ internal static class Tools
             foreach (PropertyInfo item in t.GetType().GetProperties())
                 str += "\n" + item.Name + ": " + item.GetValue(t, null);  // Add property name and value to the string.
         }
-
         return str;  // Returns the constructed string.
-    }
-
-    /// <summary>
-    /// Validates if the input string is a valid numeric field.
-    /// Throws an exception if the input is empty or cannot be parsed as an integer or double.
-    /// </summary>
-    internal static void IsNumericField(string input)
-    {
-        // If the input is null, empty, or only contains whitespace
-        if (string.IsNullOrWhiteSpace(input))
-            throw new BO.BlInvalidValueExeption("");  // Throws an exception for invalid input.
-
-        // Tries to parse the input as either an integer or a double, throws an exception if it fails
-        if (int.TryParse(input, out _) || double.TryParse(input, out _) == false)
-            throw new BO.BlInvalidValueExeption("Invalid Phone Number");  // Throws an exception if the input is not a valid number.
-    }
+    } 
 }

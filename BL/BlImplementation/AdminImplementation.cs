@@ -77,24 +77,52 @@ public class AdminImplementation : IAdmin
     }
 
     #region Stage 5
+    /// <summary>
+    /// Adds an observer for clock updates.
+    /// </summary>
+    /// <param name="clockObserver">The observer to be notified of clock updates.</param>
     public void AddClockObserver(Action clockObserver) =>
-    AdminManager.ClockUpdatedObservers += clockObserver;
+        AdminManager.ClockUpdatedObservers += clockObserver;
+
+    /// <summary>
+    /// Removes an observer from clock updates.
+    /// </summary>
+    /// <param name="clockObserver">The observer to be removed from clock updates.</param>
     public void RemoveClockObserver(Action clockObserver) =>
-    AdminManager.ClockUpdatedObservers -= clockObserver;
+        AdminManager.ClockUpdatedObservers -= clockObserver;
+
+    /// <summary>
+    /// Adds an observer for configuration updates.
+    /// </summary>
+    /// <param name="configObserver">The observer to be notified of configuration updates.</param>
     public void AddConfigObserver(Action configObserver) =>
-   AdminManager.ConfigUpdatedObservers += configObserver;
+        AdminManager.ConfigUpdatedObservers += configObserver;
+
+    /// <summary>
+    /// Removes an observer from configuration updates.
+    /// </summary>
+    /// <param name="configObserver">The observer to be removed from configuration updates.</param>
     public void RemoveConfigObserver(Action configObserver) =>
-    AdminManager.ConfigUpdatedObservers -= configObserver;
+        AdminManager.ConfigUpdatedObservers -= configObserver;
+
     #endregion Stage 5
 
-    public void StartSimulator(int interval)  //stage 7
+    /// <summary>
+    /// Starts the simulator with a specified interval.
+    /// </summary>
+    /// <param name="interval">The time interval for the simulator updates.</param>
+    public void StartSimulator(int interval) // Stage 7
     {
-        AdminManager.ThrowOnSimulatorIsRunning();  //stage 7
-        AdminManager.Start(interval); //stage 7
+        AdminManager.ThrowOnSimulatorIsRunning(); // Ensures the simulator is not already running
+        AdminManager.Start(interval); // Starts the simulator with the given interval
     }
 
+    /// <summary>
+    /// Stops the simulator.
+    /// </summary>
     public void StopSimulator()
-    => AdminManager.Stop(); //stage 7
+        => AdminManager.Stop(); // Stops the simulator
+
 
 }
 
