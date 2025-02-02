@@ -22,4 +22,4 @@
     <ProjectReference Include="..\DalXml\DalXml.csproj" />
   </ItemGroup>
 
-</Project>
+</Project> 
