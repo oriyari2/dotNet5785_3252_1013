@@ -115,8 +115,6 @@ namespace PL.Call
             if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
                 _observerOperation = Dispatcher.BeginInvoke(() =>
                 {
-                   
-                    
                     queryCall();
                 });
         }
