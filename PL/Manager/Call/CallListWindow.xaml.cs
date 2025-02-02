@@ -120,6 +120,7 @@ public partial class CallListWindow : Window
         // Register observers for call updates and clock updates
         s_bl.Call.AddObserver(CallListObserver);
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.AddConfigObserver(clockObserver); //
     }
 
     /// <summary>
@@ -130,6 +131,7 @@ public partial class CallListWindow : Window
         // Remove observers when the window is closed
         s_bl.Call.RemoveObserver(CallListObserver);
         s_bl.Admin.RemoveClockObserver(clockObserver); // Removes observer for volunteer
+        s_bl.Admin.RemoveConfigObserver(clockObserver);
     }
 
     /// <summary>

@@ -1,5 +1,4 @@
-﻿using PL.Volunteer;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Threading;
 
 namespace PL.Call
@@ -110,6 +109,18 @@ namespace PL.Call
                 });
         }
 
+        private void configObserver()
+        {
+            // Check if the operation has completed or hasn't started
+            if (_observerOperation is null || _observerOperation.Status == DispatcherOperationStatus.Completed)
+                _observerOperation = Dispatcher.BeginInvoke(() =>
+                {
+                   
+                    
+                    queryCall();
+                });
+        }
+
         /// <summary>
         /// Event handler for the Add/Update button click.
         /// Adds or updates the call based on the button text ("Add" or "Update").
@@ -186,6 +197,8 @@ namespace PL.Call
             // Set the current time based on the button text ("Update" or "Add")
             CurrentTime = ButtonText == "Update" ? CurrentCall.OpeningTime : s_bl.Admin.GetClock(); // Get the current time from the backend
             s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+
+        s_bl.Admin.AddConfigObserver(configObserver);
         }
 
         /// <summary>
@@ -199,6 +212,8 @@ namespace PL.Call
                 s_bl.Call.RemoveObserver(CurrentCall!.Id, callObserver);
 
             s_bl.Admin.RemoveClockObserver(clockObserver);
+
+            s_bl.Admin.RemoveConfigObserver(configObserver);
         }
     }
 }

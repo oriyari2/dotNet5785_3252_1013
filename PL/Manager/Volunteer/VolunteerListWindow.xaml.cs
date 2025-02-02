@@ -94,6 +94,7 @@ public partial class VolunteerListWindow : Window
 {
         s_bl.Volunteer.AddObserver(volunteerListObserver);
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.AddConfigObserver(clockObserver);
 
     }
     /// <summary>
@@ -103,6 +104,7 @@ public partial class VolunteerListWindow : Window
 {
         s_bl.Volunteer.RemoveObserver(volunteerListObserver);
         s_bl.Admin.RemoveClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.RemoveConfigObserver(clockObserver);
     }
 
     private void clockObserver()

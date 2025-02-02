@@ -136,6 +136,8 @@ public partial class VolunteerWindow : Window
             // Add an observer for the current volunteer if it exists.
             s_bl.Volunteer.AddObserver(CurrentVolunteer!.Id, volunteerObserver);
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.AddConfigObserver(clockObserver); // Register for clock updates
+
     }
 
     /// <summary>
@@ -147,6 +149,7 @@ public partial class VolunteerWindow : Window
             // Remove the observer for the current volunteer when the window is closed.
             s_bl.Volunteer.RemoveObserver(CurrentVolunteer!.Id, volunteerObserver);
         s_bl.Admin.RemoveClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.RemoveConfigObserver(clockObserver);
     }
 
     /// <summary>

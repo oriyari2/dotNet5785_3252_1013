@@ -104,6 +104,7 @@ public partial class CallHistoryWindow : Window
     {
         s_bl.Call.AddObserver(CallListObserver);
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.AddConfigObserver(clockObserver);
         RefreshCallList();
     }
 
@@ -114,6 +115,8 @@ public partial class CallHistoryWindow : Window
     {
         s_bl.Call.RemoveObserver(CallListObserver);
         s_bl.Admin.RemoveClockObserver(clockObserver);
+        s_bl.Admin.RemoveConfigObserver(clockObserver);
+
     }
 
     /// <summary>

@@ -194,7 +194,7 @@ namespace PL
             s_bl.Call.AddObserver(callInProgressObserver); // Add observer to monitor call progress
             s_bl.Volunteer.AddObserver(VolunteerObserver); // Add observer to monitor volunteer progress
             s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
-
+            s_bl.Admin.AddConfigObserver(clockObserver);
         }
 
         /// <summary>
@@ -206,6 +206,8 @@ namespace PL
             s_bl.Call.RemoveObserver(callInProgressObserver);
             s_bl.Volunteer.RemoveObserver(VolunteerObserver);
             s_bl.Admin.RemoveClockObserver(clockObserver);
+            s_bl.Admin.RemoveConfigObserver(clockObserver);
+
         }
 
         private void clockObserver()

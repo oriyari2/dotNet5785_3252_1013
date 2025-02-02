@@ -118,6 +118,7 @@ public partial class SelectCallWindow : Window
         s_bl.Call.AddObserver(CallListObserver); // Adds observer for call list
         s_bl.Volunteer.AddObserver(VolunteerObserver); // Adds observer for volunteer
         s_bl.Admin.AddClockObserver(clockObserver); // Register for clock updates
+        s_bl.Admin.AddConfigObserver(clockObserver);
         RefreshCallList();
     }
 
@@ -129,6 +130,7 @@ public partial class SelectCallWindow : Window
         s_bl.Call.RemoveObserver(CallListObserver); // Removes observer for call list
         s_bl.Volunteer.RemoveObserver(VolunteerObserver); // Removes observer for volunteer
         s_bl.Admin.RemoveClockObserver(clockObserver);
+        s_bl.Admin.RemoveConfigObserver(clockObserver);
     }
 
     private void clockObserver()
