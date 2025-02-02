@@ -1,7 +1,6 @@
 ﻿namespace BlImplementation;
 using BlApi;
 using Helpers;
-
 using System;
 
 /// <summary>
