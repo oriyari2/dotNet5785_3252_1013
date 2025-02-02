@@ -7,8 +7,8 @@
     <Address>Haneviim 1, Jerusalem, Israel</Address>
     <Latitude>31.778</Latitude>
     <Longitude>35.216</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>2</Id>
@@ -17,8 +17,8 @@
     <Address>Yad Harutsim 3, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.213</Longitude>
-    <OpeningTime>2025-01-31T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-31T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>3</Id>
@@ -27,8 +27,8 @@
     <Address>Emek Refaim 8, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2025-01-27T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-08T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-27T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-08T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>4</Id>
@@ -37,8 +37,8 @@
     <Address>Yad Harutsim 9, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2025-01-21T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-21T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>5</Id>
@@ -47,8 +47,8 @@
     <Address>Harav Kook 6, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.212</Longitude>
-    <OpeningTime>2025-01-13T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-22T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-13T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-22T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>6</Id>
@@ -57,8 +57,8 @@
     <Address>HaPalmach 12, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.211</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>7</Id>
@@ -67,8 +67,8 @@
     <Address>Balfour 4, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.21</Longitude>
-    <OpeningTime>2024-12-22T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-16T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-22T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-16T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>8</Id>
@@ -77,8 +77,8 @@
     <Address>Agron 11, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2024-12-08T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-30T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-08T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-30T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>9</Id>
@@ -87,8 +87,8 @@
     <Address>Shazar 7, Jerusalem, Israel</Address>
     <Latitude>31.78</Latitude>
     <Longitude>35.218</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>10</Id>
@@ -97,8 +97,8 @@
     <Address>King George 32, Jerusalem, Israel</Address>
     <Latitude>31.776</Latitude>
     <Longitude>35.213</Longitude>
-    <OpeningTime>2024-12-24T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-24T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>11</Id>
@@ -107,8 +107,8 @@
     <Address>Keren HaYesod 27, Jerusalem, Israel</Address>
     <Latitude>31.763</Latitude>
     <Longitude>35.212</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>12</Id>
@@ -117,8 +117,8 @@
     <Address>Ramban 9, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.209</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>13</Id>
@@ -127,8 +127,8 @@
     <Address>Diskin 10, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2024-12-18T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-20T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-18T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-20T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>14</Id>
@@ -137,8 +137,8 @@
     <Address>HaRav Herzog 22, Jerusalem, Israel</Address>
     <Latitude>31.777</Latitude>
     <Longitude>35.213</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>15</Id>
@@ -147,8 +147,8 @@
     <Address>Zalman Shazar 15, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.208</Longitude>
-    <OpeningTime>2024-12-14T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-14T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>16</Id>
@@ -157,8 +157,8 @@
     <Address>Tchernichovsky 33, Jerusalem, Israel</Address>
     <Latitude>31.779</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>17</Id>
@@ -167,8 +167,8 @@
     <Address>Aza 19, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.216</Longitude>
-    <OpeningTime>2025-01-21T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-21T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>18</Id>
@@ -177,8 +177,8 @@
     <Address>Ben Yehuda 55, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2024-12-18T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-20T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-18T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-20T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>19</Id>
@@ -187,8 +187,8 @@
     <Address>Rambam 21, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.207</Longitude>
-    <OpeningTime>2025-01-01T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-06T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-01T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-06T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>20</Id>
@@ -197,8 +197,8 @@
     <Address>Malha Rd 12, Jerusalem, Israel</Address>
     <Latitude>31.75</Latitude>
     <Longitude>35.206</Longitude>
-    <OpeningTime>2025-01-13T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-22T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-13T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-22T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>21</Id>
@@ -207,8 +207,8 @@
     <Address>HaPisga 2, Jerusalem, Israel</Address>
     <Latitude>31.765</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>22</Id>
@@ -217,8 +217,8 @@
     <Address>Kiryat Moshe 5, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.209</Longitude>
-    <OpeningTime>2024-12-22T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-16T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-22T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-16T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>23</Id>
@@ -227,8 +227,8 @@
     <Address>HaNasi 14, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.208</Longitude>
-    <OpeningTime>2024-12-28T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-10T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-28T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-10T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>24</Id>
@@ -237,8 +237,8 @@
     <Address>Aliash 23, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.207</Longitude>
-    <OpeningTime>2025-01-01T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-06T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-01T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-06T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>25</Id>
@@ -247,8 +247,8 @@
     <Address>Gaza 26, Jerusalem, Israel</Address>
     <Latitude>31.757</Latitude>
     <Longitude>35.213</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>26</Id>
@@ -257,8 +257,8 @@
     <Address>Ein Kerem 31, Jerusalem, Israel</Address>
     <Latitude>31.755</Latitude>
     <Longitude>35.211</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>27</Id>
@@ -267,8 +267,8 @@
     <Address>Motza 8, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.208</Longitude>
-    <OpeningTime>2025-01-01T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-06T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-01T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-06T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>28</Id>
@@ -277,8 +277,8 @@
     <Address>Rashi 6, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.212</Longitude>
-    <OpeningTime>2024-12-28T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-10T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-28T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-10T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>29</Id>
@@ -287,8 +287,8 @@
     <Address>King David 20, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2024-12-22T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-16T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-22T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-16T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>30</Id>
@@ -297,8 +297,8 @@
     <Address>Hillel 25, Jerusalem, Israel</Address>
     <Latitude>31.778</Latitude>
     <Longitude>35.218</Longitude>
-    <OpeningTime>2024-12-14T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-14T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>31</Id>
@@ -307,8 +307,8 @@
     <Address>Yoel Solomon 4, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.21</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>32</Id>
@@ -317,8 +317,8 @@
     <Address>Ramat Beit HaKerem 4, Jerusalem, Israel</Address>
     <Latitude>31.753</Latitude>
     <Longitude>35.216</Longitude>
-    <OpeningTime>2025-01-21T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-21T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>33</Id>
@@ -327,8 +327,8 @@
     <Address>Ramat Beit HaKerem 2, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.211</Longitude>
-    <OpeningTime>2025-01-07T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-28T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-07T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-28T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>34</Id>
@@ -337,8 +337,8 @@
     <Address>Yermiyahu 3, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.219</Longitude>
-    <OpeningTime>2024-12-22T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-16T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-22T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-16T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>35</Id>
@@ -347,8 +347,8 @@
     <Address>Rabin 9, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2025-01-23T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-12T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-23T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-12T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>36</Id>
@@ -357,8 +357,8 @@
     <Address>Malha Mall, Jerusalem, Israel</Address>
     <Latitude>31.752</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>37</Id>
@@ -367,8 +367,8 @@
     <Address>Jaffa Rd 120, Jerusalem, Israel</Address>
     <Latitude>31.771</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2024-12-12T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-26T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-12T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-26T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>38</Id>
@@ -377,8 +377,8 @@
     <Address>Agripas 67, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.218</Longitude>
-    <OpeningTime>2025-01-07T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-28T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-07T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-28T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>39</Id>
@@ -387,8 +387,8 @@
     <Address>Ein Gedi 10, Jerusalem, Israel</Address>
     <Latitude>31.776</Latitude>
     <Longitude>35.216</Longitude>
-    <OpeningTime>2024-12-12T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-26T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-12T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-26T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>40</Id>
@@ -397,8 +397,8 @@
     <Address>HaTayasim 3, Jerusalem, Israel</Address>
     <Latitude>31.769</Latitude>
     <Longitude>35.212</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>41</Id>
@@ -407,8 +407,8 @@
     <Address>Mesilat Yesharim 5, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>42</Id>
@@ -417,8 +417,8 @@
     <Address>Avraham Shalom Yehuda 8, Jerusalem, Israel</Address>
     <Latitude>31.76</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2025-01-01T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-06T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-01T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-06T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>43</Id>
@@ -427,8 +427,8 @@
     <Address>Begin 14, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.213</Longitude>
-    <OpeningTime>2025-01-17T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-18T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-17T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-18T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>44</Id>
@@ -437,8 +437,8 @@
     <Address>Shmu’el HaNavi 22, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.211</Longitude>
-    <OpeningTime>2024-12-12T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-26T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-12T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-26T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>45</Id>
@@ -447,8 +447,8 @@
     <Address>Golda Meir 33, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2024-12-24T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-24T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>46</Id>
@@ -457,8 +457,8 @@
     <Address>Menachem Begin 40, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.209</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>47</Id>
@@ -467,8 +467,8 @@
     <Address>Davidka Square 13, Jerusalem, Israel</Address>
     <Latitude>31.772</Latitude>
     <Longitude>35.21</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>48</Id>
@@ -477,8 +477,8 @@
     <Address>Zion Square 1, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.207</Longitude>
-    <OpeningTime>2025-01-17T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-18T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-17T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-18T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>49</Id>
@@ -487,8 +487,8 @@
     <Address>Eliashar 5, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.208</Longitude>
-    <OpeningTime>2025-01-21T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-21T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>50</Id>
@@ -497,8 +497,8 @@
     <Address>Bezalel 3, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.209</Longitude>
-    <OpeningTime>2025-01-23T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-12T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-23T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-12T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>51</Id>
@@ -507,8 +507,8 @@
     <Address>HaMasger 6, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.212</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>52</Id>
@@ -517,8 +517,8 @@
     <Address>Einstein 9, Jerusalem, Israel</Address>
     <Latitude>31.775</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2025-01-31T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-31T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>53</Id>
@@ -527,8 +527,8 @@
     <Address>Ben Gurion 12, Jerusalem, Israel</Address>
     <Latitude>31.754</Latitude>
     <Longitude>35.216</Longitude>
-    <OpeningTime>2025-01-27T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-08T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-27T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-08T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>54</Id>
@@ -537,8 +537,8 @@
     <Address>Alpert 10, Jerusalem, Israel</Address>
     <Latitude>31.751</Latitude>
     <Longitude>35.21</Longitude>
-    <OpeningTime>2025-01-21T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-21T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>55</Id>
@@ -547,8 +547,8 @@
     <Address>Abraham Lincoln 6, Jerusalem, Israel</Address>
     <Latitude>31.759</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2025-01-13T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-22T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-13T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-22T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>56</Id>
@@ -557,8 +557,8 @@
     <Address>Ein Kerem Valley, Jerusalem, Israel</Address>
     <Latitude>31.762</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>57</Id>
@@ -567,8 +567,8 @@
     <Address>HaKibbutz HaMeuhad 13, Jerusalem, Israel</Address>
     <Latitude>31.766</Latitude>
     <Longitude>35.208</Longitude>
-    <OpeningTime>2024-12-22T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-16T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-22T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-16T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>58</Id>
@@ -577,8 +577,8 @@
     <Address>HaPalmach 10, Jerusalem, Israel</Address>
     <Latitude>31.768</Latitude>
     <Longitude>35.209</Longitude>
-    <OpeningTime>2024-12-08T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-30T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-08T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-30T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>59</Id>
@@ -587,8 +587,8 @@
     <Address>HaMelitz 14, Jerusalem, Israel</Address>
     <Latitude>31.77</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>60</Id>
@@ -597,8 +597,8 @@
     <Address>HaPalmach 45, Jerusalem, Israel</Address>
     <Latitude>31.761</Latitude>
     <Longitude>35.217</Longitude>
-    <OpeningTime>2024-12-24T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-24T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>61</Id>
@@ -607,8 +607,8 @@
     <Address>HaKablan 33, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.213</Longitude>
-    <OpeningTime>2025-02-02T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-02T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-02-02T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-02T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>62</Id>
@@ -617,8 +617,8 @@
     <Address>Rachel Imenu 5, Jerusalem, Israel</Address>
     <Latitude>31.763</Latitude>
     <Longitude>35.211</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>63</Id>
@@ -627,8 +627,8 @@
     <Address>Ben Zakkai 16, Jerusalem, Israel</Address>
     <Latitude>31.767</Latitude>
     <Longitude>35.208</Longitude>
-    <OpeningTime>2024-12-18T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-20T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-18T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-20T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>64</Id>
@@ -637,8 +637,8 @@
     <Address>Nachalat Shiva 8, Jerusalem, Israel</Address>
     <Latitude>31.758</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2025-01-11T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-11T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>65</Id>
@@ -647,8 +647,8 @@
     <Address>Beit Yaakov 7, Jerusalem, Israel</Address>
     <Latitude>31.773</Latitude>
     <Longitude>35.218</Longitude>
-    <OpeningTime>2024-12-14T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-24T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-14T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-24T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>66</Id>
@@ -657,8 +657,8 @@
     <Address>HaHistadrut 11, Jerusalem, Israel</Address>
     <Latitude>31.756</Latitude>
     <Longitude>35.212</Longitude>
-    <OpeningTime>2025-01-03T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-04T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-03T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-04T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>67</Id>
@@ -667,8 +667,8 @@
     <Address>HaMagid 6, Jerusalem, Israel</Address>
     <Latitude>31.772</Latitude>
     <Longitude>35.21</Longitude>
-    <OpeningTime>2025-01-21T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-14T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-21T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-14T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>68</Id>
@@ -677,8 +677,8 @@
     <Address>Harav Kook 9, Jerusalem, Israel</Address>
     <Latitude>31.764</Latitude>
     <Longitude>35.215</Longitude>
-    <OpeningTime>2024-12-18T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-20T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2024-12-18T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-20T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>69</Id>
@@ -687,8 +687,8 @@
     <Address>Yeshayahu 19, Jerusalem, Israel</Address>
     <Latitude>31.757</Latitude>
     <Longitude>35.219</Longitude>
-    <OpeningTime>2025-01-01T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-03-06T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-01T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-03-06T20:03:13</MaxTimeToEnd>
   </Call>
   <Call>
     <Id>70</Id>
@@ -697,7 +697,7 @@
     <Address>Har Nof 4, Jerusalem, Israel</Address>
     <Latitude>31.765</Latitude>
     <Longitude>35.214</Longitude>
-    <OpeningTime>2025-01-13T19:40:29</OpeningTime>
-    <MaxTimeToEnd>2025-02-22T19:40:29</MaxTimeToEnd>
+    <OpeningTime>2025-01-13T20:03:13</OpeningTime>
+    <MaxTimeToEnd>2025-02-22T20:03:13</MaxTimeToEnd>
   </Call>
 </Calls>
