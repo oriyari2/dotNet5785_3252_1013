@@ -51,7 +51,8 @@ static void Main(string[] args)
             Console.WriteLine("3. Volunteer");
 
             // Parse user input to navigate to the selected menu
-            if (Enum.TryParse(Console.ReadLine(), out MainMenuOptions choice))
+            if (Enum.
+                (Console.ReadLine(), out MainMenuOptions choice))
             {
                 switch (choice)
                 {
