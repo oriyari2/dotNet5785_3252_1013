@@ -88,7 +88,7 @@ public static class Initialization
         var assignedCalls = new HashSet<int>(); // all assigned calls
 
         // Get the current system time
-        DateTime currentTime = DateTime.Now;
+        DateTime currentTime = s_dal.Config.Clock;
 
         // Select 5 volunteers who will have multiple assignments
         var specialVolunteers = availableVolunteers.Take(5).ToList();

@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Helpers;  // Declares the Helpers namespace, containing utility classes for call management.
 
-/// <summary>
+/// <summary>בס
 /// CallManager class that manages call assignments and statuses.
 /// </summary>
 internal static class CallManager

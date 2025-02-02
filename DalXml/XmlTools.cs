@@ -40,7 +40,7 @@ static class XMLTools
     //[MethodImpl(MethodImplOptions.Synchronized)]
     public static void SaveListToXMLSerializer<T>(List<T> list, string xmlFileName) where T : class
     {
-        string xmlFilePath = s_xmlDir + xmlFileName;//אולי פה להחזיר לשים לב
+        string xmlFilePath = s_xmlDir + xmlFileName;
 
         try
         {
