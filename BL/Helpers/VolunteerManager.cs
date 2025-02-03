@@ -26,11 +26,24 @@ internal static class VolunteerManager
     /// <returns>The total number of assignments.</returns>
     internal static int TotalCall(int id, DO.EndType endType)
     {
-        IEnumerable<DO.Assignment> tempAssignments;
-        lock (AdminManager.BlMutex)
-            tempAssignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == endType)); // Get assignments
-        var toReturn = tempAssignments == null ? 0 : tempAssignments.Count(); // Count assignments
-        return toReturn;
+        if (endType != DO.EndType.expired)
+        {
+            IEnumerable<DO.Assignment> tempAssignments;
+            lock (AdminManager.BlMutex)
+                tempAssignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id) && (s.TheEndType == endType)); // Get assignments
+            var toReturn = tempAssignments == null ? 0 : tempAssignments.Count(); // Count assignments
+            return toReturn;
+        }
+        else
+        {     
+            IEnumerable<DO.Assignment> tempAssignments;
+            lock (AdminManager.BlMutex)
+            { 
+                tempAssignments = s_dal.Assignment.ReadAll(s => (s.VolunteerId == id)&& CallManager.CheckStatus(s, s_dal.Call.Read(s.CallId)) == BO.Status.expired);
+            }// Get assignments
+            var toReturn = tempAssignments == null ? 0 : tempAssignments.Count(); // Count assignments
+            return toReturn;
+        }
     }
 
     /// <summary>
