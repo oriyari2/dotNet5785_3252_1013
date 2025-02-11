@@ -6,73 +6,54 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-    Title="Log In Window" Height="450" Width="500">
-    <!-- Main grid layout for the window -->
+        Title="Log In Window" Height="450" Width="450">
     <Grid>
-        <!-- Defines rows for different input fields and buttons -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.6*"/>
-            <!-- Top row for the title -->
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="0.9*"/>
-            <!-- Row for the welcome message -->
             <RowDefinition Height="*"/>
-            <!-- Row for the ID input field -->
             <RowDefinition Height="*"/>
-            <!-- Row for the password input field -->
-            <RowDefinition Height="*"/>
-            <!-- Row for the login button -->
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="0.7*"/>
         </Grid.RowDefinitions>
 
-        <!-- Welcome message -->
         <Grid Grid.Row="1">
-            <!-- Label to display the welcome message in the center of the grid -->
-            <Label Content="Welcome to Oref Eitan" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize ="32" Height="116" Width="356" />
+            <Label Content="Welcome to Oref Eitan" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="28"  />
         </Grid>
 
-        <!-- ID input field -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <!-- First column for label -->
                 <ColumnDefinition Width="1.1*"/>
-                <!-- Second column for text box -->
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <!-- Label for ID input field -->
                 <Label Content="ID:              " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" />
             </Grid>
             <Grid Grid.Column="1">
-                <!-- TextBox for ID input, bound to CurrentId -->
-                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentId, Mode=TwoWay}" VerticalAlignment="Center" Width="150" Height="25" TextChanged="TextBox_TextChangedId" />
+                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         VerticalAlignment="Center" Width="150" Height="25" PreviewKeyDown="TextBox_KeyDown"/>
             </Grid>
         </Grid>
 
-        <!-- Password input field -->
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <!-- First column for label -->
                 <ColumnDefinition Width="1.1*"/>
-                <!-- Second column for text box -->
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <!-- Label for password input field -->
                 <Label Content="Password:  " HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20"/>
             </Grid>
             <Grid Grid.Column="1">
-                <!-- TextBox for password input, bound to CurrentPassword -->
-                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CurrentPassword, Mode=TwoWay}"
-                         VerticalAlignment="Center" Width="150" Height="25" TextChanged="TextBox_TextChangedpass" Margin="-1,0,0,0"/>
+                <PasswordBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="25"
+                             PasswordChanged="PasswordBox_PasswordChanged" PreviewKeyDown="PasswordBox_KeyDown"/>
             </Grid>
         </Grid>
 
-        <!-- Log In button -->
-        <Grid Grid.Row="4">
-            <!-- Button to trigger the login action -->
-            <Button Content="Log In" FontSize="20" HorizontalAlignment="center" VerticalAlignment="Center" Click="btnLogIn_Click" Width="170" Height="35"  />
+        <Grid Grid.Row="4" Grid.RowSpan="2">
+            <Button x:Name="btnLogIn" Content="Log In" FontSize="20" HorizontalAlignment="center" VerticalAlignment="Center" 
+                    Click="btnLogIn_Click" Width="170" Height="35" />
         </Grid>
 
-        <!-- Image for the logo -->
         <Image HorizontalAlignment="Center" Height="120" VerticalAlignment="Top" Width="150" Source="/newImage.png" />
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using PL.Call;
+﻿using BO;
+using PL.Call;
 using PL.privateVolunteer;
 using System.Windows;
 using System.Windows.Controls;
@@ -121,7 +122,7 @@ namespace PL
         /// <summary>
         /// Handles the click event of the "End Treatment" button to end the volunteer's treatment for the current call.
         /// </summary>
-        private void BtnEndTreatmrnt_Click(object sender, RoutedEventArgs e)
+        private void BtnEndTreatment_Click(object sender, RoutedEventArgs e)
         {
             var result = MessageBox.Show(
                 "Are you sure you want to end your treatment for this call?",
@@ -287,6 +288,7 @@ namespace PL
             return s_bl.Volunteer.Read(CurrentVolunteer.Id); // Return the volunteer details
         }
 
+
         /// <summary>
         /// Observes changes in the volunteer's progress and refreshes the volunteer data.
         /// </summary>
@@ -297,6 +299,16 @@ namespace PL
                 {
                     RefreshVolunteer();
                 });
-} 
+}
+        // Add to BO.Call class
+        public bool IsNearDeadline
+        {
+            get
+            {
+                return CurrentCall != null && CurrentCall.status == Status.riskTreatment;
+            }
+        }
     }
+
+
 }

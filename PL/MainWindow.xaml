@@ -109,7 +109,27 @@
                 <!-- Row for "Handle Calls" button -->
             </Grid.RowDefinitions>
             <!-- Button for handling volunteers -->
-            <Button Content="Handle Volunteers" Click="btnVolunteers_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="1"/>
+            <!-- Handle Volunteers button with MultiTrigger -->
+            <Button Content="Handle Volunteers" Click="btnVolunteers_Click" 
+        HorizontalAlignment="Center" VerticalAlignment="Center" 
+        Width="150" Height="51" Grid.Row="1">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#A3C77F"/>
+
+                        <Style.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsEnabled" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </MultiTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <!-- Button for handling calls -->
             <Button Content="Handle Calls" Click="btnCalls_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="51" Grid.Row="2"/>
             <!-- Simulator Area -->
@@ -156,7 +176,22 @@
                 <!-- Risk range input -->
             </Grid.RowDefinitions>
             <!-- Display the current time -->
-            <Label Content="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" />
+            <Label Content="{Binding CurrentTime}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold">
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#A78B9A"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+
             <!-- Buttons for adjusting time -->
             <Button Content="Add Minute" Click="btnAddOneMinute_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="150" Height="27"
                     IsEnabled="{Binding FlagSimulator, Converter={StaticResource SimulatorEnableConverterkey}}"/>

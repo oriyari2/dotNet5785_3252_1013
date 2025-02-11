@@ -8,11 +8,14 @@
         Title="Main Volunteer Window" Height="700" Width="900"
         Loaded="MainVolunteerWindow_Loaded"
         Closed="MainVolunteerWindow_Closed">
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4.2*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -26,8 +29,52 @@
                         <Binding Path="CurrentVolunteer.Active" />
                     </MultiBinding>
                 </Button.IsEnabled>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.2" Duration="0:0:0.3" />
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.2" Duration="0:0:0.3" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.0" Duration="0:0:0.3" />
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="0:0:0.3" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
             </Button>
-            <Button Content="Calls History" HorizontalAlignment="Center"  VerticalAlignment="Center"  Height="60" Width="130" FontSize="17" Click="BtnCallsHistory_Click"/>
+            <Button Content="Calls History" HorizontalAlignment="Center" VerticalAlignment="Center"
+        Height="60" Width="130" FontSize="17" Click="BtnCallsHistory_Click">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.2" Duration="0:0:0.3" />
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.2" Duration="0:0:0.3" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.0" Duration="0:0:0.3" />
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="0:0:0.3" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Button.RenderTransform>
+            </Button>
         </Grid>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -80,11 +127,6 @@
                     <Label Grid.Row="5" Grid.Column="0" Content="Address:" />
                     <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True" Text="{Binding CurrentCall.Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
-                    
-
-
-
-
                     <Label Grid.Row="6" Grid.Column="0" Content="Opening Time:" />
                     <TextBox IsReadOnly="True" Grid.Row="6" Grid.Column="1"  
       Text="{Binding CurrentCall.OpeningTime, Converter={StaticResource OpeningTimeConverterkey}}" />
@@ -92,12 +134,21 @@
                     <Label Grid.Row="7" Grid.Column="0" Content="Max Time To End:" />
                     <DatePicker Grid.Row="7" Grid.Column="1" IsEnabled="False"  SelectedDate="{Binding CurrentCall.MaxTimeToEnd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
 
-
                     <Label Grid.Row="8" Grid.Column="0" Content="Status:" />
-                    <ComboBox Grid.Row="8" Grid.Column="1" IsEnabled="false" ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
-       SelectedValue="{Binding CurrentCall.status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
-
-                    
+                    <ComboBox Grid.Row="8" Grid.Column="1" IsEnabled="false" 
+                  ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}" 
+                  SelectedValue="{Binding CurrentCall.status, Mode=TwoWay, 
+                  NotifyOnValidationError=true, ValidatesOnExceptions=true}">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CurrentCall.status}" Value="riskTreatment">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
                     <Label Grid.Row="9" Grid.Column="0" Content="Assigned Calls:" />
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="9" Grid.Column="1" Grid.RowSpan="3" >
                         <ListBox ItemsSource="{Binding CurrentCall.listAssignForCall}" 
@@ -139,9 +190,11 @@
                         <Button Content="Cancel Treatment" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="150" 
                                 FontSize="17" Height="35" Click="BtnCancelTreatment_Click" 
                                 IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNotNullToBoolConverterkey}}"/>
-                        <Button Grid.Column="1" Content="End Treatment" HorizontalAlignment="Center"  Width="150" Height="35" 
-                                FontSize="17" VerticalAlignment="Center" Click="BtnEndTreatmrnt_Click" 
-                                IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNotNullToBoolConverterkey}}"/>
+                        <Button Grid.Column="1" Content="End Treatment" HorizontalAlignment="Center" Width="150" Height="35" 
+                FontSize="17" VerticalAlignment="Center" Click="BtnEndTreatment_Click" 
+                IsEnabled="{Binding CurrentCall, Converter={StaticResource IsNotNullToBoolConverterkey}}">
+                          
+                        </Button>
                     </Grid>
 
                     <!-- Action Button for saving or updating volunteer details -->
@@ -274,11 +327,32 @@
                         </Grid.ColumnDefinitions>
                     </Grid>
                     <Button Grid.Row="16" Content="Update" FontSize="17"   Click="BtnUpdate_Click" 
-    HorizontalAlignment="Left" Grid.ColumnSpan="2"   Grid.Column="1" Width="150" Height="35" />
+            HorizontalAlignment="Left" Grid.ColumnSpan="2"   Grid.Column="1" Width="150" Height="35"
+                            />
                 </Grid>
                 <Border BorderBrush="Black" BorderThickness="1"/>
 
             </Grid>
         </Grid>
+        <!-- הוספת TextBlock לאזהרה -->
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0,5,0,0">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentCall.status}" Value="riskTreatment">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Text" Value="⚠️ Warning: Risk Treatment Call"/>
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="LightYellow"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
     </Grid>
 </Window>
