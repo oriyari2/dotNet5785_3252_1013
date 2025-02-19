@@ -1,58 +1,64 @@
-File that we write in the changes in the Project
 # dotNet5785_3252_1013
-Windows project. Creating a volunteer management system
-/stage0 final commit/
+## **Oref Eitan – Volunteer Organization Management System**  
 
-/stage1 final commit/
-$ We add Trypharse bonus -  1 point$
-	We couldn't define the variables inside the loop because we used them later,
-	but we did capture the variable if it was entered incorrectly again inside the loop.
+### **Project Overview**  
+"Oref Eitan" is a volunteer organization that assists families affected by war. This system streamlines volunteer
+management by enabling efficient task assignment and communication. Volunteers can accept, complete, or release tasks,
+while administrators oversee operations and ensure timely execution.  
 
-$we add password bonus-2 points$
+### **Key Features**  
+- **Volunteer Management**: Volunteers can update their location and set a maximum distance for task visibility.  
+- **Task Assignment**: Requests are assigned based on availability, ensuring proper tracking and completion.  
+- **Risk Management**: Tasks nearing deadlines are marked as "at risk."  
+- **Custom System Clock**: An internal clock, managed by the administrator, simulates time progression.  
 
-/stage2 final commit/
+## **User Roles and Permissions**  
 
-/stage3 final commit/
-$ We add Initial password by manager bonus- 1 points$
+### **Administrator Capabilities**  
+- **Volunteer Management**: Add, update, remove, and analyze volunteer activity.  
+- **Task Management**: Create, assign, update, and track tasks with full assignment history.  
+- **System Clock Control**: Adjust the system clock to simulate time changes.  
+- **Risk Threshold Configuration**: Define thresholds for tasks approaching deadlines.  
+- **Dual Role Functionality**: Administrators can also act as volunteers.  
 
+### **Volunteer Capabilities**  
+- **Profile Management**: Update location and set a preferred task radius.  
+- **Task Handling**: Accept, complete, or release a task (limited to one at a time).  
+- **Task History**: View and filter past assigned tasks.  
 
-$ We add Thread Safe full Lazy Initialization bonus- 2 points$
+## **Development Phases**  
 
-in volunteerImplemenation of BO we decided to let the system delete a volunteer just if he do not have a call in program, 
-because otherwise even if he never treated a call but now he has a call in progress when we delete the volunteer it will create
-problemswith the current call
+### **Phase 1: Understanding C# Basics**  
+Explored C# concepts such as **classes, structs, interfaces, and records**, while implementing basic data structures
+and a **Data Access Layer (DAL)** with structured data contracts.  
 
-in volunteerManager of BO we wrote a functions for each field that need check,that include every check he need include numbers etc.
-and that why we didnt write a func that check if number field is a real number, and about id we assume that as an int he will
-throw exeption earlier if he got non int value, and if we got a field of int he must be valid for int
+### **Phase 2: Enhancing the DAL**  
+Implemented a **generic ICrud interface**, used **LINQ** for efficient data queries, and introduced **delegates and
+custom exceptions** for better modularity.  
 
-in the func create of volunteerImplemenation we assume that the person who created the volunteer is manager because
-we doesent have any information about the person who add the volunteer and only manager can add
+### **Phase 3: XML Data Storage**  
+Added **XML-based storage** using **LINQ to XML** and **XML serialization**, enabling data persistence beyond runtime.  
 
-$we added bonus of check that the password is strong-1 point $
+### **Phase 4: Business Logic Layer (BL) & Design Patterns**  
+Introduced **Singleton** and **Factory Method** patterns, developed **BO (Business Objects)**, and implemented
+structured interfaces for business operations. A **command-line test program (BlTest)** was created for manual 
+verification.  
 
-$we added bonus of encode and decipher the password- 2 points$
+### **Phase 5: Observer Pattern & Basic UI**  
+Integrated the **observer pattern** for real-time updates and developed a basic UI with entity management screens.  
 
-in callImplemenation in Read all in everi select new we initialize CallId from DO.Call.ReadAll even thogh in the table
-of CallInList we asked to intialize CallId from DO.Assignment.ReadAll because if the Id which mean Assignment id is null
-we cant get the CallId from DO.Assignment.ReadAll and in this specific use we can get the call id from DO.Call.ReadAll
-because it inside select (LinqToObject).
+### **Phase 6: Completing the UI (MVVM Pattern)**  
+- Implemented **MVVM (Model-View-ViewModel)** with full **data binding** and minimal code-behind logic.  
+- Improved **error handling** using user-friendly message pop-ups.  
+- Used **IConverter** for dynamic UI behavior.  
+- Ensured UI synchronization using the **observer pattern**.  
 
-/stage4 final commit/
+### **Phase 7: System Simulator**  
+Developed a **simulator** that runs in parallel with the system, automating periodic updates and simulating real-world
+operations. Implemented **multithreading and synchronization** to prevent race conditions.  
 
-/stage5 final commit/
-
-$we added the icon bonus- 1 points$
-
-/stage6 final commit/
-
-/stage7 final commit/
-
-$we added the IMultiValueConverter bonus- 1 points$
-
- 
-
-
-
-
+## **Conclusion**  
+The "Oref Eitan" volunteer management system efficiently connects volunteers with families in need while ensuring task
+completion, risk management, and real-time updates. By adhering to structured software development principles, we 
+created a scalable and maintainable system that enhances volunteer coordination and support.
 
