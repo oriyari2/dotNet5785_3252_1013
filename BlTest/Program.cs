@@ -1,12 +1,8 @@
-﻿using BO;
-using DO;
-using System;
-using System.Data;
-
+﻿
 namespace BlTest;
 
 /// <summary>
-/// Main program class containing the entry point and menu options for different sections (Admin, Call, Volunteer).
+/// Main program class containing the entry point and menu options for different sections (Admin, Call, Volunteer). 
 /// </summary>
 internal class Program
 {
@@ -51,8 +47,7 @@ static void Main(string[] args)
             Console.WriteLine("3. Volunteer");
 
             // Parse user input to navigate to the selected menu
-            if (Enum.
-                (Console.ReadLine(), out MainMenuOptions choice))
+            if (Enum.TryParse(Console.ReadLine()?.Trim(), true, out MainMenuOptions choice))
             {
                 switch (choice)
                 {
