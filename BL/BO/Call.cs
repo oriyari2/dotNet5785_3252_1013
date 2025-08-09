@@ -3,7 +3,7 @@
 namespace BO;
 
 /// <summary>
-/// The Call entity contains details for a "call", including a unique running ID number.
+/// The Call entity contains details for a "call", including a unique running ID number. 
 /// </summary>
 /// <param name="Id">Represents a number that uniquely identifies the call.</param>
 /// <param name="TheCallType">Specifies the type of the call.</param>
